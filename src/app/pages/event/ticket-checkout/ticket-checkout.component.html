@@ -1,0 +1,29 @@
+<div  class="donorcheckout-header">
+  <ul>
+    <li class="button"> <button [routerLink]="'/event-details/'+eventId"><img src="assets/icon/arow-g.svg" alt=""></button> </li>
+    <li>
+      <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; "> {{eventDetail['name']}}</h4>
+       <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px; " [innerHTML]="eventDetail['description']"></p>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="eventDetail?.eventConfigurations?.registrationType =='AGE'">
+  <!--age Group Wise-->
+  <app-agewise-booking   [discount]="discountSubject" *ngIf="userStatus ==true && guestShow == false && ageGroupDetail.length != 0" [eventId]="eventId" [(ageGroupDetail)]="ageGroupDetail" (completed)="paymentStep()"  [(paymentDetail)] = "paymentDetail"></app-agewise-booking>
+  <app-payment-detail  (discountChange)="addDiscount()" [(discount)]="discountCode" [type]="'ticket'" (completePayment)="ageGroupPaymentCheckout()"  [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentDetail"></app-payment-detail>
+  <!--age Group-->
+</div>
+
+<app-new-user-register *ngIf="guestShow == true" (completed)="addGuest()" [(guestDetail)]="guestDetail" ></app-new-user-register>
+
+
+<div *ngIf="eventDetail?.eventConfigurations?.registrationType !='AGE'">
+  <!--Ticket Wise-->
+  <app-book-tickets [discount]="discountSubject"
+                    *ngIf="userStatus ==true && guestShow == false"
+                    [eventId]="eventId" (completeGuest)="addGuest()" [(guestDetail)]="guestDetail"  [(userDetail)]="userDetail" (completed)="paymentStep()"  [(paymentDetail)] = "paymentDetail"></app-book-tickets>
+  <app-payment-detail [ticket]="'ticket'" (discountChange)="this.discountSubject.next(this.discountCode)" [(discount)]="discountCode" [type]="'ticket'" (completePayment)="ticketPaymentCheckout()"  [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentDetail"></app-payment-detail>
+  <!--Ticket Wise-->
+</div>
+

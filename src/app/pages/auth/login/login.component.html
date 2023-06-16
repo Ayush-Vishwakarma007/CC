@@ -1,0 +1,129 @@
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-md-6">
+      <div class="height100">
+        <div class="login-logo">
+          <img src="assets/images/cclogo.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 full-wid">
+      <!-- right area -->
+      <div class="rightpart">
+        <div class="main-box">
+          <h3>
+            Welcome
+          </h3>
+
+          <form id="loginForm" [formGroup]="loginForm" *ngIf="loginFormHTML">
+            <div class="group">
+              <input type="text" formControlName="email">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>EMAIL/MOBILE</label>
+              <img src="assets/icon/checked.svg" alt="" *ngIf="validMobile">
+            </div>
+
+            <div class="group">
+              <input type="password" formControlName="password">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>PASSWORD</label>
+              <img src="assets/icon/checked.svg" alt="" *ngIf="validMobile">
+            </div>
+
+            <div class="login-button">
+              <button (click)="login()">Login</button>
+              <button (click)="facebooklogin()">Facebook Login</button>
+            </div>
+            <div class="login-button" [routerLink]="['/registration']">
+              <button>Sign up</button>
+            </div>
+            <div class="login-button" style="cursor:pointer;text-decoration:underline;color:blue" (click)="forgotPassword()">
+              Forgot Password
+            </div>
+          </form>
+
+          <form id="sendOtpForm" [formGroup]="sendOtpForm" *ngIf="sendOTPHTML">
+
+            <div class="group no-mar">
+              <div class="row">
+                <div class="col-sm-5">
+                  <input type="radio" formControlName="otpType" value="email">
+                  <label for="multi">Email</label>
+                </div>
+                <div class="col-sm-7">
+                  <input type="radio" formControlName="otpType" value="mobile">
+                  <label for="single">Mobile No.</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="login-button" (click)="sendOTP()">
+              <button>Send</button>
+            </div>
+            <div class="login-button" (click)="returnToLogin()">
+              <button>Back</button>
+            </div>
+          </form>
+
+          <form id="verifyOTPForm" [formGroup]="verifyOTPForm" *ngIf="verifyOTPHTML">
+            <div class="group no-mar" style="margin-top:45px">
+              <input type="text" class="otp" formControlName="otp" maxlength="6">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>verification code</label>
+              <img src="assets/icon/checked.svg" alt="" *ngIf="otpSend">
+            </div>
+            <div class="login-button" (click)="verifyOTP()">
+              <button>Verify</button>
+            </div>
+            <div class="login-button" (click)="returnToLogin()">
+              <button>Back</button>
+            </div>
+          </form>
+
+          <form id="ForgotPasswordForm" [formGroup]="ForgotPasswordForm" *ngIf="forgotPasswordHtml">
+            <div class="group">
+              <input type="text" formControlName="email">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>EMAIL/MOBILE</label>
+            </div>
+            <div class="login-button" (click)="forgotPass()">
+              <button>Forgot Password</button>
+            </div>
+            <div class="login-button" (click)="returnToLogin()">
+              <button>Back</button>
+            </div>
+          </form>
+
+          <form id="ResetPasswordForm" [formGroup]="ResetPasswordForm" *ngIf="ResetPasswordFormHTML">
+              <div class="group">
+                <input type="password" formControlName="password">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Password</label>
+              </div>
+              <div class="group">
+                  <input type="password" formControlName="cPassword">
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Confirm Password</label>
+                </div>
+              <div class="login-button" (click)="resetPassword()">
+                <button>Change</button>
+              </div>
+              <div class="login-button" (click)="returnToLogin()">
+                <button>Back</button>
+              </div>
+            </form>
+
+
+        </div>
+      </div>
+      <!-- right area -->
+    </div>
+  </div>
+</div>
+

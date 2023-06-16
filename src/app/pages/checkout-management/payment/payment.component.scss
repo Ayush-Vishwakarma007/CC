@@ -1,0 +1,106 @@
+:root{
+  --primary-color : #ca0009;
+  --secondary-color :#283279;
+  --secondary-color2: #344A5F;
+  --black-light-color: #202126;
+  --black-dark-color: #202020;
+  --greay: #717171;
+  --greay-text: #6D6D6D;
+  --red-light-bg: #FCF5F5;
+  --greay-card-head: #EFEFEF;
+  --blue-dark: #283279;
+  --gray-dark: #666;
+  --gray-light: #e5e5e5;
+  --red-light-main: #edc9c9;
+  --blue-light: #eaebf7;
+  --blue-dark2: #afc6db;
+  --gray-dark2: #e5e5e5;
+  --gray75: #757575;
+  --gray-e7: #e7e7e7;
+  --font20: 20px;
+  --font13: 13px;
+  --heandingpage: 30px;
+  --green-dark: #22B573;
+  --green-light: #c6e1dc;
+  --red-dark: #CE495C;
+  --red-light: #f0c8ce;
+  --tomatored: #F25C66;
+
+}
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$black: #000000;
+$afafaf: #AFAFAF;
+$tr-hvr: #f9f9f9;
+$green: #11939A;
+$active-btn: #3AA76D;
+$active: #1EBA62;
+$icon-gray: #AFAFAF;
+$red: #c62c47;
+$white: #ffffff;
+$white-light: #adadad;
+$bg-light: #F5F6FA;
+$orenge: #ED6E33;
+$gray-light: #9A9A9A;
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+
+$font20: var(--font20);
+$font13: var(--font13);
+$heandingpage: var(--heandingpage);
+
+
+// Promo Code css
+.bg-promocod{ background: #f8f8f8; padding: 15px; border-radius: 10px;
+  .paymentop{ background: #fff; padding: 20px 20px 10px 20px;
+    .mat-radio-label-content{  }
+    .mat-radio-label{ align-items: top!important;}
+  }
+
+}
+.mat-radio-button{ display: block;}
+.promo-code { background: #fff; }
+.enter-promo-code input{ width: calc(100% - 68px);}
+.receipt-name{
+  input{ width:100% !important}
+}
+.addCode { border: 1px solid #ccc; color: var(--secondary-color); font-size: 15px; font-weight: 600; background: transparent; padding: 8px 15px; border-radius: 5px; }
+.tottal-fees-area { background: #fff; min-height: 150px; }
+.paddtop0{
+  .row{ padding-top: 15px;}
+}
+.paypaltext{ font-size: 16px; font-family: "Montserrat", sans-serif; font-weight: 100;
+  span{ font-size: 12px; font-weight: 100;}
+  p{ font-weight: 600; margin: 0px; }
+}
+.martop-date { font-weight: 600;
+  a{ color: var(--primary-color); }
+}
+.finish-pay { background: var(--secondary-color); margin-top: 20px; border-radius: 10px; position: relative; text-align: center; font-size: 16px; padding: 15px 0px; display: block;
+  button{ background: transparent; color: #fff; border: 0px; outline: none; font-family: "Montserrat", sans-serif; font-weight: 600; font-size: 18px;}
+}
+.fees-top{ font-family: "Montserrat", sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 10px; }
+// Promo Code css End

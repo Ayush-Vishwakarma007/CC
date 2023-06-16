@@ -1,0 +1,44 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event new-dashboard">
+    <div class="row member-header">
+      <div class="col-md-12 col-lg-8">
+        <h1>
+          {{'memberDirectory.title' | translate}}
+          <span> {{'memberDirectory.text' | translate}}</span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="tab-main membertab">
+      <mat-tab-group (selectedTabChange)="changeTab($event.tab.textLabel)"> 
+
+        <!-- =======================  STATISTICS  ======================= -->
+        <mat-tab *ngIf="userPermisssion['VIEW_DASHBOARD']" label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span> {{'memberDirectory.statistics.tab.text' | translate}}</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-statistics-directory [save]="statisticSubject" [currentTab]="currentTab" [userPermisssion]="userPermisssion"></app-statistics-directory>
+        </mat-tab>
+        <!-- =======================  STATISTICS  ======================= -->
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>{{'memberDirectory.member.tab.text' | translate}}</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-user-detail [currentTab]="currentTab" [reqData]="reqData" [save]="memberSubject" [type]="'member'"
+                           [userPermisssion]="userPermisssion"></app-user-detail>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+
+  </div>
+</div>

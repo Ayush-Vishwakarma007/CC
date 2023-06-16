@@ -1,0 +1,16 @@
+<svg id="Group_2" data-name="Group 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="66.964" height="66.964" viewBox="0 0 66.964 66.964">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="icons_icons_ic_outline-supervised_user_circle-24px" data-name="icons/icons/ic/outline-supervised_user_circle-24px" d="M0,14.293A14.293,14.293,0,1,1,14.293,28.586,14.3,14.3,0,0,1,0,14.293Z" transform="translate(0.407 0.007)" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Oval" d="M33.482,0A33.482,33.482,0,1,1,0,33.482,33.482,33.482,0,0,1,33.482,0Z" fill="#ec4c47"/>
+  <g id="icons_ic_outline-contact_support-24px" data-name="icons/ic/outline-contact_support-24px" transform="translate(18.615 19.074)">
+    <path id="icons_icons_ic_outline-supervised_user_circle-24px-2" data-name="icons/icons/ic/outline-supervised_user_circle-24px" d="M0,14.293A14.293,14.293,0,1,1,14.293,28.586,14.3,14.3,0,0,1,0,14.293Z" transform="translate(0.407 0.007)" fill="none"/>
+    <g id="icons_ic_outline-contact_support-24px-2" data-name="icons/ic/outline-contact_support-24px" clip-path="url(#clip-path)">
+      <g id="_color" data-name="🎨 color" transform="translate(-4 -3)">
+        <rect id="BG" width="36" height="36" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <!-- Members -->
+    <!-- select Members -->
+    <div class="becomeheight">
+      <h5>
+        {{'event.registrationComponent.ageWiseBooking.title' | translate}}
+      </h5>
+      <div class="maincheckbox">
+        <div class="adultmain"  *ngFor="let list of ageGroupDetail;let i = index">
+          <div class="adult">
+            {{list.name}}
+            <span>$ {{list.price}}</span>
+          </div>
+          <div class="addbutt" *ngIf="list['count'] ==0">
+            <button class="add"  (click)="incrementCount(list)">{{'event.registrationComponent.ageWiseBooking.add.Btn.text' | translate}}</button>
+          </div>
+          <div class="addbutt" *ngIf="list['count'] !== 0">
+            <div class="plus-minus-counter">
+              <button class="btn btn-default" (click)="decrementCount(list)" >{{'event.registrationComponent.ageWiseBooking.add.decrement.Btn.text' | translate}}</button>
+              <input class="counter" readonly  (keypress)="numberOnly($event)" [(ngModel)]="list['count']" placeholder="0" type="text" />
+              <button class="btn btn-default fright"  (click)="incrementCount(list)">{{'event.registrationComponent.ageWiseBooking.add.increment.Btn.text' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- select Members -->
+  </div>
+</div>
+

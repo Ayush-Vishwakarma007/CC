@@ -1,0 +1,155 @@
+<div class="main-screen mainnewsscreen" id="page_form">
+  <div class="white-bgbanner"></div>
+
+  <div class="over-x-h">
+    <!-- Inner Banner Section Start -->
+    <section class="inner-banner commontopmargin">
+      <div class="blue-bg-banner"><span></span></div>
+      <div class="slid-left-blue-dots">
+        <img alt="" src="assets/images/inner-left-dots.png">
+      </div>
+      <div class="container">
+        <div class="red-inner">
+          <div class="row">
+            <div  animationName="animated slideInLeft" class="col-md-6 col-sm-6">
+              <h2 class="inner-page-tlt">ALL {{'newsletter.title.text' | translate}}</h2><br>
+              <span class="descNewcolor">{{'newsletter.title.desc' |translate}}</span>
+
+            </div>
+            <div  animationName="animated slideInRight" class="col-md-6 col-sm-6 news-bread">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">{{'newsletter.title.text' | translate}}</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Inner Banner Section End -->
+    <section class="news-announcement-inner">
+      <div class="container">
+<!--        <div class="row">-->
+<!--          <div class="col-sm-12">-->
+<!--            <button class="addanother newsletter" (click)="openModalWithClass(template)">Sign up for {{'newsletter.title.button' | translate}}</button>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div  animationName="animated fadeInUpBig">
+          <div class="row no-equal">
+            <div class="col-sm-12 col-md-12" *ngFor="let n of newsletterList?.content">
+              <mat-card>
+                <div class="row row-eq-height">
+                  <div class="col-xs-3 col-sm-3 col-md-3 pr-0">
+                    <div class="date-blue">
+                      <span>{{n['dateTime'] | date : "MMM dd, yyyy"}}</span>
+                    </div>
+                  </div>
+                  <div class="col-xs-9 col-sm-9 col-md-9" style="cursor:pointer" [routerLink]="'/newsletter-details/'+n['id']">
+                    <div class="card-text-part">
+                      <h3 style=" overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis;">{{n['name']}}</h3>
+                      <p style=" overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; height: 42px;">{{n['description']}}</p>
+                      <a  [routerLink]="'/newsletter-details/'+n['id']"> Read More  <i  aria-hidden="true" class="icon icon-right-arrow"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="newsletterList?.content.length==0">
+        <div style="text-align: center;"><b>No record found !</b></div>
+      </div>
+      <div class="pegination-main totalPosition" *ngIf="newsletterList?.content.length!=0">
+        <ul>
+          <li>
+            <button (click)="pagination('current','user',0)" [disabled]="newsletterList['first'] == true"
+                    class="next">First
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('prev','user')" [disabled]="newsletterList['first'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-left-arrow icon"></i>
+            </button>
+          </li>
+          <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+              [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+            <button class="numeric">{{i + 1}}</button>
+          </li>
+          <li>
+            <button (click)="pagination('next','user')" [disabled]="newsletterList['last'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-right-arrow icon"></i>
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('current','user',(newsletterList['totalPages']-1))"
+                    [disabled]="newsletterList['last'] == true"
+                    class="next">Last
+            </button>
+          </li>
+        </ul>
+        <div class="totalShow"><span>Total :</span> {{newsletterList['totalElements']}}</div>
+
+      </div>
+
+    </section>
+  </div>
+
+</div>
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">SIGN UP FOR NEWSLETTER</h4>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button (click)="modalRef.hide()" aria-label="Close" id="closeModel" class="close-container">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="email-footer">
+      <form [formGroup]="newsLetterform" class="example-form" id="newsLetterform">
+        <div class="row noborer-footer">
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <div class="styled-input">
+              <input formControlName="firstName" type="text" (keypress)="charOnly($event)" />
+              <label>First Name </label>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <div class="styled-input">
+              <input formControlName="lastName" type="text" (keypress)="charOnly($event)" />
+              <label>Last Name</label>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <div class="styled-input">
+              <input formControlName="email" type="email">
+              <label>Email ID <span class="valid-msg">*</span></label>
+              <span *ngIf="isSubmit && newsLetterform.controls.email.errors" class="mob-res-email">
+                            <div *ngIf="newsLetterform.controls.email.errors.required" class="valid-msg">Email is required.</div>
+                            <div *ngIf="newsLetterform.controls.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+                          </span>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <div class="styled-input">
+              <input formControlName="phone" type="text" id="phone-number" appPhoneMask [maxLength]="10" [minLength]="10"  (keypress)="numberOnly($event)">
+              <label>Phone Number</label>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row noborer-footer">
+
+        </div> -->
+        <input style="margin-top: 10px;" type="submit" class="password btn-text" (click)="newsletterChanges()" value="SUBSCRIBE">
+      </form>
+    </div>
+  </div>
+</ng-template>

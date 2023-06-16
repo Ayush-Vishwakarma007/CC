@@ -1,0 +1,20 @@
+<div class="row no-equal">
+    <div class="col-sm-6 col-md-4" *ngFor="let n of newsList">
+        <mat-card *ngIf="n.date< currentdate || n.date == currentdate">
+              <div class="row row-eq-height">
+                  <div class="col-xs-3 col-sm-3 col-md-3 pr-0">
+                      <div class="date-blue">
+                          <span>{{n.date | date : "MMM dd, yyyy"}}</span>
+                      </div>
+                  </div>
+                  <div class="col-xs-9 col-sm-9 col-md-9">
+                      <div class="card-text-part">
+                          <h3 style=" overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; text-overflow: ellipsis;">{{n.title}}</h3>
+                          <p style=" overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; height: 42px;">{{n.sortDescription}}</p>
+                          <a   (click)="readMore(n)"> Read More <i  aria-hidden="true" class="icon-right-arrow icon"></i></a>
+                      </div>
+                  </div>
+              </div>
+        </mat-card>
+    </div>
+</div>

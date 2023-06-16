@@ -1,0 +1,634 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2: var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color: var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head: var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light: var(--gray-light);
+$green-dark: var(--green-dark);
+$red-light-bg: var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7: var(--gray-e7);
+$green-dark: var(--green-dark);
+$green-light: var(--green-light);
+$red-dark: var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: #f25c66;
+.main-dashboard {
+  background: #fff;
+  display: block;
+  margin-top: 0px;
+  padding: 30px 30px 10px 30px;
+  .thumb {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    li {
+      float: left;
+      span.charector-thumb {
+        display: inline-block;
+        margin-right: 30px;
+        border-radius: 100px;
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background: $blue-dark2;
+        color: $blue-dark;
+        font-size: 35px;
+        text-transform: uppercase;
+        i {
+          font-style: normal;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      span.image-thumb {
+        margin-right: 30px;
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        display: inline-block;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      h5 {
+        font-size: 22px;
+        display: block;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        color: #000;
+        margin: 12px 0 10px 0;
+        padding: 0px;
+      }
+      p {
+        font-size: 14px;
+        color: var(--gray75);
+        margin-bottom: 4px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        img {
+          margin: -5px 5px 0 0;
+        }
+        i {
+          font-style: normal;
+        }
+        u {
+          text-decoration: none;
+          color: var(--text-clr);
+        }
+        b {
+          color: var(--text-clr);
+        }
+      }
+    }
+  }
+  .textright {
+    float: right;
+    font-size: 16px;
+    color: #404040;
+    font-family: "Montserrat", sans-serif;
+    min-width: 270px;
+  }
+  .monthly-membership {
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);
+    padding: 15px 10px;
+    h2 {
+      font-size: 14px;
+      color: var(--primary-color);
+      font-weight: bold;
+      font-family: "Montserrat", sans-serif;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 11px;
+      margin: 0px;
+      color: var(--text-clr);
+      font-weight: normal;
+      font-family: "Montserrat", sans-serif;
+      i {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+    span {
+      font-size: 13px;
+      color: #404040;
+      font-weight: bold;
+      font-family: "Montserrat", sans-serif;
+    }
+    button {
+      background: #e7e7e7;
+      color: #a2a2a2;
+      font-weight: bold;
+      font-family: "Montserrat", sans-serif;
+      border: 0px;
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 50px;
+      margin-right: 10px;
+    }
+    .topline {
+      background-color: #a2a2a2;
+      height: 9px;
+      width: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+    }
+
+    .active {
+      button {
+        background: #ebf6e9;
+        color: #93cc8a;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      .topline {
+        background-color: #509445;
+        height: 9px;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+      }
+    }
+    .pending {
+      button {
+        background: #f7f3de;
+        color: #d5c153;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      .topline {
+        background-color: #d5c153;
+        height: 9px;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+      }
+    }
+    .reject {
+      button {
+        background: #fad8de;
+        color: #e5334f;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      .topline {
+        background-color: #e5334f;
+        height: 9px;
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+      }
+    }
+  }
+}
+.memberdashboarnew-tab {
+  .no-row {
+    padding: 0px;
+    margin: 0px 0px;
+    width: 100%;
+    float: left;
+  }
+  h2 {
+    font-size: 21px;
+    color: #404040;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    margin-top: 0px;
+    margin-bottom: 15px;
+  }
+  .back-round {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#c694f9+0,ab64f4+100 */
+    background: #c694f9; /* Old browsers */
+    background: -moz-linear-gradient(
+      -45deg,
+      #c694f9 0%,
+      #ab64f4 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+      -45deg,
+      #c694f9 0%,
+      #ab64f4 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+      135deg,
+      #c694f9 0%,
+      #ab64f4 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c694f9', endColorstr='#ab64f4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    display: block;
+    height: 210px;
+    border-radius: 10px;
+    position: relative;
+    width: calc(33% - 32px);
+    float: left;
+    margin: 0px 15px;
+    .round {
+      display: block;
+      padding: 30px;
+      ul {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        li {
+          p {
+            font-size: 19px;
+            color: #fff;
+            font-weight: bold;
+            font-family: "Montserrat", sans-serif;
+            padding: 0px;
+            margin: 0px;
+          }
+          span {
+            font-size: 37px;
+            color: #fff;
+            font-weight: bold;
+            font-family: "Montserrat", sans-serif;
+          }
+        }
+      }
+    }
+    .lifem {
+      margin: 30px 0 0px 0;
+    }
+    .lifem2 {
+      margin: 10px 0 0px 0;
+    }
+    .lifem3 {
+      margin: 34px 0 10px 0;
+    }
+    .roundimage {
+      position: absolute;
+      z-index: 13;
+      top: 0px;
+      width: 200px;
+      height: 200px;
+      right: -50px;
+    }
+  }
+  .event-im {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#6aa5e3+0,6866e9+100 */
+    background: #6aa5e3; /* Old browsers */
+    background: -moz-linear-gradient(
+      -45deg,
+      #6aa5e3 0%,
+      #6866e9 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+      -45deg,
+      #6aa5e3 0%,
+      #6866e9 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+      135deg,
+      #6aa5e3 0%,
+      #6866e9 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6aa5e3', endColorstr='#6866e9',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  }
+
+  .fundraise {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#feb683+0,ff8993+100 */
+    background: #feb683; /* Old browsers */
+    background: -moz-linear-gradient(
+      -45deg,
+      #feb683 0%,
+      #ff8993 100%
+    ); /* FF3.6-15 */
+    background: -webkit-linear-gradient(
+      -45deg,
+      #feb683 0%,
+      #ff8993 100%
+    ); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(
+      135deg,
+      #feb683 0%,
+      #ff8993 100%
+    ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feb683', endColorstr='#ff8993',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  }
+  .renew {
+    background: var(--secondary-color);
+    margin-left: 15px;
+    color: #fff;
+    border: 0px;
+    padding: 7px 20px !important;
+    font-size: 14px !important;
+    height: 43px !important;
+    border-radius: 4px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+.main-box-dashboard {  float: left;  width: calc(100% - 25px);  box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);  border-radius: 10px;  display: block;  padding: 10px;  margin: 0px 15px 15px 15px;
+  ul {
+    li {
+      float: left;
+      h3 {
+        font-size: 14px;
+        color: var(--primary-color);
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        margin-top: 10px;
+        margin-bottom: 5px;
+      }
+      .act-btn {
+        background: #ebf6e9;
+        color: #93cc8a;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      .pending-btn {
+        background: #f7f3de;
+        color: #d5c153;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      .reject-btn {
+        background: #fad8de;
+        color: #e5334f;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        border: 0px;
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 50px;
+      }
+      p {
+        margin-bottom: 4px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-clr);
+        text-align: justify;
+      }
+      .date {
+        width: 100%;
+        text-align: right;
+        float: left;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-clr);
+        margin-bottom: 4px;
+        font-family: "Montserrat", sans-serif;
+      }
+      .dollar {
+        width: 100%;
+        text-align: right;
+        float: left;
+        font-size: 18px;
+        color: var(--gray75);
+        margin-bottom: 4px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+      }
+    }
+  }
+  .rightside {
+    width: 266px;
+    text-align: right;
+    .search-button {
+      padding: 7px 20px !important;
+    }
+  }
+  .leftside {
+    width: calc(100% - 266px);
+  }
+}
+.viewbtnlink .toolnew {
+  width: 110px;
+  text-align: left;
+  z-index: 1;
+}
+.topshow {
+  span {
+    display: inline-block;
+    padding: 0;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: 600;
+  }
+  i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    display: inline-block;
+  }
+}
+.nodatafound {
+  display: block;
+  text-align: center;
+  span {
+    font-size: 13px;
+    display: block;
+    color: #404040;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    margin: 10px 0 0 0;
+  }
+  p {
+    font-size: 11px;
+    color: #a2a2a2;
+    font-weight: normal;
+    font-family: "Montserrat", sans-serif;
+    margin: 5px 0px;
+  }
+  button {
+    background: var(--secondary-color);
+    margin: 10px 0 20px 15px;
+    color: #fff;
+    border: 0px;
+    padding: 7px 20px !important;
+    font-size: 14px !important;
+    height: 43px !important;
+    border-radius: 4px !important;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+.membrship i {
+  color: var(--primary-color);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+}
+.backtn {
+  background: transparent;
+  border: 0px;
+  font-size: 19px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  [class*="icon-"]:before {
+    font-size: 20px;
+  }
+  .memship-arrow {
+    margin-top: 6px;
+  }
+}
+.memship {
+  b {
+    font-size: 13px;
+  }
+}
+.becomemember-btn {
+  background: var(--secondary-color);
+  color: #fff;
+  border: 0px;
+  padding: 7px 20px !important;
+  font-size: 14px !important;
+  height: 43px !important;
+  border-radius: 4px !important;
+  display: inline-flex;
+  align-items: center;
+}
+.renew-btn {
+  background: var(--secondary-color) !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+}
+.renew-tab {
+  float: right;
+}
+.dateinfowid {
+  width: calc(100% - 90px);
+  display: inline-block;
+}
+.rightleftpaid { padding: 0px 10px 15px 15px; }
+.viewbtnlink {  padding-top: 10px;
+  button { background: transparent; border: 0px; margin-left: 10px; }
+}
+.lastlogin {  font-weight: bold;  font-size: 12px;  text-align: right;
+  span { opacity: 1; }
+}
+.btn-edit {
+  position: relative;
+}
+.btn-edit:hover .toolnew {
+  display: inline-block;
+}
+.toolnew {
+  display: none;
+  position: absolute;
+  bottom: -15px;
+  right: 33px;
+  width: 100px;
+  background: #666;
+  color: #fff;
+  padding: 15px;
+  font-size: 13px;
+  font-weight: 100;
+  box-shadow: 2px 1px 9px rgba(68, 68, 68, 0.6);
+  border-radius: 5px;
+}
+.toolnew::before {
+  position: absolute;
+  right: -10px;
+  top: 14px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  content: "";
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #666;
+}
+.paynow {
+  background: var(--secondary-color) !important;
+  color: #fff !important;
+}
+@media screen and (max-width: 991px) {
+  .lastlogin {
+    font-size: 12px;
+  }
+  .memberdashboarnew-tab .searchmem {
+    text-align: left;
+    margin-top: 15px;
+  }
+  .tegsicon{ margin-top: 15px;}
+}
+@media screen and (max-width: 767px) {
+  .memberdashboarnew-tab .no-row { padding: 10px; }
+  .memberdashboarnew-tab .search2 { width: 100%;  }
+  .memberdashboarnew-tab .renew {    margin-left: 0px;    margin-bottom: 15px;  }
+  .main-box-dashboard {    margin: 0px 15px 15px 15px;  }
+  .main-box-dashboard ul li p {    font-size: 13px;    height: 37px !important;  }
+  .main-box-dashboard .leftside {    width: calc(100% - 0px);  }
+  .main-box-dashboard .rightside {    width: 100%;    margin-top: 10px;
+    .date {      font-size: 12px !important;    }
+    .dollar {      font-size: 16px !important;    }
+  }
+  .memberdashboarnew-tab .renew-tab {    padding: 7px 10px !important;    height: 31px !important;  }
+  .rightleftpaid {    padding: 15px;    clear: both;  }
+  .main-box-dashboard .rightside {    text-align: left !important;
+    .search-button {      margin-left: 0px;    }
+  }
+  .main-box-dashboard ul li .date {    text-align: left;  }
+  .main-box-dashboard { width: calc(100% - 30px);  }
+  .dateinfowid { width: calc(100% - 82px);  }
+  .lastlogin { text-align: left;  }
+  .stardt{ margin-bottom: 15px;}
+  .search-button { margin-bottom: 0px!important; }
+
+}
+.paddingDiv:focus {  outline: 0;}
+
+.icon-edit-member::before {
+  font-size: 16px;
+  margin: 0;
+  display: inline-block;
+}
+.membership-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

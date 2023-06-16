@@ -1,0 +1,62 @@
+<h5>Sponsor Details </h5>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="photo">
+      <li>
+        <button class="photoupload"> <img src="assets/icon/plus-photo.svg" alt="">  </button>
+        <a href="#">Upload Logo</a>
+      </li>
+      <li>
+        <form [formGroup]="registerForm">
+          <div class="row">
+            <div class="col-sm-4">
+              <input formControlName="firstName" type="text" placeholder="First Name*" class="inputcheck">
+            </div>
+            <div class="col-sm-4">
+              <input formControlName="lastName" type="text" placeholder="Last Name*" class="inputcheck">
+            </div>
+            <div class="col-sm-4">
+              <input formControlName="email" type="text" placeholder="Email*" class="inputcheck">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="text" placeholder="Website URL*" class="inputcheck">
+            </div>
+            <div class="col-sm-4">
+              <input type="text" placeholder="company Name*" class="inputcheck">
+            </div>
+            <div class="col-sm-4">
+              <input type="text" placeholder="Phone*" class="inputcheck">
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+<h5>Select Plans</h5>
+<div class="row">
+  <div class="col-sm-12 marbottomdiamond">
+    <mat-radio-group aria-label="Select an option">
+      <div class="row"  *ngFor="let list of categoryDetail;let i = index" >
+        <div class="borcard">
+          <div class="col-sm-8">
+            <mat-radio-button id="{{list['id']}}" (change)="categoryChange($event.source.checked,i)" [checked]="list['checked'] == true"  [value]="list['id']">
+              <ul class="diamond-txt">
+                <li><span> {{list['categoryName']}} </span></li>
+                <li>{{communityService?.publicInfo?.currency}} {{list['range']['min']}} - {{communityService?.publicInfo?.currency}} {{list['range']['max']}}</li>
+                <li><i  [innerHTML]="list['description']"></i></li>
+              </ul>
+            </mat-radio-button>
+          </div>
+          <div class="col-sm-4"  *ngIf="list['checked']">
+            <input type="text" placeholder="Enter Amount"  (change)="calculateAmount()" [(ngModel)]="list['amount']" [disabled]="!list['checked']" (keypress)="numberOnly($event)" class="enteramount">
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <!-- <mat-radio-button value="2">Option 2</mat-radio-button> -->
+    </mat-radio-group>
+  </div>
+</div>

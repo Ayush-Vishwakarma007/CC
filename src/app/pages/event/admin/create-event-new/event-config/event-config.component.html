@@ -1,0 +1,123 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="selecttype">
+          Select Event Type
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+         <button (click)="submitConfig()" type="button" class="save-changes fright" >
+          next
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="eventconfig">
+          <li (click)="getQuestionsFromList(list)" *ngFor="let list of eventConfigDetail"
+              [ngClass]="{'active':list.active}" data-target="#questionsModal" data-toggle="modal">
+            <u *ngIf="list['active']"><img alt="" src="assets/icon/check-event.svg"></u>
+            <span>
+              <img [src]="list.imageUrl" style="    width: 67%;" alt=""><br>
+              <i>{{list.name}}</i>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div class="col-md-12">
+        <ul class="eventconfig">
+          <li (click)="getQuestionsFromList(list)" *ngFor="let list of eventConfigDetail"
+              [ngClass]="{'active':list.active}">
+            <u *ngIf="list['active']"><img alt="" src="assets/icon/check-event.svg"></u>
+            <span>
+              <img [src]="list.imageUrl" style="    width: 67%;" alt=""><br>
+              <i>{{list.name}}</i>
+            </span>
+          </li>
+        </ul>
+      </div> -->
+
+
+      <div class="col-md-12">
+        <ul class="eventconfig full" >
+          <li (click)="setOtherConfig()" [ngClass]="{'active':otherConfig.active || customTemplate == true}">
+            <u *ngIf="otherConfig['active'] || customTemplate == true"><img alt="" src="assets/icon/check-event.svg"></u>
+
+            <!-- <u><img src="assets/icon/check-event.svg" alt=""></u> -->
+            <span>
+              <img style="    width: 26%;"
+                alt=""
+                src="assets/images/5_Configure_your_own.svg">
+              <i>Configure your own</i>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade questionmain" id="questionsModal"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog questionmodel" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'event.create.template.question.popup.title' | translate}} </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button (click)="modalRef2.hide()" aria-label="Close" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-9 col-sm-9">
+            <div class="questionheading active">
+              <h6>{{currentQuestion['question']}}</h6>
+              <div *ngIf="currentQuestion['questionType'] == 'CHECK_BOX'">
+                <div *ngFor="let list of currentQuestion['options'];let i= index;">
+                  <mat-checkbox [checked]="list['selected']" (change)="addQuestionAnswer($event,list)" [value]="i"
+                                class="example-margin">{{list['name']}}</mat-checkbox>
+                </div>
+              </div>
+              <div *ngIf="currentQuestion['questionType'] != 'CHECK_BOX'" >
+                <mat-radio-group (change)="addQuestionAnswer($event,list)"  *ngFor="let list of currentQuestion['options']let i= index" aria-label="Select an option">
+                  <mat-radio-button [checked]="list['selected']"
+                                    value="{{i}}">{{list.name}}</mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+            </div>
+            <div *ngFor="let list of configDetail['configurationQuestions'];let i = index;"
+                 [hidden]="currentQuestionIndex+1 > i"
+                 class="questionheading">
+              <h6>{{list.question}}</h6>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-3">
+            <ul class="count">
+              <li>
+                <button (click)="nextOrBackQuestion('back')"><img alt="" src="assets/icon/toparrow.svg"></button>
+              </li>
+              <li> {{currentQuestionIndex + 1}} /{{configDetail?.configurationQuestions?.length}}</li>
+              <li>
+                <button (click)="nextOrBackQuestion('next')"><img alt="" src="assets/icon/bottmarrow.svg"></button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

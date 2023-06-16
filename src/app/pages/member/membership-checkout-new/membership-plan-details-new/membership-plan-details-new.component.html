@@ -1,0 +1,161 @@
+<section class="membership-plan-main">
+  <div class="row row-eq-height m-0">
+    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 p-0">
+      <div class="left-part-plan">
+        <div class="header-tlt">
+          <h1><img (click)="goBack()"  src="assets/icon/close-new.svg"> Become a Member</h1>
+        </div>
+        <div class="page-staps-details">
+          <ul>
+           
+            <li class="selected" ><span class="fa fa-check-circle"></span>Information</li>
+            <li ><span class="fa fa-check-circle"></span>Options Selection</li>
+            <li><span class="fa fa-check-circle"></span>Payment</li>
+          </ul>
+        </div>
+        <div class="tabs-part-plan">
+          <div class="tab-data-plan">
+
+             <!--<div class="plan-main">
+          <div class="card-data">
+                <mat-card>
+                  <div class="text-part">
+                    <div class="text-data">
+                      <h4> {{checkoutArray?.selectedPlan?.name}}</h4>
+                      <p>{{checkoutArray?.selectedPlan?.description}}</p>
+                    </div>
+                    <h3>{{checkoutArray?.selectedPlan?.plans[0]['price'] |currency:'USD'}}</h3>
+                  </div>
+                </mat-card>
+              </div>
+            </div> -->
+
+            <h2>Basic Information
+            <!-- <button> Edit </button> -->
+            </h2>
+              <div class="basic-information-part">
+                <form class="example-form" [formGroup]="userForm">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <!-- <mat-label>First Name <span style="color:red;">*</span></mat-label> -->
+                      <mat-form-field class="example-full-width">
+                        <mat-label>First Name <i>*</i></mat-label>
+                        <input formControlName="firstName" matInput placeholder="">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <!-- <mat-label>First Name <span style="color:red;">*</span></mat-label> -->
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Middle Name</mat-label>
+                        <input formControlName="middleName" matInput placeholder="">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                      <!-- <mat-label>Last Name <span style="color:red;">*</span></mat-label> -->
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Last Name <i>*</i></mat-label>
+                        <input formControlName="lastName" matInput placeholder="">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                      <!-- <mat-label>Email Address <span style="color:red;">*</span></mat-label> -->
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Email <i>*</i></mat-label>
+                        <input formControlName="email" matInput placeholder="Enter Email Address">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                     <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Country code </mat-label>
+                          <input type="text"
+                           aria-label="Country Code"
+                           matInput
+                           formControlName="countryPhoneCode"
+                           [matAutocomplete]="auto" (focus)="onFocusEvent($event)">
+                          <mat-autocomplete #auto="matAutocomplete"   >
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" >
+                              {{option}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                        </div>
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Phone Number </mat-label>
+                          <input formControlName="phone" appPhoneMask (keypress)="numberOnly($event)" [max]="16" matInput placeholder="Enter Phone Number">
+                        </mat-form-field>
+                      </div>
+                     </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- <mat-form-field class="example-full-width add-sponsor">
+                        <mat-label>Address <i>*</i></mat-label>
+                        <textarea #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" [options]='maploc' formControlName="addressLine1" matInput ngx-google-places-autocomplete></textarea>
+                      </mat-form-field> -->
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Address <i>*</i></mat-label>
+                        <input formControlName="addressLine1" matInput placeholder="Enter Address">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>City <i>*</i></mat-label>
+                        <input formControlName="city" matInput placeholder="Enter City">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>State <i>*</i></mat-label>
+                        <input formControlName="state" matInput placeholder="Enter State">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Zipcode </mat-label>
+                        <input formControlName="zipCode" matInput placeholder="Enter Zipcode">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+        <div class="left-footer">
+          <div class="row m-0">
+            <div class="col-xs-6 col-md-6 p-0">
+              <div class="next-back back">
+              <!-- <button (click)="changeStep('back')"><i class="fa fa-arrow-left"></i> Back</button>-->
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-6 p-0 text-right">
+              <div class="next-back next">
+                <button (click)="changeStep('next')">Next <i class="fa fa-arrow-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3  col-lg-3 p-0">
+      <div class="right-part-plan">
+        <h2>Summary</h2>
+        <div *ngIf="checkoutArray['summery']" class="table-part">
+          <table>
+            <tr *ngFor="let list of checkoutArray['summery']">
+              <td>{{list['name']}}</td>
+              <td class="blue-clr-text" nowrap>{{list['value'] | currency:'USD'}} </td>
+            </tr>
+            <tfoot>
+            <tr>
+              <td class="blue-clr-text">Grand Total</td>
+              <td class="blue-clr-text" nowrap> {{this.checkoutArray['finalAmount'] |currency:'USD'}}</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,460 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+            Chapter Management
+          <span>Provide chapter management & make it stand unique.</span>
+        </div>
+
+      </div>
+    </h1>
+
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section"> General Information </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>1</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width ">
+                        <mat-label>Chapter Name</mat-label>
+                        <input matInput type="text" [maxLength]="18" size="18" [(ngModel)]="chapterDetails['name']" [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width ">
+                        <mat-label>Slogan</mat-label>
+                        <input matInput type="text" [maxLength]="12" size="12" [(ngModel)]="details.slogan" [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width ">
+                        <mat-label>Alias</mat-label>
+                        <input matInput type="text"  [maxLength]="12" size="12" [(ngModel)]="chapterDetails['alias']" [ngModelOptions]="{standalone: true}">
+                      </mat-form-field>
+                    </div>
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>Description</mat-label>
+                  <textarea [rows]="10" matInput type="text"  [(ngModel)]="chapterDetails['description']" [ngModelOptions]="{standalone: true}"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Address Line 1</mat-label>
+                  <input matInput type="text" [(ngModel)]="details['addressLine1']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Address Line 2</mat-label>
+                  <input matInput type="text" [(ngModel)]="details['addressLine2']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>City</mat-label>
+                  <input matInput type="text" [maxLength]="15" size="15"  [(ngModel)]="details['city']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>State</mat-label>
+                  <input matInput type="text" [maxLength]="12" size="12"  [(ngModel)]="details['state']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Country</mat-label>
+                  <input matInput type="text" [maxLength]="10" size="10" [(ngModel)]="details['country']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Zipcode</mat-label>
+                  <input matInput type="text"  [(ngModel)]="details['zipcode']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="text" [maxLength]="50" size="50" [(ngModel)]="details['email']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Phone</mat-label>
+                  <input [maxLength]="10" matInput [(ngModel)]="details['phone']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Fax</mat-label>
+                  <input matInput type="text" [(ngModel)]="details['fax']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Non Profit Registration No</mat-label>
+                  <input matInput type="text" [(ngModel)]="chapterDetails['nonProfitRegistrationNo']" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Display Priority</mat-label>
+                  <input matInput type="text" [(ngModel)]="chapterDetails['displayPriority']">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Level</mat-label>
+                  <input matInput type="text" [(ngModel)]="chapterDetails['level']">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+         Additional Information
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>2</span>
+          </div>
+          <div class="right-member">
+
+              <div class="row martop-date">
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>On Click Redirect To Another Website</mat-label>
+                  <ui-switch [(ngModel)]="chapterDetails['onClickRedirect']" [defaultBgColor]="'#a2a2a2'"
+                    [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <mat-form-field class="example-full-width ">
+                      <mat-label> Enter Redirect Link</mat-label>
+                      <input matInput type="text"  [(ngModel)]="chapterDetails['redirectUrl']">
+                    </mat-form-field>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+<!--    <ng-container style="display: none">-->
+<!--      <div class="main-section-membership">-->
+<!--        <h5 class="edit-section">-->
+<!--          Social Media Information-->
+<!--          <div class="col-sm-12 col-md-12 col-lg-12">-->
+<!--            <button (click)="addSocialMedia()"-->
+<!--              class="addanother">Add Another</button>-->
+<!--          </div>-->
+<!--        </h5>-->
+<!--        <div class="bluenumber">-->
+<!--          <div class="bluebox">-->
+<!--            <span>3</span>-->
+<!--          </div>-->
+<!--          <div class="right-member">-->
+<!--            <div  class="row martop-date" *ngFor="let list of socialMediaList;let i=index">-->
+<!--              <div class="col-md-6 col-lg-4">-->
+<!--                <mat-form-field class="example-full-width ">-->
+<!--                  <mat-label>Name</mat-label>-->
+<!--                  <input matInput type="text" [(ngModel)]="list.name" [ngModelOptions]="{standalone: true}" matInput type="text">-->
+<!--                </mat-form-field>-->
+<!--              </div>-->
+<!--              <div class="col-md-6 col-lg-4">-->
+<!--                <mat-form-field class="example-full-width">-->
+<!--                  <mat-label>URL</mat-label>-->
+<!--                  <input matInput type="text" [(ngModel)]="list.link" [ngModelOptions]="{standalone: true}" matInput type="text">-->
+<!--                </mat-form-field>-->
+<!--              </div>-->
+<!--              <div class="col-md-6 col-lg-3">-->
+<!--                <div class="imageup create-img-upload small-upload">-->
+<!--                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"-->
+<!--                      (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"-->
+<!--                      (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"-->
+<!--                      [(uploadedFiles)]="list['img']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"-->
+<!--                      [uploaderText]="'Add Logo'">-->
+<!--                  </app-file-uploader-vertical>-->
+<!--                </div>-->
+
+<!--              </div>-->
+<!--              <div class="removeBtn col-md-1 col-lg-1">-->
+<!--                <button (click)="removeSocialMedia(i)">-->
+<!--                  <i class="icon-delete-blue newicon"></i>-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+
+<!--    <ng-container style="display: none">-->
+<!--      <div class="main-section-membership">-->
+<!--        <h5 class="edit-section">-->
+<!--          Chapter Branding-->
+<!--        </h5>-->
+<!--        <div class="bluenumber">-->
+<!--          <div class="bluebox">-->
+<!--            <span>4</span>-->
+<!--          </div>-->
+<!--          <div class="right-member">-->
+<!--            <div class="row martop-date">-->
+<!--              <div class="col-md-3">-->
+<!--                <div class="imageup create-img-upload small-upload">-->
+<!--                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"-->
+<!--                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"-->
+<!--                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"-->
+<!--                    [(uploadedFiles)]="mediaList['logo']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"-->
+<!--                    [uploaderText]="'Add Logo'">-->
+<!--                  </app-file-uploader-vertical>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-md-3">-->
+<!--                <div class="imageup create-img-upload small-upload">-->
+<!--                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"-->
+<!--                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"-->
+<!--                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"-->
+<!--                    [(uploadedFiles)]="mediaList['logo2']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"-->
+<!--                    [uploaderText]="'Add Logo'">-->
+<!--                  </app-file-uploader-vertical>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;              <div class="col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <mat-form-field class="example-full-width">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <mat-label>Font</mat-label>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <mat-select [(ngModel)]="chapterBranding.font" [ngModelOptions]="{standalone: true}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <mat-option *ngFor="let list of fontList;let i =index" [value]="i">{{list.name}}</mat-option>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </mat-select>&ndash;&gt;-->
+<!--&lt;!&ndash;                </mat-form-field>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            </div>-->
+
+<!--&lt;!&ndash;-->
+<!--            <div class="row martop-date">-->
+<!--              <div class="col-md-3">-->
+<!--                <label class="example-full-width"><b class="label-margin">-->
+<!--                  Primary Background Color Code</b>-->
+<!--                </label>-->
+<!--                <input readonly [style.background]="this.colorList['primaryColor']['backgroundColorCode']"-->
+<!--                [colorPicker]="this.colorList['primaryColor']['backgroundColorCode']" [cpPosition]="'bottom'"-->
+<!--                [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"-->
+<!--                [cpCancelButtonClass]="'btn btn-primary btn-xs'"-->
+<!--                [(colorPicker)]="this.colorList['primaryColor']['backgroundColorCode']" />-->
+<!--              </div>-->
+<!--              <div class="col-md-3">-->
+<!--                <label class="example-full-width"><b class="label-margin">-->
+<!--                  Primary Foreground Color Code</b>-->
+<!--                </label>-->
+<!--                <input readonly [style.background]="this.colorList['primaryColor']['foregroundColorCode']"-->
+<!--                [colorPicker]="this.colorList['primaryColor']['foregroundColorCode']" [cpPosition]="'bottom'"-->
+<!--                [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"-->
+<!--                [cpCancelButtonClass]="'btn btn-primary btn-xs'"-->
+<!--                [(colorPicker)]="this.colorList['primaryColor']['foregroundColorCode']" />-->
+<!--              </div>-->
+<!--              <div class="col-md-3">-->
+<!--                <label class="example-full-width"><b class="label-margin">-->
+<!--                  Secondary Background Color Code</b>-->
+<!--                </label>-->
+<!--                <input readonly [style.background]="this.colorList['secondaryColor']['backgroundColorCode']"-->
+<!--                  [colorPicker]="this.colorList['secondaryColor']['backgroundColorCode']" [cpPosition]="'bottom'"-->
+<!--                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"-->
+<!--                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"-->
+<!--                  [(colorPicker)]="this.colorList['secondaryColor']['backgroundColorCode']" />-->
+<!--              </div>-->
+<!--              <div class="col-md-3">-->
+<!--                <label class="example-full-width"><b class="label-margin">-->
+<!--                  Secondary Foreground Color Code</b>-->
+<!--                </label>-->
+<!--                <input readonly [style.background]="this.colorList['secondaryColor']['foregroundColorCode']"-->
+<!--                  [colorPicker]="this.colorList['secondaryColor']['foregroundColorCode']" [cpPosition]="'bottom'"-->
+<!--                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"-->
+<!--                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"-->
+<!--                  [(colorPicker)]="this.colorList['secondaryColor']['foregroundColorCode']" />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--&ndash;&gt;-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          About Community
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>5</span>
+          </div>
+          <div class="right-member">
+            <div  class="row martop-date">
+              <div class="col-md-6 col-lg-6">
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['about']['main']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6">
+                <!-- <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu> -->
+                <ngx-editor [(ngModel)]="about.details" [editor]="editor" [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+              </div>
+
+              <div class="col-md-12 col-lg-12">
+                <b style="display: block;"> Other Pictures</b>
+                <div class="imageup create-img-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                [(uploadedFiles)]="mediaList['about']['other']" [maxFileCount]="5" [uploadUrl]="mediaUploadUrl"
+                [uploaderText]="'Add Logo'">
+              </app-file-uploader-vertical>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section"> SEO </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>6</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <div class="imageup create-img-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['seo']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Keywords</mat-label>
+                  <input [(ngModel)]="details.seoKeywords"
+                    [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>Description</mat-label>
+                  <textarea [(ngModel)]="details.seoDescription"
+                    [ngModelOptions]="{standalone: true}" [rows]="2" matInput type="text"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Site Title</mat-label>
+                  <input [(ngModel)]="details.seoTitle" [ngModelOptions]="{standalone: true}"
+                  matInput type="text">
+                </mat-form-field>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section"> Committee Page Details </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>7</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <mat-form-field class="example-full-width ">
+                      <mat-label>Title</mat-label>
+                      <input [(ngModel)]="details.comTitle" [ngModelOptions]="{standalone: true}"
+                             matInput type="text">                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="imageup create-img-upload small-upload">
+                      <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                        (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                        (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                        [(uploadedFiles)]="mediaList['chapterCommityimage']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                        [uploaderText]="'Add Logo'">
+                      </app-file-uploader-vertical>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt descrip-edit">
+                  <mat-label>Description</mat-label>
+                  <textarea [rows]="10" matInput type="text"  [(ngModel)]="details.comDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <!--          <button   class="addsection">-->
+          <!--            + Add another section-->
+          <!--          </button>-->
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+          <button (click)="submit()" class="save-changes">
+            save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.volunteer {
+  background-color: black;
+  height: 100vh;
+  color: #fff;
+  &__img {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 3rem;
+    & img {
+      max-width: 40%;
+    }
+  }
+  &__missing {
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-align: center;
+    margin-top: 5rem;
+  }
+  &__search {
+    padding: 2rem;
+    label {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    & input {
+      font-size: 1.5rem;
+      border-bottom: 2px solid #fff;
+      background-color: black;
+      color: white;
+      margin-bottom: 5rem;
+      &::-webkit-input-placeholder {
+        color: #fff;
+      }
+    }
+    button {
+      font-size: 1.8rem;
+      width: 100%;
+      color: #15bbd5;
+      font-weight: 800;
+      padding: 10px 0;
+      border-radius: 8px;
+      &:active {
+        background-color: #15bbd5;
+        color: #fff;
+      }
+    }
+  }
+}

@@ -1,0 +1,254 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <div class="white-area-create-event new-dashboard">
+    <div class="title-news">
+      Newsletter Management
+    </div>
+    <div class="tab-main">
+
+      <mat-tab-group (selectedTabChange)="changeTab($event.tab.textLabel)">
+        <mat-tab label="dashboard" *ngIf="userPermisssion['VIEW_DASHBOARD']">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Dashboard</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-newsletter-dashboard [save]="dashboardSubject"></app-newsletter-dashboard>
+        </mat-tab>
+        <mat-tab label="newsletters-list">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Newsletters</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-newsletter-list  [(newsletterDetail)]="reqDataPerId" (detailIdChange)="getNewsletterId()" [reqData]="reqData" [save]="newsletterListSubject" ></app-newsletter-list>
+        </mat-tab>
+        <mat-tab label="news-subscribers">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Subscribers</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-user-detail [type]="'subscriber'" [reqData]="userReqData" [save]="newSubscriberSubject" [currentTab]="currentTab" [userPermisssion]="userPermisssion"></app-user-detail>
+        </mat-tab>
+        <mat-tab label="people">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Unsubscribers</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-user-detail [type]="'unsubscriber'" [reqData]="userunScubReqData" [save]="peopleSubject" [currentTab]="currentTab" [userPermisssion]="userPermisssion"></app-user-detail>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="addbtnright" >
+        <mat-form-field class="select-chap" *ngIf="chapterList.length!=1">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select [value]="chapterId" (selectionChange)="getChapterDetail($event.value)">
+            <mat-option *ngFor="let list of chapterList" value="{{list.id}}" >{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="addanother" [routerLink]="'/management/create-newsletter'">+ Newsletter</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template id="myForm">
+  <div class="padd-area noshadowpop">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">
+        {{this.newsLetterDetail['name']}}
+        <p class="publishby"><i class="fa fa-clock-o" aria-hidden="true"></i>
+          Released on: {{this.newsLetterDetail['dateTime'] | date : 'MMM dd, yyyy hh:mm a'}}
+          <span *ngIf="this.newsLetterDetail['publish']==true">Published by: {{this.newsLetterDetail['firstName']}} {{this.newsLetterDetail['lastName'] }}</span>
+          <span *ngIf="this.newsLetterDetail['publish']==false">Created by: {{this.newsLetterDetail['firstName']}} {{this.newsLetterDetail['lastName'] }}</span>
+        </p>
+      </h5>
+      <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button> -->
+      <button type="button"  class="close-container leftarrow" (click)="closeModel()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- tabs -->
+      <div class="tabsection grid-card-box modleperformance">
+        <mat-tab-group (selectedTabChange)="changeTabForDetail($event.index)">
+          <!-- =========================== Dashboard ================================ -->
+<!--          <mat-tab label="Viewed by({{this.newsLetterDetail['totalViewCount']}})">-->
+<!--            <ng-template>-->
+<!--              Viewed by ({{this.newsLetterDetail['totalViewCount']}}))-->
+<!--            </ng-template>-->
+<!--            <table class="tab-sent">-->
+<!--              <tr class="paddbor" *ngFor="let member of newsletterDetail?.content">-->
+<!--                <td>-->
+<!--                   <span>-->
+<!--                      <div class="topbutton-thumb thumb-news">-->
+<!--                        <div *ngIf="member['profileShow'] == true" class="charector-mem imagethumb">-->
+<!--                          <img alt="" src="{{member['profileUrl']}}">-->
+<!--                        </div>-->
+<!--                        <div *ngIf="member['profileShow'] == false" class="charector-mem">-->
+<!--                          <i>{{member['profileUrl']}}</i>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      {{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}} <br>-->
+<!--                      {{member['memberNumber']}}-->
+<!--                    </span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                <span>{{member['email']}}</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <span class="icon-village newicon" *ngIf="member['country'] && member['city']">{{member['city']}}-->
+<!--                    <b *ngIf="member['country']">| {{member['country']}}</b>-->
+<!--                  </span>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </table>-->
+<!--            <div class="pegination-main totalPosition">-->
+<!--              <ul>-->
+<!--                <li>-->
+<!--                  <button (click)="pagination('current','user',0)" [disabled]="newsletterDetail['first'] == true" class="next">First </button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <button (click)="pagination('prev','user')" [disabled]="newsletterDetail['first'] == true" class="arrow">-->
+<!--                    <i aria-hidden="true" class="icon-left-arrow icon"></i>-->
+<!--                  </button>-->
+<!--                </li>-->
+<!--                <li (click)="pagination('current','user',i)" *ngFor="let i of totalPagesPerId" [ngClass]="reqDataPerId.page.pageNumber == i ?  'blue-peg' : ''">-->
+<!--                  <button class="numeric">{{i + 1}}</button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <button (click)="pagination('next','user')" [disabled]="newsletterDetail['last'] == true"  class="arrow">-->
+<!--                    <i aria-hidden="true" class="icon-right-arrow icon"></i>-->
+<!--                  </button>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <button (click)="pagination('current','user',(newsletterDetail['totalPages']-1))" [disabled]="newsletterDetail['last'] == true" class="next">-->
+<!--                    Last-->
+<!--                  </button>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--              <div class="totalShow"><span>Total :</span> {{newsLetterDetail['totalViewCount']}}</div>-->
+
+<!--            </div>-->
+
+<!--          </mat-tab>-->
+          <mat-tab label="Sent to ({{this.newsLetterDetail['totalSentCount']}}) | Viewed by ({{this.totalViewNewsMember}})">
+            <ng-template>
+              Sent to( {{this.newsLetterDetail['totalSentCount']}}) | Viewed by ({{this.totalViewNewsMember}}))
+            </ng-template>
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="searchmember searchsponsor searchnewsletter" style="padding-right:0px!important;">
+                  <mat-form-field class="example-full-width map-url searchform">
+                    <mat-label> Search Here..</mat-label>
+                    <input  autocomplete="off" (change)="viewSearchfunction($event.target.value)" [(ngModel)]="viewSearch" matInput type="text">
+                  </mat-form-field>
+                  <button type="button" class="search-button" (click)="searchClick()"> Search </button>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="allread">
+                  <mat-radio-button  class="business-radio" type="radio" (click)="readUnread('all')" checked>All</mat-radio-button>
+                  <mat-radio-button  class="business-radio" type="radio" (click)="readUnread(true)">Read</mat-radio-button>
+                  <mat-radio-button  class="business-radio"  type="radio" (click)="readUnread(false)">Unread</mat-radio-button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="">
+              <table class="tab-sent">
+                <tr class="paddbor" *ngFor="let member of newsletterDetail?.content">
+                  <td><span *ngIf="member['viewed'] == true"><i class="fa fa-eye"></i></span>
+                  </td>
+                  <td>
+                      <span>
+                      <div class="topbutton-thumb thumb-news">
+                        <div *ngIf="member['profileShow'] == true" class="charector-mem imagethumb">
+                          <img alt="" src="{{member['profileUrl']}}">
+                        </div>
+                        <div *ngIf="member['profileShow'] == false" class="charector-mem">
+                          <i>{{member['profileUrl']}}</i>
+                        </div>
+                      </div>
+                        {{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}} <br>
+                        {{member['memberNumber']}}
+                      </span>
+                  </td>
+                  <td><span>{{member['email']}}</span>
+                  </td>
+                  <td>
+                      <span *ngIf="member['country'] && member['city']">{{member['city']}}
+                        <b *ngIf="member['country']">| {{member['country']}}</b>
+                      </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current','user',0)" [disabled]="newsletterDetail['first'] == true"
+                          class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user')" [disabled]="newsletterDetail['first'] == true"
+                          class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i)" *ngFor="let i of totalPagesPerId"
+                    [ngClass]="reqDataPerId.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user')" [disabled]="newsletterDetail['last'] == true"
+                          class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(newsletterDetail['totalPages']-1))"
+                          [disabled]="newsletterDetail['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{totalNewsLetterViewMember}}</div>
+
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Preview">
+            <ng-template>
+              Preview
+            </ng-template>
+            <i [innerHTML]="newsLetterDetail?.template  | safeHtml"></i>
+          </mat-tab>
+
+        </mat-tab-group>
+        <!-- tabs -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<i id="openModel" (click)="openModalWithClass(template)"></i>
+<div class="modal right fade " id="viewDetailModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+  </div>
+</div>

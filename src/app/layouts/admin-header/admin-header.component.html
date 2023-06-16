@@ -1,0 +1,104 @@
+<div class="main-screen">
+  <!-- Header Section Start -->
+  <section [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}" class="header header-new admin-header">
+    <div [ngClass]="communityService.uiPermission['PLATFORM'] ? 'admin-header-main' : ''" class="container-fluid">
+      <div class="row">
+        <div animationName="animated slideInLeft" class="col-sm-12 col-md-12 col-lg-12">
+          <div class="main-menu">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <div class="spcs-logo-header">
+                <a routerLink="">
+                  <!-- <ul>
+                    <li>  <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}"></li>
+                    <li>  <img *ngIf="communityService.logo?.logo2" alt="logo" src="{{communityService.logo?.logo2?.url}}"></li>
+                  </ul> -->
+                  <ul
+                    *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''">
+                    <li><img *ngIf="communityService.logo?.logo" alt="logo"
+                        [src]="communityService.logo?.logo?.url |communityImages">
+                    </li>
+                    <li><img *ngIf="communityService.logo?.logo2" alt="logo"
+                        [src]="communityService.logo?.logo2?.url |communityImages"></li>
+                  </ul>
+                  <span
+                    *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                    <img *ngIf="communityService.logo?.logo" alt="logo"
+                      [src]="communityService.logo?.logo?.url |communityImages">
+                  </span>
+                </a>
+              </div>
+              <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+                <!-- <img src="assets/icon/menu.svg" alt=""> -->
+                <i aria-hidden="true" class="fa fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse adminheader" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li *ngIf="communityService.uiPermission['CREATE_EVENT']" class="nav-item create-event-admin">
+                    <a class="nav-link" routerLink="/create-event-new">
+                      <i aria-hidden="true" class="fa fa-calendar-plus-o"></i>
+                      Create Event</a>
+                  </li>
+
+                  <!-- <li>
+                     <a class="nav-link"  >
+                       <i>
+                         <u></u>
+                         <i class="fa fa-bell" aria-hidden="true"></i>
+                       </i>
+                     </a>
+                   </li>-->
+                  <li class="nav-item create-event-admin">
+                    <a class="nav-link" routerLink="/" type="button">
+                      <i aria-hidden="true" class="fa fa-home"></i> Home
+                    </a>
+                  </li>
+                  <li class="loginbtnprofile">
+                    <div class=" login-button">
+                      <div class="dropdown profile profileicontop toprightprofile">
+                        <a class="" data-toggle="dropdown" type="button">
+                          <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profiletop">
+                            <img alt="" [src]="menuService?.profileDetail?.profileUrl | authImages ">
+                          </span>
+                          <button *ngIf="menuService?.profileDetail?.profileShow == false" class="login-round">
+                            <img alt="" src="assets/icon/user-become.svg">
+                          </button>
+                          <span
+                            style="display: inline-block;width: 60px;  white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;">
+                            {{menuService?.profileDetail?.firstName | titlecase}} </span>
+                        </a>
+                        <!-- <button class="logoutheader">
+                          <img  alt="" class="gray" src="assets/icon/logout.svg">
+                          <img  alt="" class="blue" src="assets/icon/logout-b.svg">
+                        </button> -->
+                        <div class="dropdown-menu">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <ul>
+                                <!--                          <li><a   routerLink="/profile">My Profile</a></li>-->
+                                <!-- <li *ngIf="this.authService.isLogin"><a   routerLink="/my-event">My
+                                  Event</a></li> -->
+                                <li><a routerLink="/profile-member"><i class="fas fa-user"></i> Profile</a></li>
+                                <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i
+                                      class="fas fa-lock"></i> Change Password</a></li>
+                                <li><a (click)='logout()'>
+                                    <!-- <img src="assets/icon/open-account-logout.svg" alt="">  -->
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                    Log out</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

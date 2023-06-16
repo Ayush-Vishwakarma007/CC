@@ -1,0 +1,517 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'admin.communityManagement.title' | translate}}
+          <span>{{'admin.communityManagement.text' | translate}} </span>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="community-management">
+            <span class="btnr">Click here to customize community look and feel</span>
+            <img mat-raised-button matTooltip="Customize Widgets"
+              aria-label="Button that displays a tooltip when focused or hovered over"
+              (click)="openModalWithClass(template)" src="assets/icon/widgets.svg">
+          </div>
+        </div>
+      </div>
+    </h1>
+    <!-- General Information -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.generalInfo.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>1</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.communityName.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.name" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.slogan.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.slogan" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.generalInfo.description.lbl.text' | translate}}</mat-label>
+                  <textarea [(ngModel)]="communityDetail?.basicInformation.description"
+                    [ngModelOptions]="{standalone: true}" [rows]="2" matInput type="text"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.alias.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail.alias" [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.address1.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.addressLine1"
+                    [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.address2.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.addressLine2"
+                    [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.city.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.city" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.state.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.state" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.country.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.country" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.zipcode.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.zipcode" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.email.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.email" [formControl]="email" matInput
+                    type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.phone.lbl.text' | translate}}</mat-label>
+                  <input (keypress)="numberOnly($event)" [(ngModel)]="communityDetail?.basicInformation.phone" 
+                    [formControl]="phone" [maxLength]="10" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.fax.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.fax" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.generalInfo.nonProfitNo.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail.nonProfitRegistrationNo" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- General Information -->
+    <!--  Social Media Information -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.socialMediaInfo.title' | translate}}
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <button (click)="addSocialMedia()"
+              class="addanother">{{'admin.communityManagement.socialMediaInfo.add.Btn.text' | translate}}</button>
+          </div>
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>2</span>
+          </div>
+          <div class="right-member">
+            <div *ngFor="let list of socialMediaList;let i=index" class="row martop-date">
+              <div class="col-md-6 col-lg-4">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.communityManagement.socialMediaInfo.name.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="list.name" [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>{{'admin.communityManagement.socialMediaInfo.url.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="list.link" [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-11 col-lg-3 martop-cls">
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="list['img']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="removeBtn col-md-1 col-lg-1">
+                <button (click)="removeSocialMedia(i)">
+                  <i class="icon-delete-blue newicon"></i>
+                </button>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!--  Social Media Information -->
+    <!--  Community Branding -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.communityBranding.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>3</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-3">
+                <span class="logocommunity">Logo </span>
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['logo']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <span class="logocommunity">Logo 2</span>
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['logo2']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <span class="logocommunity">Powered By Logo </span>
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                              (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                                              (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                                              [(uploadedFiles)]="mediaList['poweredByLogo']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                              [uploaderText]="'Add Powered By Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-3">
+
+                <mat-form-field class="example-full-width fontgaf">
+                  <mat-label>{{'admin.communityManagement.communityBranding.font.lbl.text' | translate}}</mat-label>
+                  <mat-select [(ngModel)]="communityBranding.font" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let list of fontList;let i =index" [value]="i">{{list.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-3">
+                <label class="example-full-width"><b class="label-margin">
+                    {{'admin.communityManagement.communityBranding.color1.lbl.text' | translate}} </b>
+                </label>
+                <input readonly [style.background]="this.colorList['primaryColor']['backgroundColorCode']"
+                  [colorPicker]="this.colorList['primaryColor']['backgroundColorCode']" [cpPosition]="'bottom'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['primaryColor']['backgroundColorCode']" />
+              </div>
+              <div class="col-md-3">
+                <label class="example-full-width"><b class="label-margin">
+                    {{'admin.communityManagement.communityBranding.color2.lbl.text' | translate}} </b>
+                </label>
+                <input readonly [style.background]="this.colorList['primaryColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['primaryColor']['foregroundColorCode']" [cpPosition]="'bottom'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['primaryColor']['foregroundColorCode']" />
+              </div>
+              <div class="col-md-3">
+                <label class="example-full-width"><b class="label-margin">
+                    {{'admin.communityManagement.communityBranding.color3.lbl.text' | translate}} </b>
+                </label>
+                <input readonly [style.background]="this.colorList['secondaryColor']['backgroundColorCode']"
+                  [colorPicker]="this.colorList['secondaryColor']['backgroundColorCode']" [cpPosition]="'bottom'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['secondaryColor']['backgroundColorCode']" />
+              </div>
+
+              <div class="col-md-3">
+                <label class="example-full-width"><b class="label-margin">
+                    {{'admin.communityManagement.communityBranding.color4.lbl.text' | translate}} </b>
+                </label>
+                <input readonly [style.background]="this.colorList['secondaryColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['secondaryColor']['foregroundColorCode']" [cpPosition]="'bottom'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['secondaryColor']['foregroundColorCode']" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!--  Community Branding -->
+
+    <!-- About Us -->
+   <!-- <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.aboutCommunity.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>4</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['about']['main']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-6">
+
+                <div class="editor-main">
+                  <span class="sub-head"> {{'admin.communityManagement.aboutCommunity.description.text' | translate}}
+                  </span>
+                  <ngx-editor [(ngModel)]="communityDetail?.aboutCommunity.details"
+                    [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+                </div>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-12">
+                <b> {{'admin.communityManagement.aboutCommunity.otherPicture.text' | translate}}</b>
+                <div class="imageup create-img-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['about']['other']" [maxFileCount]="5" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>-->
+    <!--  About Us -->
+    <!-- SEO-->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.seo.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>4</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['seo']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.seo.keyword.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.seoKeywords"
+                    [ngModelOptions]="{standalone: true}" matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.seo.description.lbl.text' | translate}}</mat-label>
+                  <textarea [(ngModel)]="communityDetail?.basicInformation.seoDescription"
+                    [ngModelOptions]="{standalone: true}" [rows]="2" matInput type="text"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.seo.siteTitle.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail?.basicInformation.seoTitle" [ngModelOptions]="{standalone: true}"
+                    matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- SEO-->
+
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.applink.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>5</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.applink.android.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail.androidAppLink" [ngModelOptions]="{standalone: true}" matInput
+                    type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width address-evnt">
+                  <mat-label>{{'admin.communityManagement.applink.ios.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="communityDetail.iosAppLink" [ngModelOptions]="{standalone: true}" matInput
+                    type="text">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Thank you image -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.communityManagement.thankyouImage.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>6</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <div class="imageup create-img-upload small-upload">
+                  <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                    (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                    (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                    [(uploadedFiles)]="mediaList['thankYouImageLink']" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                    [uploaderText]="'Add Logo'">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Thank you image-->
+
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <!--          <button   class="addsection">-->
+          <!--            + Add another section-->
+          <!--          </button>-->
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+          <button (click)="submit()" class="save-changes">
+            {{'admin.communityManagement.save.Btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'admin.communityManagement.widgets.popup.title' | translate}}</h4>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button aria-label="Close" (click)="modalRef.hide()" class="close-container" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-data">
+      <div class="quetions" *ngFor="let list of widgetsList">
+        <h5>{{list.name}}</h5>
+        <mat-slide-toggle (change)="onChange()" [checked]="list['check'] == true" [(ngModel)]="list['check']">
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary cancel" (click)="modalRef.hide()">
+      {{'admin.communityManagement.widgets.popup.cancel.btn.text' | translate}}
+    </button>
+    <button type="button" class="btn btn-primary done" (click)="submitChange()">
+      {{'admin.communityManagement.widgets.popup.done.btn.text' | translate}}
+    </button>
+  </div>
+</ng-template>

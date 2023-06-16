@@ -1,0 +1,126 @@
+<div class="main-live-streaming">
+  <ul class="livestrm">
+    <li class="fisrmar">
+      <div class="blurevent-image" [style.backgroundImage]="'url('+eventDetail?.profilePicture+')'"></div>
+      <img alt="" src="{{eventDetail?.profilePicture}}">
+    </li>
+    <li class="main-text" >
+      <span> <i
+        style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; font-style: normal;">{{eventDetail['type']}}
+        <b *ngIf="eventDetail['venueType'] != 'ONLINE'"> | {{eventDetail?.venueTypeName}}</b> </i></span>
+      <p style="cursor: pointer" [routerLink]="'/event-details/'+this.eventId">
+        <i style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; font-style: normal;">{{eventDetail['name']}} </i>
+      </p>
+      <ul class="timestream">
+        <li><i class="fa fa-calendar" aria-hidden="true"></i> {{eventDetail?.dates}}</li>
+        <li><i class="fa fa-clock-o"></i>{{eventDetail?.times}} ( {{eventDetail['timezones']}} )</li>
+      </ul>
+      <ul class="timestream-add">
+        <li *ngIf="eventDetail['venueType'] != 'ONLINE'"><img alt="" src="assets/icon/pinicon.svg">
+          {{eventDetail?.city}} | {{eventDetail?.country}} 
+        </li>
+      </ul>
+    </li>
+    <li class="lastmain">
+      <div class="datail-list-date">
+        <button class="btn-share" (click)="shareEvent(eventDetail?.id)" data-target="#share_modal" data-toggle="modal">
+          <i aria-hidden="true" class="fa fa-share-alt"></i></button>
+        <button (click)="interestedEvent(eventDetail?.id)" *ngIf="authDetail" class="btn-bookmark">
+          <i *ngIf="bookmarked == false" aria-hidden="true" class="fa fa-bookmark-o"></i>
+          <i *ngIf="bookmarked== true" aria-hidden="true" class="fa fa-bookmark"></i>
+        </button>
+      </div>
+      <div class="createbystream">
+        {{'event.detail.createdBy.text' | translate}}
+        <span class="main"> {{eventDetail?.firstName | titlecase}} {{eventDetail?.lastName | titlecase}} </span>
+      </div>
+    </li>
+  </ul>
+  <div class="row" *ngIf="eventDetail?.polls?.length !=0 ">
+    <div class="aditional-info"><span>Event Polls</span></div>
+    <div class="col-xs-12 col-sm-12 col-md-6" *ngFor="let list of eventDetail?.polls">
+      <div class="accordian-text session-acc">
+        <mat-accordion [hideToggle]="true">
+          <mat-expansion-panel disabled="true">
+            <mat-expansion-panel-header>
+              <ul class="usermain" style="width: 100%">
+                <li> {{list?.title}}
+                  <button (click)="goToPoll(list)" class="save-changes pull-right" style="margin-top: 0px">Go</button>
+                </li>
+              </ul>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+
+  <div class="martop videowid" style="text-align: center" >
+    <iframe *ngIf="valid" [src]="eventDetail.meetingUrl | safe:'resourceUrl'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <!--  <div class="session">
+      Sessions
+    </div>-->
+  <div class="row">
+    <div class="aditional-info"><span>Event Sessions</span></div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12" *ngFor="let list of session_list">
+      <div class="accordian-text session-acc">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <ul class="usermain">
+                <li> {{list?.name}}</li>
+                <li> {{list.startDateTime | date : "MMM dd,yyyy hh:m a" }}
+                  - {{list.endDateTime | date : "MMM dd,yyyy hh:m a" }}</li>
+                <li><img alt="" src="assets/icon/pinicon.svg"> {{list?.address}} </li>
+              </ul>
+            </mat-expansion-panel-header>
+            <p>{{list?.description | stripHtml}}</p>
+
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="share_modal" class="modal fade share-model" id="share_modal"
+     role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'event.detail.share.popup.title' | translate}}</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="../../../../assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <div class="modal-body create-session-model custom-form-field">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="share-icon">
+
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="facebook"
+                      shareButton="facebook">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="twitter"
+                      shareButton="twitter">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="linkedin"
+                      shareButton="linkedin">
+                <i class="fab fa-linkedin"></i>
+              </button>
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="whatsapp"
+                      shareButton="whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

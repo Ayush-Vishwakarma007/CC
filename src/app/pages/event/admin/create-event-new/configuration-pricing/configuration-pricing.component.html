@@ -1,0 +1,439 @@
+<!-- New design  -->
+<div class="configuraionmain">
+  <div class="configuretop">
+    <ul class="dashboard-donation">
+      <li class="imagethumb">
+        <img [src]="eventDetail.profilePicture |  eventImages">
+
+      </li>
+      <li class="interior-txt">
+        <h1>{{eventDetail['name']}}
+          <span> <p  [innerHTML]="eventDetail['sortDescription']"></p></span>
+        </h1>
+        <ul class="category-donation" >
+          <li *ngIf="eventDetail['city']!=null || eventDetail['state']!=null ">
+            <span> <i aria-hidden="true" class="fa fa-map-marker"></i>{{eventDetail['city']}} | {{eventDetail['state']}}
+            </span>
+          </li>
+          <li>
+            <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i> {{ eventDetail['startDateTime'] |  date:"MM/dd/yyyy HH:mm"}} | {{eventDetail['startDateTime'] |  date:"MM/dd/yyyy HH:mm"}}
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <h1 class="marbottomheading">
+    <div class="img-create">
+      <img alt="Pricing" src="assets/images/money.png">
+    </div>
+    {{'event.create.eventConfig.eventConfiguration.title' | translate}}
+    <span>{{'event.create.eventConfig.eventConfiguration.text' | translate}}</span>
+  </h1>
+ <div class="border-line-bottom padd-btm-tab online-event-tab">
+  <form [formGroup]="foodForm" class="example-form" id="foodForm">
+    <div class="row martopevent">
+      <div class="col-md-6 col-lg-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>{{'event.create.eventConfig.registrationTypelbl.text' | translate}} </mat-label>
+          <mat-select (selectionChange)="changeRegistrationType($event.value)" formControlName="registrationType">
+            <mat-option value="">Select Registration Type</mat-option>
+            <mat-option [disabled]="list.disabled ||response?.fundRaisingEvent==true " *ngFor="let list of registrationType;let i = index" value="{{list['value']}}">
+              {{list['name']}} <span *ngIf="list?.disabled == true"> ({{list.disableMessage}})</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div
+          *ngIf="this.submitBtn == false && foodForm.controls.registrationType.errors ">
+              <span
+                *ngIf="this.submitBtn == false && foodForm.controls.registrationType.errors "
+                class="valid-msg">Registration Type is required</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-6" *ngIf="showFees">
+        <div class="price-inp">
+          <span>{{'event.create.eventConfig.pricinglbl.text' | translate}}</span>
+          <p>{{'event.create.eventConfig.registrationFeelbl.text' | translate}}</p>
+          <input (keypress)="numberOnly($event)" formControlName="registrationFees" placeholder="Price"
+                 type="text" (blur)="onBlur($event)">
+        </div>
+        <div
+        *ngIf="this.submitBtn == false && foodForm.controls.registrationFees.errors ">
+        <span *ngIf="this.submitBtn == false && foodForm.controls.registrationFees.errors "
+        class="valid-msg">Registration Fee is required</span>
+      </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+  <!-- <h1>
+    <div class="img-create">
+      <img alt="basic-info" src="assets/icon/miscellaneous2.svg">
+    </div>
+    Miscellaneous
+    <span> Select appropriate option(s). </span>
+  </h1> -->
+  <!-- <ul class="miscellaneous-list">
+    <li>
+      <input type="checkbox"> Would you like to enable waiver option for the event?
+    </li>
+    <li>
+      <input type="checkbox"> Are we allowing marketplace to be integrated for the event?
+    </li>
+    <li>
+      <input type="checkbox"> Do you need more custom fields, where you can add more information?
+    </li>
+    <li>
+      <input type="checkbox"> Do you allow guest with members?
+    </li>
+    <li>
+      <input type="checkbox"> Is this event cancellable?
+    </li>
+    <li>
+      <input type="checkbox"> Is this a fund raising event?
+    </li>
+    <li>
+      <input type="checkbox"> Do we required user details?
+    </li>
+    <li>
+      <input type="checkbox"> Would you like to enable waiver option for the event?
+    </li>
+  </ul> -->
+  <!-- <h1>
+    <div class="img-create">
+      <img alt="basic-info" src="assets/icon/note.svg">
+    </div>
+    Event Configuration
+    <span> Provide General Information about your Event Protocols. </span>
+  </h1> -->
+
+  <div class="marleftspace" *ngIf="newConfigurationList">
+    <div class="row" *ngFor="let list of newConfigurationList; let i = index; ">
+
+      <div class="col-sm-12 col-md-6">
+        <!-- <mat-form-field  class="example-full-width">
+            <mat-label >{{list['groupName']}}</mat-label>
+            <mat-select  [formControl]="toppings" multiple>
+
+              <mat-option *ngIf="list['question'] !=''" (click)="click($event,list['groupName']);" value="{{i}}" >include?</mat-option>
+              <mat-option  *ngFor="let que of newQuestionList" value="{{que['key']}}">{{que['name']}}</mat-option>
+
+            </mat-select>
+
+          </mat-form-field> -->
+
+
+        <!-- <mat-form-field class="example-full-width chapter-name pull-right mar80">
+            <mat-label>{{list['groupName']}}</mat-label>
+            <mat-select multiple="true">
+              <mat-option *ngFor="let que of newQuestionList" value="{{que['key']}}">{{que['name']}}</mat-option>
+             </mat-select>
+          </mat-form-field> -->
+
+        <mat-form-field class="example-full-width">
+          <mat-label>{{list['groupName']}}</mat-label>
+          <mat-select multiple="true" [(ngModel)]="list.selected" >
+
+            <mat-option (onSelectionChange)=" checkUncheckMain($event,list,list['groupName'],i);"  value="{{list['key']}}">
+              {{list['question']}}</mat-option>
+            <ng-container *ngIf="list.chk==true && list.selected.length!==0">
+              <mat-option *ngFor="let que of list['eventConfigKeyModels'] "
+                (onSelectionChange)=" checkUncheckSub($event,que['key'],list);" value="{{que['key']}}">{{que.name}}</mat-option>
+            </ng-container>
+            <!-- <mat-option *ngFor="let topping of toppingList; let i =index">{{topping}}</mat-option> -->
+          </mat-select>
+        </mat-form-field>
+
+        <!-- <ng-container *ngIf="this.chk==true">
+          </ng-container> -->
+
+      </div>
+
+      <!-- <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+    </div>
+    <!-- <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <mat-label>Included</mat-label>
+            <mat-select [formControl]="toppings" multiple>
+              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div> -->
+  </div>
+</div>
+
+
+<!-- New design  -->
+
+
+<div class="sections-main">
+  <div class="">
+    <form [formGroup]="foodForm" class="example-form" id="foodForm">
+      <div class="row">
+        <div class="col-md-6 col-lg-6" *ngIf="showFees">
+          <div class="price-inp">
+            <span>{{'event.create.eventConfig.pricinglbl.text' | translate}}</span>
+            <p>{{'event.create.eventConfig.registrationFeelbl.text' | translate}}</p>
+            <input (keypress)="numberOnly($event)" formControlName="registrationFees" placeholder="Price" type="text"
+              (blur)="onBlur($event)">
+          </div>
+          <div *ngIf="this.submitBtn == false && foodForm.controls.registrationFees.errors ">
+            <span *ngIf="this.submitBtn == false && foodForm.controls.registrationFees.errors "
+              class="valid-msg">Registration Fee is required</span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="martop-pricing">
+      <form [formGroup]="configurationForm" class="example-form" id="configurationForm">
+        <div *ngFor="let list of configurationList; let i = index; " class="row">
+          <div class="col-sm-6 col-md-4 question-text ">
+            <span>{{list['name']}}</span>
+          </div>
+          <div class="col-sm-6 col-md-8 radao-yes cancellable-txt">
+            <mat-radio-group (change)="submitConfig($event, list);updateConfig()" [formControlName]="list['key']"
+              aria-label="Select an option">
+              <mat-radio-button [checked]="list['checked'] == true" [value]="true">
+                {{'event.create.eventConfig.radioButtonYes.text' | translate}}</mat-radio-button>
+              <mat-radio-button [checked]="list['checked'] == false || list['checked'] == null " [value]="false"
+                class="marno">{{'event.create.eventConfig.radioButtonNo.text' | translate}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="endDateTimeForm" class="example-form" id="endDateTimeForm">
+      <div class="row martopevent">
+        <div class="col-md-6 datefullclick">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>{{'event.create.eventConfig.donationEndDate.lbl.text' | translate}} </mat-label>
+            <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+            </mat-datetimepicker>
+            <input formControlName="donationEndDate" [matDatetimepicker]="datetimePicker" autocomplete="false" matInput
+              [min]="startDate">
+          </mat-form-field>
+          <!--          <div *ngIf="this.submitBtn == false && endDateTimeForm.controls.donationEndDate.errors ">-->
+          <!--            <span *ngIf="this.submitBtn == false && endDateTimeForm.controls.donationEndDate.errors "-->
+          <!--              class="valid-msg">Donation end date is required</span>-->
+          <!--            </div>-->
+          <!--            <div *ngIf="endDateTimeForm.controls['donationEndDate'].invalid" class="valid-msg">-->
+          <!--              Please enter valid date-->
+          <!--             </div> -->
+        </div>
+        <div class="col-md-6 martopvenue datefullclick">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>{{'event.create.eventConfig.sponsorshipEndDate.lbl.text' | translate}} </mat-label>
+            <mat-datetimepicker-toggle [for]="datetimePicker1" matSuffix></mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker1 openOnFocus="true" timeInterval="5" type="datetime">
+            </mat-datetimepicker>
+            <input formControlName="sponsorshipEndDate" [matDatetimepicker]="datetimePicker1" autocomplete="false"
+              matInput [min]="startDate">
+          </mat-form-field>
+          <!--          <div *ngIf="this.submitBtn == false && endDateTimeForm.controls.sponsorshipEndDate.errors ">-->
+          <!--            <span *ngIf="this.submitBtn == false && endDateTimeForm.controls.sponsorshipEndDate.errors "-->
+          <!--              class="valid-msg">Sponsorship end date is required</span>-->
+          <!--          </div>-->
+          <!--          <div *ngIf="endDateTimeForm.controls['sponsorshipEndDate'].invalid" class="valid-msg">-->
+          <!--            Please enter valid date-->
+          <!--           </div> -->
+        </div>
+      </div>
+      <div class="row martopevent">
+        <div class="col-md-6 datefullclick">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>{{'event.create.eventConfig.registrationEndDate.lbl.text' | translate}} </mat-label>
+            <mat-datetimepicker-toggle [for]="datetimePicker2" matSuffix></mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker2 openOnFocus="true" timeInterval="5" type="datetime">
+            </mat-datetimepicker>
+            <input formControlName="registrationEndDate" [matDatetimepicker]="datetimePicker2" autocomplete="false"
+              matInput [min]="startDate">
+          </mat-form-field>
+
+          <!--          <div *ngIf="this.submitBtn == false && endDateTimeForm.controls.registrationEndDate.errors ">-->
+          <!--            <span *ngIf="this.submitBtn == false && endDateTimeForm.controls.registrationEndDate.errors "-->
+          <!--              class="valid-msg">Registration end date is required</span>-->
+          <!--          -->
+          <!--          </div>-->
+          <!--          <div *ngIf="endDateTimeForm.controls['registrationEndDate'].invalid" class="valid-msg">-->
+          <!--           Please enter valid date-->
+          <!--          </div> -->
+        </div>
+        <div class="col-md-6 martopvenue datefullclick">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>{{'event.create.eventConfig.performanceEndDate.lbl.text' | translate}} </mat-label>
+            <mat-datetimepicker-toggle [for]="datetimePicker3" matSuffix></mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker3 openOnFocus="true" timeInterval="5" type="datetime">
+            </mat-datetimepicker>
+            <input formControlName="performanceEndDate" [matDatetimepicker]="datetimePicker3" autocomplete="false"
+              matInput [min]="startDate">
+          </mat-form-field>
+          <!--          <div *ngIf="this.submitBtn == false && endDateTimeForm.controls.performanceEndDate.errors ">-->
+          <!--            <span *ngIf="this.submitBtn == false && endDateTimeForm.controls.performanceEndDate.errors "-->
+          <!--              class="valid-msg">Performance end date is required</span>-->
+          <!--          </div>-->
+          <!--          <div *ngIf="endDateTimeForm.controls['performanceEndDate'].invalid" class="valid-msg">-->
+          <!--            Please enter valid date-->
+          <!--           </div> -->
+        </div>
+      </div>
+      <div class="row martopevent">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width ">
+            <mat-label>{{'event.create.eventConfig.donationGoal.lbl.text' | translate}} </mat-label>
+            <input formControlName="donationGoal" matInput (keypress)="numberOnly($event)">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+
+          <mat-form-field class="example-full-width " *ngIf=" this.response?.redirectRegistration==true || storeSelected.includes('redirectRegistration')">
+            <mat-label> Enter web service url for registration</mat-label>
+            <input formControlName="registrationRedirectUrl" matInput>
+          </mat-form-field>
+
+        </div>
+        <div class="col-md-6">
+
+          <mat-form-field class="example-full-width "  *ngIf=" this.response?.redirectVendor==true ||storeSelected.includes('redirectVendor')">
+            <mat-label> Enter web service url for vendor</mat-label>
+            <input formControlName="vendorRedirectUrl" matInput>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+<li>
+  <!--<form [formGroup]="parkingoption" class="example-form" id="parkingoption"  >
+
+  <div class="row martopevent"   >
+    <h1>Parking option</h1>
+    <div class="col-md-6">
+
+      <mat-form-field class="example-full-width dateinfo">
+        <mat-label>Description</mat-label>
+        <input formControlName="description" matInput>
+      </mat-form-field>
+      </div>
+
+
+      <div class="col-md-6">
+      <mat-form-field class="example-full-width dateinfo">
+        <mat-label>Price</mat-label>
+        <input formControlName="price" matInput >
+      </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width dateinfo">
+          <mat-label>Title</mat-label>
+          <input formControlName="title" matInput >
+        </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>Totalslot</mat-label>
+            <input formControlName="totalslot" matInput >
+          </mat-form-field>
+          </div>
+    </div>
+
+    </form>-->
+</li>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalinfo" role="dialog"
+  tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Obtaining PayPal Client ID</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p>Accepting Payment has been very easy with PayPal. Please create your PayPal business account if you do not
+            have one to receive payment online.</p>
+          <ul class="paypalcontent">
+            <li>Create your PayPal Business account to accept payments <a
+                href="https://www.paypal.com/us/webapps/mpp/account-selection"
+                target="_blank">https://www.paypal.com/us/webapps/mpp/account-selection</a>
+            </li>
+            <li>Verify your PayPal Account by clicking the link you receive in email</li>
+            <li>Open this link <a href="https://www.paypal.com/commercesetup/APICredentials?guided=true"
+                target="_blank">https://www.paypal.com/commercesetup/APICredentials?guided=true</a>
+            </li>
+            <li>Login if not already logged in</li>
+            <li>Copy your Credentials PayPal Community Connect</li>
+          </ul>
+          <p>** PayPal Terms & Conditions Applies while using PayPal for Checkout.</p>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

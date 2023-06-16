@@ -1,0 +1,143 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event new-dashboard notifications-no-paid">
+    <div class="title-news">
+     Fundraising
+    </div>
+    <div class="tab-main">
+      <mat-tab-group (selectedTabChange)="changetab($event.tab.textLabel)">
+        <mat-tab label="DONTAION" >
+          <ng-template mat-tab-label >
+            <ul [ngClass]="{'active':activetab == 'DONATION'}" data-toggle="tab">
+              <li>
+                <span>Donation</span>
+              </li>
+            </ul>
+          </ng-template>
+          </mat-tab>
+          <mat-tab label="SPONSOR">
+            <ng-template mat-tab-label >
+              <ul [ngClass]="{'active':activetab == 'SPONSOR'}"  data-toggle="tab">
+                <li>
+                  <span>Sponsorship</span>
+                </li>
+              </ul>
+            </ng-template>
+          </mat-tab>
+          </mat-tab-group>
+    </div>
+
+<div class="borsponsor" id="page_form">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 col-md-6 col-lg-8">
+        <div class="totall-collection">
+          <span> Fundraising</span>
+          <p *ngIf="activetab == 'DONTAION'">Total Donation: <i> {{total['totalDonation'] |currency:'USD'}} </i></p>
+          <p *ngIf="activetab == 'SPONSOR'">Total Sponsorship: <i> {{total['totalSponsorship'] | currency:'USD'}} </i></p>
+        </div>
+      </div>
+      <div class="col-sm-8 col-md-6 col-lg-4">
+        <div class="searchfilter notificationfilter raisingfund">
+          <div class="padd-area sponsorsearch">
+            <div class="main-search-top">
+              <div class="searchmember searchsponsor">
+                <mat-form-field class="example-full-width map-url searchform">
+                  <mat-label> Search Here..</mat-label>
+                  <input (change)="fundraising($event.target.value)" [(ngModel)]="search"   autocomplete="off"   matInput type="text">
+                </mat-form-field>
+                <button type="button" class="search-button" (click)="searchClick()"> Search </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="donation-sponsor ">
+  <table >
+    <tr class="notif-list-header">
+      <th width="50"></th>
+      <th>
+      Name
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+        Address
+      </th>
+      <th *ngIf="chapterList.length!=1">
+        Chapter Name
+      </th>
+      <th>
+        Event Name
+      </th>
+      <th>Date</th>
+      <th>
+        Amount
+      </th>
+
+    </tr>
+    <tbody>
+      <tr *ngFor="let list of  fundlist">
+       <td></td>
+        <td>
+         {{list.firstName}} {{list.lastName}}
+        </td>
+
+        <td>
+         {{list.email}}
+        </td>
+        <td>
+          {{list.addressLine1}} <span *ngIf="list['city']">{{list['city']}} </span>
+          <span *ngIf="(list['city']==null && list['addressLine1']==null)|| list['city']=='' && list['addressLine1']==''">-</span>
+
+        </td>
+        <td *ngIf="chapterList.length!=1">
+          {{list.chapterName}}
+        </td>
+         <td>
+          {{list.eventName}}
+         </td>
+         <td>{{list.dateTime | date: 'dd-MM-yyyy'}}</td>
+         <td> {{list.finalAmount|currency:'USD'}}</td>
+      </tr>
+      </tbody>
+  </table>
+</div>
+
+<div class="pegination-main" *ngIf="fundlist1?.content ==0">Member not found</div>
+<div class="pegination-main" *ngIf="fundlist1?.content!=0">
+  <ul>
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="fundlist1['first'] == true" class="next">
+        First
+      </button>
+    </li>
+
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="fundlist1['first'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+        [ngClass]="reqData.page.page == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="fundlist1['last'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current',user,(fundlist1['totalPages']-1))"
+              [disabled]="pagination['last'] == true" class="next">Last
+      </button>
+    </li>
+  </ul>
+  <div class="totalShow"><span>Total :</span>{{fundlist1['totalElements']}} </div>
+
+</div>

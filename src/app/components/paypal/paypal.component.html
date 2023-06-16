@@ -1,0 +1,47 @@
+<i data-target="#examplePaymentModal" data-toggle="modal" id="open">
+</i>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade online-payment" id="examplePaymentModal"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title model-tt" id="exampleModalLabel">
+          Payment
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" id="closePaypalId" type="button">
+          <img alt="" src="assets/icon/ionic-md-close.svg">
+        </button>
+      </div>
+      <!-- content  -->
+
+      <div class="row">
+
+
+        <!-- PayPal Logo -->
+        <table align="center" border="0" cellpadding="10" cellspacing="0" class="tabmod">
+          <tr>
+            <td align="center"></td>
+          </tr>
+          <tr>
+            <td align="center"><a
+              title="How PayPal Works"><img
+              alt="PayPal Acceptance Mark"
+              border="0"
+              src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/IN/logo-center/logo-center-solution-graphics.png"></a>
+            </td>
+          </tr>
+        </table><!-- PayPal Logo -->
+      </div>
+
+      <!-- Content -->
+
+      <div class="modal-footer footerpay ">
+
+        <span class="payment-redi"> You will be redirected to Payment page</span>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button (click)="onPaymentStatus(null)" class="save-changes book-tick confirm-pay" type="button">Confirm & Pay</button>
+      </div>
+    </div>
+  </div>
+</div>

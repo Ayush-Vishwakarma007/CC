@@ -1,0 +1,61 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading"> Banner Management
+  </div>
+  <div class="white-area-create-event committi-main bannernomargin">
+    <div class="totalcommitteemem">
+      <div class="row">
+        <div class="col-sm-7 col-md-8 col-lg-9">
+          <mat-form-field class="select-chap" *ngIf="chapterList.length!=1">
+            <mat-label>Select Chapter</mat-label>
+            <mat-select (selectionChange)="getChapterDetail($event.value)" [value]="chapterList[0]?.id">
+              <mat-option *ngFor="let list of chapterList;let i = index" value="{{list.id}}">{{list.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5 col-md-4 col-lg-3">
+          <button routerLink="/banner-display" class="addmember" type="button">+ Add Banner </button>
+
+          <!-- <div class="searchmain">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>Search here...</mat-label>
+                <input matInput type="text">
+              </mat-form-field>
+            </form>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <!-- table -->
+    <div class="committi-tab">
+      <table>
+        <tr>
+          <th width="120">Banner Type</th>
+          <th>Description</th>
+          <th width="60">Action</th>
+        </tr>
+        <tr *ngFor="let banner of bannerList">
+          <td>{{banner.bannerType}}</td>
+          <td>{{banner.details}}</td>
+          <td>
+            <button class="btn-edit" routerLink="/banner-display/{{banner.id}}">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+            <button class="btn-edit" (click)="deleteBanner(banner.id)"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+            <!-- <div class="dropdown dropup moredrop editgallery">
+              <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                <img alt="" src="assets/icon/interface.svg">
+              </a>
+              <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                <a routerLink="/banner-display/{{banner.id}}" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+                  Edit</a>
+                <a (click)="deleteBanner(banner.id)" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+                  Delete</a>
+              </div>
+            </div> -->
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- table -->
+  </div>
+</div>

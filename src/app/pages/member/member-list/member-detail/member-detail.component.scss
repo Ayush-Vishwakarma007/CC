@@ -1,0 +1,47 @@
+.hideSubMember
+{
+  display: none !important;
+}
+.small-icon{
+  width: 23%;margin-bottom: 14%;
+}
+.emailbutton {
+  background: #fff;
+  margin-top: -18px;
+  margin-left: 7px;
+  width: 37px;
+  height: 37px;
+  border-radius: 100%;
+  border: 1px solid #dfdfdf;
+  position: relative;
+}
+
+.filterBtn{
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+.example-margin {
+  margin: 0 10px;
+}
+.memexport{
+  button{ padding: 11px 21px; font-size: 14px; height: 45px; margin-left: 15px; border-radius: 5px;
+    img{ margin-top: -5px;}
+  }
+}
+
+@media screen and (max-width: 1700px) and (min-width: 1200px) {
+
+  .memberl {
+    .col-lg-3 {
+      width: 33.33333333%;
+    }
+  }
+}

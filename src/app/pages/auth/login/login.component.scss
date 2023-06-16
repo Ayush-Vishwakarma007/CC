@@ -1,0 +1,52 @@
+body{
+
+  margin: 0px!important;
+  padding: 0px!important;
+}
+
+.login-logo{
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+input {  padding: 14px 10px 7px 25px; }
+
+.height100{ 
+
+  height: 100vh;
+
+}
+
+.rightpart input:focus ~ label, .rightpart input:valid ~ label { background: transparent; }
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+ 
+  /* Safari 5+ ONLY */ 
+  
+  ::i-block-chrome, 
+   
+    .login-logo{  margin-left: -150px; margin-top: 400px; } 
+   
+  }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  
+  -webkit-text-fill-color: var(--text-clr);
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+
+}
+
+

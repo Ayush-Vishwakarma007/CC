@@ -1,0 +1,75 @@
+
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+
+
+$font20: var(--font20);
+$font13: var(--font13);
+$heandingpage: var(--heandingpage);
+$tomatored: #F25C66;
+
+.scroll-tab-event { padding-bottom: 6%; }
+
+// new design css
+.configuraionmain{ display: block; 
+    .configuretop{ background: #fff; display: block; padding: 30px 0px 15px 0px; margin-bottom: 1px; border-bottom: 1px solid #ececec;
+        .dashboard-donation{ margin: 0px 0 0 0; padding: 0px; list-style: none; display: flex;
+            li.arrowleft{ width: 80px; height: 80px; position: relative;
+                button{ background: transparent; border: 0px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+            }
+            li{  list-style: none; float: left;
+                h1{ margin: 0px; padding: 0px;  font-size: 18px; font-weight: 600; color: var(--text-clr); letter-spacing: 0.2px; display: inline-block; outline: none; cursor: pointer;
+                    span{ display: block; color: $green-dark; font-size: 14px; padding-top: 10px; text-transform: none; font-weight: 600; margin-bottom: 11px;
+                    }
+                }
+                .moredrop{ margin-top: 0px!important;}
+            }
+            li.imagethumb{ padding-right: 20px;
+                img{ width: 80px; height: 80px; border-radius: 10px; max-width: 80px;
+                }
+            }
+            .category-donation{  margin-top: 0px;
+                li{ float: left; font-size: 14px; color: var(--text-clr); padding-right: 10px; margin-bottom: 10px;
+                    span{ font-size: 13px;  font-weight: 100; text-transform: none; display: flex; align-items: flex-start;
+                    [class*='fa-']:before{ font-size: 17px; margin-right: 3px; color: $secondary-color;}
+                    [class*='fa-map-marker']:before{color: red;}
+                        .location{ width: 9px; height: auto; margin-right: 5px; margin-top: -4px;}
+                        .clock { width: 14px; height: auto; margin-right: 5px; margin-top: -4px; }
+                    }
+                }
+            }
+        }
+    }
+    .miscellaneous-list{ margin: 0px; padding: 0px; list-style: none;
+      li{ display: flex; justify-content: flex-start; font-family: "Montserrat", sans-serif; font-size: 14px; color: #757575; font-weight: 600; margin-bottom: 15px;
+            input{ width: 20px; margin-right: 5px; }
+        }
+    }
+    .marleftspace{ padding-left: 0px; padding-top: 16px;  margin-left: 50px;}
+}
+.marbottomheading{ margin-bottom: 45px!important;}
+.padd-btm-tab { margin-left: 50px; }
+

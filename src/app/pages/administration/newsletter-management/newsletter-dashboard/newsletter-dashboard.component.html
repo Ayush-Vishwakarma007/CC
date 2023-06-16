@@ -1,0 +1,48 @@
+<div *ngIf="status == true " class="">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-6 whitebox">
+      <div class="dailydonation">
+        <!--      Daily Donations-->
+      </div>
+      <!-- chart box  -->
+      <div class="chartmain">
+        <div id="chapterChart" *ngIf="chapterChartOptions?.chapterChart">
+          <apx-chart
+            [chart]="chapterChartOptions.chapterChart"
+            [dataLabels]="chapterChartOptions.dataLabels"
+            [fill]="chapterChartOptions.fill"
+            [grid]="chapterChartOptions.grid"
+            [markers]="chapterChartOptions.markers"
+            [series]="chapterChartOptions.series"
+            [stroke]="chapterChartOptions.stroke"
+            [title]="chapterChartOptions.title"
+            [tooltip]="chapterChartOptions.tooltip"
+            [xaxis]="chapterChartOptions.xaxis"
+            [yaxis]="chapterChartOptions.yaxis"
+          ></apx-chart>
+        </div>
+
+      </div>
+      <!-- chart box  -->
+    </div>
+    <div class="col-sm-6 col-md-12 col-lg-6 whitebox">
+      <div class="chartmain">
+        <div id="newsletterChart" *ngIf="newsletterChartOptions">
+          <apx-chart
+            [chart]="newsletterChartOptions.newsletterChart"
+            [dataLabels]="newsletterChartOptions.dataLabels"
+            [fill]="newsletterChartOptions.fill"
+            [xaxis]="newsletterChartOptions.xaxis"
+            [labels]="newsletterChartOptions.labels"
+            [title]="newsletterChartOptions.title"
+            [tooltip]="newsletterChartOptions.tooltip"
+            [plotOptions]="newsletterChartOptions.plotOptions"
+            [responsive]="newsletterChartOptions.responsive"
+            [series]="newsletterChartOptions.series"
+          ></apx-chart>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

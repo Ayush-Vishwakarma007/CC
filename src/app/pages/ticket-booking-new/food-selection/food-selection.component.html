@@ -1,0 +1,42 @@
+<div class="scrolltab">
+  <h3>
+    <span>Food Details</span>
+    <button class="skip" (click)="skip()"> SKip</button>
+  </h3>
+
+  <div class="parking" *ngFor="let list of foodcategory ">
+    <span  *ngIf="list.defaultFood==true">
+     <i class="defaulmain"> **{{list.foodName}}
+    <u> (DEFAULT)</u>
+  </i>
+  </span>
+    <span *ngIf="list.defaultFood==false">{{list.foodName}}</span>
+    <mat-form-field class="example-full-width">
+      <mat-label>Number of food quantity </mat-label>
+      <input matInput placeholder="" [(ngModel)]="list.value" (ngModelChange)="mychange($event, i)" (keypress)="numberOnly($event)">
+    </mat-form-field>
+    <div class="per-ticket">${{list.price}}</div>
+  </div>
+  
+
+
+  <!--<div class="parking">
+                              <span>
+                                **Indian Veg
+                              <i>(Default) </i>
+                              </span>
+    <mat-form-field class="example-full-width" floatLabel="never">
+      <input matInput placeholder="Number of Guest" value="">
+    </mat-form-field>
+  </div>
+  <div class="parking">
+    <span> Jain </span>
+    <mat-form-field class="example-full-width" floatLabel="never">
+      <input matInput placeholder="Number of Guest" value="">
+    </mat-form-field>
+  </div>-->
+  <h3>
+    ** default food will be assigned, if not specified
+  </h3>
+
+</div>

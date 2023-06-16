@@ -1,0 +1,196 @@
+<div class="scrolltab">
+  <h3><span> Participants Entry Fees </span>
+    <button class="skip" (click)="skip()"> SKip</button>
+  </h3>
+  <form [formGroup]="Participant">
+    <div class="mainparticipate">
+      <div class="col-sm-12 col-md-6 leftpad0">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Choreographer first name</mat-label>
+          <input matInput placeholder="" formControlName="cfirstName" type="text"
+            (ngModelChange)="mychange($event)">
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.cfirstName.errors " class="error">
+          <mat-error>
+            Choreographer first name is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 leftpad0">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Choreographer last name</mat-label>
+          <input matInput placeholder="" formControlName="clastName" type="text"
+                 (ngModelChange)="mychange($event)">
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.clastName.errors " class="error">
+          <mat-error>
+            Choreographer last name is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 leftpad0">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="" formControlName="email" type="text"
+                 (ngModelChange)="mychange($event)">
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.email.errors " class="error">
+          <mat-error>
+            Choreographer email is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 rightpad0">
+        <mat-form-field class="example-full-width">
+          <mat-label>Choreographer business name</mat-label>
+          <input matInput placeholder=""  formControlName="businessName" type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.businessName.errors " class="error">
+          <mat-error>
+            Choreographer business name is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div class="mainparticipate">
+      <div class="col-sm-12 col-md-6 leftpad0">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Performance duration(min)</mat-label>
+          <input matInput placeholder="min" formControlName="performanceDuration" type="text"
+          (keypress)="numberOnly($event)" >
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.performanceDuration.errors " class="error">
+          <mat-error>
+            Performance duration is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6 rightpad0">
+        <mat-form-field class="example-full-width">
+          <mat-label>Performance title</mat-label>
+          <input matInput placeholder=""  formControlName="eventName" type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitted == false && Participant.controls.eventName.errors " class="error">
+          <mat-error>
+            Performance title is
+            <strong>required</strong>
+          </mat-error>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  <div class="mainparticipate">
+    <div class="col-sm-12 col-md-6 leftpad0">
+      <div class="create-img-upload">
+        <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                    (maxFileError)="maxFileError()"
+                                    (maxFileSizeError)="fileSizeError()"
+                                    (queueCompleted)="imageQueueCompleted()"
+                                    (uploadStarted)="uploadStarted()"
+                                    (uploadedFilesChange)="uploadedFilesChange()"
+                                    [(uploadedFiles)]="imageList"
+                                    [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                    [validTypes]="validTypesImage">
+        </app-file-uploader-vertical>
+        <p class="upload-img"> Upload image</p>
+      </div>
+      <div *ngIf="uploadedImageList?.length != 0" class="main-thumbs-model-main">
+        <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+          <div [style.backgroundImage]="'url(('+image.link+')|  galleryImagePipe)'" class="blurimageabout"
+               style="background: no-repeat;"></div>
+          <img alt="" [src]="image.link | galleryImagePipe">
+          <button (click)="removeImage(i,image)">
+            <i  class="icon-delete-blue newicon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <!-- <h4> Upload Video *</h4> -->
+      <div class="sub-main-pop">
+        <div class="image-main-up thumb100">
+          <div class="imageup create-img-upload videotoptext">
+            <app-file-uploader-vertical #imageUpload (invalidFile)="invalidVideoUploadFile()"
+                                        (maxFileError)="maxFileError()"
+                                        (maxFileSizeError)="fileSizeError()"
+                                        (queueCompleted)="videoQueueCompleted()"
+                                        (uploadStarted)="uploadStarted()"
+                                        (uploadedFilesChange)="uploadedFilesChange()"
+                                        [(uploadedFiles)]="videoList"
+                                        [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                        [validTypes]="validTypesVideo">
+            </app-file-uploader-vertical>
+            <p class="upload-img"> Upload Video </p>
+          </div>
+        </div>
+        <div *ngIf="uploadedVideoList?.length != 0" class="main-thumbs-model-main">
+          <div *ngFor="let list of uploadedVideoList;let i = index" class="thumb video-up">
+            <video controls height="50" width="75">
+              <source [src]="list.link | galleryImagePipe">
+            </video>
+            <button  (click)="removeVideo(i,list)">
+              <i  class="icon-delete-blue newicon"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h3 class="participatehead"> Participants details
+    <button class="skip new-participants" (click)="addDynamicField()">+ Add New Participants</button>
+  </h3>
+  <!-- <div class="mainparticipate" *ngFor="let option of performanceList ;let i = index">
+    <div class="col-sm-6 leftpad0">
+      <mat-form-field class="example-full-width " floatLabel="never">
+        <input matInput placeholder="Performance Duration " value="">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-6 removeBtn rightpad0">
+      <mat-form-field class="example-full-width phone-num " floatLabel="never">
+        <input matInput placeholder="Performance Title" value="">
+      </mat-form-field>
+      <button>
+        <i class="icon-delete-blue newicon" (click)="removeLastOption()"></i>
+      </button>
+    </div>
+  </div>  -->
+  <!-- <div *ngFor="let data of array1, let i = index">        -->
+  <form [formGroup]="AddParticipant" (ngSubmit)="submit()">
+    <!-- <div *ngFor="let items of this.array1"> -->
+    <div formArrayName="participant">
+      <div class="mainparticipate" *ngFor="let option of optionList; let i = index;">
+            <div class="col-sm-4 leftpad0">
+<!--              <div  *ngFor="let items of this.array1;let index = i" >-->
+                <mat-form-field class="example-full-width">
+                  <mat-label>Full name <i>*</i></mat-label>
+                  <input matInput type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="option.firstName" (keypress)="charOnly($event)">
+                </mat-form-field>
+<!--              </div>-->
+            </div>
+            <div class="col-sm-4 leftpad0">
+              <mat-form-field class="example-full-width">
+
+                <mat-label>Email <i>*</i></mat-label>
+                <input matInput [(ngModel)]="option.email" [ngModelOptions]="{standalone: true}" type="email" >
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3 removeBtn rightpad0">
+              <mat-form-field class="example-full-width">
+                <mat-label>Age <i>*</i></mat-label>
+                <input matInput [(ngModel)]="option.age" type="text" [ngModelOptions]="{standalone: true}" (keypress)="numberOnly($event)">
+              </mat-form-field>
+              <button>
+                <i class="icon-delete-blue newicon" (click)="removeLastOption(i)"></i>
+              </button>
+            </div>
+          </div>
+        <!-- </div> -->
+      <!-- </div> -->
+    </div>
+  </form>
+  <h3> ** If you add your child as a Participant please add parent email id </h3>
+</div>

@@ -1,0 +1,189 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="upload-txt">
+      Upload Event Images
+      <span>User can upload the images which are part of the event</span>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="addbutton">
+      <span>{{mediaList?.length}} Image</span>
+      <button>+ Add Photos</button>
+    </div>
+  </div>
+</div>
+
+<div class="imageupload-user">
+  <div class="main-img-gallery">
+    <app-image-uploader
+      #imageUpload
+      (invalidFile)="invalidUploadFile()"
+      (maxFileError)="maxFileError()"
+      (maxFileSizeError)="fileSizeError()"
+      (queueCompleted)="queueCompleted()"
+      (uploadStarted)="uploadStarted()"
+      [(uploadedFiles)]="mediaList"
+      [maxFileCount]="10"
+      [uploadUrl]="mediaUploadUrl"
+    >
+    </app-image-uploader>
+  </div>
+  <div class="clear"></div>
+  <div class="admingallery">
+    <table>
+      <tr>
+        <th>Photos</th>
+        <th>Uploaded By</th>
+        <th>Date</th>
+        <th width="150">Action</th>
+      </tr>
+      <tr>
+        <td class="imagethumb">
+          <img src="assets/images/background.png" alt="" />
+          <ul>
+            <li>Party Image from Expo.png</li>
+            <li>2.33MB</li>
+          </ul>
+        </td>
+        <td>Mitesh Doe</td>
+        <td>20 May, 2020</td>
+        <td>
+          <div class="buttonright">
+            <div>
+              <div class="dropdown dropup moredrop editgallery">
+                <a
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  id="dropdownMenuLink"
+                  role="button"
+                >
+                  <img alt="" src="assets/icon/interface.svg" />
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i> Edit
+                    image</a
+                  >
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i>
+                    close</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="close-img">
+              <div class="leftright"></div>
+              <div class="rightleft"></div>
+            </button>
+
+            <button type="button" class="checkbtn">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="imagethumb">
+          <img src="assets/images/background.png" alt="" />
+          <ul>
+            <li>Party Image from Expo.png</li>
+            <li>2.33MB</li>
+          </ul>
+        </td>
+        <td>Mitesh Doe</td>
+        <td>20 May, 2020</td>
+        <td>
+          <div class="buttonright">
+            <div>
+              <div class="dropdown dropup moredrop editgallery">
+                <a
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  id="dropdownMenuLink"
+                  role="button"
+                >
+                  <img alt="" src="assets/icon/interface.svg" />
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i> Edit
+                    image</a
+                  >
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i>
+                    close</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="close-img">
+              <div class="leftright"></div>
+              <div class="rightleft"></div>
+            </button>
+
+            <button type="button" class="checkbtn green-edit">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="imagethumb">
+          <img src="assets/images/background.png" alt="" />
+          <ul>
+            <li>Party Image from Expo.png</li>
+            <li>2.33MB</li>
+          </ul>
+        </td>
+        <td>Mitesh Doe</td>
+        <td>20 May, 2020</td>
+        <td>
+          <div class="buttonright">
+            <div>
+              <div class="dropdown dropup moredrop editgallery">
+                <a
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  href="#"
+                  id="dropdownMenuLink"
+                  role="button"
+                >
+                  <img alt="" src="assets/icon/interface.svg" />
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i> Edit
+                    image</a
+                  >
+                  <a class="dropdown-item"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i>
+                    close</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="close-img redbutton">
+              <div class="leftright"></div>
+              <div class="rightleft"></div>
+            </button>
+
+            <button type="button" class="checkbtn">
+              <i class="fa fa-check" aria-hidden="true"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

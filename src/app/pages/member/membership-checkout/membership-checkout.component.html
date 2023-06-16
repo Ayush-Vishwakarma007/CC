@@ -1,0 +1,18 @@
+<div  class="donorcheckout-header">
+  <ul>
+    <li class="button">
+      <button *ngIf="type == 'renew'" [routerLink]="'/membership-dashboard/'"><img src="assets/icon/arow-g.svg" alt=""></button>
+
+      <button *ngIf="type == 'new'" [routerLink]="'/membership-plan/'"><img src="assets/icon/arow-g.svg" alt=""></button>
+    </li>
+    <li>
+      <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;">Membership Checkout</h4>
+      <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px;">
+        Thank You for taking keep interest to become a part of this community
+      </p>
+    </li>
+  </ul>
+</div>
+
+<app-membership-donation  *ngIf="status != false"  [save]="submitSubject" (completed)="submitMemberRegister()" (changePayment)="getPaymentDetail()" [(userDetail)]="userDetail" [(paymentMethod)]="paymentMethod"> </app-membership-donation>
+<app-payment-info *ngIf="currentMembershipDetail.length != 0"  [allMemberShip]="allMemberShip" [planId]="planId" [membershipDetail]="currentMembershipDetail" [(discount)]="discountCode" (completePayment)="paymentCheckout()"  [save]="submitSubject" [(paymentDetail)] = "paymentDetail" [(paymentMethod)]="paymentMethod"></app-payment-info>

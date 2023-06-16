@@ -1,0 +1,134 @@
+.box-main{ display: block; border-radius: 8px; box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, .2); min-height: 137px; margin-bottom: 20px;
+    .contentmem{ display: flex; align-items: center; padding: 20px 10px;
+        h2{font-size: 20px; font-weight:bold ; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; color: var(--text-color); margin: 0px 0 5px 0; padding: 0px 0 0 10px; letter-spacing: 1.7px; }
+        p{font-size: 16px; font-weight:500 ; font-family: 'Montserrat', sans-serif; color: var(--text-color); margin: 0px; padding: 0px 0 0 10px; letter-spacing: 1.7px; }
+    }
+}
+.membenefits{ 
+    font-size: 25px; font-weight:bold ; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; color: var(--text-color); margin: 0px 0 25px 0; padding: 0px 0 0 10px; letter-spacing: 1.7px;
+}
+.button-benefit{ float: right; text-decoration: none; margin-bottom: 15px; background: var(--secondary-color);  color: #fff; border: 0px; padding: 7px 20px !important; font-size: 14px !important; height: 43px !important; margin-left: 0px !important; border-radius: 4px !important; display: inline-flex; align-items: center;
+    &:hover{ opacity: 0.7;}
+    
+}
+.martp{ margin-top: 40px;}
+.tablemembership{  margin-bottom: 20px;
+    table{ width: 100%;
+        td{ border: 1px solid #ccc; padding: 7px; text-align: center; font-weight: 600; font-size: 17px; color: var(--text-clr); font-family: 'Montserrat', sans-serif;}
+        td strong{  font-size: 20px; }
+        td.lft{ text-align: left;}
+        tr.bg{ background: #f5f4f4; }
+    }
+}
+.topincentive {
+    td{   color: var(--text-clr);  background: var(--primary-color);
+        // strong{ color: #fff!important;}
+    }
+    td:first-child{ background: var(--primary-color); }
+}
+.topincentive0 {
+    td{ background: #ACCD41; color: var(--text-clr); }
+    td:first-child{ background: #ACCD41; }
+}
+.topincentive1 {
+    td{ background: #729864; }
+    td:first-child{ background: #729864; }
+}
+.topincentive2 {
+    td{ background: #EDBB58; }
+    td:first-child{ background: #EDBB58; }
+}
+.topincentive3 {
+    td{ background: #1F868B; }
+    td:first-child{ background: #1F868B; }
+}
+.topincentive4 {
+    td{ background: #9E7BB5; }
+    td:first-child{ background: #9E7BB5; }
+}
+.topincentive5 {
+    td{ background: #56C0E8; }
+    td:first-child{ background: #56C0E8; }
+}
+.topincentive6 {
+    td{ background: #c6d6c1; }
+    td:first-child{ background: #c6d6c1; }
+}
+.topincentive7 {
+    td{ background: #f8e4bc; }
+    td:first-child{ background: #f8e4bc; }
+}
+.topincentive8 {
+    td{ background: #a5ced0; }
+    td:first-child{ background: #a5ced0; }
+}
+.topincentive9 {
+    td{ background: #bbe6f6; }
+    td:first-child{ background: #bbe6f6; }
+}
+
+.sponsorship-tab{ margin-bottom: 30px;
+    table{ width: 100%;
+        th{
+            span{ min-height: 80px; margin: 5px; font-size: 16px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #fff; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px; border-top-right-radius: 20px; border-top-left-radius: 20px; }
+        }
+    }
+    .sponsoramnt{
+        td{
+            span{  min-height: 50px; margin: 5px; font-size: 16px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #161616; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px; background: #fdf2e9; }
+        }
+        p{ position: relative; margin: 0px; font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif; color: var(--primary-color); text-align: center;
+            .line{ left: 0px; right: 0px; top: 15px; height: 2px; background: var(--primary-color); z-index: 0; content: ""; width: 100%; display: inline-block; position: absolute;}
+            u{ display: inline-block; background: #fff; padding:0px 10px; z-index: 1;text-decoration: none;}
+            
+        }
+        .texrul{ position: relative; z-index: 2;}
+    }
+    .sponsoramnt2{
+        td{
+            span{  min-height: 95px; margin: 5px; font-size: 15px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #161616; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px;  }
+        }
+    }
+    
+    .bg1{ background: #56C0E8;}
+    .bg2{ background: #9E7BB5;}
+    .bg3{ background: #1F868B;}
+    .bg4{ background: #EDBB58;}
+    .bg5{ background: #729864;}
+    .bg6{ background: #ACCD41;}
+    .bg7{ background: #ED8427;}
+    .bg8{ background: #EFEFEF; color: #161616!important;}
+
+    .bg01{ background: #bbe6f6!important;}
+    .bg02{ background: #d8cae1!important;}
+    .bg03{ background: #a5ced0!important;}
+    .bg04{ background: #f8e4bc;}
+    .bg05{ background: #c6d6c1;}
+    .bg06{ background: #deebb3;}
+    .bg07{ background: #f8cea8;}
+    .bg08{ background: #EFEFEF!important; color: #161616!important; text-align: left!important; justify-content: flex-start!important;}
+
+    
+    
+}
+@media screen and (max-width: 1199px) {
+    .box-main { min-height: 160px; }
+}
+
+@media screen and (max-width: 991px) {
+    .box-main { min-height: auto; }
+}
+@media screen and (max-width: 767px) {
+    .box-main .contentmem h2 { font-size: 17px;}
+    .box-main .contentmem p { font-size: 13px;}
+    .button-benefit{ float: left;}
+    .tablemembership{  overflow-x: scroll;
+        table{ width: 750px;}
+    }
+    .sponsorship-tab { overflow-x: scroll; 
+        table{ width: 760px;}
+    }
+}

@@ -1,0 +1,252 @@
+<!-- sponsor -->
+<div class="borsponsor">
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="totall-collection">
+        <!--        <p>User can upload the images which are part of the event</p>-->
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+      <button (click)="formReset(); openModalWithClass(template)" type="button" class="addanother" id="openModel">{{'donationSponsorship.chapterDonation.detail.addplan.Btn.text' | translate}} </button>
+      <i id="openEditModel" data-toggle="modal" data-target="#addplanModal"></i>
+    </div>
+  </div>
+</div>
+<!-- sponsor -->
+
+<!-- table -->
+<div class="donation-sponsor">
+  <table>
+    <tr>
+      <th>
+        {{'donationSponsorship.chapterDonation.detail.plan.table.header.categoryName.lbl.text' | translate}}
+      </th>
+      <th>
+        {{'donationSponsorship.chapterDonation.detail.plan.table.header.minValue.lbl.text' | translate}}
+      </th>
+      <th>
+        {{'donationSponsorship.chapterDonation.detail.plan.table.header.maxValue.lbl.text' | translate}}
+      </th>
+      <th>
+        {{'donationSponsorship.chapterDonation.detail.plan.table.header.priority.lbl.text' | translate}}
+      </th>
+      <th width="70">
+        {{'donationSponsorship.chapterDonation.detail.plan.table.header.action.lbl.text' | translate}}
+      </th>
+    </tr>
+    <tr *ngFor="let list of donation_list">
+      <td>
+        {{list['categoryName']}}
+      </td>
+      <td>
+         {{list['range']['min'] | currency:'USD'}}
+      </td>
+      <td>
+         {{list['range']['max'] | currency:'USD'}}
+      </td>
+      <td>
+        {{list['index']}}
+      </td>
+      <td>
+      <button class="btn-edit" (click)="edit(list,'donation')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+      <button class="btn-edit" (click)="delete(list,'donation')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+        <!-- <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a  (click)="edit(list,'donation')" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i> {{'donationSponsorship.chapterDonation.detail.plan.table.header.action.edit.lbl.text' | translate}}</a>
+            <a (click)="delete(list,'donation')"  class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{'donationSponsorship.chapterDonation.detail.plan.table.header.action.delete.lbl.text' | translate}}</a>
+
+          </div>
+        </div> -->
+      </td>
+    </tr>
+  </table>
+</div>
+<ng-template #template>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button aria-label="Close" (click)="formReset(); modalRef.hide()" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <div class="tabhead-icon">
+          <i class="icon-settings1 newicon"></i>
+        </div>
+        <h5 *ngIf="editId == ''">{{'donationSponsorship.chapterDonation.detail.addPlan.popup.title' | translate}}  </h5>
+        <h5 *ngIf="editId != ''">{{'donationSponsorship.chapterDonation.detail.editPlan.popup.title' | translate}}  </h5>
+        <form class="example-form " [formGroup]="donationForm">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.displayName.text' | translate}} </mat-label>
+                <input formControlName="categoryName" matInput>
+              </mat-form-field>
+              <div  *ngIf="this.submitdonationBtn == false && donationForm.controls.categoryName.errors ">
+              <span
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.categoryName.errors "
+                class="valid-msg">Donation Display Name is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.description.text' | translate}}</mat-label>
+                <input matInput placeholder="{{'donationSponsorship.chapterDonation.detail.addPlan.popup.description.ph.text' | translate}}"  formControlName="description">
+              </mat-form-field>
+              <!--  <div *ngIf="this.submitdonationBtn == false && donationForm.controls.description.errors">
+                      <span *ngIf="this.submitdonationBtn == false && donationForm.controls.description.errors" class="valid-msg"> Description is required </span>
+                    </div>
+              -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.minValue.text' | translate}} ({{currency}}) </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="minRange" matInput type="number">
+              </mat-form-field>
+              <div *ngIf="this.submitdonationBtn == false && donationForm.controls.minRange.errors ">
+              <span *ngIf="this.submitdonationBtn == false && donationForm.controls.minRange.errors " class="valid-msg">Minimum Value is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.maxValue.text' | translate}} ({{currency}}) </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="maxRange" matInput type="number">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.maxRange.errors ">
+                      <span
+                        *ngIf="this.submitdonationBtn == false && donationForm.controls.maxRange.errors "
+                        class="valid-msg">Maximum Value is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.priority.text' | translate}} </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="index" matInput type="text">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.index.errors ">
+                      <span
+                        *ngIf="this.submitdonationBtn == false && donationForm.controls.index.errors "
+                        class="valid-msg">Priority is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row savetop">
+            <div class="col-md-12 main-screen">
+              <div class="btn-general" type="button" tabindex="0"  (click)="submitdonation()">
+                <div class="eff-5"></div>
+                <a   >{{'donationSponsorship.chapterDonation.detail.addPlan.popup.save.Btn.text' | translate}}</a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- table -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="addplanModal" role="dialog"
+     tabindex="1">
+  <div class="modal-dialog add-donation" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button aria-label="Close" (click)="formReset();" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <div class="tabhead-icon">
+          <i class="icon-settings1 newicon"></i>
+        </div>
+        <h5 *ngIf="editId == ''">{{'donationSponsorship.chapterDonation.detail.addPlan.popup.title' | translate}}  </h5>
+        <h5 *ngIf="editId != ''">{{'donationSponsorship.chapterDonation.detail.editPlan.popup.title' | translate}}  </h5>
+        <form class="example-form " [formGroup]="donationForm">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.displayName.text' | translate}} </mat-label>
+                <input formControlName="categoryName" matInput>
+              </mat-form-field>
+              <div  *ngIf="this.submitdonationBtn == false && donationForm.controls.categoryName.errors ">
+              <span
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.categoryName.errors "
+                class="valid-msg">Donation Display Name is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.description.text' | translate}}</mat-label>
+                <input matInput placeholder="{{'donationSponsorship.chapterDonation.detail.addPlan.popup.description.ph.text' | translate}}"  formControlName="description">
+              </mat-form-field>
+              <!-- <div
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.description.errors ">
+                      <span
+                        *ngIf="this.submitdonationBtn == false && donationForm.controls.description.errors "
+                        class="valid-msg">Description is required</span>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.minValue.text' | translate}} ({{currency}}) </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="minRange" matInput type="number">
+              </mat-form-field>
+              <div *ngIf="this.submitdonationBtn == false && donationForm.controls.minRange.errors ">
+              <span *ngIf="this.submitdonationBtn == false && donationForm.controls.minRange.errors "
+                    class="valid-msg">Minimum Value is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.maxValue.text' | translate}} ({{currency}}) </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="maxRange" matInput type="number">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.maxRange.errors ">
+                      <span
+                        *ngIf="this.submitdonationBtn == false && donationForm.controls.maxRange.errors "
+                        class="valid-msg">Maximum Value is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>{{'donationSponsorship.chapterDonation.detail.addPlan.popup.priority.text' | translate}} </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="index" matInput type="text">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitdonationBtn == false && donationForm.controls.index.errors ">
+                      <span
+                        *ngIf="this.submitdonationBtn == false && donationForm.controls.index.errors "
+                        class="valid-msg">Priority is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row savetop">
+            <div class="col-md-12 main-screen">
+              <div class="btn-general" type="button" tabindex="0"  (click)="submitdonation()">
+                <div class="eff-5"></div>
+                <a   >{{'donationSponsorship.chapterDonation.detail.addPlan.popup.save.Btn.text' | translate}}</a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

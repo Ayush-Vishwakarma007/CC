@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="9.472" height="9.472" viewBox="0 0 9.472 9.472">
+  <g id="Group_992" data-name="Group 992" transform="translate(0 -3.157)">
+    <g id="clock-circular-outline" transform="translate(0 3.157)">
+      <g id="Group_977" data-name="Group 977">
+        <path id="Path_2397" data-name="Path 2397" d="M4.736,0A4.736,4.736,0,1,0,9.472,4.736,4.741,4.741,0,0,0,4.736,0Zm0,8.464A3.728,3.728,0,1,1,8.464,4.736,3.732,3.732,0,0,1,4.736,8.464Z" fill="#aeacac"/>
+        <path id="Path_2398" data-name="Path 2398" d="M47.246,20.055H44.919v-2.8a.426.426,0,0,0-.853,0v3.225a.426.426,0,0,0,.426.426h2.754a.426.426,0,1,0,0-.853Z" transform="translate(-39.985 -15.289)" fill="#aeacac"/>
+      </g>
+    </g>
+  </g>
+</svg>

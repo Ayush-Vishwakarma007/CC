@@ -1,0 +1,280 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+
+.membership-plan-main{padding: 20px 50px 50px; background: #F4F6FC; height: 100vh;
+  .left-part-plan{background: #fff; padding: 15px 0 0; position: relative;
+    .header-tlt{position: sticky; top: 0; z-index: 999; background: #fff; padding: 10px 18px;
+      h1{font-size: 25px; font-weight: 700; margin: 0; position: relative; padding-left: 40px;
+        img{width: 30px; position: absolute; top: 0; left: 0;}
+      }
+      .right-content{ display: block; text-align: right;
+        h2{ font-size: 23px; font-weight: 700; font-family: "Montserrat", sans-serif; color: var(--primary-color); }
+        span{ font-size: 15px;  font-family: "Montserrat", sans-serif; }
+        p{ font-size: 15px; font-weight: 600;  font-family: "Montserrat", sans-serif; }
+      }
+    }
+    .page-staps-details{padding: 10px 15px;
+      ul{margin: 0; padding: 0; background: #F5F5F5; padding: 10px; border-radius: 50px; display: flex; justify-content: space-around;
+        li{list-style: none; display: inline-block; color: var(--text-clr); font-size: 18px; font-weight: 400;
+          span{font-size: 20px; color: var(--text-clr); margin-right: 10px;}
+          &.selected{ color: var(--primary-color);
+            span{color: var(--primary-color);}
+          }
+          &.green-clr{color: #4CAF50;
+            span{color: #4CAF50;}
+          }
+        }
+      }
+    }
+    .tabs-part-plan{margin-top: 25px; height: 76.5%; background: #fff; overflow: auto;
+      .tab-data-plan{
+        h2{font-size: 22px; font-weight: 700; color: var(--text-clr); margin: 30px 0 6px; padding-left: 20px;
+          button{border-radius: 50px; font-size: 15px; font-weight: 700; padding: 6px 13px; border: 0; outline: none; background: var(--primary-color); color: #fff; box-shadow: 0 0 10px #797979;}
+        }
+        .plan-main{padding: 0 5px;}
+        .card-data{padding: 0 15px; margin: 15px 0;
+          mat-card{box-shadow: 0 0 10px #ccc; padding: 16px 15px; border-radius: 7px;
+            .text-part{position: relative; padding-left:0px; display: flex;
+              .text-data{ flex: 1;
+                h4{font-size: 15px; font-weight: 700; color: var(--primary-color); margin: 0 0 5px 0;}
+                p{font-size: 13px; font-weight: 400; color: #000000; margin: 0;}
+              }
+              h3{font-size: 16px; font-weight: 700; color: var(--primary-color); margin: 0 0 5px 0; align-self: center;}
+            }
+          }
+        }
+        .basic-information-part{padding:15px 20px;
+          mat-label{color: var(--text-clr); font-weight: 400; font-size: 14px;}
+          mat-form-field{margin-bottom: 10px; margin-top: 10px;}
+          .check-box-design{margin-top: 42px;  margin-bottom: 42px;}
+          h5{color: #D8D8D8; font-weight: 500; font-size: 15px; margin: 0 0 10px;}
+          .upload-main{border: 1px dashed #ccc; text-align: center; border-radius: 5px; display: flex; justify-content: center; align-self: center; align-items: center; flex-flow: column; min-height: 100px; cursor: pointer;
+            img{max-width: 100%; width: 34px;}
+            p{font-size: 12px; font-weight: 400; color: var(--text-clr); margin: 10px 0 0;}
+          }
+        }
+      }
+    }
+    .left-footer{ padding: 10px; position: sticky; bottom: 0; width: 100%; z-index: 999; background: #fff; box-shadow: 0 0 10px #ccc;
+      .next-back{padding: 0 10px;
+        button{border-radius: 50px; font-size: 15px; font-weight: 700; padding: 6px 13px; border: 0; outline: none;
+          i{font-size: 20px;}
+        }
+        &.back{
+          button{background: #F5F5F5; color: var(--text-clr); box-shadow: 0 0 10px #C4B7B7;
+            i{margin-right: 15px; color: var(--text-clr);}
+          }
+        }
+        &.next{
+          button{background: var(--primary-color); color: #fff; box-shadow: 0 0 10px #797979;
+            i{margin-left: 15px; color: #fff;}
+          }
+        }
+      }
+    }
+  }
+  .right-part-plan{ background: #F1F1F1; padding: 15px 20px; height: 100%;
+    h2{ font-size: 22px; font-weight: 700; color: var(--text-clr); margin: 0; padding-left: 0px; text-transform: uppercase;}
+    .table-part{ background: #fff; border-radius: 5px; box-shadow: 0 0 10px #ccc; padding: 5px 15px; margin: 20px 0;
+      table{ width: 100%;
+        tr{
+          td{font-size: 15px; font-weight: 600; color: #000; padding: 9px 4px;
+            &.blue-clr-text{color: var(--primary-color);}
+            &:last-child{text-align: right;}
+          }
+        }
+        tfoot{border-top: 1px solid #ccc;}
+      }
+    }
+  }
+  .p-0{padding: 0 !important;}
+  .m-0{margin: 0 !important;}
+}
+.mat-tab-header { border-bottom: 0px solid rgba(0,0,0,.12)!important; }
+.general-ticket{ display: inline-block; font-size: 20px; font-weight: bold; color: var(--primary-color); text-transform: uppercase; width: 95px; text-align: center; margin-top: 0px; float: left;
+  span{ display: inline-block;background: #f4f4f4; padding: 5px 10px; font-size: 9px; font-family: 'Montserrat', sans-serif; text-transform: none; border-radius: 50px; color: var(--text-clr); width: 75px; }
+}
+.numberinp { width: calc(100% - 125px); margin-left: 16px; }
+.perticket{ font-size: 20px; font-weight: bold; color: var(--text-clr); text-transform: uppercase; margin-top: 11px; }
+.formnum{
+  .row{ margin-top: 10px;}
+}
+.arenaview{ padding: 15px 10px; display: block; background: #fff;  margin-top: 10px; text-align: center; margin-bottom: 20px;
+  button{ border: 0px; border-radius: 50px; background:var(--primary-color); padding: 10px 25px; margin-top: 15px; color: #fff; font-weight: bold; font-size: 11px; text-transform: uppercase; font-family: 'Montserrat', sans-serif; }
+}
+.removeBtn button { background: transparent; margin: 8px 10px 0 5px; float: left; border: 0px; border-radius: 50px; padding: 5px; position: relative;
+  .icon-delete-blue:before{ color: var(--primary-color); }
+}
+.area-view-image{ display: block;}
+.phone-num{ width: calc(100% - 50px); float: left;}
+.subhead{  font-size: 20px; font-weight: 700; font-family: "Montserrat", sans-serif; color: var(--primary-color); text-transform: uppercase; margin-top: 20px;
+  button{ background: var(--primary-color); color: #fff; font-size: 13px; padding: 7px 15px; border: 0px; text-transform: uppercase; border-radius: 15px;}
+}
+.skip { background: transparent; margin-right: 10px; float: right; color: var(--primary-color); font-size: 17px;  border: 0px; text-transform: uppercase; text-decoration: underline; }
+.parking{ display: flex;
+  span{ color: var(--primary-color); font-size: 20px; font-weight: bold; text-transform: uppercase; width: 270px; display: inline-block;
+    i { display: block; font-size: 16px; font-style: normal; text-align: left; padding-left: 23px; color: #A2A2A2; }
+  }
+  .mat-form-field { width: 400px; }
+}
+.main-accommodation{ display: block;
+  span{ width: 220px; display: inline-block; color: var(--primary-color); padding-top: 12px; float: left; font-size: 20px; font-weight: bold; text-transform: uppercase;}
+  .num-guest{ width: calc(100% - 280px); display: inline-block; }
+  .rightform{ padding-right: 0px;}
+}
+.plan-main{padding: 0 5px;}
+.card-data{padding: 0 0px; margin: 15px 0;
+  mat-card{box-shadow: 0 0 10px #ccc; padding: 16px 15px; border-radius: 7px;
+    .text-part{position: relative; padding-left:30px; flex: 1;
+      .text-data{ flex: 1; }
+      h3{font-size: 16px; font-weight: 700; color: #666; margin: 0 0 5px 0; align-self: center;}
+      h4{font-size: 15px; font-weight: 700; color: var(--primary-color); margin: 0 0 5px 0;}
+      p{font-size: 13px; font-weight: 400; color: #000000; margin: 0;}
+    }
+    mat-radio-button { position: absolute; left: 0; top: 0; }
+  }
+  .input-box{ align-self: center; }
+}
+.box-part-main { display: flex; }
+
+.basic-information-part{padding:15px 20px;
+  mat-label{color: var(--text-clr); font-weight: 400; font-size: 14px;}
+  mat-form-field{margin-bottom: 10px; margin-top: 10px;}
+  .check-box-design{margin-top: 42px;  margin-bottom: 42px;}
+  h5{color: #D8D8D8; font-weight: 500; font-size: 15px; margin: 0 0 10px;}
+  .upload-main{border: 1px dashed #ccc; text-align: center; border-radius: 5px; display: flex; justify-content: center; align-self: center; align-items: center; flex-flow: column; min-height: 100px; cursor: pointer;
+    img{max-width: 100%; width: 34px;}
+    p{font-size: 12px; font-weight: 400; color: var(--text-clr); margin: 10px 0 0;}
+  }
+}
+.leftpad0{ padding-left: 0px;}
+.rightpad0{ padding-right: 0px;}
+.mainparticipate{ display: block; width: 100%; float: left;}
+
+
+$background-color: #292931;
+$button-color: var(--primary-color);
+.custom-upload{ border: 1px solid var(--greay-card-head); border-radius: 5px;
+  label[for="file-input"]{
+    display: block;
+    margin-bottom: 1em;
+    font-size: 1em;
+    color: #fff;
+    opacity: .9;
+    font-weight: bold;
+  }
+  input:focus{ border: 0px; outline: none;}
+  input[type="file"] {
+    padding: 0px;
+    cursor: pointer !important;
+    font-size: 15px;
+
+    &::-webkit-file-upload-button {
+      background: $button-color;
+      border: 0;
+      padding: 1em 2em;
+      cursor: pointer;
+      color: #fff;
+      border-radius: .2em;
+    }
+
+    &::-ms-browse {
+      background: $button-color;
+      border: 0;
+      padding: 1em 2em;
+      cursor: pointer;
+      color: #fff;
+      border-radius: .2em;
+    }
+
+  }
+
+}
+.participatehead{ margin-top: 50px; float: left; width: 100%;}
+.areyou{ font-size: 15px; font-weight: 600;  font-family: "Montserrat", sans-serif; padding-right: 20px; }
+.leftpad0{
+  .mat-radio-button{ border: 1px solid var(--primary-color); padding: 3px 8px; border-radius: 50px; margin-right: 10px; height: 31px;
+    .mat-radio-outer-circle{ border: 1px solid var(--primary-color)!important; }
+  }
+}
+.mat-radio-outer-circle { border: 1px solid var(--primary-color)!important; }
+.fullw{ width: 100%; float: left;}
+.scrolltab{ overflow-y: auto; height: calc(100vh - 344px); }
+.hotelview{ font-weight: 600;  text-decoration: underline;  display: inline-block;  margin-top: 13px;}
+
+@media screen and (max-width: 1600px) {
+  .perticket { font-size: 15px;    }
+  .general-ticket { font-size: 14px; }
+  .numberinp { width: calc(100% - 106px); margin-left: 0px; }
+  .parking .mat-form-field { width: 300px; }
+  .leftpad0 {
+    padding-left: 15px;
+  }
+  .rightpad0[_ngcontent-pip-c2] {
+    padding-right: 15px;
+  }
+  .membership-plan-main .left-part-plan .header-tlt .right-content h2 { margin-top: 0px; }
+  .hotelview{     font-size: 12px;}
+  .scrolltab { height: calc(100vh - 318px); }
+}
+
+@media screen and (max-width: 1199px) {
+  .membership-plan-main { padding: 20px 20px 50px; }
+  .main-accommodation span { width: 100%; margin-bottom: 7px; }
+  .main-accommodation .num-guest {  width: calc(100% - 0px); }
+}
+@media screen and (max-width: 1199px) {
+  .main-accommodation .rightform { padding-right: 15px; }
+  .rightpad0{ padding-right: 15px;}
+}
+@media screen and (max-width: 991px) {
+  .hotelview { margin-top: 0px; margin-bottom: 15px; }
+  .parking span { font-size: 15px; }
+  .defaulmain { font-size: 13px !important;
+    u { font-size: 12px; }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .membership-plan-main .left-part-plan .header-tlt .right-content h2 { margin-top: 20px; }
+  .general-ticket { width: 100%; text-align: left; }
+  .general-ticket span { display: block; margin: 7px 0px;  }
+  .numberinp {  width: calc(100% - 0px); }
+  .subhead button { margin: 8px 0px; }
+  .parking span { font-size: 15px; }
+  .participatehead{
+    span{ width: calc(100% - 50px); display: inline-block;}
+  }
+  .main-accommodation span { width: 70px; font-size: 13px; }
+  .main-accommodation .num-guest { width: calc(100% - 72px); }
+  .areyou { display: block; margin-bottom: 10px; }
+  .membership-plan-main .right-part-plan { padding: 15px 10px; }
+  .parking .mat-form-field { width: 96%; }
+  .participatehead{
+    button{ font-size: 13px; margin-top: 10px;}
+  }
+  .card-data .input-box { width: 50px; }
+}

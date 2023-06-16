@@ -1,0 +1,167 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          Community Settings
+        </div>
+      </div>
+    </h1>
+
+    <form [formGroup]="communitySettingForm" class="example-form" id="communitySettingForm">
+
+      <ng-container>
+        <div class="main-section-membership">
+          <div class="bluenumber">
+            <div class="bluebox">
+              <span>1</span>
+            </div>
+            <div class="right-member">
+              <div class="commu-settings-data">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>General Settings</h4>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="quetions paymentsupport">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <mat-label>Allow global payment configuration</mat-label>
+                          <ui-switch formControlName="globalPaymentConfiguration" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" class="pull-right">
+                          </ui-switch>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field class="example-full-width ">
+                            <mat-label>Media max size (In MB)</mat-label>
+                            <input formControlName="imageMaxSize" matInput type="text" (keypress)="numberOnly($event)"
+                              autocomplete="off">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-label>Allow multi committee high priority</mat-label>
+                            <ui-switch formControlName="allowMultiCommitteeHighPriority" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" class="pull-right">
+                          </ui-switch>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 ">
+                 <span class="allowcontact">
+                      <mat-checkbox formControlName="allowStaticContactUs" (change)="allowContact($event)">Default
+                        Contact Us</mat-checkbox>
+                      </span>
+
+                  </div>
+
+                  <div class="col-md-12" *ngIf="isShow">
+                    <div class="quetions">
+                      <div class="hide-show">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width ">
+                              <mat-label>Contact First Name</mat-label>
+                              <input formControlName="contactFirstName" matInput type="text"
+                                (keypress)="charOnly($event)">
+                            </mat-form-field>
+                            <div *ngIf="isSubmit && communitySettingForm.controls.contactFirstName.errors ">
+                              <span *ngIf="isSubmit && communitySettingForm.controls.contactFirstName.errors "
+                                class="valid-msg">Contact FirstName is Required</span>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width ">
+                              <mat-label>Contact Last Name</mat-label>
+                              <input formControlName="contactLastName" matInput type="text"
+                                (keypress)="charOnly($event)">
+                            </mat-form-field>
+                            <div *ngIf="isSubmit && communitySettingForm.controls.contactLastName.errors ">
+                              <span *ngIf="isSubmit && communitySettingForm.controls.contactLastName.errors "
+                                class="valid-msg">Contact LastName is Required</span>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width ">
+                              <mat-label>Contact Email</mat-label>
+                              <input formControlName="contactEmail" matInput type="text">
+                            </mat-form-field>
+                            <div *ngIf="isSubmit && communitySettingForm.controls.contactEmail.errors ">
+                              <span *ngIf="isSubmit && communitySettingForm.controls.contactEmail.errors.required"
+                                class="valid-msg">Contact Email is Required</span>
+                              <span *ngIf="isSubmit && communitySettingForm.controls.contactEmail.errors.pattern"
+                                class="valid-msg">Please enter valid email</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container>
+        <div class="main-section-membership">
+          <div class="bluenumber">
+            <div class="bluebox">
+              <span>2</span>
+            </div>
+            <div class="right-member">
+              <div class="commu-settings-data">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>Additional Settings</h4>
+                  </div>
+
+                  <div class="col-lg-6 col-md-10 col-sm-12">
+                    <div *ngFor="let list of bccList;let i = index" class="row martop-date">
+                      <div class="col-md-11 col-sm-10">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>BCC for Email Notification</mat-label>
+                          <input (change)="emailValidation($event.target.value)" [(ngModel)]="list.bcc"
+                            [ngModelOptions]="{standalone: true}" matInput type="text">
+                        </mat-form-field>
+                      </div>
+                      <div class="removeBtn col-md-1 col-sm-2">
+                        <button (click)="removeLastBCC(i)" *ngIf="i !=0">
+                          <i class="icon-delete-blue newicon"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row martop-date">
+                      <div class="col-md-11 col-sm-12">
+                        <button (click)="addBCC()" class="addsection">
+                          <strong> + </strong> Add BCC
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </form>
+
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+          <button [disabled]="!communitySettingForm.dirty" (click)="submit()" class="save-changes">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

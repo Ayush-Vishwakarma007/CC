@@ -1,0 +1,38 @@
+
+<div class="main-screen mainnewsscreendetailpage">
+    <section class="news-announcement-details">
+        <div class="inner-img">
+            <img src="assets/images/News_Announcement.jpg" alt="">
+        </div>
+        <div class="container">
+            <div class="detail-text">
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="detail-head">
+                            <a routerLink="/news" style="cursor: pointer;"><img src="assets/icons/left-arrow.svg" style="width: 30px; "/></a><h3  [innerHTML]="newsDetail?.title | safeHtml"></h3>
+                            <br >
+                            <div class="imageblurmain" >
+
+                                <div  class="blur-image" [style.backgroundImage]="'url('+newsDetail.imageUrl+')'"></div>
+                            <img *ngIf="newsDetail?.imageUrl != null && newsDetail?.imageUrl != ''" alt="" src="{{newsDetail?.imageUrl}}" height="300px" width="300px">
+                           
+                        </div>
+                            <span  [innerHTML]="newsDetail?.date | date : 'EEEE d, MMMM y h:mm a' | safeHtml  "></span>
+                            <!-- <div class="share-news">
+                                <a href="#">
+                                    <i class="fa fa-share-alt"></i>
+                                </a>
+                            </div> -->
+                        </div>
+                        <div class="detail-contant">
+
+                            <p [innerHTML]="newsDetail?.sortDescription | safeHtml"></p>
+                            <p [innerHTML]="newsDetail?.fullDescription  | safeHtml"></p>
+                            <!-- <p>Aliquam laoreet libero bibendum, gravida diam id, molestie justo. Donec et velit vel arcu iaculis condimentum vel et arcu. Nulla fringilla risus a venenatis faucibus. Curabitur vel nibh ligula. Integer dignissim eros tortor, sit amet suscipit urna imperdiet egestas. Fusce rhoncus non dui eu feugiat. In vel magna ac turpis vestibulum placerat. Aliquam condimentum pellentesque turpis vitae malesuada. </p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

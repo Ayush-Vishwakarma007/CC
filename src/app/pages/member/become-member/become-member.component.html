@@ -1,0 +1,47 @@
+<div class="main-become-member mainnewsscreen">
+  <div class="padd-member">
+    <!--  Become a lifetime Member -->
+    <div *ngIf="!showPayment"  class="becomemember-section martopmember" >
+      <h4>
+        Become a {{membershipDetail.name}}
+      </h4>
+      <p>Membership Benefits</p>
+      <ul>
+        <li *ngFor="let member of membershipDetail.benefits;let i=index" >
+         {{member}}
+        </li>
+      </ul>
+      <div class="buttonsection">
+        <div class="row">
+          <div class="col-md-6">
+            <button class="skipmember" routerLink="/">
+              Skip
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button [routerLink]="'/become-member-steps/'+typeId"  class="buybtn">
+              $ {{price}} | Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Become a lifetime Member -->
+    <!--  Payment info  -->
+    <div *ngIf="showPayment && membershipDetail.length != 0"  class="payment-info">
+      <h5>
+        Payment info
+      </h5>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="lifetime-membership">
+            <h6>{{membershipDetail.name}} ( {{otherData.durationType}} )</h6>
+            <span>$ {{price}}</span>
+            <button  (click)="onPaymentStatus(null)">Pay Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Payment info  -->
+  </div>
+</div>

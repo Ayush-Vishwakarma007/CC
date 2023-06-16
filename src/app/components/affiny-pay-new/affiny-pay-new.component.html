@@ -1,0 +1,72 @@
+<div class="card-details payment-info1">
+  <fieldset>
+    <legend><img src="assets/icon/secure-payment-green.svg"></legend>
+    <form class="example-form" id="paymentForm">
+      <div class="row " style="    margin-top: -34px;">
+        <div class="col-md-12 paymentMember">
+          
+            <div class="col-md-6">
+              <label class="cardheading" for="credit_card_field_id">Credit Card / Debit Card  <span style="color: red">*</span></label>
+              <div id="credit_card_field_id"></div>
+            </div>
+            <div class="col-md-6 halfwid">
+              <label class="cardheading" for="cvv_field_id">CVV <span style="color: red">*</span>  </label>
+              <div id="cvv_field_id"></div>
+
+              <!--<div id="cvv_field_id" [type]="hide ? 'password' : 'text'">
+
+              </div>-->
+<!--              <input (keypress)="numberOnly($event)" [maxLength]="4" id="cvv_field_id" type=password [type]="hide ? 'password' : 'text'"  matInput>-->
+<!--              <span-->
+<!--              class=" p-viewer">-->
+<!--              <i (click)="myFunction()" aria-hidden="true" [class]="!hide ? 'fa fa-fw fa-eye' :'fa fa-eye-slash '"> </i></span>-->
+
+              <!--<div>
+              <input (keypress)="numberOnly($event)" [maxLength]="4" id="cvv_field_id"  [type]="fields['show'] ? 'text' : 'password'" matInput>
+              <span
+              class="fa fa-fw fa-eye "></span>
+              <span
+              class="fa fa-eye-slash "></span>
+            </div>-->
+
+            </div>
+
+          
+        
+            <div class="col-md-4 halfwid rightpadnone">
+              <label class="cardheading" for="exp_month">Exp Month <span style="color: red">*</span></label>
+              <mat-form-field class="example-full-width">
+                <mat-select id="exp_month" name="exp_month" [(ngModel)]="exp_month">
+                  <mat-option value="01"> January</mat-option>
+                  <mat-option value="02"> February</mat-option>
+                  <mat-option value="03"> March</mat-option>
+                  <mat-option value="04"> April</mat-option>
+                  <mat-option value="05"> May</mat-option>
+                  <mat-option value="06"> June</mat-option>
+                  <mat-option value="07"> July</mat-option>
+                  <mat-option value="08"> August</mat-option>
+                  <mat-option value="09"> September</mat-option>
+                  <mat-option value="10"> October</mat-option>
+                  <mat-option value="11"> November</mat-option>
+                  <mat-option value="12"> December</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 halfwid">
+              <label class="cardheading" for="exp_year">Exp Year <span style="color: red">*</span></label>
+              <mat-form-field class="example-full-width">
+                <mat-select id="exp_year" name="exp_year"  [(ngModel)]="exp_year">
+                  <mat-option *ngFor="let list of yearList" [value]="list"> {{list}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 halfwid rightpadnone">
+              <label class="cardheading" for="postal_code">Zip Code/Postal Code <span style="color: red">*</span></label>
+              <input (keypress)="numberOnly($event)" [maxLength]="5" id="postal_code" name="postal_code" type="text">
+            </div>
+         
+        </div>
+      </div>
+    </form>
+  </fieldset>
+</div>

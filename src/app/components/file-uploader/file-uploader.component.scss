@@ -1,0 +1,10 @@
+.upload-main{border: 1px dashed #ccc; text-align: center; border-radius: 5px; display: flex; justify-content: center; align-self: center; align-items: center; flex-flow: column; min-height: 100px; cursor: pointer;
+  img{max-width: 100%; width: 34px;}
+  p{font-size: 12px; font-weight: 400; color: var(--text-clr); margin: 10px 0 0;}
+}
+
+.__file_uploader_input {
+
+  display: none;
+
+}

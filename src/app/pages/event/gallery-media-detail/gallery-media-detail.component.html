@@ -1,0 +1,174 @@
+<div class="create-event-right-side common-page new-dashboard">
+  <div class="title-news">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="selecttype"><a [routerLink]="'/event-gallery'">
+            <img alt="" src="assets/icon/arrow-news.svg"></a>&nbsp;
+          {{'gallery.mediaDetail.title' | translate}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5">
+        <ul>
+          <li> {{'gallery.mediaDetail.name.lbl.text' | translate}} :</li>
+          <li> {{galleryDetail.name}}</li>
+        </ul>
+      </div>
+      <div class="col-md-5">
+        <ul *ngIf="galleryDetail.eventName!=null && galleryDetail.eventName!=''">
+          <li> {{'gallery.mediaDetail.eventname.lbl.text' | translate}} :</li>
+          <li> {{galleryDetail.eventName}}</li>
+        </ul>
+        <ul *ngIf="galleryDetail.eventName==null || galleryDetail.eventName==''">
+          <li> Chapter Name :</li>
+          <li> {{galleryDetail.chapterName}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5" *ngIf="galleryDetail.categoryName!=null && galleryDetail.categoryName!=''">
+        <ul>
+          <li> {{'gallery.mediaDetail.category.lbl.text' | translate}} :</li>
+          <li> {{galleryDetail.categoryName}}</li>
+        </ul>
+      </div>
+<!--      <div class="col-md-5">-->
+<!--        <ul>-->
+<!--          <li> {{'gallery.mediaDetail.dateTime.lbl.text' | translate}} :</li>-->
+<!--          <li> {{galleryDetail.dateTime | date : 'MMM dd, yyy h:mm a'}}</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+    </div>
+  </div>
+  <div class="tab-main">
+    <!-- <div class="addbtnright">
+      <button class="addanother" [routerLink]="'/management/create-notification'">+ Notification</button>
+    </div> -->
+    <mat-tab-group (selectedTabChange)="resetTab()">
+      <mat-tab label="Media Files">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <span>{{'gallery.mediaDetail.mediaFiles.tab.text' | translate}}</span>
+            </li>
+          </ul>
+        </ng-template>
+
+        <div class="row borbotom">
+          <div class="col-sm-6">
+            <div class="selectall">
+              <input (change)="selectAll('TRACE')" [(ngModel)]="selectedAllTrace" type="checkbox"> <label
+                for="fname">{{'gallery.mediaDetail.mediaFiles.selectAll.lbl.text' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="padding-addmember">
+              <button (click)="moveToTraceAndRestore('REJECTED')" class="rejectmember">{{'gallery.mediaDetail.mediaFiles.moveToTrace.Btn.text' | translate}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="main-thumbs-model" infiniteScroll
+             [infiniteScrollDistance]="3"
+             [scrollWindow]="false"
+             [infiniteScrollThrottle]="50"
+             (scrolled)="onScroll()">
+          <div class="thumb youtube-video" *ngFor="let list of approvedMediaList">
+            <div *ngIf="list['mediaType'] == 'IMAGE'" class="blurimageabout" style="background: no-repeat;" [style.backgroundImage]="'url('+list.link+')'">
+            </div>
+
+            <label>
+              <img *ngIf="list['mediaType'] == 'IMAGE'" [src]="list.link | eventImages" alt="">
+
+              <div *ngIf="list['mediaType'] == 'YOUTUBE'" [innerHtml]="list.youtube_iframe"></div>
+
+              <!-- <video *ngIf="list['mediaType'] == 'VIDEO'" width="300" height="150" controls>
+                <source [src]="list.link |eventImages"></video> -->
+                <iframe *ngIf="list['mediaType'] == 'VIDEO'" width="300" height="150" controls  [src]="list.link |eventImages"></iframe>
+            </label>
+            <input (change)="getCheckedItems(list,'APPROVED')" [(ngModel)]="list['checked']" class="checkb"
+              type="checkbox">
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="User Media">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <span>{{'gallery.mediaDetail.usermediaFiles.tab.text' | translate}}</span>
+            </li>
+          </ul>
+        </ng-template>
+        <div class="gallery-media-table table-structure-front">
+          <table>
+            <thead>
+              <tr>
+                <th width="20"> </th>
+                <th> {{'gallery.mediaDetail.usermediaFiles.table.header.user.text' | translate}} </th>
+                <th class="uploaded">{{'gallery.mediaDetail.usermediaFiles.table.header.count.text' | translate}}</th>
+                <th width="140">{{'gallery.mediaDetail.usermediaFiles.table.header.action.text' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody class="tabl-body">
+              <tr class="borbott" *ngFor="let list of userMediaDetail">
+                <td></td>
+                <td class="thumb">
+                  <button data-toggle="modal" data-target="#imagepopup" *ngIf="!list.profilePictureUrl">
+                    <span> {{getShortName(list.firstName)}}{{getShortName(list.lastName)}} </span>
+                  </button>
+                  <button data-toggle="modal" data-target="#imagepopup" *ngIf="!!list.profilePictureUrl">
+                    <img src="{{list.profilePictureUrl}}"
+                      alt=""> </button>
+                  <span class="name">{{list.firstName | titlecase}}
+                    {{list.lastName | titlecase}}</span> </td>
+                <td>{{list.totalFiles}}</td>
+                <td>
+                  <a href="/user-edit/{{this.galleryDetailId}}/{{list.userId}}" class="edit-button"><i
+                      class="icon-edit-member newicon"></i></a>
+                  <!-- <button class="edit-button"><i class="icon-delete newicon"></i></button></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Rejected Media">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <span>{{'gallery.mediaDetail.recyclemediaFiles.tab.text' | translate}}</span>
+            </li>
+          </ul>
+        </ng-template>
+        <div class="row borbotom">
+          <div class="col-sm-6">
+            <div class="selectall">
+              <input (change)="selectAll('RESTORE')" [(ngModel)]="selectedAllRestore" type="checkbox"> <label
+                for="fname">{{'gallery.mediaDetail.recyclemediaFiles.selectAll.lbl.text' | translate}}</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="padding-addmember">
+              <button (click)="moveToTraceAndRestore('DELETE')" class="addmember delete">{{'gallery.mediaDetail.recyclemediaFiles.delete.Btn.text' | translate}}</button> <button
+                (click)="moveToTraceAndRestore('APPROVED')" class="addmember">{{'gallery.mediaDetail.recyclemediaFiles.restore.Btn.text' | translate}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="main-thumbs-model">
+          <div class="thumb youtube-video" *ngFor="let list of rejectedMediaList">
+            <div *ngIf="list['mediaType'] == 'IMAGE'" class="blurimageabout" style="background: no-repeat;"
+              [style.backgroundImage]="'url('+list.link+')'"></div>
+            <label>
+              <img *ngIf="list['mediaType'] == 'IMAGE'" src="{{list.link}}" alt="">
+              <div *ngIf="list['mediaType'] == 'YOUTUBE'" [innerHtml]="list.youtube_iframe"></div>
+              <!-- <video *ngIf="list['mediaType'] == 'VIDEO'" width="320" height="240" controls>
+                <source src="{{list.link}}"></video> -->
+                <iframe *ngIf="list['mediaType'] == 'VIDEO'" width="320" height="240" controls  src="{{list.link}}"></iframe>
+            </label>
+            <input (change)="getCheckedItems(list,'REJECTED')" [(ngModel)]="list['checked']" class="checkb"
+              type="checkbox">
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

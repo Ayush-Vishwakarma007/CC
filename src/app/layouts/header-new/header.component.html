@@ -1,0 +1,648 @@
+<!-- New Header html -->
+<!--<div class="top-strip-num" *ngIf="communityService.communityDetail?.hidePhoneEmailOnNavigation">-->
+<!--  <div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--      <div class="col-sm-12">-->
+<!--        <ul *ngIf="communityService.communityDetail?.hidePhoneEmailOnNavigation">-->
+<!--          <li *ngIf="this.communityService.communityDetail.basicInformation?.phone"><a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone" class="borright"><i class="fa fa-phone"></i>{{this.communityService.communityDetail.basicInformation?.phone}}</a></li>-->
+<!--          <li *ngIf="this.communityService.communityDetail.basicInformation?.email"><a [href] = "'mailto: '+this.communityService.communityDetail.basicInformation?.email"><i class="fa fa-envelope"></i>{{this.communityService.communityDetail.basicInformation?.email}}</a></li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--  -->
+<!-- mat-elevation-z5 -->
+<div [ngClass]="{'' : true, 'sticky' : isSticky}">
+  <div class="top-header-new">
+    <div class="">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-6 col-sm-4 col-md-4 col-lg-5">
+            <div class="social-header" *ngIf = "this.communityService.communityDetail.basicInformation?.socialMediaList?.length != 0">
+              <ul >
+                <li *ngFor = "let item of this.communityService.communityDetail.basicInformation?.socialMediaList"><a href="{{item.link}}" target="_blank">
+                  <img  src = "{{item.icon}}">
+                </a></li>
+              </ul>
+              <div class="phonetop" *ngIf="communityService.communityDetail?.hidePhoneEmailOnNavigation">
+                <span *ngIf="this.communityService.communityDetail.basicInformation?.phone"><a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone"><i class="fa fa-phone"></i>{{this.communityService.communityDetail.basicInformation?.phone}}</a></span>
+                <span *ngIf="this.communityService.communityDetail.basicInformation?.email"><a [href] = "'mailto: '+this.communityService.communityDetail.basicInformation?.email"><i class="fa fa-envelope"></i>
+                  {{this.communityService.communityDetail.basicInformation?.email}}
+                  </a></span>
+              </div>
+              <button class="subscribe-news" *ngIf="communityService.communityDetail?.showHeaderNavigation" (click)="openModalWithClass(template)"> {{'newsletter.title.Button.text' | translate}} </button>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-8 col-md-8 col-lg-7">
+            <div class="dashboard-top-header">
+              <div class="divid-in-responsive">
+                <a  style="text-decoration: none;"*ngIf="communityService.communityDetail?.allowSponsorship" [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id"  class="become-sponsor-header" type="button">
+                  <img src="assets/icon/solution.svg" alt="">
+                  {{'sponsorshipTitle' | translate}}
+                </a>
+                <a style="text-decoration: none;" *ngIf="(communityService.communityDetail?.allowMembership && userDetail?.showJoinMembership && userDetail?.mainUser == true) || !this.authService.isLogin" class="become-sponsor-header" routerLink="/membership-plan"  type="button">
+                  <img src="assets/icon/link.svg" alt="">
+                  {{'membershipTitle' | translate}}
+                </a>
+              </div>
+              <div class="divid-in-responsive2">
+                <button *ngIf="communityService.chapterList?.length > 1" class="chapter-new-header" data-target="#exampleModal"
+                        data-toggle="modal" id="openChapter" type="button">
+                <span *ngIf="chapter?.imageUrl">
+                  <img alt="" src="{{chapter?.imageUrl}}"
+                       style="border-radius: 50px;;">
+                </span>
+                  <i>
+                    <u>Our Community</u>
+                    {{chapter?.name}}
+                  </i>
+                </button>
+                <button *ngIf="this.authService.isLogin" class="dashboardbtn" routerLink="/membership-dashboard">
+                  <img src="assets/icon/material-dashboard.svg" alt=""> <span>Dashboard</span>
+                </button>
+                <div class="" >
+                  <div *ngFor="let menu of this.communityService.menu">
+                    <div *ngIf="!this.authService.isLogin && menu.link=='/login'" class="login-header-new">
+                      <a (click)="showChapterModal()" class="nav-link" type="button"> {{menu.name}}
+                      </a>
+                    </div>
+                  </div>
+                  <div aria-colcount="" *ngIf="this.authService.isLogin" class="dropdown new-profile-header">
+                    <a class="topprofile" data-toggle="dropdown" type="button">
+                      <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profileimg-headr">
+                        <img alt=""  [src]="menuService?.profileDetail?.profileUrl | authImages ">
+
+                      </span>
+                      <button  *ngIf="menuService?.profileDetail?.profileShow == false" class="withoutpic">
+                        <img alt="" src="assets/icon/user-become.svg">
+                      </button>
+                      <span class="profiledown" style="display: inline-block; width: 80px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis; color: #fff; padding-left: 8px; padding-right: 10px;"> {{menuService?.profileDetail?.firstName | titlecase}} </span>
+                    </a>
+                    <div class="dropdown-menu">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul>
+                            <li><a routerLink="/profile-member"> <i class="fas fa-user"></i> Profile</a></li>
+                            <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i class="fas fa-lock"></i> Change Password</a></li>
+                            <li><a (click)='logout()'> <img src="assets/icon/open-account-logout.svg" alt=""> Log out</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Menu -->
+
+  <div class="menu-header-main">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand newheaderlogo" href="#">
+        <ul class="spcs-logo-header-new" *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''">
+          <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url |communityImages"></li>
+          <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url |communityImages"></li>
+        </ul>
+        <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')" class="singlelogo">
+          <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url |communityImages">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <i aria-hidden="true" class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li *ngFor="let menu of this.communityService.menu" [ngClass]="menu['menuItems'].length != 0 ? 'dropdown' : '' "
+              [routerLinkActiveOptions]="{exact:true}"
+              class="nav-item menu-header" routerLinkActive="active">
+            <a *ngIf="menu['menuItems'].length == 0 && !menu.pageId && menu.link!='/login' && menu.redirectToOtherWeb==false"
+               [routerLinkActiveOptions]="{ exact: true }"
+               class="nav-link" routerLink="{{menu.link}}"
+               routerLinkActive="active">{{menu.name}} 
+               <span class="sr-only">(current)</span>
+            </a> 
+            <a *ngIf="menu['menuItems'].length == 0 && menu.pageId && menu.redirectToOtherWeb==false"
+               [href]="'/dynamic-page'+menu.link"
+               [routerLinkActiveOptions]="{ exact: true }" class="nav-link"
+               routerLinkActive="active">{{menu.name}} <span
+              class="sr-only">(current)</span>
+            </a>
+            <!-- gurjari -->
+            <a *ngIf="menu['menuItems'].length == 0  && menu.redirectToOtherWeb==true"
+               [routerLinkActiveOptions]="{ exact: true }"
+               type="button"
+               class="nav-link" href="{{menu.link}}" 
+               routerLinkActive="active" target="_blank">{{menu.name}}<span
+              class="sr-only">(current)</span>
+            </a>
+            <a *ngIf="menu['menuItems'].length != 0" aria-expanded="false" aria-haspopup="true"
+               class="dropdown-toggle dropicon" class="nav-link" data-toggle="dropdown" id="navbarDropdown"
+               role="button" routerLink="{{menu.link}}">
+              {{menu.name}}
+            </a>
+            <!-- <span *ngIf="menu['menuItems'].length != 0" class="dropdown-toggle dropicon"
+                  data-toggle="dropdown"> <img alt="" src="assets/icon/download.svg"></span>
+              <div *ngIf="menu['menuItems'].length != 0" aria-labelledby="navbarDropdown"
+                 class="dropdown-menu">
+              <div *ngFor="let item of menu.menuItems" class="dropdown-item">
+                <a *ngIf="item.pageId" [href]="'/dynamic-page'+item.link">{{item.name}}</a>
+                <a *ngIf="!item.pageId" [href]="item.link">{{item.name}}</a>
+              </div>
+            </div> -->
+
+          </li>
+          <li class="donatenow-header">
+            <ul class="responsive-setings">
+              <li>
+                <a class="respons" *ngIf="communityService.communityDetail.allowDonation"
+                   [routerLink]="'/donor-checkout-without-steps/chapter/'+this.chapter?.id" target="_blank">
+                  <span>
+                    <img src="assets/icon/heart-new.svg" alt="">
+                  </span>
+                  {{'donation' | translate}}
+                </a>
+              </li>
+              <!-- <li>
+                <a class="respons" *ngIf="communityService.communityDetail.allowDonation"
+                 [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id"   target="_blank">
+                  <span>
+                    <img src="assets/icon/heart-new.svg" alt="">
+                  </span>
+                  {{'donation' | translate}}
+                </a>
+              </li> -->
+              <li class="normal-none">
+                <div class="dashboard-top-header">
+                  <div class="divid-in-responsive">
+                    <a  style="text-decoration: none;"*ngIf="communityService.communityDetail?.allowSponsorship" [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id" target="_blank" class="become-sponsor-header" type="button">
+                      <img src="assets/icon/solution.svg" alt="">
+                      {{'sponsorshipTitle' | translate}}
+                    </a>
+                    <a style="text-decoration: none;" *ngIf="(communityService.communityDetail?.allowMembership && userDetail?.showJoinMembership && userDetail?.mainUser == true) || !this.authService.isLogin" class="become-sponsor-header" routerLink="/membership-plan" target="_blank" type="button">
+                      <img src="assets/icon/link.svg" alt="">
+                      {{'membershipTitle' | translate}}
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="dashboard-top-header normal-none">
+                <button *ngIf="this.authService.isLogin" class="dashboardbtn" routerLink="/membership-dashboard">
+                  <img src="assets/icon/material-dashboard.svg" alt=""> <span>Dashboard</span>
+                </button>
+                <div *ngFor="let menu of this.communityService.menu">
+                  <div *ngIf="!this.authService.isLogin && menu.link=='/login'" class="login-header-new memlogin">
+                    <a (click)="showChapterModal()" class="nav-link" type="button"> {{menu.name}}
+                    </a>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </li>
+          <li class="normal-none"><button class="subscribe-news-mobile" *ngIf="communityService.communityDetail?.showHeaderNavigation" (click)="openModalWithClass(template)"> {{'newsletter.title.Button.text' | translate}} </button></li>
+
+          <li class="normal-none">
+            <div aria-colcount="" *ngIf="this.authService.isLogin" class="dropdown new-profile-header">
+              <a class="topprofile" data-toggle="dropdown" type="button">
+                <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profileimg-headr">
+                  <img alt="" src="{{menuService?.profileDetail?.profileUrl}}">
+                </span>
+                <button *ngIf="menuService?.profileDetail?.profileShow == false" class="withoutpic">
+                  <img alt="" src="assets/icon/user-become.svg">
+                </button>
+                <span class="profiledown" style="display: inline-block; width: 80px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis; color: #161616; padding-left: 8px; padding-right: 10px;"> {{menuService?.profileDetail?.firstName | titlecase}} </span>
+              </a>
+              <div class="dropdown-menu">
+                <div class="row">
+                  <div class="col-md-12">
+                    <ul>
+                      <li><a routerLink="/profile-member"> <i class="fas fa-user"></i> Profile</a></li>
+                      <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i class="fas fa-lock"></i> Change Password</a></li>
+                      <li><a (click)='logout()'> <img src="assets/icon/open-account-logout.svg" alt=""> Log out</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- <li class="sponsordorp">
+            <button *ngIf="communityService.communityDetail?.allowSponsorship" [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id"
+                    class="become-sponsor"
+                    type="button">
+              <i class="icon-share-spcs newicon"></i> {{'sponsorshipTitle' | translate}}
+            </button>
+          </li>
+          <li class="sponsordorp">
+            <button *ngIf="communityService.communityDetail?.allowMembership" class="become-spcs" routerLink="/membership-plan"
+                    type="button">
+              <i class="icon-share-spcs newicon"></i>{{'membershipTitle' | translate}}
+            </button>
+          </li>
+          <li class="sponsordorp">
+            <button [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id"
+                    class="bacome-member-button">
+              {{'donationTitle' | translate}}
+            </button>
+          </li>
+          <li class="login-logout">
+            <div *ngIf="this.authService.isLogin" class="dropdown profile profileicontop toprightprofile">
+              <a class="" data-toggle="dropdown" type="button">
+                <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profiletop">
+                  <img alt="" src="{{menuService?.profileDetail?.profileUrl}}">
+                </span>
+                <button *ngIf="menuService?.profileDetail?.profileShow == false" class="login-round">
+                  <img alt="" src="assets/icon/user-become.svg">
+                </button>
+                <span
+                  style="display: inline-block; width: 60px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;"> {{menuService?.profileDetail?.firstName | titlecase}} </span>
+              </a>
+              <div class="dropdown-menu">
+                <div class="row">
+                  <div class="col-md-12">
+                    <ul>
+                      <li><a routerLink="/profile"> <i class="fas fa-user"></i> Profile</a></li>
+                      <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i class="fas fa-lock"></i> Change Password</a></li>
+                      <li><a (click)='logout()'> <img src="assets/icon/open-account-logout.svg" alt=""> Log out</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!this.authService.isLogin" class="login-txt">
+              <a (click)="showChapterModal()" class="nav-link" type="button"> Login
+              </a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+<!-- New Header html -->
+
+<!-- <div class="main-screen">
+  <div class="new-top-header" *ngIf="communityService.communityDetail?.showHeaderNavigation">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-4">
+              <div class="left-icon-part" *ngIf = "this.communityService.communityDetail.basicInformation?.socialMediaList?.length != 0">
+                  <ul >
+                      <li *ngFor = "let item of this.communityService.communityDetail.basicInformation?.socialMediaList"><a href="{{item.link}}" target="_blank">
+                        <img src = "{{item.icon}}" style="height: 30px; width: 30px;">
+                      </a></li>
+                  </ul>
+              </div>
+          </div>
+            <div class="col-sm-8 col-md-9 col-lg-8">
+
+              <div class="right-contact">
+                <ul>
+                  <li> <button class="addanother newsletter" (click)="openModalWithClass(template)">Sign up for {{'newsletter.title.button' | translate}}</button></li>
+                  <li *ngIf="this.communityService.communityDetail.basicInformation?.email"><a [href] = "'mailto: '+this.communityService.communityDetail.basicInformation?.email"><i class="fa fa-envelope"></i>{{this.communityService.communityDetail.basicInformation?.email}}</a></li>
+                  <li *ngIf="this.communityService.communityDetail.basicInformation?.phone"><a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone"><i class="fa fa-phone"></i>{{this.communityService.communityDetail.basicInformation?.phone}}</a></li>
+                </ul>
+              </div>
+          </div>
+          </div>
+      </div>
+  </div>
+
+
+  <section [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}" class="header header-new">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 col-md-3 col-lg-2">
+          <div class="spcs-logo-header">
+            <a routerLink="">
+              <ul
+                *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''">
+                <li><img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}"></li>
+                <li><img *ngIf="communityService.logo?.logo2" alt="logo" src="{{communityService.logo?.logo2?.url}}">
+                </li>
+              </ul>
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}">
+              </span>
+
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-12  col-md-9  col-lg-10 tabcollapse">
+          <div class="row nopaidmenu">
+            <div class="col-md-12 text-right">
+              <div class="allbtn">
+                <a  style="text-decoration: none;"*ngIf="communityService.communityDetail?.allowSponsorship" [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id"
+                target="_blank"
+                class="become-sponsor"
+                        type="button">
+
+                  <i class="icon-share-spcs newicon"></i> {{'sponsorshipTitle' | translate}}
+              </a>
+                  <a style="text-decoration: none;" *ngIf="(communityService.communityDetail?.allowMembership && userDetail?.showJoinMembership && userDetail?.mainUser == true) || !this.authService.isLogin" class="become-spcs" routerLink="/membership-plan"
+                  target="_blank"
+                  type="button">
+                  <i class="icon-share-spcs newicon"></i>{{'membershipTitle' | translate}}
+            </a>
+                <button *ngIf="communityService.chapterList?.length > 1" class="chapter" data-target="#exampleModal"
+                        data-toggle="modal" id="openChapter" type="button">
+                  <span *ngIf="chapter?.imageUrl">
+                    <img alt="" src="{{chapter?.imageUrl}}"
+                         style="border-radius: 50px;;">
+                  </span>
+                  <i>
+                    <u>Our Community</u>
+                    {{chapter?.name}}
+                  </i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-12 paddtopmenu">
+              <div class="main-menu topmenu">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                  <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+                          class="navbar-toggler"
+                          data-target="#navbarNavDropdown" data-toggle="collapse" type="button">
+                    <img alt="" src="assets/icon/menu.svg">
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                      <li *ngFor="let menu of this.communityService.menu" [ngClass]="menu['menuItems'].length != 0 ? 'dropdown' : '' "
+                          [routerLinkActiveOptions]="{exact:true}"
+                          class="nav-item" routerLinkActive="active">
+
+                        <a *ngIf="menu['menuItems'].length == 0 && !menu.pageId && menu.link!='/login'"
+                           [routerLinkActiveOptions]="{ exact: true }"
+                           class="nav-link" routerLink="{{menu.link}}"
+                           routerLinkActive="active">{{menu.name}} <span
+                          class="sr-only">(current)</span></a>
+                        <a *ngIf="menu['menuItems'].length == 0 && menu.pageId"
+                           [href]="'/dynamic-page'+menu.link"
+                           [routerLinkActiveOptions]="{ exact: true }" class="nav-link"
+                           routerLinkActive="active">{{menu.name}} <span
+                          class="sr-only">(current)</span></a>
+
+                        <a *ngIf="menu['menuItems'].length != 0" aria-expanded="false" aria-haspopup="true"
+                           class="dropdown-toggle dropicon" class="nav-link" data-toggle="dropdown" id="navbarDropdown"
+                           role="button">
+                          {{menu.name}}
+                        </a>
+                        <span *ngIf="menu['menuItems'].length != 0" class="dropdown-toggle dropicon"
+                              data-toggle="dropdown"> <img alt="" src="assets/icon/download.svg"></span>
+                        <div *ngIf="menu['menuItems'].length != 0" aria-labelledby="navbarDropdown"
+                             class="dropdown-menu about-dropdown">
+                          <div *ngFor="let item of menu.menuItems" class="dropdown-item">
+                            <a *ngIf="item.pageId" [href]="'/dynamic-page'+item.link">{{item.name}}</a>
+                            <a *ngIf="!item.pageId" [href]="item.link">{{item.name}}</a>
+                          </div>
+                        </div>
+
+                      </li>
+                      <li class="sponsordorp">
+                        <button *ngIf="communityService.communityDetail?.allowSponsorship" [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id"
+                                class="become-sponsor"
+                                type="button">
+                          <i class="icon-share-spcs newicon"></i> {{'sponsorshipTitle' | translate}}
+                        </button>
+                      </li>
+                      <li class="sponsordorp">
+                        <button *ngIf="communityService.communityDetail?.allowMembership" class="become-spcs" routerLink="/membership-plan"
+                                type="button">
+                          <i class="icon-share-spcs newicon"></i>{{'membershipTitle' | translate}}
+                        </button>
+                      </li>
+                      <li class="sponsordorp">
+                        <button [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id"
+                                class="bacome-member-button">
+                          {{'donationTitle' | translate}}
+                        </button>
+                      </li>
+                      <li class="login-logout">
+                        <div *ngIf="this.authService.isLogin" class="dropdown profile profileicontop toprightprofile">
+                          <a class="" data-toggle="dropdown" type="button">
+                            <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profiletop">
+                              <img alt="" src="{{menuService?.profileDetail?.profileUrl}}">
+                            </span>
+                            <button *ngIf="menuService?.profileDetail?.profileShow == false" class="login-round">
+                              <img alt="" src="assets/icon/user-become.svg">
+                            </button>
+                            <span
+                              style="display: inline-block; width: 60px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;"> {{menuService?.profileDetail?.firstName | titlecase}} </span>
+                          </a>
+                          <div class="dropdown-menu">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <ul>
+                                  <li><a routerLink="/profile"> <i class="fas fa-user"></i> Profile</a></li>
+                                  <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i class="fas fa-lock"></i> Change Password</a></li>
+                                  <li><a (click)='logout()'> <img src="assets/icon/open-account-logout.svg" alt=""> Log out</a></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="!this.authService.isLogin" class="login-txt">
+                          <a (click)="showChapterModal()" class="nav-link" type="button"> Login
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+
+              <div class="selectchapter">
+                <button *ngIf="this.authService.isLogin" class="homebutton" routerLink="/membership-dashboard">
+                  <i class="icon-dots-menu newicon"></i> <span>Dashboard</span>
+                </button>
+                <div class="login-button" >
+                  <div *ngFor="let menu of this.communityService.menu">
+                  <div *ngIf="!this.authService.isLogin && menu.link=='/login'" class="login-txt toplog">
+                    <a (click)="showChapterModal()" class="nav-link" type="button"> {{menu.name}}
+                    </a>
+                  </div>
+                  </div>
+                  <div *ngIf="this.authService.isLogin" class="dropdown profile profileicontop toprightprofile">
+                    <a class="" data-toggle="dropdown" type="button">
+                      <span *ngIf="menuService?.profileDetail?.profileShow == true" class="profiletop">
+                        <img alt="" src="{{menuService?.profileDetail?.profileUrl}}">
+                      </span>
+                      <button *ngIf="menuService?.profileDetail?.profileShow == false" class="login-round">
+                        <img alt="" src="assets/icon/user-become.svg">
+                      </button>
+                      <span
+                        style="display: inline-block; width: 60px; white-space: nowrap; overflow: hidden !important; text-overflow: ellipsis;"> {{menuService?.profileDetail?.firstName | titlecase}} </span>
+                    </a>
+                    <div class="dropdown-menu">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul>
+                            <li><a routerLink="/profile"> <i class="fas fa-user"></i> Profile</a></li>
+                            <li> <a data-toggle="modal" data-target="#exampleModalChangePassword"><i class="fas fa-lock"></i> Change Password</a></li>
+                            <li><a (click)='logout()'> <img src="assets/icon/open-account-logout.svg" alt=""> Log out</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a style="text-decoration: none; text-align: center;" *ngIf="communityService.communityDetail?.allowDonation" [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id"
+                        class="bacome-member-button"
+                        target="_blank">
+                  {{'donation' | translate}}
+              </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 text-right">
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div> -->
+
+
+<div #chapterModel *ngIf="communityService.chapterList?.length > 1" aria-hidden="true" aria-labelledby="exampleModalLabel"
+     class="modal fade right chaptermodel" data-backdrop="static" data-keyboard="false" id="exampleModal" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content homepagechapter">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select Chapter</h5>
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close close-container leftarrow">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="menuright">
+          <li *ngFor="let c of this.communityService.chapterList">
+            <a (click)='clickChapter(c)' *ngIf="c.level == 0" routerLink="/">
+              <span> <img alt="" src="{{c.imageUrl}}"> </span> <i>{{c.name}} </i> </a>
+            <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && !c.onClickRedirect"
+               [target]="!c.onClickRedirect?'_self':'_blank'">
+              <span> <img alt="" src="{{c.imageUrl}}"> </span> <i>{{c.name}} </i> </a>
+            <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && c.onClickRedirect"
+               [href]="c.redirectUrl"
+               [target]="!c.onClickRedirect?'_self':'_blank'">
+              <span> <img alt="" src="{{c.imageUrl}}"> </span> <i>{{c.name}} </i> </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="login_modal_btn" routerLink="/login" style="display: none;"></button>
+<div #chapterModelLogin class="modal" id="cmyModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">which chapter you want to login?</h4>
+        <button class="close" data-dismiss="modal" id="login_modal_close_btn" type="button">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <ng-container *ngFor="let c of this.communityService.chapterList">
+            <div *ngIf="c.allowLogin==true" class="col-lg-3">
+              <label (click)="clickOnChapterModal(c)" style="cursor: pointer">{{c.name}}</label></div>
+          </ng-container>
+          <div class="col-lg-3"><label (click)="clickOtherChapterModal('n')" style="cursor: pointer">Other</label></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"> {{'newsletter.title.Button.text' | translate}} </h4>
+    <button (click)="closeNewsMol()" aria-label="Close" id="closeModel" class="close-container">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="email-footer">
+      <form [formGroup]="newsLetterform" class="example-form" id="newsLetterform">
+        <div class="row noborer-footer newsletterheader">
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput placeholder="" type="text" formControlName="firstName" (keypress)="charOnly($event)" >
+            </mat-form-field>
+            <!-- <div class="styled-input">
+              <input formControlName="firstName" type="text" (keypress)="charOnly($event)" />
+              <label>First Name </label>
+            </div> -->
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Middle Name</mat-label>
+              <input matInput placeholder="" type="text" formControlName="MiddleName" (keypress)="charOnly($event)" >
+            </mat-form-field>
+            <!-- <div class="styled-input">
+              <input formControlName="firstName" type="text" (keypress)="charOnly($event)" />
+              <label>First Name </label>
+            </div> -->
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput placeholder="" type="text" formControlName="lastName" (keypress)="charOnly($event)" >
+            </mat-form-field>
+            <!-- <div class="styled-input">
+              <input formControlName="lastName" type="text" (keypress)="charOnly($event)" />
+              <label>Last Name</label>
+            </div> -->
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email ID</mat-label>
+              <input matInput placeholder="" formControlName="email" type="email"  >
+            </mat-form-field>
+            <span *ngIf="isSubmit && newsLetterform.controls.email.errors" class="mob-res-email">
+              <div *ngIf="newsLetterform.controls.email.errors.required" class="valid-msg">Email is required.</div>
+              <div *ngIf="newsLetterform.controls.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+            </span>
+            <!-- <div class="styled-input">
+              <input formControlName="email" type="email">
+              <label>Email ID <span class="valid-msg">*</span></label>
+              <span *ngIf="isSubmit && newsLetterform.controls.email.errors" class="mob-res-email">
+                            <div *ngIf="newsLetterform.controls.email.errors.required" class="valid-msg">Email is required.</div>
+                            <div *ngIf="newsLetterform.controls.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+                          </span>
+            </div> -->
+          </div>
+          <div class="col-sm-6 col-md-12 col-lg-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Phone Number</mat-label>
+              <input matInput placeholder="" formControlName="phone"  type="text" id="phone-number" appPhoneMask appNgModelPhoneMask >
+            </mat-form-field>
+            <!-- <div class="styled-input">
+              <input formControlName="phone" type="text" id="phone-number" appPhoneMask [maxLength]="10" [minLength]="10"  (keypress)="numberOnly($event)">
+              <label>Phone Number</label>
+            </div> -->
+          </div>
+        </div>
+        <input style="margin-top: 25px; width: 150px; margin-bottom: 10px;" type="submit" class="password btn-text" (click)="newsletterChanges()" value="SUBSCRIBE">
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+
+

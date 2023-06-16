@@ -1,0 +1,252 @@
+<form id="assignForm" [formGroup]="assignForm">
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">{{formName}}</h4>
+      <button type="button" class="close round-btn" aria-label="Close" (click)="modalHide()">
+        <span class="fa fa-close"></span>
+      </button>
+      <button type="button" class="refresh round-btn" (click)="refreshForm()">
+        <span class="fa fa-refresh"></span>
+      </button>
+      <button type="button" class="file round-btn" (click)="submit()">
+        <span class="fa fa-file-text-o"></span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-data">
+        <div class="row">
+          <div class="col-md-9">
+            <h2 class="form-tlt">Details</h2>
+          </div>
+          <div class="col-md-3 align-self-center">
+            <div class="active-btn">
+              <div class="onoffswitch">
+                <input type="checkbox"
+                       (change)="isChangeLimitAccessToggle($event.target.checked ? 'true' : 'false')"
+                       name="activeStatus" for class="onoffswitch-checkbox" id="myonoffswitch"
+                       [checked]="checked">
+                <label class="onoffswitch-label" for="myonoffswitch">
+                  <span class="onoffswitch-inner"></span>
+                  <span class="onoffswitch-switch"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-data assign-form">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Assignment Name<span class="red"> *</span></mat-label>
+                  <input matInput type="text" formControlName="assignmentName" (keypress)="charOnly($event)">
+                </mat-form-field>
+                <div *ngIf="submitted && formCon.assignmentName.errors">
+                  <div *ngIf="formCon.assignmentName.errors.required" class="valid-msg">Assignment Name is
+                    required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Assignment Type<span class="red"> *</span></mat-label>
+                  <mat-select formControlName="assignType" (selectionChange)="changeOption($event)">
+                    <mat-option value="">Select Type</mat-option>
+                    <mat-option value="user">User</mat-option>
+                    <mat-option value="role">Role</mat-option>
+                    <mat-option value="team">Team</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && formCon.assignType.errors">
+                  <div *ngIf="formCon.assignType.errors.required" class="valid-msg">Assignment Type is
+                    required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Assignees<span class="red"> *</span></mat-label>
+                  <mat-select formControlName="assignees" multiple>
+                    <mat-option *ngFor="let option of optionList;"
+                                value="{{option.id}}">{{option.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="submitted && formCon.assignees.errors">
+                  <div *ngIf="formCon.assignees.errors.required" class="valid-msg">Assignees is
+                    required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Description</mat-label>
+                  <input matInput type="text" formControlName="comment">
+                </mat-form-field>
+                <div *ngIf="submitted && formCon.comment.errors">
+                  <div *ngIf="formCon.comment.errors.required" class="valid-msg">Account
+                    Number is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field>
+                <mat-label>Start date<span class="red"> *</span></mat-label>
+                <input matInput formControlName="date" [matDatepicker]="picker" (keypress)="numberOnly($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <div *ngIf="submitted && formCon.date.errors">
+                <div *ngIf="formCon.date.errors.required" class="valid-msg">Start date is required</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field>
+                <mat-label>Due date</mat-label>
+                <input matInput formControlName="dueDate" [matDatepicker]="picker1" (keypress)="numberOnly($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              <div *ngIf="submitted && formCon.dueDate.errors">
+                <div *ngIf="formCon.dueDate.errors.required" class="valid-msg">Due date is required</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-checkbox (change)="onChangeCheckbox($event)" formControlName="anonymousForm">Anonymous Form
+              </mat-checkbox>
+            </div>
+            <div class="col-md-6">
+              Recurring Form
+              <span>Help people to set  Recurring Form .</span>
+              <mat-checkbox [(ngModel)]="recurringForm" [ngModelOptions]="{standalone: true}" [value]="true">Recurring
+                Form
+              </mat-checkbox>
+            </div>
+            <div class="col-md-12">
+                <span *ngIf="recurringForm == true">
+                    <div class="row martopevent">
+                    <div class="col-md-4 col-sm-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Recurrence Type</mat-label>
+                          <mat-select #t (selectionChange)="changeScheduleType(t.value)"
+                                      [(ngModel)]="cronScheduleRequest['scheduleType']" [ngModelOptions]="{standalone: true}">
+                            <mat-option value="">Select Recurrence Type</mat-option>
+                            <mat-option *ngFor="let list of scheduleTypeList"
+                                        value="{{list['value']}}">{{list['name']}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    <div *ngIf="scheduleType != '' && scheduleType != 'Week'" class="col-md-8 col-sm-12">
+                      <mat-form-field class="occur">
+                          <mat-label>Repeat every</mat-label>
+                          <mat-select (selectionChange)="setSchedule()" [(ngModel)]="cronScheduleRequest['repeatCount']"
+                                      [ngModelOptions]="{standalone: true}">
+                            <mat-option value="">Select Repeat every</mat-option>
+                            <mat-option *ngFor='let day of counter(30) ;let i = index' [value]="i+1">{{i + 1}}</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      <span class="month"> {{scheduleType}} </span>
+                      </div>
+                    </div>
+
+                    <div *ngIf="scheduleType != '' && scheduleType == 'Week'" class="row martopevent">
+                      <div class="col-md-12">
+                        <ul class="weakly-recurring">
+                          <li>Repeat on</li>
+                          <li>
+                            <mat-checkbox (change)="setSchedule('week')" *ngFor="let list of WeekDay;"
+                                          [checked]="list['check'] == true"   [(ngModel)]="list['check']" [ngModelOptions]="{standalone: true}"
+                                          value="{{list['value']}}">{{list['name']}}</mat-checkbox>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div *ngIf="scheduleType != '' && scheduleType == 'Month'" class="row martopevent">
+                      <mat-radio-group [value]="cronScheduleRequest['type']" (change)="setSchedule('month')" aria-label="Select an option">
+                        <div class="col-md-12">
+
+                          <div class="row align-items-center">
+                              <div class="col-md-1">
+                                <mat-radio-button [checked]="cronScheduleRequest['type'] == 'month'" value="month"></mat-radio-button>
+                              </div>
+                                <div class="col-md-7 ">
+                                  <mat-form-field class="occur">
+                                    <mat-label>Occurs on</mat-label>
+                                    <mat-select (selectionChange)="setSchedule('month+month')"
+                                                [(ngModel)]="cronScheduleRequest['dayOfMonth']"
+                                                [ngModelOptions]="{standalone: true}">
+                                      <mat-option value="">Select Occurs on</mat-option>
+                                        <mat-option *ngFor='let day of counter(30) ;let i = index' [value]="i+1">{{i + 1}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <span class="month"> of the month </span>
+                                </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-12 martopevent">
+
+                              <div class="row align-items-center">
+                                <div class="col-md-1 col-sm-1">
+                                  <mat-radio-button [checked]="cronScheduleRequest['type'] != 'month'" value="week"></mat-radio-button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 occurmain">
+                                  <mat-form-field class="occur">
+                                    <mat-label>Occurs on</mat-label>
+                                    <mat-select (selectionChange)="setSchedule('month+week+count')"
+                                                [(ngModel)]="cronScheduleRequest['weekIndex']"
+                                                [ngModelOptions]="{standalone: true}">
+                                      <mat-option value="">Select Occurs on</mat-option>
+                                      <mat-option *ngFor="let list of scheduleDay"
+                                                  [value]="list['originalValue']">{{list['name']}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                  <mat-form-field class="occur">
+                                    <mat-label>Repeat Every</mat-label>
+                                    <mat-select (selectionChange)="setSchedule('month+week+day')"
+                                                [(ngModel)]="cronScheduleRequest['weekDay']"
+                                                [ngModelOptions]="{standalone: true}" >
+                                      <mat-option value="">Select Repeat Every</mat-option>
+                                        <mat-option *ngFor="let list of WeekDays"
+                                                    value="{{list['value']}}">{{list['name']}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4 col-sm-3">
+                                  <span class="month"> of the month </span>
+                                </div>
+                              </div>
+
+                        </div>
+                      </mat-radio-group>
+                    </div>
+                </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="round-btn-design">
+        <button type="button" (click)="submit()"> Save <img
+          src="assets/icon/save.svg"></button>
+      </div>
+    </div>
+
+  </ng-template>
+</form>
+

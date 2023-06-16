@@ -1,0 +1,31 @@
+<div class="sections-main">
+    <h1>
+        <div class="img-create">
+            <img alt="community" src="assets/icon/basic-info.svg">
+        </div>
+        Auditorium Basic Details
+        <span>Provide basic details for auditorium</span>
+    </h1>
+    <form class="example-form" [formGroup]="basicDetailsForm" id="basicDetailsForm">
+        <div class=" border-line-bottom">
+            <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Auditorium Name</mat-label>
+                        <input (paste)="isAlphabetic($event)"
+                            onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode === 32"
+                            formControlName="name" maxlength="35" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width ">
+                        <mat-label>Total Sitting Capacity</mat-label>
+                        <input formControlName="capacity" (paste)="isNumeric($event)"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" matInput maxlength="4">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+    <app-create-auditorium-row *ngIf="isBasicFormValid && rowCreation"></app-create-auditorium-row>
+</div>

@@ -1,0 +1,129 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+    Manage Form
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="totalcommitteemem">
+      <div class="row">
+        <div class="right-main-screen">
+          <div class="page-content">
+            <div class="hotel-details">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Form Assignment Summery</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="manage-pm-team-list">
+              <div class="table-details">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="search">
+                          <input type="text" class="form-control" placeholder="Search">
+                          <span><img src="assets/icon/search.svg" alt=""></span>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="right-option">
+                          <div class="forecast-btn-add">
+                            <button type="button" (click)="addForm()">Add<span class="fa fa-plus"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Assignment Name</th>
+                          <th scope="col">Assignment Type</th>
+                          <th scope="col">Survey Type</th>
+                          <th scope="col">Start Date</th>
+                          <th scope="col">End Date</th>
+                          <th scope="col">Status</th>
+                          <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let form of formList ?.content;let i=index">
+                          <td><a   routerLink="/assign-form/{{form['_id']}}">{{form.name}}</a></td>
+                          <td>{{form.field['assignmentName']}}</td>
+                          <td>{{form.field['assignType']}}</td>
+                          <td>{{form.field['recurringForm']}}</td>
+                          <td>{{form.field['date']}}</td>
+                          <td>{{form.field['dueDate']}}</td>
+                          <td> <span *ngIf='form.field["activeStatus"]==false' class="inactive"><i
+                            class="fa fa-circle"></i>Inactive</span>
+                            <span *ngIf='form.field["activeStatus"]==true' class="active"><i
+                              class="fa fa-circle"></i>Active</span>
+                          </td>
+                          <td>
+                            <div class="dropdown dropleft option-btn">
+                              <span class="fa fa-ellipsis-h" data-toggle="dropdown"></span>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item"   (click)="editForm(form['_id'])"><img
+                                  src="assets/icon/edit-icon.svg">Edit</a>
+                                <a class="dropdown-item"   (click)="deleteForm(form['_id'])"><img
+                                  src="assets/icon/delete-icon.svg">Delete</a>
+                                  <a class="dropdown-item"   (click)="assignForm('modal')"><img
+                                    src="assets/icon/assign.svg">assign</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr *ngIf="formList['content']==''"><td colspan="8"><b>No data Found</b></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="pegination-main">
+                  <ul>
+                    <li>
+                      <button (click)="pagination('current','user',0)" [disabled]="formList['first'] == true"
+                              class="next">
+                        First
+                      </button>
+                    </li>
+                    <li>
+                      <button (click)="pagination('prev','user')" [disabled]="formList['first'] == true"
+                              class="arrow">
+                        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                      </button>
+                    </li>
+                    <li (click)="pagination('current','user',i)" *ngFor="let i of arrayTwo(formList['totalPages'])"
+                        [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+                      <button class="numeric">{{i + 1}}</button>
+                    </li>
+                    <li>
+                      <button (click)="pagination('next','user')" [disabled]="formList['last'] == true"
+                              class="arrow">
+                        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                      </button>
+                    </li>
+                    <li>
+                      <button (click)="pagination('current','user',(formList['totalPages']-1))"
+                              [disabled]="formList['last'] == true" class="next">Last
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-assign-form-modal [openModelSubject]="openModelSubject"></app-assign-form-modal>

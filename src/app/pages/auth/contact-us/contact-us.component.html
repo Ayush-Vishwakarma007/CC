@@ -1,0 +1,412 @@
+<div class="mainnewsscreen main-screen">
+  <div class="white-bgbanner"></div>
+  <div class="over-x-h">
+      <!-- Inner Banner Section Start -->
+      <section class="inner-banner commontopmargin">
+        <div class="blue-bg-banner">
+          <span></span>
+        </div>
+        <div class="slid-left-blue-dots">
+          <img src="assets/images/inner-left-dots.png" alt="">
+        </div>
+        <div class="container">
+          <div class="red-inner">
+            <div class="row">
+              <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6">
+                <h2 class="inner-page-tlt"> {{'contactUs.title' | translate}}</h2>
+              </div>
+              <div   animationName="animated slideInRight" class="col-sm-6 col-md-6 news-bread">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{'contactUs.title' | translate}}</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Inner Banner Section End -->
+      <section class="">
+        <div class="container">
+          <div class="row ">
+            <div class="col-sm-12 contacttext">
+              <h3  animationName="animated slideInRight">{{'contactUsContent.title' | translate}} </h3>
+              <p  animationName="animated slideInLeft" [innerHTML]="'contactUsContent.description' | translate">
+              </p>
+            </div>
+          </div>
+          <div class="row paddcontact">
+            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-6">
+              <div class="commmonadd" *ngIf = "this.communityService.communityDetail?.showAddressInfoInContactUs">
+                <h5>Address</h5>
+                <p>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine1"></b><br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1">
+            <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine2"></b><br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2">
+            <b *ngIf="this.communityService.communityDetail.basicInformation?.city" [innerHTML] = "this.communityService.communityDetail.basicInformation?.city"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.city && this.communityService.communityDetail.basicInformation?.zipcode"> - </b>
+            <b *ngIf="this.communityService.communityDetail.basicInformation?.zipcode" [innerHTML] = "this.communityService.communityDetail.basicInformation?.zipcode"></b><br>
+            <b *ngIf="this.communityService.communityDetail.basicInformation?.state" [innerHTML] = "this.communityService.communityDetail.basicInformation?.state"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.state && this.communityService.communityDetail.basicInformation?.country">, </b>
+            <b *ngIf="this.communityService.communityDetail.basicInformation?.country" [innerHTML] = "this.communityService.communityDetail.basicInformation?.country"></b>
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-6" *ngIf = "this.communityService.communityDetail?.allowSocialMediaInContactUs">
+              <div class="commmonadd">
+                <h5>Follow Us</h5>
+                <div class="left-icon-part" *ngIf = "this.communityService.communityDetail.basicInformation?.socialMediaList?.length != 0">
+                  <ul >
+                      <li *ngFor = "let item of this.communityService.communityDetail.basicInformation?.socialMediaList"><a href="{{item.link}}" target="_blank">
+                        <img src = "{{item.icon}}" style="height: 30px; width: 30px;">
+                      </a></li>
+  <!--                      <li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
+  <!--                      <li><a href="#"><i class="fa fa-twitter"></i></a></li>-->
+  <!--                      <li><a href="#"><i class="fa fa-linkedin"></i></a></li>-->
+                    </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-6">
+              <div class="commmonadd" *ngIf = "this.communityService.communityDetail?.showContactInfoInContactUs">
+                <h5> {{'contactUs.title' | translate}} </h5>
+                <b *ngIf="this.communityService.communityDetail.basicInformation?.phone">Contact : <a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone">{{this.communityService.communityDetail.basicInformation?.phone}}</a><br></b>
+                <b *ngIf="this.communityService.communityDetail.basicInformation?.email">Email : <a [href]="'mailto:'+this.communityService.communityDetail.basicInformation?.email">{{this.communityService.communityDetail.basicInformation?.email}}</a><br></b>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <form id="contactUsForm" [formGroup]="contactUsForm">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" [ngClass]="this.communityService?.communityDetail?.showMapInContactUs ? '' : 'mapHideDiv' " >
+                <div class="cnt-us-form">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="First Name" class="namecontact">
+                        <!-- <span class="fa fa-user icon"></span> -->
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.firstName.errors">
+                        <div *ngIf="contactUsFormvalid.firstName.errors.required" class="valid-msg">
+                          First Name is required
+                        </div>
+                        <div *ngIf="contactUsFormvalid.firstName.errors.pattern" class="valid-msg"> Only allowed character </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="Middle Name" class="namecontact">
+                        <!-- <span class="fa fa-user icon"></span> -->
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="middleName">
+                      </mat-form-field>
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="LastName" class="namecontact">
+                        <!-- <span class="fa fa-user icon"></span> -->
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.lastName.errors">
+                        <div *ngIf="contactUsFormvalid.lastName.errors.required" class="valid-msg">Last Name is required
+                        </div>
+                        <div *ngIf="contactUsFormvalid.lastName.errors.pattern" class="valid-msg">Only allowed character
+                        </div>
+                     </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="Phone Number" class="namecontact">
+                        <!-- <span class="fa fa-phone icon"></span> -->
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput formControlName="phoneNumber" id="phone-number" appPhoneMask
+                              (keypress)="numberOnly($event)" [max]="16">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.phoneNumber.errors">
+                        <div *ngIf="contactUsFormvalid.phoneNumber.errors.required" class="valid-msg">Phone Number is required</div>
+                        <div *ngIf="contactUsFormvalid.phoneNumber.errors.minlength" class="valid-msg">Phone Number is Invalid</div>                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [ngClass]="communityService.chapterList?.length != 1 ? '' : 'showChapter' " >
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <mat-form-field appearance="Email" class="namecontact">
+                        <!-- <span class="fa fa-envelope icon"></span> -->
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.email.errors">
+                        <div *ngIf="contactUsFormvalid.email.errors.required" class="valid-msg">Email is required </div>
+                        <div *ngIf="contactUsFormvalid.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="communityService.uiPermission['WHITELABEL']" >
+                      <mat-form-field class="selectsub autoselect namecontact">
+                        <!-- <span class="fa fa-tag icon"></span> -->
+                        <mat-label>Select Subject or Start Typing</mat-label>
+                        <input formControlName="subject"  [matAutocomplete]="auto" aria-label="Number" matInput type="text">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          <mat-option [value]="">Select Subject</mat-option>
+                          <mat-option *ngFor="let sub of subjectList;" value="{{sub.subject}}">{{sub.subject}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.subject.errors">
+                        <div *ngIf="contactUsFormvalid.subject.errors.required" class="valid-msg">
+                          Subject is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="communityService.uiPermission['WHITELABEL']">
+                      <mat-form-field  class="readonly-input namecontact select-chaptercontact" appearance="Chapter" *ngIf = "!communityService.chapterList?.length == 1">
+                        <!-- <span class="fa fa-globe icon"></span> -->
+                        <mat-label>Chapter</mat-label>
+                        <input matInput formControlName="chapterId" readonly>
+                      </mat-form-field>
+                      <mat-form-field class="selectsub namecontact select-chaptercontact " *ngIf = "communityService.chapterList?.length > 1">
+                        <!-- <span class="fa fa-globe icon"></span> -->
+                        <mat-label>Select Chapter</mat-label>
+                        <mat-select matNativeControl formControlName="chapterId">
+                          <mat-option *ngFor="let chapter of chapterDetail;" value="{{chapter.id}}" selected>
+                            {{chapter.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.chapterId.errors">
+                        <div *ngIf="contactUsFormvalid.chapterId.errors.required" class="valid-msg">
+                          Chapter is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 topmsg">
+                      <mat-form-field appearance="Message" class="msg-height">
+                        <!-- <span class="fa fa-comment icon"></span> -->
+                        <mat-label>Message</mat-label>
+                        <textarea matInput placeholder="Enter Message" formControlName="message"></textarea>
+                      </mat-form-field>
+                      <div style="margin-top: 6px;" *ngIf="submitted && contactUsFormvalid.message.errors">
+                        <div *ngIf="contactUsFormvalid.message.errors.required" class="valid-msg">
+                          Message is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"  animationName="animated slideInUp">
+                      <div style="margin-top: 15px; margin-bottom:15px ;">
+                        <div class="btn-general" (click)="ContactUsSubmit()">
+                          <div class="eff-5"></div>
+                          <a> Submit </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="this.communityService?.communityDetail?.showMapInContactUs">
+                <div id="map">
+<!--                  <iframe *ngIf="this.communityService?.communityDetail?.location?.length !=0" width="300" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" [src]="'https://maps.google.com/maps?q='+this.communityService?.communityDetail?.location[0]+','+this.communityService?.communityDetail?.location[1]+'&hl=en&z=14&amp;output=embed' | safe: 'resourceUrl'"></iframe><br />-->
+                  <iframe *ngIf="this.communityService?.communityDetail?.location?.length !=0"
+                          class="mapfooter"
+                          allowfullscreen
+                          frameborder="0"
+                          scrolling="no"
+                          marginheight="0"
+                          marginwidth="0"
+                          [src]="'https://www.google.com/maps/embed/v1/place?key=AIzaSyAQYXBcDVLEB0IzaDG2HyvMeFjcCFsGp5U&q='+this.communityService?.communityDetail?.location[0]+','+this.communityService?.communityDetail?.location[1] | safe: 'resourceUrl'">
+                  </iframe>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- <div class="row">
+            <form id="contactUsForm" [formGroup]="contactUsForm">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="cnt-us-form">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="First Name">
+                        <span class="fa fa-user icon"></span>
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.firstName.errors">
+                        <div *ngIf="contactUsFormvalid.firstName.errors.required" class="valid-msg">
+                          First Name is required
+                        </div>
+                        <div *ngIf="contactUsFormvalid.firstName.errors.pattern" class="valid-msg">Only allowed character
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="LastName">
+                        <span class="fa fa-user icon"></span>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.lastName.errors">
+                        <div *ngIf="contactUsFormvalid.lastName.errors.required" class="valid-msg">Last Name is required
+                        </div>
+                        <div *ngIf="contactUsFormvalid.lastName.errors.pattern" class="valid-msg">Only allowed character
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="Phone Number">
+                        <span class="fa fa-phone icon"></span>
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput formControlName="phoneNumber" id="phone-number" appPhoneMask
+                              (keypress)="numberOnly($event)" [max]="16">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.phoneNumber.errors">
+                        <div *ngIf="contactUsFormvalid.phoneNumber.errors.required" class="valid-msg">Phone Number is required</div>
+                        <div *ngIf="contactUsFormvalid.phoneNumber.errors.minlength" class="valid-msg">Phone Number is Invalid</div>
+                      </div>
+
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <mat-form-field appearance="Email">
+                        <span class="fa fa-envelope icon"></span>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.email.errors">
+                        <div *ngIf="contactUsFormvalid.email.errors.required" class="valid-msg">Email is required
+                        </div>
+                        <div *ngIf="contactUsFormvalid.email.errors.pattern" class="valid-msg">Please enter valid email.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" [ngClass]="communityService.chapterList?.length != 1 ? '' : 'showChapter' " >
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngIf="communityService.uiPermission['WHITELABEL']" >
+                      <mat-form-field class="selectsub autoselect">
+                        <span class="fa fa-tag icon"></span>
+                        <input formControlName="subject" placeholder="Select Subject or Start Typing" [matAutocomplete]="auto" aria-label="Number" matInput type="text">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          <mat-option [value]="">Select Subject</mat-option>
+                          <mat-option *ngFor="let sub of subjectList;" value="{{sub.subject}}">{{sub.subject}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.subject.errors">
+                        <div *ngIf="contactUsFormvalid.subject.errors.required" class="valid-msg">
+                          Subject is required
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="communityService.uiPermission['WHITELABEL']">
+                      <mat-form-field  class="readonly-input" appearance="Chapter" *ngIf = "!communityService.chapterList?.length == 1">
+                        <span class="fa fa-globe icon"></span>
+                        <mat-label>Chapter</mat-label>
+                        <input matInput formControlName="chapterId" readonly>
+                      </mat-form-field>
+
+                      <mat-form-field class="selectsub" *ngIf = "communityService.chapterList?.length > 1">
+                        <span class="fa fa-globe icon"></span>
+                        <mat-label>Select Chapter</mat-label>
+                        <mat-select matNativeControl formControlName="chapterId">
+                          <mat-option *ngFor="let chapter of chapterDetail;" value="{{chapter.id}}" selected>
+                            {{chapter.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.chapterId.errors">
+                        <div *ngIf="contactUsFormvalid.chapterId.errors.required" class="valid-msg">
+                          Chapter is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 topmsg">
+                      <mat-form-field appearance="Message" class="msg-height">
+                        <span class="fa fa-comment icon"></span>
+                        <mat-label>Message</mat-label>
+                        <textarea matInput placeholder="Enter Message" formControlName="message"></textarea>
+                      </mat-form-field>
+                      <div *ngIf="submitted && contactUsFormvalid.message.errors">
+                        <div *ngIf="contactUsFormvalid.message.errors.required" class="valid-msg">
+                          Message is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12"  animationName="animated slideInUp">
+                      <div style="margin-top: 15px;">
+                        <div class="btn-general" (click)="ContactUsSubmit()">
+                          <div class="eff-5"></div>
+                          <a  > Submit </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+<<<<<<< HEAD
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="commmonadd" *ngIf = "this.communityService.communityDetail?.showAddressInfoInContactUs">
+                      <h5>Address</h5>
+                      <p>
+                        <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine1"></b><br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1">
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine2"></b><br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2">
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.city" [innerHTML] = "this.communityService.communityDetail.basicInformation?.city"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.city && this.communityService.communityDetail.basicInformation?.zipcode"> - </b>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.zipcode" [innerHTML] = "this.communityService.communityDetail.basicInformation?.zipcode"></b><br>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.state" [innerHTML] = "this.communityService.communityDetail.basicInformation?.state"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.state && this.communityService.communityDetail.basicInformation?.country">, </b>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.country" [innerHTML] = "this.communityService.communityDetail.basicInformation?.country"></b>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="commmonadd" *ngIf = "this.communityService.communityDetail?.showContactInfoInContactUs">
+                      <h5> Contact Us </h5>
+                      <b *ngIf="this.communityService.communityDetail.basicInformation?.phone">Contact : <a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone">{{this.communityService.communityDetail.basicInformation?.phone}}</a><br></b>
+                      <b *ngIf="this.communityService.communityDetail.basicInformation?.email">Email : <a [href]="'mailto:'+this.communityService.communityDetail.basicInformation?.email">{{this.communityService.communityDetail.basicInformation?.email}}</a><br></b>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div id="map" *ngIf="this.communityService?.communityDetail.showMapInContactUs">
+                  <iframe *ngIf="this.communityService?.communityDetail?.location?.length !=0" width="300" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                          [src]="'https://maps.google.com/maps?q='+this.communityService?.communityDetail?.location[0]+','+this.communityService?.communityDetail?.location[1]+'&hl=en&z=14&amp;output=embed' | safe: 'resourceUrl'"></iframe><br />
+=======
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="this.communityService?.communityDetail.showMapInContactUs">
+                <div id="map">
+                  <iframe *ngIf="this.communityService?.communityDetail?.location?.length !=0" width="300" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"-->
+<!--                          [src]="'https://maps.google.com/maps?q='+this.communityService?.communityDetail?.location[0]+','+this.communityService?.communityDetail?.location[1]+'&hl=en&z=14&amp;output=embed' | safe: 'resourceUrl'"></iframe><br />-->
+
+
+        </div>
+      </section>
+  </div>
+</div>
+
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1947 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+$font20:20px;
+$font13:13px;
+$heandingpage:30px;
+
+// $blue-light:#29abe2;
+
+$green-dark:#22B573;
+@media screen and ( min-width: 1200px ) and (max-width:1700px) {
+    app-member-list, app-members-directory, app-user-detail{
+        .col-sm-6.col-md-4.col-lg-3{ width: 33.33333333%; }
+    }
+}
+@media screen and ( max-width: 1600px ) {
+    .dateuser input { font-size: 13px; }
+    .card-responsive{
+        .col-lg-3{ width: 33.33%;}
+    }
+    .main-screen .inner-banner .red-inner::after{ z-index: -1;}
+    .new-dashboard .mat-tab-body-wrapper .mat-tab-body { margin: 10px 10px; }
+    .add-donation .valid-msg{ font-size: 12px;}
+    .paddleft60 { padding-left: 0px;    }
+    .bottomsticky .donatenowsticky { padding: 20px 0 0 0px; }
+    .bottomsticky .donatenowsticky button{ padding: 10px 15px; margin-right: 8px; }
+    .bottomsticky ul li .register { width: 200px; }
+    .paddtopmenu{ padding-left: 0px;
+        .navbar-nav{
+            li:first-child{ padding-left: 0px!important;}
+        }
+    }
+    .committee-member-mod .modal-dialog { width: 85%!important; }
+    .donateetop h6 { font-size: 17px!important;}
+    .event-not-found img{ width: 300px;}
+    .event-not-found span { font-size: 18px!important; }
+    .modelselectevent{ width: 600px!important;
+        .modal-dialog { width: 100% !important; }
+    }
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember .familymemberdetail li{font-size: 14px;}
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember{ width: 300px;}
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember .familymemberdetail li:first-child { width: 175px;}
+    .padd-area .grid-card-box .familymemberbottom .righthandside { left: -40px; }
+    .vendorcheckout .regstartdate li span{ font-size: 12px;}
+    .leftdonorpart { /* width: 360px;*/ width: 496px }
+    .rightdonorpart { width: calc(100% - 360px); margin: 80px 0 0 360px; }
+    .borbtomformat { padding: 0px 0px 15px 0px }
+
+    .main-become-member .padd-member {  padding: 50px 0 0 0; }
+    .payment-info .lifetime-membership h6 { font-size: 19px; }
+    .membertab .new-member-tab { overflow-y: scroll; }
+    //.new-member-tab table { width: 1600px; }
+    .new-member-tab table { width: 100%; }
+ 
+    app-newsletter-management{
+        .new-member-tab { 
+            table { width: 100%; }
+        }
+    }
+    app-members-directory{
+        .new-member-tab table { width: 100%; }
+    }
+    .ticket-chart { width: 250px;}
+    .select-chep a{ padding: 6px 13px; }
+    .dashboard-heading{ margin: 15px 20px 0px; }
+
+    .event-detailpagebanner{ margin: 0px; padding: 0px 0px 20px 0px;}
+    .login-input-area { margin-top: 50px; }
+    .login-rgt-bg h1 { margin: 30px 0px 50px 0px!important; }
+    .createmembership .memberplan .amount-member{ width: 120px; margin-left: 35px;}
+
+    .paddleftmember { padding-left: 0px;padding-right: 0px; }
+    .padd-area .grid-card-box .topbutton-thumb { padding-left: 15px; }
+    .padd-area .grid-card-box .topbutton-thumb .emailbutton{ margin-left: 4px; }
+    .padd-area .grid-card-box p{ padding: 5px 0 0 10px; }
+    .padd-area .grid-card-box h4 { padding: 15px 0 0 10px; }
+    .padd-area .grid-card-box .familymemberbottom{ padding: 10px 0px 0px 20px;}
+    .padd-area .grid-card-box .familymemberbottom{ padding: 12px 0px 3px 10px;}
+
+    .reg-left {
+        h1{ margin: 60px 0 0 0px;  font-size: 25px; }
+    }
+    .reg-left { width: 330px; }
+    .booticket-lft {  width: 300px; }
+    .create-event-right-side {  width: calc(100% - 330px); margin: 135px 0 0 330px; }
+    .common-page { width: calc(100% - 80px);margin: 0px 0 0 80px; }
+    .bookticket-right {width: calc(100% - 300px); margin: 90px 0 0 300px; }
+    .book-ticket-main { margin: 20px; }
+    .tottal-fees-area span { font-size: 13px !important; }
+    .book-payment { margin: 0px; padding: 0px; }
+    .cc-web-main .create-event-right-side { margin-top: 113px !important; }
+
+    .donation-model {
+        .event-pera p { font-size: 12px;line-height: 15px; }
+        .perice_txt p {padding: 0px; margin-bottom: 0px;font-size: 13px;}
+        .regs_list p { font-size: 12px;line-height: 17px;margin: 0px 0 7px 0; }
+        .modal-body mat-radio-group mat-radio-button { margin-right: 30px;font-size: 14px;color: var(--text-clr); }
+        .mod-scroll { height: 200px; }
+     }
+
+     .padd-area .grid-card-box span{ margin: 0px 0 13px 10px; }
+     .publish-btn .save-changes { padding: 10px 10px; min-width: 116px; }
+    .evnt-pr {
+
+        .add_food {
+
+            margin: 0px!important;
+            font-size: 13px;
+
+        }
+    }
+
+    .login-rgt-bg {
+
+        h1 {
+
+            margin: 0px 0px 30px 0px;
+        }
+    }
+
+    .logo-l {
+
+        margin-top: 7%;
+
+    }
+
+    .login-input-area {
+
+        .login-b {
+
+            padding-top: 30px;
+
+        }
+    }
+
+    .evnt-pr{
+
+        padding-right: 0px!important;
+
+    }
+
+    .profile-head {
+
+        font-size: 25px;
+
+    }
+
+    .nomargin{
+
+        margin-left: 5%!important;
+        flex: 0 0 90%!important;
+        max-width: 90%!important;
+
+    }
+
+    .top-search{
+
+        width: 400px;
+
+    }
+    .footer-main{
+        width: 100%;
+    }
+    .numprofile{
+        margin-left: 5px;
+    }
+    .more div{
+        background: transparent;
+    }
+    .dropdown-menu{ background: #fff !important; z-index: 1; }
+    .event-drop{ background: transparent!important;}
+    .notification_head, .notification_top{margin-left: 50px;}
+    .notification-nm{width:19%;}
+    // .main-scheduel td {padding: 7px 14px;}
+    .date-not {width: 0px;}
+    .txt-notification{text-align: justify;}
+    .edit-gap {margin-right: 9px;}
+    .edit-button img {width: 14px;}
+    .border-country select {font-size: 15px;}
+    .modal-body .submit{font-size: 18px;}
+    .notific_msg{margin-top: 11px;}
+    .event-pera p{font-size: 14px;line-height: 23px;}
+    .event-dntbtn{font-size:11px;}
+    .about-us-home{ 
+        .col-md-3{ width: 33.33%;}
+        .col-md-9{ width: 66.66%;}
+    }
+}
+
+@media screen and (max-width: 1599px) {
+    .rightpartmain {
+      .container{ width: 970px;
+        .col-lg-4 { width: 50%; }
+        .col-md-4 { width: 50%; }
+      }
+    }
+
+  }
+  @media screen and ( max-width: 1399px ) {
+    .maineventwidth { margin-top: -560px; }
+  }
+
+@media screen and ( max-width: 1365px ) {
+    app-chapter-sponsorship{
+        .tab-main .mat-tab-label { padding: 0 20px; }
+    }
+    app-newsletter-management{
+        .tab-main .mat-tab-label { padding: 0 29px; }
+    }
+
+    .mainthanku { display: block; text-align: center;}
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember { width: 250px; }
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember .familymemberdetail li:first-child { width: 120px; }
+    .membershiptab table { width: 1000px!important; }
+    .createmembership .memberplan .amount-member { width: 90px!important;  margin-left: 50px; }
+    .padd-area .grid-card-box .topbutton-thumb { padding-left: 5px; padding-right: 5px; }
+    .padd-area .grid-card-box .topbutton-thumb .charector-mem { width: 40px; height: 40px; margin-top: -20px; }
+    .bottomsticky ul li .register{ width: 150px; }
+    .padddonor .nopayheight{ display: block; }
+    .padddonor .nobackground{ text-align: center; padding: 20px 0px;}
+    .padddonor .col-lg-8 { width: 100%;}
+    .padddonor .col-lg-4 {width: 100%;}
+    .padddonor .thanskimage { position: relative; transform: translate(0%, 0%); top: 0%; left: 0%; margin: auto;}
+    .add-media{ max-width: 900px!important; width: 900px!important;
+        .mat-tab-header {  width: 220px!important;}
+        .mat-tab-labels{display: block; }
+        .mat-tab-label{ padding: 0 10px; }
+    }
+    .sponsorsearch { width: 250px!important; }
+    .diamond-inp{
+        width: 75px;
+        .second{ width: 50px; }
+    }
+    .card-box {
+        ul {
+            li:first-child{
+                img{ max-width: 130px; }
+            }
+        }
+    }
+    .scroll-tab-event{ overflow-x: scroll;
+        table{ width: 860px; }
+    }
+    .top-export-button-main input{ width: 300px; }
+    .login-input-area { width: 85%; }
+    .right-m { margin: 10px 0 0 25px;}
+    .select-chep a { padding: 3px 13px; }
+    .mar-help { margin-top: auto; }
+    .inner-page-responsive{ width: calc(100% - 80px)!important; margin-left: 80px !important;
+        .nomargin { margin-left: 0% !important; flex: 0 0 100% !important; max-width: 100% !important; }
+    }
+    .book-tick{ text-align: center; width: 120px; min-width: 140px; padding: 10px 0px; }
+    .notification_head,
+    .notification_top { margin-left: 0px; }
+    .btn-action { width: 37px; }
+    .regs_list li{padding: 0px 20px;}
+
+    //02-03-2020
+    .description_main{ margin-left: 30px; margin-right: 30px;}
+    .new-yr-event{left: 30px; right:30px}
+    .event-pera p{font-size: 14px;line-height: 23px;}
+    .event-dntbtn{font-size:11px;}
+    .rightpartmain{
+        .container{ width: 100%;}
+    }
+    .editmemberpopup { width: 820px !important; }
+    .my-account .mat-tab-header { width: 28%; }
+    .pad-left { padding-left: 0px !important; }
+    .monthlybutton{ width: 100%; text-align: left!important; margin-top: 14px; }
+    .registrationmain{ width: 100%;}
+    app-user-detail{
+        .new-member-tab { 
+            table { width: 1320px; }
+        }
+    }
+}
+
+@media screen and ( max-width: 1199px ) {
+    .memberdashboarnew-tab .back-round { width: calc(50% - 42px)!important; margin-bottom: 15px!important; }
+    .cc-web-main .create-event-right-side { border-left: 1px solid #e9dfdf; }
+    .padd-area { padding: 15px; }
+    .mainbottm { padding-left: 15px; }
+    .bottomsticky ul li { font-size: 16px; }
+    .nomemequal{ display: block;}
+    // .padd-area .grid-card-box .topbutton-thumb .emailbutton { margin-top: -15px; width: 28px; height: 28px; }
+    .event-inner-paid .sub-main .watchicon { font-size: 12px;    }
+    .time-display { padding-left: 20px; font-size: 12px;}
+    .nopayheight{ display: block;}
+    .white100{ margin-top: 30px;}
+    .rightdonorpart .white100 .bor-blue { position: relative; left: 0px; right: 0px;}
+    .bor-detail{ margin-top: 15px;}
+    .noequalmem{ display: block;}
+    .formatmembershipnumber .indivisual{ text-align: left; margin-top: 20px;margin-left: 15px;}
+    .indivisual .mat-form-field{ margin-left: 0px!important;  margin-right: 20px;}
+    .main-section-membership .bluenumber .bluebox { width: 40px; height: 40px; }
+    .main-section-membership .bluenumber .right-member { width: calc(100% - 44px); margin-left: 17px;  padding-bottom: 30px; margin-bottom: 15px;  }
+    .lightarea .lightinner { width: calc(100% - 120px); margin-left: 60px; }
+    .createmembership .memberplan .amount-member{ width: 132px;}
+    .textlft{ text-align: left; margin-top: 30px;}
+    .bottomsticky .donatenowsticky button{ margin-right: 5px; padding: 10px 10px; font-size: 12px; }
+    .white-area-create-event{ margin: 20px; }
+    .searchfilter { float: left!important; margin-right: 0px!important; }
+    .white-area-create-event {  margin: 0px; padding: 0px 0px 20px 0px; }
+    .addbtnright { top: 75px; padding-top: 7px; background: #fff; margin-top: 0 !important; padding-bottom: 0px;
+        .select-chap{ margin-top: 4px;}
+    }
+    app-volunteer-list{
+        .addbtnright { top: 7px;}
+    }
+    app-auth-setting-management {
+        .no-paid h1 { padding-left: 34px; }
+        .main-section-membership h5 { padding: 20px 0 5px 40px; }
+        .addanothersection { width: calc(100% - 87px); }
+    }
+    .main-screen .header .main-menu .navbar li.nav-item{ padding: 5px 8px; }
+    .card-responsive{
+        .col-lg-3{ width: 50%;}
+    }
+    .cc-web-main{
+        .navbar { margin-bottom: 31px; }
+    }
+    .publish-btn{
+        .preview { font-size: 13px!important; margin: 0px 7px 0 0!important; padding: 10px 8px!important; }
+        .addanother { font-size: 13px!important; margin: 0px 7px 0 0!important; padding: 10px 15px!important; }
+        .marleft { margin-left: 6px!important; }
+    }
+    .card-resp{ overflow-x:scroll;
+        mat-radio-button{ width: 480px; }
+    }
+    app-chapter-sponsorship{
+        .mat-tab-body { margin-top: 61px!important; }
+        .donation-sponsor{ overflow-x: scroll;
+            table { width: 900px!important; }
+        }
+    }
+    app-dashboard-event{
+        // .mat-tab-body { margin-top: 61px!important; }
+        .donation-sponsor{ overflow-x: scroll;
+            table { width: 1050px!important; }
+        }
+    }
+
+    app-newsletter-management{
+        .mat-tab-body { margin-top: 61px!important; }
+        .addbtnright { top: 74px; }
+    }
+    .padd-area .grid-card-box .topbutton-thumb .emailbutton .newicon::before { font-size: 13px !important; }
+    .padd-area .grid-card-box .topbutton-thumb .emailbutton .fa-envelope:before { font-size: 13px !important; }
+    .card-responsive{
+        .card-box{ margin-bottom: 15px; }
+    }
+    .member-collection-table { overflow-x: scroll; width: 100%; display: block; }
+    .member-collection-table table{ width: 1020px; }
+    .select-week .mat-form-field-infix{ padding:12px 3px!important; width: 131px;}
+    .top-export-button-main input{ width: 100%; margin: 0px 0px 0px 0px; }
+    .dashboard-top li h1 { font-size: 21px; }
+    .totallmember span { padding-right: 15px; }
+    .mem-coll { padding: 22px 15px 10px 15px; }
+    .top-export-button-main { text-align: left; }
+    .top-export-button-main input { width: calc(100% - 227px); }
+   .paypal-clr{ display: contents;}
+   .paidbtm{margin-bottom: 20px;}
+    .create-new-evnt{
+        .save-changes{ min-width: 130px; }
+    }
+    .txt-card { font-size: 16px; }
+    .mem-header{
+        .col-md-8{ width: 50%; }
+        .col-md-4{ width: 50%; }
+    }
+    .head-r{ position: relative; right: 0px; }
+    .login-lft-bg { width: 50%; }
+    .login-rgt-bg { width: 50%; }
+    .progrees-responsive{ overflow: scroll; padding-bottom: 15px; scrollbar-color: rebeccapurple green; scrollbar-width: thin;
+        .progressbar{ width: 1200px; }
+    }
+    .top-search { margin: 23px 0px 0px 20px; width: 300px;}
+    .profilecarector { width: 100px; height: 100px; }
+    .numprofile { width: 40px; height: 40px; }
+    .footer-main{ width: 100%; }
+    .numprofile{ margin-left: 5px; }
+    .addbutton-mem{ padding: 9px 25px; }
+    .evnt-pr {
+        .add_food { font-size: 12px; }
+    }
+    .regs_list li{padding: 0px 20px;}
+    .perice_txt p{font-size:12px;}
+    .fa.fa-pencil::before, .fa.fa-map-marker::before{font-size:14px;}
+    .event_slider .carousel-indicators{height: 45px !important;}
+    .event_slider .carousel-indicators li {margin: 16px 4px !important;}
+    .event-list-expanlist .mat-expansion-panel-header-title p{font-size: 15px;}
+    .event-list-expanlist .mat-expansion-panel-header-title h5{font-size:20px;}
+
+    //04-03-2020
+    .top-export-button-main{text-align: right;}
+    .padd-btm{
+        .paypal-clr{ display: block; }
+    }
+    .main-section-membership .bluenumber .mar80{ margin-left: 60px;}
+    .cc-web-main .toplogo { margin-top: 30px; }
+    .spcs-only .home-banner { padding: 109px 0 0px !important; }
+    .slider .item{ height: 450px!important; }
+}
+
+@media screen and ( max-width: 1024px ) {
+    .collapse-left-menu .sidebar { width: 55px !important; }
+    .sidebar { width: 55px !important; }
+    .event-inner-paid .sub-main { padding: 0px 0px; }
+    .reg-left { width: 280px; }
+    .leftmenucollapse .profileleft .menuleft {  margin-left:37px; width: 242px; }
+    .leftmenucollapse .profileleft { width: 280px; }
+    .leftpart{ height: calc(100% - 95px); margin-top: 95px;}
+    .stepprogress{ margin: 30px 0 0 58px; padding-left: 25px;}
+    .reg-left h1 { margin: 20px 0 0 40px;  font-size: 22px; }
+    .stepprogress-item::before { left: -16px;}
+    .stepprogress-item::after { left: -19px;}
+    .stepprogress .icon { margin-right: 10px; }
+    .create-event-right-side { width: calc(100% - 280px); margin: 80px 0 0 280px; }
+    .common-page { width: calc(100% - 55px)!important; margin: 0px 0 0 55px!important; }
+    .bookticket-right { width: calc(100% - 220px); margin: 90px 0 0 220px; }
+    .collapse-left-menu .common-page { width: calc(100% - 55px)!important; margin: 0px 0 0 55px!important; transition: all 0.5s ease 0s; }
+    .without-login-donation-dashboard.common-page{ margin: 0px 0 0 0px!important; width: calc(100% - 0px) !important; }
+    .reg-inner { padding-left: 65px; }
+    .logo { width: 154px; margin-left: -0px; }
+    .main-screen .header .main-menu { padding-top: 15px; }
+    .sidebar {  height: calc(100% - 80px)!important;  margin-top: 94px!important; }
+    .dots-menu img { width: 14px;}
+    .dots-menu { width: 35px; height: 35px;  margin: 15px 0px 0px 5px;}
+    .membershipicon img{ width: 19px; }
+    .membershipicon { margin: 20px 0 0 13px;}
+    .notification-bel { margin: 0 0 0 12px; }
+    .settingsbottm{ left: 14px; }
+    .reg-inner { padding-left: 45px; }
+    .event-successfully .check-box { width: 60px!important; height: 60px!important; margin-top: 40px!important;}
+    .event-successfully p { font-size: 17px; width: 198px; }
+    .becomemembermenu {  margin-left: 45px !important; }
+    .eventlistdetailnomargin { margin: 95px 0 0 0px !important; }
+    .eventnotfound { width: calc(100% - 40px)!important; min-height: calc(100vh - 157px)!important; margin: 95px 0 0 40px!important; }
+    .cc-web-main .create-event-right-side { margin-top: 85px !important; }
+    .cc-web-main .toplogo { margin-top: 12px; }
+    .cc-web-main .sidebar { height: calc(100% - 88px)!important; margin-top:88px!important; }
+    .cc-web-main .navbar-nav { padding-top: 24px; }
+    .cc-web-main .navbar {  margin-bottom: 18px;    }
+    .eventdetailpage { width: calc(100% - 0px) !important;}
+    .slider .item{ height: 350px!important; }
+    .cc-web-main .rightpartmain { margin: 88px 0 0 270px !important; min-height: calc(100vh - 88px)!important; }
+    .collapse-left-menu .rightpartmain { margin: 88px 0 0 70px !important; min-height: calc(100vh - 88px)!important; }
+
+
+
+}
+
+// @media screen and (max-width: 1199px){
+//     .white-area-create-event{
+//      margin: 20px !important;
+//       padding: 5px 20px 20px 20px !important;
+//     }
+//   }
+
+@media screen and ( max-width: 991px ) {
+    app-newsletter-management{
+        .new-member-tab { overflow: scroll;
+            table { width: 700px; }
+        }
+    }
+    .modal-dialog.add-donation.newsletterpopup{margin: 30px 0;}
+    .add-media .mat-tab-header { float: none; display: block; height: auto;}
+    .add-media .mat-tab-body-wrapper{width: 100% !important;}
+    .modal-dialog.add-media{width: 100% !important;}
+    .rightpartmain {
+        .container{
+          .col-lg-4 { width: 100%; }
+          .col-md-4 { width: 100%; }
+        }
+      }
+      .contactpopupmain {
+        .btn-general{ line-height: 50px;}
+      }
+    .backtable { margin-left: -10px; margin-right: -15px; padding: 30px 0px; }
+    .registration-admn li { font-size: 15px; }
+    .modelselectevent .close { margin-top: -13px; margin-bottom: 9px; }
+    .performance-mod .modal-dialog { width: 96%!important; }
+    .totallmember{ padding-bottom: 10px;}
+    .dashboard-heading { margin: 15px 20px 10px; }
+    .maineventwidth { margin-top: 20px; position: relative;
+        .head-event{ padding-left: 15px; }
+    }
+    .event-detail-slider { width: 96%; float: none; margin-left: 2%!important; }
+    .mainbottm { padding-left: 0px;  }
+    .add-media{ max-width: 700px!important; width: 700px!important; }
+    .whitebox{ padding: 20px 10px!important;}
+    .whitebox .donated-people{ padding: 30px  10px 30px 10px;}
+    .nobackground .thanskimage{ top: 50%!important; left: 50%!important; position: absolute; transform: translate(-50%, -50%)!important; }
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember { width: 300px; }
+    .padd-area .grid-card-box .familymemberbottom .righthandside {left: -20px; }
+    .padd-area .grid-card-box .familymemberbottom .tooltipsmember .familymemberdetail li:first-child { width: 160px;}
+    .detail-p { margin-top: 30px; float: left; }
+    .donation-model .modal-lg { width: 620px; }
+    .martopvenue{ margin-top: 15px;}
+    .membershiptab{ margin-left: 15px; margin-right: 15px;}
+    .added-membership{ margin-left: 15px;}
+    .formatmembershipnumber { margin-left: -15px; margin-right: -15px; }
+    .amount-member {  width: 76px !important; margin-left: 0px !important; }
+    .paddleft60 { padding-left: 10px; padding-right: 10px; }
+    .indivisual .mat-form-field {width: 175px!important; margin-right: 5px; }
+    .borderright { border: 1px solid #ccc; height: 150px; display: block; margin:15px 0px 20px 0px; }
+    .lmpreview { padding: 0px 0 0 20px; font-size: 25px; }
+    .previewstring { padding: 20px 0 10px 20px; }
+    .marginnumber{ margin-top: 15px;}
+    .event-book { font-size: 14px;}
+    .cancellable-txt { padding-top: 0px!important;     }
+    .event-detailpagebanner{ margin: 0px!important; padding: 0px 0px 20px 0px!important;}
+    .reg-left {  height: calc(100% - 95px); top: 95px;}
+    .noequal-height{ display: block; }
+    .datetime.event-datetitme{padding-left: 12px !important;}
+     .setting-dashboard li { margin-left: 20px; }
+    .no-equal-height-sm{ display: block; }
+    .no-equal-height-sm .border-right-chart{ border: 0px; border-top: 1px solid $gray-e7; margin-top: 20px; }
+    .pad-left{ padding-left: 0px!important; padding-top: 20px;}
+    .top-export-button-main input { width: calc(100% - 227px); margin: 15px 0px 10px 0px; }
+    .radao-yes{text-align: left;padding-top: 12px;}
+    .paidbtm{margin-bottom: 20px;}
+    .paypal-clr{ display: block;}
+    .totall-collection { margin: 15px 0 0 15px; }
+    .tottal-collection-amount { margin-right: 15px; font-size: 18px; }
+
+    .in-progress{ margin-top: 0px; }
+    .paddleftmember { padding-left: 0px; padding-right: 0px; }
+    .main-section-membership .bluenumber .bluebox { width: 30px; margin-top: 15px; }
+    .main-section-membership .bluenumber .right-member {  width: calc(100% - 18px); margin-left: 10px; }
+    app-additional-information{
+        .main-section-membership .bluenumber .right-member { width: calc(100% - 50px); margin-left: 10px; }
+    }
+    .main-section-membership h5 { padding: 10px 0 5px 40px;}
+    .lightarea .lightinner { width: calc(100% - 80px); margin-left: 40px; }
+    .paddleftmember h5 { padding: 10px 0 0px 40px; margin-bottom: 0px; }
+    .main-section-membership .bluenumber .mar80{ margin-left: 40px;}
+    .lightarea .lightinner .fieldtype-marbottom { margin-bottom: 0px; }
+    .paddleftmember .border-country { margin-top: 0px; margin-bottom: 20px; }
+    .addanothersection { width: calc(100% - 80px);  margin-left: 40px; }
+    .addanothersection .addsection { padding: 10px 9px; }
+    .maineventwidth {  width: calc(100% - 0px); }
+    .event-inner-paid { padding: 20px 20px 0px 20px; }
+    .event-inner-paid .sub-main { padding: 20px; }
+    .event-inner-paid .sub-main .profiletop { margin-top: 10px; }
+    .event-inner-paid .sub-main .breadkrum{ padding-left: 20px; }
+    .facebooklogin ul li:first-child { width: 40px!important; height: 40px!important; }
+    .facebooklogin ul li:last-child {  height: 40px!important; }
+    .facebooklogin { margin-bottom: 10px!important;}
+    .bottomsticky ul li .register { width: 80px; font-size: 12px; }
+    .bottomsticky ul li:first-child { padding-right: 10px; }
+    .infomainpopup{ max-width: 600px!important;}
+    .notarea .ngx-editor .ngx-editor-textarea {  height: 100px !important; min-height: 100px;    }
+    .tabsection .mat-tab-body-wrapper { padding: 15px; }
+    .signature-upload { margin-top: 15px; }
+    .invoice-upload{ margin-top: 15px;}
+    .martoprole{ margin-top: 15px;}
+    .publish-btn{ padding-bottom: 10px;
+    .perfermanceright-btn { text-align: left;}
+    app-newsletter-management{
+        .addbtnright { top: 145px; }
+    }
+        .save-changes{ margin-top: 10px; }
+    }
+    .card-responsive{
+        .col-lg-3{ width: 100%;}
+    }
+    .performance-mod .modal-dialog { width: 700px; }
+    .perfermanceright-btn { text-align: left!important; }
+    .cc-web-main .navbar { margin-bottom: 7px; }
+    .cc-web-main .navbar-nav { padding-top: 16px; }
+
+    .add-media{
+        .mat-tab-group{ display: block;}
+        .mat-tab-header{ float: left; display: block;}
+        .mat-tab-body-wrapper { width: 450px; display: block; height: calc(100vh - 175px); }
+        .marleft0{ margin-left: -0px!important;}
+        .col-md-4{ margin-top: 15px;}
+        .main-thumbs-model{ width: auto!important; margin-left: 15px!important; height: calc(100vh - 441px)!important; }
+    }
+    .adminheader .navbar-nav { padding-top: 35px;}
+    .white-area-create-event { padding: 0px 10px 20px 10px !important; }
+    .memberdireno-paid {  padding: 0px 0px 20px 0px!important; }
+    .event-inner-paid {
+        .profiletop { padding: 15px; }
+    }
+    .event-detail-slider{ margin-left: 0px;}
+    .right-dashboard-address{
+        text-align: left;
+        br{ display: none; }
+    }
+    .tottal-fees-area{ margin-top: 10px; }
+    .fees-top{ margin-bottom: 10px; }
+    .search-h { width: calc(100% - 340px); }
+    .sm-paid{ margin-top: 15px;}
+    .create-new-evnt{
+        .save-changes{
+         min-width: 104px;
+        }
+    }
+
+    .saveinfo .fright{
+
+        margin-left: 10px;
+    }
+    .plus-minus-counter {
+        button{
+
+            padding: 3px 7px;
+        }
+
+        .fright {
+
+            padding: 3px 0px;
+
+        }
+
+        input {
+
+            padding: 6px 0px;
+
+        }
+    }
+
+    .text-r {
+
+        .plus-minus-counter {
+
+            margin-right: 10px;
+
+        }
+    }
+
+    .plus-minus-counter {
+
+        width: 93px;
+
+    }
+
+    .booth-txt {
+
+        h1 {
+            font-size: 17px;
+        }
+    }
+
+    .adult-dollar {
+
+        font-size: 14px;
+
+    }
+
+    .plus-minus-counter {
+
+        input {
+
+            width: 33px;
+        }
+    }
+
+    .mem-register  {
+
+        h2 {
+
+            font-size: 20px;
+        }
+    }
+
+    .heading-event-detail {
+
+        span{
+
+            font-size: 18px ;
+
+        }
+    }
+
+    .promo-code {
+
+        padding: 10px;
+
+    }
+
+    .percentace {
+
+        width: 21px;
+
+    }
+
+    .txt-card {
+
+        font-size: 13px;
+
+    }
+
+    .enter-promo-code {
+
+        input{
+
+            font-size: 12px;
+        }
+    }
+
+    .added-member-detail{
+
+        h1{
+
+            font-size: 16px;
+        }
+    }
+
+    .total-fees{
+
+        font-size: 16px;
+
+    }
+
+    .tottal-fees-area {
+
+        .bor-blue {
+
+            span{
+
+                font-size: 14px!important;
+
+            }
+        }
+    }
+
+    .add-fam {
+
+        height: 130px;
+
+    }
+
+    .signup-res{
+
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0px 10px;
+        width: 90%;
+        margin: 40px auto 0px;
+
+    }
+
+    .login-rgt-bg {
+
+        h1 {
+
+            font-size: 24px;
+        }
+    }
+
+    .login-lft-bg {
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p{
+
+            font-size: 14px;
+
+        }
+    }
+
+    .level-font{
+
+        font-size: 14px;
+
+        .row{
+
+            margin: 7px 0px;
+
+        }
+    }
+
+    .survey-scroll{
+
+        overflow: scroll ;
+        width: auto;
+
+        .table{
+
+            width: 850px;
+
+        }
+    }
+    .session-top{ margin-top: 15px; }
+    .event-detail-slider{ margin-top: 30px;}
+    .sub_title { font-size: 30px; }
+    .caption_title { font-size: 16px; }
+    .san_title { font-size: 14px; }
+    .white_boxfrm { padding: 0px 15px 0px 15px; }
+    .left-top { width: 130px; }
+    .logo-inner {
+
+        width: 100px;
+        margin-left: 9px;
+
+    }
+    .profile-img{
+
+        a{
+
+            margin-top: 0px;
+            margin-bottom: 15px;
+
+        }
+    }
+
+    .profiletop{
+
+        padding: 30px 30px 30px 30px;
+
+    }
+
+    .emailprofile{
+        margin-top: 90px;
+    }
+    .addbutton-mem{
+        padding: 10px 24px;
+    }
+    .margin-01{
+
+        margin-top: 15px;
+
+    }
+
+    .footer-main span{
+
+        line-height: 40px;
+        float: none;
+
+    }
+    .footer-main ul {
+        margin: 0px 8px 10px 10px;
+        float: none;
+    }
+    .footer-main{
+        height: auto;
+        text-align: center;
+        width: 100%;
+    }
+
+
+     .notification-nm{width:19%;}
+    //  .main-scheduel td {padding: 7px 14px;}
+     .date-not {width: 0px;}
+     .txt-notification{text-align: justify;}
+     .edit-gap {margin-right: 9px;}
+     .edit-button img {width: 14px;}
+     .border-country select {font-size: 15px;}
+     .modal-body .submit{font-size: 18px;}
+     .last-sch{width: 0px;}
+     .addbutton-mem,.perice_txt p{font-size: 14px;}
+     .event_btn.btn.member_btn span,.event_editbtn span, .event_map img{display: none;}
+     .newyr_title h3{font-size:20px;}
+     .event_lcsntxt span{margin-left: 5px;}
+     .event_btn.btn.sliderbtn span{display: none;}
+    .event_slider .carousel-indicators{height: 47px !important;}
+    .event_slider .carousel-indicators li { margin: 17px 4px !important; }
+    .top_dt span{display:inline-block;}
+    .event-list-price{padding-top: 20px;}
+    .event-book{margin-top: 20px;}
+
+      //04-03-2020
+      .top-export-button-main{text-align: left;}
+      .book-payment { margin: 0px; padding: 0px; }
+
+    //   ticket checkout page responsive
+    app-book-tickets{ width: 100%!important; float: left; display: block;}
+    .leftdonorpart{ width: 100%!important; float: left; position: relative; margin-top: 0px; }
+    app-payment-detail{ width: 100%; float: left;}
+    .guest-allow{  margin: 0px!important; width: 100%!important; float: left; position: relative;}
+    .donorcheckout-header{ box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4); }
+    .maincheckbox .heading-top .down-img img { width: 15px; }
+    .becomeheight { height: auto; }
+    .full-width { padding: 13px!important; }
+    .maincheckbox{ width: 100%; margin-top: 10px;}
+    .main-screen .header .main-menu .navbar li.nav-item { padding: 5px 6px; }
+    .main-screen .header .main-menu .navbar li.nav-item a{ font-size: 12px; }
+    .create-event-button { padding: 12px 10px; font-size: 12px; }
+    .navbar {  margin-bottom: 0px;}
+    .cc-web-main .create-event-right-side {  margin-top: 87px !important; }
+    .cc-web-main .toplogo { margin-top: 5px; }
+    .newsletterpopup { width: 95% !important; }
+    .addmenu-popup{
+        .newsletterpopup { width: 100% !important; }
+    }
+    .whitearea .container{ width: 100%;}
+    .spcs-only .home-banner {  padding: 86px 0 0px !important; }
+    .editmemberpopup { max-width: 600px !important; }
+    .my-account .mat-tab-header { width: 100%; }
+    .editmemberpopup .mat-tab-label {  height: 61px !important; }
+    .editmemberpopup .mat-tab-body { margin: 5px !important; }
+    .editmemberpopup .mat-tab-header-pagination { display: flex!important; }
+    app-newsletter-management .addbtnright {
+        .mat-form-field-wrapper {  padding-bottom: 0px!important; }
+
+        .mat-form-field-infix { padding: 13px 23px!important;  }
+        mat-select{ margin-right: 10px!important; }
+    }
+
+    .editmemberpopup .tabmainright h3 { padding-left: 22px!important; }
+    .bottomsticky .donatenowsticky { padding: 20px 0 10px 0px; text-align: center; float: none; display: inline-block; }
+    .slider .item{ height: 300px!important; }
+    .bottomsticky { height: 135px; text-align: center; }
+    .bottomsticky ul li span{ margin-top: 5px;}
+    // .bottomsticky ul li .register{ height: 50px;}
+    // .bottomsticky ul{ float: none; clear: both; margin-top: 10px; display: flex; justify-content: center;
+    //     li{ float: none; display: inline-block;}
+    // }
+    .bottomsticky ul li .register { height: 50px; width: 100%; margin: 0;}
+    .bottomsticky ul{ float: none; clear: both; margin-top: 10px; display: block; justify-content: center; width: 100%;
+        li{ float: none;display: block; width: 100%;}
+    }
+    .right-li{ float: none!important; }
+    app-event-detail{
+        .event-inner-paid .sub-main .profiletop{ padding-bottom: 60px; }
+    }
+    .whitebg .paddingaround .membershiplan .buybtn { margin-top: 0px!important; }
+    app-auth-setting-management {
+        .no-paid h1 { padding-left: 14px; }
+        .main-section-membership h5 { padding: 20px 0 5px 14px; }
+        .addanothersection { width: calc(100% - 40px); }
+    }
+    app-hall-booking{
+        .mat-checkbox-label{ font-size: 17px; }
+      }
+
+      app-hall-booking-details{
+        .event-detail-slider { margin-top: 0px; }
+        .maineventwidth { margin-top: 20px; }
+      }
+      
+      app-header{
+        .navbar-toggler { display: inline-block; width: 30px; height: 30px; float: right; margin: 34px 20px 0 0; background: transparent; border: 0px;
+            [class*='fa-']:before{ font-size: 29px; color: var(--primary-color);}
+        }
+        .collapse { display: none!important;  }
+        .navbar-collapse.collapse { display: none!important;}
+        .collapse.in { display: block!important; border-top: 1px solid #ccc; overflow-y: inherit; 
+            max-height: calc(100vh - 140px); overflow: hidden; overflow-y: auto !important;
+        }
+      }
+
+}
+@media screen and ( max-width: 767px ) {
+    app-affiny-pay-new .payment-info1 form label { margin: 10px 0 5px 0px; }
+    app-affiny-pay-new .mat-form-field-wrapper {
+        padding-bottom: 0em;
+    }
+    .modal-lg.sponsor-details .modal-design .logo-part { margin: auto;  }
+    .modal-lg.sponsor-details .modal-design .right-data .sponsor-data h5 { text-align: center !important; }
+    .modal-lg.sponsor-details .modal-design .right-data .sponsor-data p { text-align: center !important; }
+
+    .about-us-home{ 
+        .col-md-3{ width: 100%;}
+        .col-md-9{ width: 100%;}
+    }
+    .edituser{width: 95% !important; max-width: 95% !important;
+        .editmemberpopup{width: 95% !important; max-width: 95% !important;}
+    }
+    .infomainpopup{ max-width: 600px!important; width: 95% !important;}
+    .popop-common-center{width: 95%;
+        .newsletterpopup{width: 100% !important; margin: 0 !important;}
+    }
+    .gallerypopup-redesign{width: 95%;}
+    app-sponsor-donor-plan-new{
+        .mat-form-field-appearance-fill .mat-form-field-flex { padding: 0px;  }
+        .tabs-part-plan .mat-form-field-prefix, .tabs-part-plan .mat-form-field-suffix { left: 3px; top: 1px; }
+        .mat-form-field-label-wrapper{ font-size: 13px;}
+        .cdk-text-field-autofill-monitored:not(:-webkit-autofill){ font-size: 12px; padding-left: 2px; }
+    }
+    .contactpopupmain .contactpopup{ width: 94%;              }
+    app-hall-booking{
+        .mat-checkbox-label{ font-size: 14px; }
+    }
+    app-hall-booking-details{
+        .event-inner-paid .sub-main { padding: 0px 0px; }
+        .event-inner-paid ul.price li { font-size: 15px; }
+        .detail-p {  margin-top: 10px; padding-top: 10px; }
+        .img-thb { width: 50px; height: 50px; }
+    }
+
+    .main-asset .search2 {  width: 100%; margin-top: 15px;
+        .mat-form-field-appearance-legacy .mat-form-field-wrapper { padding-bottom: 0em!important; }
+    }
+    .hall-booking-list-box ul li:first-child { width: calc(100% - 0px); }
+    .memberdashboarnew-tab .back-round { width: calc(100% - 50px) !important; margin: 0px 0px; }
+    .memberdashboarnew-tab .no-row { padding: 0px; width: auto; }
+    .memberdashboarnew-tab .mat-tab-body-wrapper { padding: 0px; }
+    .main-dashboard { padding: 30px 15px 15px 15px!important; }
+    .memberdashboarnew-tab .back-round .round ul li p { font-size: 14px !important; }
+    .memberdashboarnew-tab .back-round .round ul li span { font-size: 23px !important; }
+    .memberdashboarnew-tab .back-round .round{ padding: 30px 10px!important; }
+    .memberdashboarnew-tab .back-round { margin: 10px 0px!important;  width: calc(100% - 0px) !important; height: 171px; }
+    .memberdashboarnew-tab .mat-tab-body-content { overflow: hidden; }
+    .memdirectory .col-sm-6{ margin: 0px; padding: 0px; }
+    .memdirectory .col-md-6{ margin: 0px; padding: 0px; }
+    .memdirectory{ padding-bottom: 0px!important;
+        h2{ font-size: 18px; }
+    }
+    .img-dragger { background: #fff; }
+    .signup-res { top: auto; left: auto; transform: translate(-0%, -0%); }
+    .signup-head{
+        .singlelogo{ margin-top: 25px;}
+    }
+    .noheight-res{ height: auto!important; }
+    .login-input-area .styled-input { margin-top: 15px; }
+    .uploadmedia{  width: auto!important;  margin: 30px auto 0px;
+        .save-changes { min-width: 140px; }
+    }
+    .aditional-info span{ font-size: 20px;}
+    .diamondtxt{ font-size: 16px!important;margin-top: 25px; }
+    .mainbottm { padding-top: 5px; }
+    .main-screen .event-home .tab-design mat-card mat-card-content span.date { font-size: 12px; }
+    .email-mem:hover .tltips { left: -48px!important; }
+    .arrow-up {left: 65px; }
+    .cc-web-main .sidebar { height: calc(100% - 101px)!important; margin-top:101px!important;    }
+    .cc-web-main .rightpartmain { margin:88px 0 0 250px!important; width:calc(100% - 250px)!important; }
+    .collapse-left-menu .rightpartmain { margin: 88px 0 0 45px !important; width:calc(100% - 45px)!important; }
+    .no-paid-mobile{ padding:0px;}
+    .mainabout { height: 200px !important;}
+    .slider_main .carousel-item .item { margin-top: 0px; }
+    .welcomepopup{ width: 90%; margin: 0px; }
+    .subbox{ width: calc(46% - 10px)!important; height: 180px!important; }
+    //16-03-202
+    .sidebar { width: 45px!important; height: calc(100% - 80px) !important; margin-top: 80px !important; }
+    .collapse-left-menu .common-page { width: calc(100% - 45px) !important; margin: 100px 0 0 45px !important; }
+    .subleft-menu ul li { margin: 3px 0 4px 0; }
+    .setting-last-menu .subleft-menu { top: -260px; }
+    .setting-last-menu .subleft-menu::after { top: 260px; }
+    .collapse-left-menu .sidebar { width: 45px !important; }
+    .menuleftnew { margin: 12px 0 0 10px!important; }
+    .sidebar::before { left: 45px!important;}
+    .menuleftnew li a .icon-w{  width: 47px!important;}
+    .profileleft li a .thumb-image { margin-right: 19px;}
+    .heading-event-detail {  width: calc(100% - 0px); margin-bottom: 25px; }
+    .leftdonorpart .save-changes{ margin-top: 0px;}
+    .leftdonorpart .innerpaid mat-radio-button label{ font-size: 14px;}
+    .maincheckbox .mainvipsesating .radion-heading mat-radio-button { width: calc(100% - 60px);}
+    .padddonor .thanskimage{ width: 200px;}
+
+    .event-inner-paid ul.price li{ float: left;}
+    .event-detailpagebanner{ margin: 0px!important; padding: 0px 0px 20px 0px!important;}
+    .cancellable-txt { padding-top: 12px!important;     }
+    .additional-details {padding-top: 0px;padding: 0px 18px; text-align: justify;}
+    .main-screen .news-announcement-details .detail-text .detail-head h3 { font-size: 21px; }
+    .main-screen .news-announcement-details .detail-text .detail-head span { font-size: 15px; }
+    .main-screen .news-announcement-details .detail-text { margin-top: 15px; }
+    .mod-scroll { height: 150px; }
+    .booticket-lft{
+        .reg-inner { padding-left: 20px; }
+        .stepprogress { margin: 30px 0 0 15px;}
+    }
+    .book-ticket-main { margin: 10px; }
+    .bookticket-right { width: calc(100% - 0px)!important; margin: 60px 0 0 0px!important; }
+    .booticket-lft { width: 100%!important; left: 0px!important;  }
+    .grand-t { font-size: 13px; margin-right: 0px; margin-top: 0px; margin-left: 20px; float: none; display: block;}
+    .text-off li:first-child { font-size: 15px; }
+    .text-off { margin: 3px 0 0 20px; }
+    .no-equal-height-book-ticket{ display: block }
+    .pad-right { padding-right: 0px !important; }
+    .tick-collection { font-size: 14px; }
+    .ticket-amount { font-size: 14px; }
+    .top-chart {  padding: 15px; }
+    .tab-main .mat-tab-label{ height: 55px; }
+    .setting-dashboard li { width: calc(100% - 40px); }
+    .pegination-main ul li button.arrow { padding: 0px 7px;}
+    .pegination-main ul li button.next { margin: 0px 0px;}
+    .mem-coll { padding: 10px 15px 10px 15px; }
+    .totallmember span{ display: block;}
+    .top-export-button-main input { width: 100%; }
+    .top-export-button-main button { margin-left: 0px; margin-right: 15px; }
+    .dashboard-top li {  width: 100%; }
+    .dashboard-top li:first-child img {width: 90px; height: 90px; margin-bottom: 15px; }
+    .common-page { width: calc(100% - 45px)!important; margin: 0px 0 0 45px!important; }
+    .tottal-collection-amount { font-size: 14px; }
+    .totall-collection span { font-size: 16px; }
+    .dashboard-top li h1 {font-size: 17px;}
+    .category-dashboard li span { margin-top: 10px; margin-bottom: 5px;}
+    .category-dashboard{ margin-top: 5px; }
+    .dashboard-top li:first-child { padding-right: 15px; }
+    .event_date.top_dt{float: left;}
+    .event_date{margin-top: 0px;}
+    .reg-left { height: calc(100% - 70px); position: relative; left: 0px; top: 50px; width: 100%; padding-top: 20px; padding-bottom: 20px; }
+    .borfamily{ padding:10px; }
+    .stepprogress { margin: 30px 0 0 46px; }
+    .reg-left h1 { font-size: 28px; }
+
+    .search-h{ display: none;}
+    .profile-t{ float: right!important;}
+    .menu-right-icon { margin-top: 19px;  margin-right: 20px; }
+    .profile-t .profiledrop { margin-top: 8px; }
+    .profile-t .dropdown-menu { margin-left: -38px!important; }
+    .social-icon-menu { min-height: 80px; padding: 15px 0 0 20px; }
+    .social-icon-menu span { padding-bottom: 9px; }
+    .menu-scrl { height: calc(100% - 80px); }
+    .right-m li { font-size: 14px;}
+    .right-m { margin: 10px 0 0 5px;}
+    .select-chep button { padding: 6px 15px;}
+    .paddtop0 .becomemember-section{ width: 100%!important;   padding: 15px!important; }
+    .paddtop0 h4{ font-size: 26px!important;}
+    button.buy { font-size: 18px; padding: 10px 25px; }
+    .event-inner-paid .sub-main .btn-bookmark { float: none; margin-left: -5px!important; }
+    .bottomsticky{  height: auto; z-index: 1; float: left; padding-bottom: 10px; box-shadow: none; margin-bottom: 0px; padding-bottom: 0px; border-top: 1px solid #ccc; }
+    .bottomsticky .donatenowsticky { width: calc(100% - 0px); padding: 0px 0 0 0px!important; margin-left: 0px; text-align: center; display: contents; }
+    .bottomsticky .donatenowsticky button{ margin-left: 5px; margin-bottom: 2px;}
+    .bottomsticky ul { float: none; margin: auto; width: auto; display: block; }
+    .bottomsticky ul li .register{ height: 40px; margin-top: 0px;}
+    .bottomsticky ul li span{ margin-top: 15px; }
+    .bottomsticky ul li:first-child { margin-left: 0px; }
+    .cc-web-main .navbar-toggler { display: inline-block; border: 0px; margin-top: 24px;
+        .fa-bars::before{ color: $secondary-color; }
+    }
+    .login-social { margin-bottom: 15px!important; }
+    .txtcenter { margin-top: 0px!important; }
+    .navbar-nav li { text-align: left;  padding: 13px 0px 13px 6px;
+        a{ padding-bottom: 7px!important;
+            &::before{ height: 2px;}
+        }
+    }
+    .navbar-collapse { box-shadow: none; margin-top: 18px; }
+    .cc-web-main .header { height: auto !important; }
+
+    //26-2
+    .radao-yes{text-align: left;padding-top: 12px;}
+    .paidbtm{margin-bottom: 20px;}
+    .sm-paymntleft{float: left;}
+
+    //03-03-2020
+    .share-model .modal-lg .modal-content{height: auto !important;}
+    .right-dashboard-address{margin-top: 10px;}
+    .in-progress {margin-top: 9px;}
+    .select-week {margin-top: 10px;float: left;}
+    .registration-admn{display: flex;}
+    .cc-web-main .toplogo {  margin: 0px!important; }
+
+
+
+
+        .booth-down{
+
+        display:block;
+
+        .col-md-6{
+
+            width:100%;
+        }
+
+        .text-r {
+
+            text-align: left;
+        }
+    }
+
+    .slider_main .carousel-item .item img {
+
+        height: 200px;
+    }
+
+    .carousel-caption{
+
+        top:4%;
+        left: 5%;
+        right: 5%;
+
+    }
+
+    .sub_title {
+        font-size: 16px;
+    }
+
+    .caption_title {
+        font-size: 13px;
+    }
+
+    .explr_btn button {
+
+        padding:4px 15px;
+        font-size: 13px;
+    }
+
+    .promo-code{
+
+        margin-top: 20px;
+    }
+
+    .added-member-detail{
+
+        margin-top: 20px;
+
+        h1 {
+
+            font-size: 18px;
+
+        }
+    }
+    .datail-list-date{
+
+        text-align: left;
+        padding-top: 15px;
+        width: 80px;
+        float: right;
+        margin-top: -68px;
+
+    }
+
+    .heading-event-detail{
+
+        span{
+
+            font-size: 19px;
+
+        }
+    }
+
+    .share-model {
+
+        .modal-lg{
+
+            width: 90%;
+
+        }
+    }
+
+    .member-responsive{
+
+        overflow: scroll;
+        width: auto;
+
+        .progressbar{
+
+            width: 700px;
+
+        }
+    }
+
+    .member-add{
+
+        margin-top: 30px;
+
+    }
+
+    .full-food-beverage{
+
+        display: block;
+
+        .col-md-8{
+
+            width: 100%;
+
+        }
+    }
+
+    .mem-header{
+
+        .col-md-8{
+
+            width: 100%;
+
+        }
+
+        .col-md-4{
+
+            width: 100%;
+
+        }
+    }
+
+
+    .right-top-reg {
+
+        text-align: left;
+
+    }
+
+    .no-equal-height{
+
+        display: block;
+
+    }
+
+    app-sidebar{
+
+        .profiledrop{
+
+            margin-left: 5px!important;
+        }
+    }
+
+    .responsive-btn{
+
+        display: block;
+        text-align: center;
+        margin-top: 10px;
+
+        button{
+
+            background: transparent!important;
+            color: $blue-dark;
+            border: 0px;
+
+        }
+    }
+    .main-slide { overflow: auto; }
+    .marsignup{ margin-bottom: 20px; }
+    .login-rgt-bg{ height: calc(100vh - 0px); }
+    .login-lft-bg{ display: none;}
+    .login-rgt-bg{ width: 100%; }
+    .datematerial {
+        .mat-icon-button { top: 3px; }
+    }
+    .modal.right {
+        .modal-dialog { width: 100%; }
+    }
+    .notification-scrl{ overflow: scroll; padding-bottom: 15px;
+        table{ width: 800px; }
+    }
+    .level-font{
+        span{ margin-bottom: 5px; display: block; }
+    }
+    .upload-responsive{
+
+        display: block;
+
+    }
+
+    .config_details{
+
+        p{
+            margin-bottom: 0px;
+            margin-top: 10px;
+
+        }
+    }
+
+    .save-changes {
+
+        padding: 10px 0px;
+        margin-top: 20px;
+        min-width: 85px;
+
+    }
+
+    .food-responsive{
+
+        width: 80%;
+    }
+
+    .cnfg_btn{
+
+        margin-left: 0px;
+        margin-top: 10px;
+
+        .add_food{
+
+            margin-left: 0px;
+        }
+    }
+
+    .add_food-config {
+
+        margin-top: 12px;
+        right: -26px;
+    }
+
+    .mem-register {
+
+        h2 {
+
+            font-size: 18px;
+        }
+    }
+
+    .styled-input  {
+
+        select  {
+
+            padding: 14px 10px 14px 10px;
+            font-size: 16px;
+        }
+    }
+
+    .inner-page-responsive {
+
+        width: calc(100% - 60px)!important;
+        margin-left: 60px!important;
+
+    }
+
+    .book-tick {
+
+        margin-top: 5px;
+    }
+
+    .count-res{
+
+        .plus-minus-counter{
+
+            width: 100px;
+
+        }
+
+        .btn{
+
+            padding: 6px 9px;
+
+        }
+
+        .fright {
+
+            width: 30px;
+
+        }
+
+        .adult-dollar {
+
+            font-size: 16px;
+
+        }
+
+        input {
+
+            width: 40px;
+        }
+
+        .col-sm-7{
+
+            width: 50%;
+            float: left;
+
+        }
+
+        .col-sm-5{
+
+            width: 50%;
+            float: left;
+
+        }
+    }
+
+    .priceevent div {
+
+        font-size: 25px;
+
+    }
+
+    .gallery_caption {
+
+        height: 140px;
+
+        h2{
+
+            font-size: 18px;
+            margin-top: 10px;
+
+        }
+    }
+
+    .text-two-ln{
+
+        font-size: 14px;
+    }
+
+    .caption_btm {
+
+        span{
+
+            font-size: 14px;
+        }
+
+        a {
+
+            font-size: 14px;
+
+        }
+    }
+
+    .gallery_caption { padding: 1px 10px; }
+
+    // left menu collapse on top of the content
+    .leftpart { margin-top: 89px; height: calc(100% - 89px); }
+
+
+
+    // .leftmenucollapse {
+
+    //     .rightpartmain {
+
+    //         width: calc(100% - 54px);
+    //         margin: 90px 0 0 61px;
+
+    //     }
+    // }
+
+    // left menu collapse on top of the content
+
+    .name-family {
+        span { font-size: 12px; }
+    }
+    .border-country {
+        select{ padding: 0px 10px; }
+    }
+
+    .fil-full {
+
+        display: block;
+
+        .col-12{
+
+            width: 100%;
+            max-width: 100;
+            min-width: 100%;
+
+        }
+
+        .button-sub{
+
+            position: relative;
+            margin-top: 15px;
+
+        }
+    }
+
+    .full-id-res{ width: 100%;
+        .nomargin { margin-left: 0px !important; flex: 0 0 100% !important; max-width: 100% !important;
+        }
+    }
+    .menuleftnewDiv { margin: 40px 0 0 45px; }
+    .profile-head { font-size: 22px; }
+    .notification-bel { margin: 0 0 0 17px!important;}
+    .dots-menu {
+        img { width: 16px; }
+    }
+    .dots-menu {  width: 35px!important; height: 35px!important; margin: 30px 0px 0px 5px !important; }
+    .profiledrop button {
+        img { width: 35px; height: 35px; margin-right: 5px; }
+    }
+    .open {
+        .profiledropdown {            left: 46px;
+
+        }
+    }
+
+
+
+    .rightpartmain {
+
+        min-height: calc(100vh - 70px);
+
+    }
+
+    .menuleft {
+
+        margin-left: 17px;
+
+    }
+
+    .leftpart {
+
+        z-index: 9999999999;
+
+    }
+
+    .menuleft {
+
+        width: 262px;
+
+    }
+
+    .profile-head{  margin-top: 5px; padding-left: 0px; }
+
+    .gaftop {
+
+        margin-top: 10px;
+
+    }
+
+    .profiletop {
+
+        padding: 15px 15px 15px 15px;
+
+    }
+
+    .profile-img {
+
+        img {
+
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
+
+        }
+    }
+
+    .wid01{
+
+        width: calc(100% - 0px);
+        float: none;
+        margin-bottom: 15px;
+
+    }
+
+    .emailprofile {
+        margin-top: 0px;
+    }
+
+    .wid02{
+
+        width: calc(100% - 0px);
+        margin-left: 0px;
+        float: none;
+    }
+
+    .menuleft li a {
+
+        font-size: 15px;
+    }
+
+    .menuleft {
+
+        .active {
+
+            a {
+
+                font-weight: 700;
+                font-size: 16px;
+
+            }
+        }
+    }
+
+
+    .header {
+
+        height: 70px;
+
+    }
+
+
+
+    .left-top {  height: 70px; }
+
+    .top-search {
+
+        margin: 17px 0px 0px 20px;
+        width: 95%;
+        height: 37px;
+        padding: 12px 20px 12px 30px;
+        font-size: 14px;
+        background: #f5f5f5 url(assets/images/search.svg) no-repeat 10px 13px;
+        background-size: 12px;
+
+    }
+
+    .profile-num input {
+
+        width: 130px;
+        padding: 14px 10px;
+        font-size: 16px;
+
+    }
+
+    .profile_cntc {
+
+        width: 150px;
+
+    }
+
+    input:valid ~ label{
+
+        padding: 0px 12px 0 3px;
+        left: 11px;
+
+    }
+
+    .styled-input{
+
+        input{
+
+            font-size: 16px;
+            padding: 14px 10px 14px 14px;
+
+        }
+    }
+
+    .changepass {
+
+        font-size: 20px;
+        padding: 0px 15px 5px 0px;
+
+    }
+
+    .emailprofile{
+
+        input{
+
+            padding: 14px 12px;
+            font-size: 16px;
+        }
+    }
+
+    .profile-num{
+
+        select{
+
+            padding: 0px 25px 0px 9px;
+
+        }
+    }
+
+    .border-country {
+
+        span {
+
+            padding: 0px 12px 0px 3px!important;
+            left: 10px;
+
+        }
+    }
+
+    .profiledrop{
+
+        .dropdown-menu{
+
+            margin-left: -120px;
+
+        }
+    }
+
+    .profiletop{
+        margin-bottom: 14px;
+    }
+    .footer-main span{
+        line-height: 40px;
+    }
+    .footer-main ul {
+        margin: 0px 8px 10px 10px;
+    }
+
+    .email-not{width: 130px;}
+    .timer-icon { width: 30px;}
+    .main-scheduel td{padding: 0px;}
+    .last-sch{width: 0px;}
+    .addbutton-mem{ font-size: 13px;  display: block; float: none; padding: 8px 20px; margin-top: 14px;}
+    .modal-title{font-size:20px;}
+    .icon-notification {width: 42px;}
+    .styled-input.cnfg {
+        input { font-size: 14px; padding: 14px 22px; }
+    }
+    .marvendor { margin-top: 15px; margin-bottom: 10px; }
+    .imageup {
+        .img { height: 125px; }
+        .color-darkblue { bottom: -18px; }
+    }
+    .uploader { height: 150px; }
+    .fild-type button { margin: 14px 0px 0px 10px; min-width: 149px; font-size: 12px; }
+    .add-cont{ font-size: 13px;
+        .col-xs-8,
+        .col-xs-4{ width: 100%; }
+    }
+    .share-model {
+        .modal-lg {
+            .modal-content { height: 150px; }
+        }
+    }
+    .event_btn.btn.sliderbtn span{display: none;}
+    .regs_list li{display: block; padding: 0px;}
+    .regs_list li::before{display: none;}
+    .perice_txt p{font-size:16px; padding-top: 7px;}
+    .no-eql-height,.edit_no-eql{display: block;}
+    .perice_txt {text-align: left;}
+    .sub_title_event h4{ margin: 17px 0px 12px;}
+    .member_title h5, .title_left{float: left;}
+    .event_slider .carousel-indicators li {margin: 17px 4px !important;}
+    .top_dt span{float: left;padding: 0px 6px 10px;}
+    .event_lcsntxt { margin: 16px 0px 11px;}
+    .newyr_title h3{margin: 18px 0px;}
+    .event_left, .ntwrk { margin-top: 18px;}
+    .event-pera p {padding: 8px 0px 24px 0px;}
+
+    //02-03-2020
+
+    .save-changes.fright.event-book{padding: 11px 5px;}
+    .event-list-price{padding-top: 20px;font-size:22px;float: left;}
+    .event-datetitme{padding-left: 14px !important; text-align: left;}
+    .event-book{font-size:12px;letter-spacing: 1px;}
+    .new-yr-event{position: relative;left: 0px; right: 0px; bottom: 0px; margin-top: 30px;}
+    .description_main{margin-left: 0px; margin-right: 0px;margin-top: 30px;}
+    .perice_txt.ent-price{float: none;}
+    .ent-price p{padding: 0px;}
+    .perice_txt.ent-price{display: block;}
+    .event-dntbtn{    margin-top: 0px;}
+    .description_txt p{font-size:16px;}
+
+    .price-inp input{ width: 65px;}
+    .eventdetailpage{ width: calc(100% - 0px) !important;  margin: 95px 0 0 0px !important; }
+    .slider .item{ height: 150px!important; }
+    #addGuestMemberForm {
+        .save-changes { min-width: 50px; }
+        .btn-secondary { width: 80px; }
+    }
+    .name-family {font-size: 15px;}
+    .family-background, .vendor-family-background { padding: 10px; margin-bottom: 10px; }
+    app-my-register-event{
+        .chapter-name { margin-left: 0px !important; }
+    }
+    app-newsletter-management .addbtnright {
+        top: 60px;
+    }
+    app-header{
+      .new-profile-header .dropdown-menu { min-width: 100%;  margin-left: 0px; }
+      .navbar-nav li { padding: 0px 0px 0px 6px!important; }
+      .navbar-collapse .dropdown { padding: 5px 20px 5px 0px !important; }
+      .new-profile-header { margin-top: 0px; margin-left: 0px!important; }
+      
+    }
+    .addbtnright { top: 60px; padding-top: 7px; background: #fff; margin-top: 0 !important; padding-bottom: 0px;
+        .select-chap{ margin-top: 4px;}
+    }
+}
+
+@media screen and ( max-width: 480px ) {
+    .bottomsticky .donatenowsticky button {  margin-right: 0px; }
+    .login-txt{
+        a{ padding-left: 0px!important;}
+    }
+    .mainabout { height: 200px !important; }
+    app-dashboard-event{
+        .moredrop .dropdown-menu{    margin-left: -0px!important; }
+    }
+    //16-03-202
+    .additional-details {padding-top: 0px;padding: 0px 18px; text-align: justify;}
+    .no-pay-ecual{ display: block;
+    .col-xs-3, .col-xs-9{ width: 100%; } }
+    .marginpaynow { margin-left: 0px; margin-right: 15px; }
+    .event-book{ float: left;}
+    .full-response-amnt {
+        .col-md-9, .col-md-3 {  width: 100%; }
+    }
+    .seating-book-ticket { border: 10px solid #afc6db; }
+    .diamond-inp { float: left; margin-left: 17px; margin-bottom: 15px; }
+    .setting-dashboard li { width: calc(100% - 20px); margin-left: 10px; margin-bottom: 10px; }
+    .collection-area .col-xs-8{ width: 100%;}
+    .collection-area .col-xs-4{ width: 100%;}
+    .collection-area { height: auto; }
+    .collection-area p{ margin-bottom: 0px; }
+    .tottal-collection-amount {  text-align: left; height: auto; justify-content: flex-start; padding-left: 15px; margin-bottom: 10px; }
+    .ticket-free-first{float: none;}
+    .fright.no-fright{float: left; margin-top: 15px;}
+    .added-ticket-section h2{margin: 21px 0px}
+    .create-new-evnt .imageup { width: 100%; }
+    .evnt-pr { display: block; }
+    .ticket-sold-res .col-xs-4{ width: 100%;}
+    .ticket-sold-res .col-xs-5{ width: 100%;}
+    .ticket-sold-res .col-xs-3{ width: 100%;}
+    .tick-collection { display: block; padding-bottom: 2px; }
+    .ticket-sold { margin-top: 18px; }
+    .terms[_ngcontent-cye-c6] .term-menu[_ngcontent-cye-c6] li a { padding: 0px 10px; }
+    .share-icon {
+        button { width: 42px; margin: 0px 5px;
+        }
+    }
+    .level-font{
+        .first-radio {  width: 100%; }
+    }
+    .imageup { width: 180px; }
+    .add-seat-res{
+        .col-xs-7, .col-xs-5{ width: 100%!important; }
+        .col-xs-7:last-child{ margin-bottom: 0px!important; }
+    }
+    .evnt-date-res{
+        .heading-event-detail{ width: 100%; }
+    }
+    .first-radio { width: 100px; }
+    .card-pay-resposive{  width: 100%!important; }
+    .count-res {
+        .col-sm-5, .col-sm-7 { width: 100%; float: left; }
+    }
+    .full-id-res{
+        .addbutton-mem{ float: none; display: block; margin-top: 10px; }
+    }
+    .profile-num {
+        input { width: 105px; padding: 14px 5px 14px 7px; }
+    }
+    .profile-num { 
+        select { padding: 0px 9px 0px 9px; width: 135px;
+            span{ width: 22px;  height: 25px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; float: left; }
+        }
+    }
+    .gallery_caption { height: 155px;
+        h3{ display: block; float: none;}
+    }
+    .newyr_title h3{font-size:18px;}
+    .regs_list li{display: block; padding: 0px;}
+    .regs_list li::before{display: none;}
+    .sub_title_event h4{font-size:16px;}
+    .event_slider .carousel-indicators{height: 34px !important;}
+    .event_slider .carousel-indicators li { margin: 12px 4px !important; }
+    .member_title h5{font-size:16px;}
+    .sub_title_event h4 {margin: 17px 0px 14px;}
+    .block_main {margin-top: 14px;}
+    //02-03-2020
+   .datetime.event-datetitme{padding-bottom: 12px;}
+   .datetime.event-datetitme p{font-size:14px;margin: 0px !important;}
+   .description_txt p{text-align: justify;}
+   .mat-expansion-panel-header{ padding: 0px 10px !important;height: 120px !important;}
+   .event-list-expanlist .mat-expansion-panel-header-title h5 { font-size: 16px;}
+   //03-03-2020
+   .pricingadd-tkt{padding-top: 22px;}
+   .select-week {float: left;}
+   .net-sales span{font-size:21px;}
+   .net-sales{ margin-top: 23px;}
+   .select-week .mat-form-field-infix{margin-top: 10px;}
+    .eventdetailpage .sub-main{ padding: 0px;}
+    .eventdetailpage .event-inner-paid { padding: 10px; }
+
+}

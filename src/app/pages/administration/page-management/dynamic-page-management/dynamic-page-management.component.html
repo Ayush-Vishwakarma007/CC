@@ -1,0 +1,272 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event new-dashboard">
+    <div class="row nomar">
+      <div class="col-md-6">
+        <div class="title-news"><a [routerLink]="'/management/page-management'">
+          <img alt="" src="assets/icon/arrow-news.svg"></a>
+          <span *ngIf="pageId == undefined">{{'admin.pageManagement.dynamicPage.title' | translate}}</span>
+          <span *ngIf="pageId != undefined">{{pageDetail.name}}</span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="publish-btn">
+          <button class="addanother" (click)="openModalWithClass(template)"> {{'admin.pageManagement.dynamicPage.addPage.Btn.text' | translate}} </button>
+          <button class="save-changes" (click)="submitInformation('redirect')"> {{'admin.pageManagement.dynamicPage.save.Btn.text' | translate}} </button>
+        </div>
+      </div>
+    </div>
+    <form class="example-form" id="pageForm">
+      <div class="row bortopgray">
+        <div class="col-md-12 col-lg-12">
+          <div id="gjs">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel"> {{'pageManagement.addpage.popup.title' | translate}} </h5>
+        <button aria-label="Close" id="closeModel" (click)="modalRef.hide()" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <form [formGroup]="pageForm">
+        <div class="modal-body">
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageType.lbl.text' | translate}}</mat-label>
+                <mat-select formControlName="pageType" (selectionChange)="type= $event.value">
+                  <mat-option value="">Select Page Type</mat-option>
+                  <mat-option *ngFor="let list of pageType" [value]="list?.value"> {{list?.name}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.pageType.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.pageType.errors" class="valid-msg">Page Type is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.path.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="path" (keydown.space)="$event.preventDefault();" (keydown)="eventHandler($event)">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.path.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.path.errors" class="valid-msg">Path is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageName.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="name">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.name.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.name.errors" class="valid-msg">Page Name is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="pageTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.pageTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.pageTitle.errors" class="valid-msg">Page Title is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.siteTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="siteTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.siteTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.siteTitle.errors" class="valid-msg">Site Title is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaTitle.errors" class="valid-msg">SEO Title is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">            
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoDescription.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaDescription">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaDescription.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaDescription.errors" class="valid-msg">SEO Description is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoKeyword.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaKeyword">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaKeyword.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaKeyword.errors" class="valid-msg">SEO Keyword is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">            
+            <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="type=='IMAGE_HEADER'">
+              <div class="imageup create-img-upload small-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                            (maxFileError)="maxFileError()"
+                                            (maxFileSizeError)="fileSizeError()"
+                                            (queueCompleted)="queueCompleted()"
+                                            (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                                            [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                            [uploaderText]="'Add Logo'">
+                </app-file-uploader-vertical>
+              </div>
+            </div>
+            </div>
+
+          <div class="row">
+             <div class="col-md-12 text-center">
+               <button class="save-changes marleft" (click)="submitInformation('save');">Save</button>
+             </div>
+           </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="newslettermodel" role="dialog" tabindex="1">
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel"> {{'pageManagement.addpage.popup.title' | translate}} </h5>
+        <button aria-label="Close" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <form [formGroup]="pageForm">
+        <div class="modal-body">
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageType.lbl.text' | translate}}</mat-label>
+                <mat-select formControlName="pageType" (selectionChange)="type= $event.value">
+                  <mat-option value="">Select Page Type</mat-option>
+                  <mat-option *ngFor="let list of pageType" [value]="list?.value"> {{list?.name}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.pageType.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.pageType.errors" class="valid-msg">Page Type is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.path.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="path">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.path.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.path.errors" class="valid-msg">Path is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageName.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="name">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.name.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.name.errors" class="valid-msg">Page Name is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.pageTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="pageTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.pageTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.pageTitle.errors" class="valid-msg">Page Title is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.siteTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="siteTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.siteTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.siteTitle.errors" class="valid-msg">Site Title is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="type=='IMAGE_HEADER'">
+              <div class="imageup create-img-upload small-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                            (maxFileError)="maxFileError()"
+                                            (maxFileSizeError)="fileSizeError()"
+                                            (queueCompleted)="queueCompleted()"
+                                            (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                                            [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                            [uploaderText]="'Add Logo'">
+                </app-file-uploader-vertical>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoTitle.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaTitle">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaTitle.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaTitle.errors" class="valid-msg">SEO Title is required</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoDescription.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaDescription">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaDescription.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaDescription.errors" class="valid-msg">SEO Description is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martop-date">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.pageManagement.dynamicPage.addPage.popup.seoKeyword.lbl.text' | translate}} <i>*</i></mat-label>
+                <input matInput formControlName="metaKeyword">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && pageForm.controls.metaKeyword.errors " class="descrip-paid">
+                <span *ngIf="this.submitBtn == false && pageForm.controls.metaKeyword.errors" class="valid-msg">SEO Keyword is required</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+             <div class="col-md-12 text-center">
+               <button class="save-changes marleft">Submit</button>
+             </div>
+           </div>-->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal -->

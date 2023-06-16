@@ -1,0 +1,1893 @@
+<div class="sections-main">
+  <h1>
+    <div class="img-create">
+      <img alt="Pricing" class="waletsize" src="assets/icon/pricing-icon.svg">
+    </div>
+    <!-- {{'event.create.donationSponsorship.title' | translate}} -->
+    Settings
+    <span>{{'event.create.donationSponsorship.text' | translate}}</span>
+  </h1>
+  <div class="border-line-bottom padd-btm-tab">
+    <mat-tab-group class="pricing-tab eventdonation" (selectedTabChange)="myTabSelectedTabChange($event,title)">
+      <mat-tab *ngIf="configuration.allowParticipation  == true" label="{{'event.create.donationSponsorship.participationConfigTab.text' | translate}}">
+        <form [formGroup]="participationConfigForm" id="participationConfigForm" autocomplete="false" class="foodValidUpdate">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Min age </mat-label>
+                    <input formControlName="minAge" (keypress)="numberOnly($event)" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.minAge.errors ">
+                    <span
+                      *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.minAge.errors "
+                      class="valid-msg">Minimum age is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-md-12 ">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Max age </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxAge" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxAge.errors ">
+                    <span
+                      *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxAge.errors "
+                      class="valid-msg">Maximum age is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-md-12 ">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Min participant </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="minParticipation" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.minParticipation.errors ">
+                    <span
+                      *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.minParticipation.errors "
+                      class="valid-msg">Minimum number of participants are required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-md-12 ">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Max participant </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxParticipation" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxParticipation.errors ">
+                    <span
+                      *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxParticipation.errors "
+                      class="valid-msg">Maximum number of participants are required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="row">
+                <div class="col-sm-6 datefullclick">
+                  <mat-form-field class="example-full-width dateinfo">
+                    <mat-label>Start date </mat-label>
+                    <mat-datetimepicker-toggle [for]="picker0001" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #picker0001 openOnFocus="true" timeInterval="5"
+                                        type="datetime"></mat-datetimepicker>
+                    <input [matDatetimepicker]="picker0001" autocomplete="false" formControlName="startDate" matInput
+                           >
+                  </mat-form-field>
+                  <div
+                  *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.startDate.errors ">
+                  <span
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.startDate.errors "
+                    class="valid-msg">Start date is required</span>
+                </div>
+                </div>
+                <div class="col-sm-6 datefullclick">
+                  <mat-form-field class="example-full-width dateinfo">
+                    <mat-label>End date </mat-label>
+                    <mat-datetimepicker-toggle [for]="picker0002" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #picker0002 openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>
+                    <input [matDatetimepicker]="picker0002" autocomplete="false" formControlName="endDate" (ngModelChange)="handleDateChange($event)" matInput >
+                  </mat-form-field>
+                  <div
+                  *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.endDate.errors ">
+                  <span
+                    *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.endDate.errors "
+                    class="valid-msg">End date is required</span>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Max performance duration </mat-label>
+                <input matInput placeholder="in min" formControlName="maxDurationOfPerformance" type="number"  min="0" oninput="validity.valid||(value='');">
+              </mat-form-field>
+              <div
+              *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxDurationOfPerformance.errors ">
+              <span
+                *ngIf="this.submitConfigBtn == false && participationConfigForm.controls.maxDurationOfPerformance.errors "
+                class="valid-msg">Maximum duration time is required</span>
+            </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width dateinfo participatedate">
+                <mat-label>Performance Start Time </mat-label>
+                  <input [owlDateTimeTrigger]="dt3" [owlDateTime]="dt3" formControlName="startTime" matInput autocomplete="false" >
+                  <span [owlDateTimeTrigger]="dt3"><i class="fa fa-clock-o"></i></span>
+                  <owl-date-time [pickerType]="'timer'" #dt3> </owl-date-time>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width dateinfo participatedate">
+                <mat-label>Performance End Time </mat-label>
+                <input [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" formControlName="endTime" matInput autocomplete="false" >
+                <span [owlDateTimeTrigger]="dt4"><i class="fa fa-clock-o"></i></span>
+                <owl-date-time [pickerType]="'timer'" #dt4></owl-date-time>
+              </mat-form-field>
+            </div>
+          </div> -->
+        </form>
+
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="resetConfiguration()" class="save-changes left-btns" type="button" value="Cancel">
+              <input (click)="submitConfiguration()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.participationConfig.saveBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab *ngIf="configuration.registrationType == 'CATEGORY' || configuration.registrationType == 'AGE'"  label="{{'event.create.donationSponsorship.ticketTab.text' | translate}}">
+        <form [formGroup]="pricingForm" id="pricingForm" class="foodValidUpdate">
+          <!-- paid -->
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="tickettype">Select type of ticket</h3>
+            </div>
+            <!-- <div class="col-md-6"> -->
+              <!-- <mat-radio-group  aria-label="Select an option" formControlName="registrationType" class="agewise"  (change)="getRadioValue($event)" > -->
+                <!-- <mat-radio-button  value="CATEGORY">Category Wise</mat-radio-button>
+                <mat-radio-button value="AGE">Age Wise</mat-radio-button> -->
+                  <!-- <mat-radio-button name="abc" >{{values.viewValue}}</mat-radio-button> -->
+              <!-- </mat-radio-group> -->
+            <!-- </div> -->
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width ">
+                <mat-label>Ticket name </mat-label>
+                <input formControlName="name" matInput type="text" autocomplete="off">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitBtn == false && pricingForm.controls.name.errors ">
+                <span
+                  *ngIf="this.submitBtn == false && pricingForm.controls.name.errors "
+                  class="valid-msg">Ticket name is required</span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width ">
+                <mat-label>{{'event.create.donationSponsorship.ticket.quantitylbl.text' | translate}} </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="capacity" matInput type="number" [readonly]="allewSeatCat==true" min="0" oninput="validity.valid||(value='');">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitBtn == false && pricingForm.controls.capacity.errors ">
+                <span
+                  *ngIf="this.submitBtn == false && pricingForm.controls.capacity.errors "
+                  class="valid-msg">Quantity is required</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="example-full-width">
+                <mat-label>Reserved seat</mat-label>
+                <input matInput placeholder="" formControlName="allocated" type="number"  min="0" oninput="validity.valid||(value='');">
+              </mat-form-field>
+            </div>
+            <div class="col-md-3" *ngIf="configuration.registrationType == 'CATEGORY'">
+              <mat-form-field class="example-full-width">
+                <mat-label>Amount ($) </mat-label>
+                <input matInput placeholder="" formControlName="amount" type="number"  min="0" oninput="validity.valid||(value='');">
+              </mat-form-field>
+              <div *ngIf="configuration.registrationType == 'CATEGORY'">
+
+                <div
+                  *ngIf="this.submitBtn == false && pricingForm.controls.amount.errors ">
+              <span
+                *ngIf="this.submitBtn == false && pricingForm.controls.amount.errors "
+                class="valid-msg">Amount is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 starnone datefullclick">
+              <mat-form-field class="example-full-width dateinfo">
+                <mat-label>Registration start date & time <i>*</i></mat-label>
+                <mat-datetimepicker-toggle [for]="picker01" matSuffix></mat-datetimepicker-toggle>
+                <mat-datetimepicker #picker01 openOnFocus="true" timeInterval="5"
+                                    type="datetime"></mat-datetimepicker>
+                <input [matDatetimepicker]="picker01" autocomplete="false" formControlName="startDateTime" matInput
+                       required>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitBtn == false && pricingForm.controls.startDateTime.errors ">
+                  <span
+                    *ngIf="this.submitBtn == false && pricingForm.controls.startDateTime.errors "
+                    class="valid-msg">Registration start date & time is required</span>
+              </div>
+            </div>
+            <div class="col-md-6 starnone datefullclick">
+              <mat-form-field class="example-full-width dateinfo">
+                <mat-label>Registration end date & time <i>*</i></mat-label>
+                <mat-datetimepicker-toggle [for]="picker02" matSuffix></mat-datetimepicker-toggle>
+                <mat-datetimepicker #picker02 openOnFocus="true" timeInterval="5"
+                                    type="datetime"></mat-datetimepicker>
+                <input [matDatetimepicker]="picker02" autocomplete="false" formControlName="endDateTime" matInput
+                       required>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitBtn == false && pricingForm.controls.endDateTime.errors ">
+                  <span
+                    *ngIf="this.submitBtn == false && pricingForm.controls.endDateTime.errors "
+                    class="valid-msg">Registration end date & time is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 paddtopcheck">
+              <mat-checkbox formControlName="allowMember"  [checked]="lifemem" class="memcheckbox">Member</mat-checkbox>
+              <mat-checkbox  formControlName="allowNonMember" [checked]="lifenonmem" class="memcheckbox">Non Member</mat-checkbox>
+              <mat-checkbox *ngIf="configuration.registrationType == 'CATEGORY'" formControlName="allowSeatSelection" (change)="showSeatCat($event)" [checked]="allewSeatCat">Seat Selection</mat-checkbox>
+              <div class="col-md-6 ticketColor" >
+                <label class="example-full-width"><b class="label-margin">
+                  Ticket Colour Code </b>
+                </label>
+                <input fornControlName="color"
+                readonly
+                style="cursor: pointer;"
+                [style.background]="colorCode"
+                autocomplete="off"
+                [(colorPicker)]="colorCode"
+                [cpPositionOffset]="'40%'"
+                [cpCancelButton]="true"
+                [cpPositionRelativeToArrow]="true"
+                [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                [cpPosition]="'bottom'"/>
+              </div>
+              <div class="col-md-12 memberCategory" *ngIf="pricingForm.get('allowMember').value">
+                <mat-checkbox formControlName="allowLifeMember" class="memcheckbox">Life Member</mat-checkbox>
+                <mat-checkbox formControlName="allowAssociateMember" class="memcheckbox">Associate Member</mat-checkbox>
+                <mat-checkbox formControlName="allowSeniorMember" class="memcheckbox">Senior Member</mat-checkbox>
+              </div>
+            </div>            
+          </div>
+            
+          <div class="" *ngIf="configuration.registrationType == 'CATEGORY' && this.allewSeatCat==true">
+            <div class="col-md-12">
+              <button class="save-changes add-btn" (click)="addSeatDynamicField()">+ Add</button>
+            </div>
+            <div class="row" *ngFor="let seat of seatList; let i =index">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-md-3 col-sm-6" >
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Seat name </mat-label>
+                      <input matInput placeholder="" [(ngModel)]="seat.name" (change)="changeSeatValue(seat)"
+                             [ngModelOptions]="{ standalone: true }">
+                    </mat-form-field>
+    
+                  </div>
+                  <div class="col-md-3 col-sm-6" >
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Start seat number </mat-label>
+                      <input matInput placeholder=""  (keypress)="numberOnly($event)"  [(ngModel)]="seat.start" (change)="changeSeatValue(seat)"
+                             [ngModelOptions]="{ standalone: true }">
+                    </mat-form-field>
+    
+                  </div>
+                  <div  class="col-md-3 col-sm-6">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>End seat number </mat-label>
+                      <input matInput placeholder=""  (keypress)="numberOnly($event)"  [(ngModel)]="seat.end" (change)="changeSeatValue(seat)"
+                             [ngModelOptions]="{ standalone: true }">
+                    </mat-form-field>
+    
+                  </div>
+                  <div class="col-md-3 col-sm-6">
+                    <div class="totalseatcount">
+                      <span>Total Seats: {{seat.totalSeats}}</span>
+                    <button  (click)="removeSeatLastOption(i,seat)" class="deletebut deletemartop">
+                      <i class="icon-delete-blue newicon"></i>
+                    </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <!--            <div class="col-md-6" *ngIf="configuration.registrationType == 'CATEGORY'">-->
+            <!--              <mat-form-field class="example-full-width">-->
+            <!--                <mat-label>Amount ($) <i>*</i></mat-label>-->
+            <!--                <input matInput placeholder="" formControlName="amount" type="text"  min="0" oninput="validity.valid||(value='');">-->
+            <!--              </mat-form-field>-->
+            <!--              <div *ngIf="configuration.registrationType == 'CATEGORY'">-->
+            <!--              <div-->
+            <!--              *ngIf="this.submitBtn == false && pricingForm.controls.amount.errors ">-->
+            <!--              <span-->
+            <!--                *ngIf="this.submitBtn == false && pricingForm.controls.amount.errors "-->
+            <!--                class="valid-msg">Amount is required</span>-->
+            <!--            </div>-->
+            <!--          </div>-->
+            <!--            </div>-->
+
+            <!-- <div class="col-md-6 userdetail">
+              <h3 class="tickettype">User details required?</h3>
+               <mat-radio-group aria-label="Select an option" class="agewise" formControlName="userDetailsRequired" [value]="value">
+                <mat-radio-button value="true">Yes</mat-radio-button>
+                <mat-radio-button value="false">No</mat-radio-button>
+              </mat-radio-group> -->
+            <!-- <mat-radio-group aria-label="Select an option" class="agewise" formControlName="userDetailsRequired">
+              <mat-radio-button *ngFor="let op of option3" [value]="op.value">
+                {{op.viewValue}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>  -->
+
+          </div>
+          <div class="row">
+            <div *ngIf="configuration.registrationType == 'AGE'">
+              <div class="col-md-12">
+                <button class="save-changes add-btn" (click)="addDynamicField()">+ Add</button>
+              </div>
+                <div class="col-sm-12 col-lg-12" *ngFor="let ticket of ageList; let i =index">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Name  </mat-label>
+                        <input matInput value="name" [(ngModel)]="ticket.name" (change)="changeValue(ticket)"
+                        [ngModelOptions]="{ standalone: true }" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Min Age </mat-label>
+                        <input matInput value="minAge" [(ngModel)]="ticket.minAge" (change)="changeValue(ticket)"
+                        [ngModelOptions]="{ standalone: true }"/>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Max Age</mat-label>
+                        <input matInput value="maxAge" (change)="changeValue(ticket)"
+                      [(ngModel)]="ticket.maxAge"
+                      [ngModelOptions]="{ standalone: true }" />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                      <mat-form-field class="example-full-width amountwid">
+                        <mat-label>Amount</mat-label>
+                        <input matInput value="amount" [(ngModel)]="ticket.price" (change)="changeValue(ticket)"
+                        [ngModelOptions]="{ standalone: true }" />
+                      </mat-form-field>
+                      <button  (click)="removeLastOption(i)" class="deletebut">
+                        <i class="icon-delete-blue newicon"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+
+          <!-- <div class="row martopevent">
+            <div *ngFor="let list of ageList; let i = index; " class="col-md-6 martopevent">
+              <div class="price-inp">
+                <span>{{'event.create.donationSponsorship.ticket.pricinglbl.text' | translate}} - {{i + 1}}</span>
+                <p>{{list.name}}</p>
+                <input (keypress)="numberOnly($event)" [(ngModel)]="list.price" [ngModelOptions]="{standalone: true}"
+                       placeholder="{{'event.create.donationSponsorship.ticket.pricelbl.text' | translate}}"
+                       type="text">
+              </div>
+            </div>
+            <div class="col-md-6 martopevent">
+              <mat-form-field class="example-full-width ">
+                <mat-label>{{'event.create.donationSponsorship.ticket.allocatedSeatslbl.text' | translate}}</mat-label>
+                <input formControlName="allocated" matInput>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitBtn == false && pricingForm.controls.allocated.errors ">
+              <span
+                *ngIf="this.submitBtn == false && pricingForm.controls.allocated.errors "
+                class="valid-msg">Allocated Seats are Required</span>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-md-12">
+              <input class="save-changes fright" type="submit" (click)="submitPricing()" value="Save Ticket" >
+            </div>
+          </div>
+        </form>
+        <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.ticket.addedTicket.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of price_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                 {{list.name}}
+                </td>
+                <td class="txt-second-col tdcenter" *ngIf="configuration.registrationType == 'CATEGORY'">
+                  <span>
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}} -->
+                    Seat type
+                  </span>
+                 {{list.seatType}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}} -->
+                    Quantity
+                  </span>
+                  {{list.capacity}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}} -->
+                    Amount
+                  </span>
+                  {{list.amount}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}} -->
+                   Start date
+                  </span>
+                  {{list.startDateTime| date: 'MM/dd/yyyy h:mm:ss a'}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}} -->
+                  End date
+                  </span>
+                  {{list.endDateTime| date: 'MM/dd/yyyy h:MM:ss a'}}
+                </td>
+                <!-- <td class="all-child-adult">
+                  <table>
+                    <tr>
+                      <td *ngFor="let age of list['ageRules']; let k = index; " class="txt-second-col tdcenter">
+                        <span>{{age['name']}}</span>
+                        $ {{age['price']}}
+                      </td>
+                    </tr>
+                  </table>
+                </td> -->
+                <td class="txt-second-col allocated-seat-wid">
+                  <span>Seat Selection
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.allocatedlbl.text' | translate}} -->
+                  </span>
+                  <span *ngIf="list.allowSeatSelection ==true">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </span>
+                </td>
+                <td class="txt-second-col allocated-seat-wid" *ngIf="configuration.registrationType == 'AGE'">
+                  <span>Age range
+                    <!-- {{'event.create.donationSponsorship.ticket.addedTicket.allocatedlbl.text' | translate}} -->
+                  </span>
+                  {{list.minAge}}-{{list.maxAge}} years
+                </td>
+                <td class="more-option">
+                  <button class="btn-edit" (click)="edit(list,'ticket')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+                  <button class="btn-edit" (click)="delete(list,'ticket')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'ticket')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'ticket')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-6">
+              <button class="add_food no-underline">{{'event.create.donationSponsorship.ticket.lessPricelbl.text' | translate}}</button>
+            </div>
+            <div class="col-md-6 pricingadd-tkt">
+              <input (click)="resetPricing()" class="save-changes cancel-btn-color" type="button" value="Cancel">
+              <input (click)="submitPricing()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.ticket.addTicketBtn.text' | translate}}">
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.ticket.addedTicket.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of price_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                  {{list['name']}}
+                  <span>{{'event.create.donationSponsorship.ticket.addedTicket.bookingEndlbl.text' | translate}} {{list['endDateTime']  | date : "MMM dd,yyyy H:m"}}</span>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.ticket.addedTicket.allocatedlbl.text' | translate}}</span>
+                  {{list['registered']}}/{{list['allocated']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.ticket.addedTicket.seatslbl.text' | translate}}</span>
+                  0/{{list['capacity']}}
+                </td>
+                <td class="all-child-adult">
+                  <table>
+                    <tr>
+                      <td *ngFor="let age of list['ageRules']; let k = index; " class="txt-second-col tdcenter">
+                        <span>{{age['name']}}</span>
+                        $ {{age['price']}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="more-option">
+                  <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'ticket')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'ticket')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div> -->
+        <!-- paid -->
+      </mat-tab>
+      <!-- <mat-tab *ngIf="configuration.registrationType == 'AGE'" label="{{'event.create.donationSponsorship.ticketTab.text' | translate}}">
+        <form id="agepricingForm">
+          <div class="row">
+            <div *ngFor="let list of ageList; let i = index; " class="col-md-6">
+              <div class="price-inp">
+                <span>{{'event.create.donationSponsorship.ticket.pricinglbl.text' | translate}} - {{i + 1}}</span>
+                <p>{{list.name}}</p>
+                <input (keypress)="numberOnly($event)" [(ngModel)]="list.price" [ngModelOptions]="{standalone: true}"
+                       placeholder="{{'event.create.donationSponsorship.ticket.pricelbl.text' | translate}}"
+                       type="text">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="submitAgePricing()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.ticket.addTicketBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+      </mat-tab> -->
+      <mat-tab *ngIf="configuration.allowDonor == true" label="{{'event.create.donationSponsorship.donationTab.text' | translate}}" title="Donation">
+        <!-- Donation -->
+        <form [formGroup]="donationForm" id="donationForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Donation plan name </mat-label>
+                    <input formControlName="categoryName" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.categoryName.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.categoryName.errors "
+                        class="valid-msg">Donation plan name is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Minimum donation ($) </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="minRange" matInput type="number"  min="0" oninput="validity.valid||(value='');">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.minRange.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.minRange.errors "
+                        class="valid-msg">Minimum donation is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Maximum donation ($) </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxRange" matInput type="number"   min="0" oninput="validity.valid||(value='');">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.maxRange.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.maxRange.errors "
+                        class="valid-msg">Maximum donation is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [hidden]="true" class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Discount type</mat-label>
+                    <mat-select formControlName="discountType"  >
+                      <mat-option value="">Select discount type <i>*</i></mat-option>
+                      <mat-option *ngFor="let list of donationTypeList" [value]="list['value']">
+                        {{list['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.discountType.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.discountType.errors "
+                        class="valid-msg">Discount type is required</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Discount value <i>*</i></mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="discount" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.discount.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.discount.errors "
+                        class="valid-msg">Discount value is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Maximum discount amount ({{currency}}) <i>*</i></mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxDiscount" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitDonationBtn == false && donationForm.controls.maxDiscount.errors ">
+                      <span
+                        *ngIf="this.submitDonationBtn == false && donationForm.controls.maxDiscount.errors "
+                        class="valid-msg">Maximum discount amount is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>Priority </mat-label>
+                <input type="number" formControlName="index" matInput  min="0" oninput="validity.valid||(value='');">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitDonationBtn == false && donationForm.controls.index.errors ">
+                <span
+                  *ngIf="this.submitDonationBtn == false && donationForm.controls.index.errors "
+                  class="valid-msg">Priority is required</span>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="editor-main martopevent">
+                <span class="sub-head">{{'event.create.donationSponsorship.donation.descriptionlbl.text' | translate}}<i  class="required"></i></span>
+                <ngx-editor class="editor-icon" [editor]="editor" formControlName="description"></ngx-editor>
+                <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                <div *ngIf="this.submitDonationBtn == false && donationForm.controls.description.errors "
+                     class="descrip-paid">
+                  <span *ngIf="this.submitDonationBtn == false && donationForm.controls.description.errors "
+                        class="valid-msg">Description is required</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="resetDonation()" class="save-changes left-btn" type="button" value="Cancel">
+              <input (click)="submitDonation()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.donation.addDonationBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.donation.donationPlan.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of donation_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                  {{list['categoryName']}}
+                  <p [innerHTML]="list['description']" class="no-italic"></p>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>Priority</span>
+                  {{list['index']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.donation.donationPlan.mindiscountlbl.text' | translate}}</span>
+                  $ {{list['range']['min']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.donation.donationPlan.maxdiscountlbl.text' | translate}}</span>
+                  $ {{list['range']['max']}}
+                </td>
+                <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'donation')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'donation')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'donation')" class="dropdown-item"  > <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.donation.donationPlan.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'donation')" class="dropdown-item"  > <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.donation.donationPlan.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!-- Donation -->
+      </mat-tab>
+      <mat-tab *ngIf="configuration.allowSponsorship  == true" label="{{'event.create.donationSponsorship.sponsorTab.text' | translate}}">
+        <!-- Sponsor -->
+        <form [formGroup]="sponsorForm" id="sponsorForm" class="foodValidUpdate">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>Sponsorship plan name </mat-label>
+                <input formControlName="categoryName" matInput>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.categoryName.errors ">
+                <span
+                  *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.categoryName.errors "
+                  class="valid-msg">Sponsorship plan name is required</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Minimum amount ($) </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="minRange" matInput type="text"  min="0" oninput="validity.valid||(value='');">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.minRange.errors ">
+                        <span
+                          *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.minRange.errors "
+                          class="valid-msg">Minimum amount is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Maximum amount ($) </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxRange" matInput type="text"  min="0" oninput="validity.valid||(value='');">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.maxRange.errors ">
+                      <span
+                        *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.maxRange.errors "
+                        class="valid-msg">Maximum amount is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-2">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Validity </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="advertisementDays" matInput type="text" placeholder="{{'event.create.donationSponsorship.sponsor.validitylbl.ph.text' | translate}}" min="0">
+                  </mat-form-field>
+
+                </div>
+</div>
+          <div  class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Discount type </mat-label>
+                <mat-select formControlName="discountType" (selectionChange)="changeSponsorDis($event)" [value]="changeSponDiscount">
+
+                  <mat-option *ngFor="let list of donationTypeList" [value]="list['value']">
+                    {{list['name']}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discountType.errors ">
+                <span
+                  *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discountType.errors "
+                  class="valid-msg">Discount type is required</span>
+              </div>
+            </div>
+            <div  class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid" *ngIf="changeSponDiscount == 'TICKET'">
+                <mat-label>Number of tickets </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="discount" matInput type="text">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors ">
+                <span
+                  *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors "
+                  class="valid-msg">Discount value is required</span>
+              </div>
+
+              <mat-form-field class="example-full-width sm-paid" *ngIf="changeSponDiscount == 'AMOUNT'">
+                <mat-label>Discount in amount </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="discount" matInput type="text">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors ">
+                <span
+                  *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors "
+                  class="valid-msg">Discount value is required</span>
+              </div>
+              <mat-form-field class="example-full-width sm-paid" *ngIf="changeSponDiscount == 'PERCENT'">
+                <mat-label>Discount % </mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="discount" matInput type="text">
+              </mat-form-field>
+              <div
+                *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors ">
+                <span
+                  *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.discount.errors "
+                  class="valid-msg">Discount value is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12" *ngIf="changeSponDiscount == 'PERCENT'">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Max. discount ({{currency}}) </mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxDiscount" matInput type="text">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.maxDiscount.errors ">
+                    <span
+                      *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.maxDiscount.errors "
+                      class="valid-msg">Max discount is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12" *ngIf="changeSponDiscount == 'TICKET'">
+                  <mat-radio-group class="priority-high"  formControlName="lowestPriceTicketFree" (change)="changeTicketDis($event)">
+                    <mat-radio-button [value]=true>Low</mat-radio-button>
+                    <mat-radio-button [value]=false >High</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>Priority </mat-label>
+                    <input type="number" formControlName="index" min="0" matInput oninput="validity.valid||(value='');">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.index.errors ">
+                    <span
+                      *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.index.errors "
+                      class="valid-msg">Priority is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="editor-main martopevent">
+                <span class="sub-head">{{'event.create.donationSponsorship.sponsor.descriptionlbl.text' | translate}}<i  class="required"></i></span>
+                <ngx-editor class="editor-icon" [editor]="editors1" formControlName="description"></ngx-editor>
+                <ngx-editor-menu [editor]="editors1" [toolbar]="toolbar"></ngx-editor-menu>
+              </div>
+              <div *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.description.errors "
+                   class="descrip-paid">
+                <span *ngIf="this.submitSponsorBtn == false && sponsorForm.controls.description.errors "
+                      class="valid-msg">description is required</span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="resetSponsor()" class="save-changes left-btn" type="button" value="Cancel">
+
+              <input (click)="submitSponsor()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.sponsor.addsponsorBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.sponsor.sponsorshipPlan.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of sponsor_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                  {{list['categoryName']}}
+                  <p [innerHTML]="list['description']" class="no-italic"></p>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>Priority</span>
+                  {{list['index']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.sponsor.sponsorshipPlan.mindiscountlbl.text' | translate}}</span>
+                  $ {{list['range']['min']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.sponsor.sponsorshipPlan.maxdiscountlbl.text' | translate}}</span>
+                  $ {{list['range']['max']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.sponsor.sponsorshipPlan.validitylbl.text' | translate}}</span>
+                  <p *ngIf="list['advertisementDays'] == -1">{{'donationSponsorship.chapterSponsorship.addSponsor.popup.validity.lifeTime.text' | translate}}</p>
+                  <p *ngIf="list['advertisementDays'] != -1">{{list['advertisementDays']}} {{'donationSponsorship.chapterSponsorship.addSponsor.popup.validity.day.text' | translate}}</p>
+                </td>
+                <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'sponsor')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'sponsor')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn"
+                            data-toggle="dropdown" id="dropdownMenuButton"
+                            type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'sponsor')" class="dropdown-item"  >  <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.sponsor.sponsorshipPlan.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'sponsor')" class="dropdown-item"  >  <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.sponsor.sponsorshipPlan.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!-- Sponsor -->
+      </mat-tab>
+      <!-- <mat-tab *ngIf="configuration.vendorExpo  == true" label="{{'event.create.donationSponsorship.vendorTab.text' | translate}}"> -->
+        <!-- Vendor -->
+        <!-- <form [formGroup]="vendorForm" id="vendorForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.planNamelbl.text' | translate}}</mat-label>
+                    <input formControlName="name" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.name.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.name.errors "
+                      class="valid-msg">Plan Name is Required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row martopevent">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.pricelbl.text' | translate}} ({{currency}})</mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="price" matInput (blur)="onBlur($event)">
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.price.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.price.errors "
+                      class="valid-msg">Price is Required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12 starnone">
+                  <mat-form-field class="example-full-width dateinfo sm-paid">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.registrationStartDatelbl.text' | translate}} <i>*</i></mat-label>
+                    <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5"
+                                        type="datetime"></mat-datetimepicker>
+                    <input [matDatetimepicker]="datetimePicker" autocomplete="false" formControlName="startDateTime"
+                           matInput
+                           required>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.startDateTime.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.startDateTime.errors "
+                      class="valid-msg">Registration Start Date & Time is Required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row martopevent">
+                <div class="col-md-12 starnone">
+                  <mat-form-field class="example-full-width dateinfo">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.registrationEndDatelbl.text' | translate}} <i>*</i> </mat-label>
+                    <mat-datetimepicker-toggle [for]="datetimePicker2" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #datetimePicker2 openOnFocus="true" timeInterval="5"
+                                        type="datetime"></mat-datetimepicker>
+                    <input [matDatetimepicker]="datetimePicker2" autocomplete="false" formControlName="endDateTime"
+                           matInput
+                           required  >
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.endDateTime.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.endDateTime.errors "
+                      class="valid-msg">Registration End Date & Time is Required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row martopevent">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.noOfRepresentativelbl.text' | translate}}</mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="memberAllowed" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.memberAllowed.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.memberAllowed.errors "
+                      class="valid-msg">No of Representatives is Required</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width sm-paid">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.discountTypelbl.text' | translate}}</mat-label>
+                    <mat-select formControlName="discountType">
+                      <mat-option value="">Select Discount type</mat-option>
+                      <mat-option *ngFor="let list of donationTypeList" [value]="list['value']">
+                        {{list['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.discountType.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.discountType.errors "
+                      class="valid-msg">Discount type is Required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 martopevent">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.discountValuelbl.text' | translate}}</mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="discount" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.discount.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.discount.errors "
+                      class="valid-msg">Discount Value is Required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 martopevent">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.vendor.maxdiscountlbl.text' | translate}} ({{currency}})</mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="maxDiscount" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitVendorBtn == false && vendorForm.controls.maxDiscount.errors ">
+                    <span
+                      *ngIf="this.submitVendorBtn == false && vendorForm.controls.maxDiscount.errors "
+                      class="valid-msg">Max. Discount is Required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 vendor-tab martopevent">
+              <div class="imageup create-img-upload small-upload arena-image-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                            (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                                            (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                                            [(uploadedFiles)]="mediaList" [uploadUrl]="mediaUploadUrl">
+                </app-file-uploader-vertical>
+              </div>
+            </div>
+          </div>
+          <div class="row martopevent">
+            <div class="col-md-12">
+              <div class="editor-main">
+                <span class="sub-head">{{'event.create.donationSponsorship.vendor.descriptionlbl.text' | translate}}</span>
+                <ngx-editor class="editor-icon"
+                                formControlName="description"></ngx-editor>
+                <div *ngIf="this.submitVendorBtn == false && vendorForm.controls.description.errors "
+                     class="descrip-paid">
+                  <span *ngIf="this.submitVendorBtn == false && vendorForm.controls.description.errors "
+                        class="valid-msg">Description is Required</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="resetVendor()" class="save-changes left-btn" type="button" value="Cancel">
+              <input (click)="submitVendor()" class="save-changes fright" type="button" value="{{'event.create.donationSponsorship.vendor.addBoothBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.vendor.vendoBoothPlan.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of vendor_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                  {{list['name']}}
+                  <span>{{list['startDateTime']  | date : "MMM dd,yyyy H:m"}}
+                    - {{list['endDateTime']  | date : "MMM dd,yyyy H:m"}}</span>
+                  <p [innerHTML]="list['description']" class="no-italic"></p>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.vendor.vendoBoothPlan.purchaseValuelbl.text' | translate}}</span>
+                  $ {{list['price']}}
+                </td>
+                <td class="txt-second-col tdcenter2">
+                  <span>{{'event.create.donationSponsorship.vendor.vendoBoothPlan.memberAllowancelbl.text' | translate}}</span>
+                  {{list['memberAllowed']}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.vendor.vendoBoothPlan.discountlbl.text' | translate}}</span>
+                  $ {{list['discount']}}
+                </td>
+                <td class="more-option">
+                  <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn"
+                            data-toggle="dropdown" id="dropdownMenuButton"
+                            type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'vendor')" class="dropdown-item"  >  <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.vendor.vendoBoothPlan.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'vendor')" class="dropdown-item"  >  <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.vendor.vendoBoothPlan.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div> -->
+        <!-- Vendor -->
+      <!-- </mat-tab> -->
+      <mat-tab *ngIf="configuration.accommodationOption  == true" label="{{'event.create.donationSponsorship.accommodationTab.text' | translate}}">
+        <!-- Accommodation -->
+        <form [formGroup]="accommodationForm" id="accommodationForm " class="foodValidUpdate">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Accommodation name </mat-label>
+                    <input formControlName="name" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.name.errors ">
+                            <span
+                              *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.name.errors "
+                              class="valid-msg">Accommodation name is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Accomodation url </mat-label>
+                    <input formControlName="accommodationUrl" matInput type="text">
+                  </mat-form-field>
+                </div>
+                <!-- <div class="col-md-12 martopevent">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'event.create.donationSponsorship.accommodation.allowMemberlbl.text' | translate}}</mat-label>
+                    <input formControlName="allowedMembers" matInput>
+                  </mat-form-field>
+                  <div
+                    *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.allowedMembers.errors ">
+                            <span
+                              *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.allowedMembers.errors "
+                              class="valid-msg">Allow Member Required</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label>{{'event.create.donationSponsorship.accommodation.noOfRoomlbl.text' | translate}}</mat-label>
+                <input formControlName="availableRooms" matInput>
+              </mat-form-field>
+              <div
+                *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.availableRooms.errors ">
+                            <span
+                              *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.availableRooms.errors "
+                              class="valid-msg">No of Room Required</span>
+              </div>
+            </div> -->
+            <div class="col-md-6  upload-photo-accommodation">
+              <div class="imageup create-img-upload small-upload arena-image-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                            (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                                            (queueCompleted)="queueComplete()" (uploadStarted)="uploadStarted()"
+                                            [(uploadedFiles)]="media_list" [uploadUrl]="mediaUploadUrl"
+                                            [validTypes]="validTypesImage" (click)="uploadclick()">
+                </app-file-uploader-vertical>
+                <div class="text-danger">{{showError}}</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="editor-main short-description martopevent">
+                <span class="sub-head">{{'event.create.donationSponsorship.accommodation.shortDescriptionlbl.text' | translate}}<i  class="required"></i></span>
+                <ngx-editor [editor]="editors" class="editor-icon" formControlName="description"></ngx-editor>
+                <ngx-editor-menu [editor]="editors" [toolbar]="toolbar"></ngx-editor-menu>
+              </div>
+              <div style="margin-top: 8px;"
+                *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.description.errors ">
+                    <span *ngIf="this.submitAccommodationBtn == false && accommodationForm.controls.description.errors "
+                          class="valid-msg">Short description is required</span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="dashed-border">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="resetAccommodation()" class="save-changes left-btns" type="button" value="Cancel">
+              <input (click)="submitAccommodation()" class="save-changes fright" type="button"
+                     value="{{'event.create.donationSponsorship.accommodation.addAccommodationBtn.text' | translate}}">
+            </div>
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            {{'event.create.donationSponsorship.accommodation.accommodation.title' | translate}}
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of accommodation_list;let i = index;">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                  {{list.name}}
+                  <p [innerHTML]="list.description" class="no-italic"></p>
+                </td>
+                <td class="txt-second-col tdcenter accomoda-main">
+                  <span>Accomodation url</span>
+                  {{list.accommodationUrl}}
+                </td>
+                <td class="txt-second-col tdcenter accomoda-main">
+                  <span>Uploaded photo</span>
+                  <i  *ngIf="list.profilePicture == '' || list.profilePicture == null " class="far fa-image placeholderimage"></i>
+                  <div *ngIf="list.profilePicture !== '' ">
+                  <img  class="accomo-img"  [src]="list.profilePicture | eventImages"/>
+                </div>
+                </td>
+                <!-- <td class="txt-second-col tdcenter">
+                  <span>{{'event.create.donationSponsorship.accommodation.Addedaccommodation.allowMemberlbl.text' | translate}}</span>
+                  {{list.allowedMembers}}
+                </td> -->
+                <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'accommodation')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'accommodation')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'accommodation')" class="dropdown-item"  > <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.accommodation.Addedaccommodation.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'accommodation')" class="dropdown-item" >  <i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.accommodation.Addedaccommodation.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <!-- Accommodation -->
+      </mat-tab>
+      <mat-tab *ngIf="configuration.allowFood  == true && configuration.freeFood == false" label="Food">
+        <!-- Food -->
+        <form [formGroup]="foodForm" id="FoodForm " class="foodValidUpdate">
+          <div class="row">
+            <div class="col-sm-8 col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Food name </mat-label>
+                <input formControlName="foodName" matInput placeholder="" >
+              </mat-form-field>
+              <div
+              *ngIf="this.submitFoodBtn == false && foodForm.controls.foodName.errors ">
+                      <span
+                        *ngIf="this.submitFoodBtn == false && foodForm.controls.foodName.errors "
+                        class="valid-msg">Food name is required</span>
+            </div>
+            </div>
+            <div class="col-sm-4 col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Price ($) </mat-label>
+                <input  formControlName="price" matInput placeholder="" (blur)="onBlur($event)" type="number"  min="0" oninput="validity.valid||(value='');" >
+              </mat-form-field>
+              <div
+              *ngIf="this.submitFoodBtn == false && foodForm.controls.price.errors ">
+                      <span
+                        *ngIf="this.submitFoodBtn == false && foodForm.controls.price.errors "
+                        class="valid-msg">Food price is required</span>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Description </mat-label>
+                <input  formControlName="description"  matInput placeholder="" >
+              </mat-form-field>
+              <div
+              *ngIf="this.submitFoodBtn == false && foodForm.controls.description.errors ">
+                      <span
+                        *ngIf="this.submitFoodBtn == false && foodForm.controls.description.errors "
+                        class="valid-msg">Food description is required</span>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input class="save-changes fright" type="submit" value="Save Food" (click)="submitFood()" >
+            </div>
+          </div>
+          <div class="added-ticket-section">
+            <h2>
+              Added Food
+            </h2>
+            <div class="scroll-tab-event">
+              <table class="table100">
+                <tr *ngFor="let list of food_List; let i = index; ">
+                  <td class="first-col">
+                    <img alt="" src="assets/images/two-line.png">
+                  </td>
+                  <td class="txt-second-col">
+                   {{list.foodName}}
+                    <span>{{list.description}}</span>
+                  </td>
+                  <td class="txt-second-col tdcenter" width="140">
+                    <span>Price</span>
+                    ${{list.price}}
+                  </td>
+                  <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'food')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'food')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                    <!-- <div class="more">
+                      <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                        <img alt="" src="assets/icon/more.svg">
+                      </button>
+                      <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                        <a (click)="edit(list,'food')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                        <a (click)="delete(list,'food')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                      </div>
+                    </div> -->
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+      <!-- Food -->
+      <!-- Parking -->
+      <mat-tab *ngIf="configuration.allowParking  == true " label="Parking" >
+      <form [formGroup]="parkingForm" id="ParkingForm " class="foodValidUpdate">
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Parking name </mat-label>
+              <input matInput placeholder="" formControlName="title">
+            </mat-form-field>
+            <div
+            *ngIf="this.submitParkingBtn == false && parkingForm.controls.title.errors ">
+                    <span
+                      *ngIf="this.submitParkingBtn == false && parkingForm.controls.title.errors "
+                      class="valid-msg">Parking name is required</span>
+          </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Number of vehicles </mat-label>
+              <input matInput placeholder="" formControlName="totalSlots" type="number"  min="0" oninput="validity.valid||(value='');">
+            </mat-form-field>
+            <div
+            *ngIf="this.submitParkingBtn == false && parkingForm.controls.totalSlots.errors ">
+                    <span
+                      *ngIf="this.submitParkingBtn == false && parkingForm.controls.totalSlots.errors "
+                      class="valid-msg">Number of vehicles are required</span>
+          </div>
+          </div>
+
+          <div class="col-sm-6 col-md-4" *ngIf="configuration.allowParking  == true && configuration.paidParking == true">
+            <mat-form-field class="example-full-width">
+              <mat-label>Price ($) </mat-label>
+              <input matInput placeholder="" formControlName="price" type="number" min="0" oninput="validity.valid||(value='');">
+            </mat-form-field>
+          </div>
+
+
+            <div
+            *ngIf="configuration.allowParking  == true && configuration.paidParking == true &&  this.submitParkingBtn == false && parkingForm.controls.price.errors ">
+                    <span
+                      *ngIf="configuration.allowParking  == true && configuration.paidParking == true && this.submitParkingBtn == false && parkingForm.controls.price.errors "
+                      class="valid-msg">Price is required</span>
+            </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>Description </mat-label>
+              <input matInput placeholder="" formControlName="description">
+            </mat-form-field>
+            <div
+            *ngIf="this.submitParkingBtn == false && parkingForm.controls.description.errors ">
+                    <span
+                      *ngIf="this.submitParkingBtn == false && parkingForm.controls.description.errors "
+                      class="valid-msg">Parking description is required</span>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <input class="save-changes fright" type="submit" value="Save Parking" (click)="submitParking()" >
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            Added Parking
+          </h2>
+          <div class="scroll-tab-event">
+            <table class="table100">
+              <tr *ngFor="let list of parking_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                 {{list.title}}
+                  <span>{{list.description}}</span>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>Price</span>
+                  ${{list.price}}
+                </td>
+                <td class="txt-second-col tdcenter2">
+                  <span>Number of vehicles</span>
+                        {{list.totalSlots}}
+                </td>
+                <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'parking')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'parking')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'parking')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'parking')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+    <!-- Parking -->
+    <!-- Vendor -->
+    <mat-tab *ngIf="configuration.vendorExpo == true" label="Vendor">
+      <form [formGroup]="newVendorForm" id="newVendorForm " class="foodValidUpdate">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Booth name </mat-label>
+              <input formControlName="name" matInput placeholder="" >
+            </mat-form-field>
+            <div
+        *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.name.errors ">
+                <span
+                  *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.name.errors "
+                  class="valid-msg">Booth name is required</span>
+      </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Price ($) </mat-label>
+              <input formControlName="price" matInput placeholder="" type="number" (blur)="onBlur($event)" min="0" oninput="validity.valid||(value='');">
+            </mat-form-field>
+            <div
+            *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.price.errors ">
+                    <span
+                      *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.price.errors "
+                      class="valid-msg">Price is required</span>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Select benefit </mat-label>
+              <mat-select formControlName="discountType" (selectionChange)="doSomething($event)">
+                <mat-option *ngFor="let values of options1" [value]="values.value">
+                  {{values.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div
+            *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.discountType.errors ">
+                    <span
+                      *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.discountType.errors "
+                      class="valid-msg">Discount is required</span>
+          </div>
+          </div>
+          <div class="col-sm-12 col-md-6" *ngIf="changeOption=='TICKET'">
+            <mat-form-field class="example-full-width">
+              <mat-label>Number of tickets </mat-label>
+              <input matInput placeholder="" formControlName="discount" type="number" min="0" oninput="validity.valid||(value='');">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-6" *ngIf="changeOption=='AMOUNT'">
+            <mat-form-field class="example-full-width">
+              <mat-label>Total amount </mat-label>
+              <input matInput placeholder="" formControlName="discount" (blur)="onBlur($event)">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-12 col-md-6" *ngIf="changeOption=='PERCENT'">
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Discount %</mat-label>
+                  <input formControlName="discount" matInput placeholder="" type="number" (blur)="onBlur($event)"  min="0" oninput="validity.valid||(value='');">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6" *ngIf="changeOption=='PERCENT'">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Max amount</mat-label>
+                  <input formControlName="maxDiscount" matInput placeholder="" type="number" (blur)="onBlur($event)"  min="0" oninput="validity.valid||(value='');">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Maximum allowed booth </mat-label>
+                  <input matInput placeholder="" formControlName="memberAllowed" type="number" min="0" oninput="validity.valid||(value='');">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 multipleicon">
+                    <mat-form-field class="example-full-width numericnum">
+                      <mat-label>Booth length </mat-label>
+                      <input  matInput type="number" inputmode="numeric" formControlName="length" min="0" oninput="validity.valid||(value='');">
+                    </mat-form-field>
+                    <div
+                    *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.length.errors ">
+                            <span
+                              *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.length.errors "
+                              class="valid-msg">Booth length is required</span>
+                  </div>
+
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Booth width </mat-label>
+                      <input formControlName="breadth" matInput type="number" inputmode="numeric" min="0" oninput="validity.valid||(value='');">
+                    </mat-form-field>
+                    <div
+                    *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.breadth.errors ">
+                            <span
+                              *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.breadth.errors "
+                              class="valid-msg">Booth width is required</span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="row ">
+                  <div class="col-sm-6 datefullclick">
+                    <mat-form-field class="example-full-width dateinfo">
+                      <mat-label>Start date </mat-label>
+                      <mat-datetimepicker-toggle [for]="picker01" matSuffix></mat-datetimepicker-toggle>
+                      <mat-datetimepicker #picker01 openOnFocus="true" timeInterval="5"
+                                          type="datetime"></mat-datetimepicker>
+                      <input [matDatetimepicker]="picker01" autocomplete="false" formControlName="startDateTime" matInput
+                             >
+                    </mat-form-field>
+                    <div
+                    *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.startDateTime.errors ">
+                            <span
+                              *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.startDateTime.errors "
+                              class="valid-msg">Start date is required</span>
+                  </div>
+                  </div>
+                  <div class="col-sm-6 datefullclick">
+                    <mat-form-field class="example-full-width dateinfo">
+                      <mat-label>End date </mat-label>
+                      <mat-datetimepicker-toggle [for]="picker001" matSuffix></mat-datetimepicker-toggle>
+                      <mat-datetimepicker #picker001 openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>
+                      <input [matDatetimepicker]="picker001" autocomplete="false" formControlName="endDateTime" (ngModelChange)="handleVendorTimeChange($event)" matInput >
+                    </mat-form-field>
+                    <div
+                    *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.endDateTime.errors ">
+                            <span
+                              *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.endDateTime.errors "
+                              class="valid-msg">End date is required</span>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="imageup create-img-upload small-upload arena-image-upload arena-image-upload-vendor">
+               <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                                        (maxFileSizeError)="fileSizeError()"
+                                        (queueCompleted)="queueCompleted()"
+                                        (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                                        [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                        [uploaderText]="'Add Logo'">
+            </app-file-uploader-vertical>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Feature list </mat-label>
+              <input formControlName="featureList" matInput placeholder="" type="text">
+            </mat-form-field>
+            <div
+            *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.featureList.errors ">
+                    <span
+                      *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.featureList.errors "
+                      class="valid-msg">Feature list is required</span>
+          </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Description </mat-label>
+              <input formControlName="description" matInput placeholder="" >
+            </mat-form-field>
+            <div
+            *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.description.errors ">
+                    <span
+                      *ngIf="this.submitNewVendorBtn == false && newVendorForm.controls.description.errors "
+                      class="valid-msg">Description is required</span>
+          </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- <button class="save-changes fright" type="button"> +ADD </button> -->
+            <input class="save-changes fright" type="submit" (click)="submitNewVendor()" value="Save Vendor" >
+          </div>
+        </div>
+        <div class="added-ticket-section">
+          <h2>
+            Added vendor
+          </h2>
+          <div class="scroll-tab-event vendortabscroll">
+            <table class="table100">
+              <tr *ngFor="let list of vendor_list; let i = index; ">
+                <td class="first-col">
+                  <img alt="" src="assets/images/two-line.png">
+                </td>
+                <td class="txt-second-col">
+                 {{list.name}}
+                  <span>{{list.description}}</span>
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>Booth size</span>
+                  {{list.length}} x {{list.breadth}}
+                </td>
+                <td class="txt-second-col tdcenter">
+                  <span>Price</span>
+                  ${{list.price}}
+                </td>
+                <td class="txt-second-col tdcenter2">
+                  <span>Complimentary ticket </span>
+                        {{list.discount}}
+                </td>
+                <td class="txt-second-col tdcentervendor">
+                  <span>Feature list</span>
+                        {{list.featureList}}
+                </td>
+                <td class="txt-second-col tdcenter2">
+                  <span>Start date</span>
+                        {{list.startDateTime |  date: 'MM/dd/yyyy h:MM:ss a' }}
+                </td>
+                <td class="txt-second-col tdcenter2">
+                  <span>End date</span>
+                        {{list.endDateTime |  date: 'MM/dd/yyyy h:MM:ss a' }}
+                </td>
+                <td class="txt-second-col tdcentervendor">
+                  <span>Discount type</span>
+                        {{list.discountType }}
+                </td>
+                <td class="txt-second-col tdcentervendor">
+                  <span>Arena image</span>
+                  <img class="vendorimg" *ngIf="list.arenaImage != '' "[src]="list.arenaImage|eventImages">
+                  <i  *ngIf="list.arenaImage == ''|| list.arenaImage == null " class="far fa-image placeholderimage"></i>
+                </td>
+                <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'new-vendor')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'vendorNew')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+                  <!-- <div class="more">
+                    <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                      <img alt="" src="assets/icon/more.svg">
+                    </button>
+                    <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                      <a (click)="edit(list,'new-vendor')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                      <a (click)="delete(list,'vendorNew')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                    </div>
+                  </div> -->
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </form>
+    </mat-tab>
+    <!-- Vendor -->
+<!-- Free Food -->
+<mat-tab *ngIf="configuration.allowFood  == true && configuration.freeFood == true" label="Food">
+  <!-- Food -->
+  <form [formGroup]="freeFoodForm" id="freeFoodForm " class="foodValidUpdate">
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Food name <i>*</i></mat-label>
+          <input formControlName="foodName" matInput placeholder="" >
+        </mat-form-field>
+        <div
+        *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.foodName.errors ">
+                <span
+                  *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.foodName.errors "
+                  class="valid-msg">Food name is required</span>
+      </div>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Dafault <i>*</i></mat-label>
+          <mat-select formControlName="default" >
+            <mat-option *ngFor="let values of options" [value]="values.value">
+              {{values.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+         <div
+        *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.default.errors ">
+                <span
+                  *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.default.errors "
+                  class="valid-msg">Default value is required</span>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="example-full-width">
+          <mat-label>Description <i>*</i></mat-label>
+          <input formControlName="description" matInput placeholder="" >
+        </mat-form-field>
+        <div
+        *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.description.errors ">
+                <span
+                  *ngIf="this.submitFreeFoodBtn == false && freeFoodForm.controls.description.errors "
+                  class="valid-msg">Food description is required</span>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <input class="save-changes fright" type="submit" (click)="submitFreeFood()" value="Save Food"  >
+      </div>
+    </div>
+    <div class="added-ticket-section">
+      <h2>
+        Added food
+      </h2>
+      <div class="scroll-tab-event">
+        <table class="table100">
+          <tr  *ngFor="let list of food_List; let i = index; ">
+            <td class="first-col">
+              <img alt="" src="assets/images/two-line.png">
+            </td>
+            <td class="txt-second-col">
+              {{list.foodName}}
+              <span>{{list.description}}</span>
+            </td>
+            <!-- <td class="txt-second-col tdcenter" width="140">
+              <span>Price</span>
+              {{list.price}}
+            </td> -->
+            <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'freefood')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" (click)="delete(list,'freefood')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+              <!-- <div class="more">
+                <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+                  <img alt="" src="assets/icon/more.svg">
+                </button>
+                <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                  <a  (click)="edit(list,'freefood')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.editBtn.text' | translate}}</a>
+                  <a  (click)="delete(list,'freefood')" class="dropdown-item"> <i  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.create.donationSponsorship.ticket.addedTicket.deleteBtn.text' | translate}}</a>
+                </div>
+              </div> -->
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+</mat-tab>
+<!-- Free Food -->
+  </mat-tab-group>
+  </div>
+</div>
+

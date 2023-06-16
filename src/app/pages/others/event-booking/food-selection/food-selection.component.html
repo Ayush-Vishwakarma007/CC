@@ -1,0 +1,50 @@
+ <!-- ===================== Food Section ================== --> 
+ <div class="main-book">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="white-payment add-food-book">
+        <div class="selectmem">
+          Select Member
+        </div>
+        <div class="term-register food-sel" *ngFor="let member of checkedMembers;let i = index">
+          <mat-radio-button (change)="saveCheckedMember($event,member,i)"> 
+            <span> 
+              <div class="charactor-nm">
+                <span>{{member.detail['firstName'].charAt(0)}}{{member.detail['lastName'].charAt(0)}}</span>
+              </div> 
+            </span>{{member.detail['firstName'] | titlecase}} {{member.detail['lastName'] | titlecase}}
+          </mat-radio-button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <span class="select-top">Select Menu</span>
+      <div class="white-payment add-food-right">
+        <div class="main-tb" *ngFor="let food of foodList;let i = index">
+          <div class="row row-eq-height">
+            <div class="col-md-7">
+              <span>{{food.foodName}}</span> 
+              <p   [innerHTML]="food['description']"></p>
+              <p class="sm-text">Price: ${{food.price}}</p>
+            </div>
+            <div class="col-md-5 button-min">
+              <span class="adult-dollar">${{food['totalPrice']}}</span>
+              <div class="plus-minus-counter" *ngIf="food['count'] >= 1">
+                <button (click)="decrementFoodItem(food)" class="btn btn-default">-</button>
+                <input class="counter" [(ngModel)]="food['count']"
+                       type="text" (keypress)="numberOnly($event)" readonly="" placeholder="0" type="text"/>
+                <button (click)="incrementFoodItem(food)" class="btn btn-default fright" >+</button>
+              </div>
+              <div class="plus-minus-counter add-b" *ngIf="food['count'] == 0">
+                <button (click)="incrementFoodItem(food)">
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ </div>
+ <!-- ===================== Food Section ================== --> 

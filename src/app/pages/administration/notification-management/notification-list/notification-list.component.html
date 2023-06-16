@@ -1,0 +1,179 @@
+<div class="borsponsor" id="noti_form">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-4">
+      <div class="totall-collection">
+        <span>Notification list</span>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 " [ngClass]="chapterList.length!=1  ? 'col-lg-3' : 'col-lg-6'">
+      <div class="searchfilter notificationfilter">
+        <div class="padd-area sponsorsearch">
+          <div class="main-search-top">
+            <div class="searchmember searchsponsor">
+              <mat-form-field class="example-full-width map-url searchform select-btm-no-paid">
+                <mat-label> Search Here..</mat-label>
+                <input (change)="getNotificationList($event.target.value)" autocomplete="off" [(ngModel)]="search" matInput type="text">
+              </mat-form-field>
+              <button type="button" class="search-button" (click)="searchClick()"> Search </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-3"  *ngIf="chapterList.length!=1">
+      <div class="searchfilter notificationchapter">
+        <div class="padd-area sponsorsearch">
+          <div class="main-search-top">
+            <div class="searchmember searchsponsor">
+              <mat-form-field class="example-full-width select-btm-no-paid">
+                <mat-label>Select Chapter</mat-label>
+                <mat-select (selectionChange)="getChapterDetail($event.value)" multiple="true" [(ngModel)]="chapterIds">
+                  <mat-checkbox [checked]="selectAllChapter" (change)="selectAllChange($event)">
+                    Select All</mat-checkbox>
+                  <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+                    {{chapter['name']}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-2 text-right">
+      <div class="page-filter-new">
+        <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid">
+          <mat-label>Page Filter</mat-label>
+          <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+            <mat-option *ngFor="let list of this.communityService.pagelist"
+                        [value]="list">{{list}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="donation-sponsor ">
+  <table>
+    <tr class="notif-list-header">
+      <th width="50"></th>
+      <th>
+        Subject
+      </th>
+      <th>
+        Filter Type
+      </th>
+      <th>
+        Status
+      </th>
+      <th width="70">
+        Action
+      </th>
+    </tr>
+    <tbody *ngFor="let list  of notificationList?.content;let i = index">
+      <tr>
+        <td>
+          <button class="downarrow" (click)="getSchedule(list, index)">
+            <span [ngClass]="list['isShow'] == true ? 'up' : 'down'">
+              <img alt="" src="assets/icon/arrow-white-down.svg">
+            </span>
+          </button>
+        </td>
+        <td>
+          {{list['subject']}}
+        </td>
+        <td>
+          {{list['notificationFilterType']}}
+        </td>
+        <td>
+          <p *ngIf="list['publish'] == false">Save as draft </p>
+          <p *ngIf="list['publish'] == true">Published </p>
+        </td>
+        <td>
+          <div class="dropdown dropup moredrop editgallery">
+            <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+              data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+              <img alt="" src="assets/icon/interface.svg">
+            </a>
+            <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+              <a class="dropdown-item" [routerLink]="'/management/edit-notification/'+list['id']"
+                 ><i class="fa fa-angle-right" aria-hidden="true"></i> Edit</a>
+              <a class="dropdown-item" (click)="deleteNotification(list['id'])"><i
+                  class="fa fa-angle-right" aria-hidden="true"></i>
+                Delete
+              </a>
+                <a class="dropdown-item" (click)="copyNotification(list['id'])"><i
+                  class="fa fa-angle-right" aria-hidden="true"></i>
+                Copy
+              </a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="familytab" [ngClass]="list['isShow'] == true ? '' : 'hideSubMember'">
+        <td colspan="5">
+          <table>
+            <tr *ngFor="let date of list.schedules">
+              <td width="300px" *ngIf="date.executed != false || date.canceled != false">
+                <button style="background: none;border: 0px; margin-left: 54px;"
+                  (click)="getNotificationDetail(list['id'],date.scheduleId,date.scheduleDate)">
+                  {{date.scheduleDate | date : "MMM dd, yyyy hh:mm a"}}
+                </button>
+              </td>
+              <td>
+                <span *ngIf="date.executed">Executed</span>
+                <span *ngIf="date.canceled">Canceled</span>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr *ngFor="let date of list.schedules">
+              <td width="300px" *ngIf="((date.scheduleId != null && date.scheduleId != '') && (date.executed == false && date.canceled == false)) || (date.scheduleId == null || date.scheduleId == '')">
+                <button style="background: none;border: 0px; margin-left: 54px;">
+                  {{date.scheduleDate | date : "MMM dd, yyyy hh:mm a"}}
+                </button>
+              </td>
+              <td *ngIf="((date.scheduleId != null && date.scheduleId != '') && (date.executed == false && date.canceled == false)) || (date.scheduleId == null || date.scheduleId == '')">
+                <span>Pending</span>
+                <span *ngIf="(date.scheduleId != null && date.scheduleId != '') && (date.executed == false && date.canceled == false)">
+                  <button style="margin-left: 15px; border: 0px; background: #666; padding: 5px 10px; display: inline; color: white; border-radius: 5px;" (click)="cancelNotification(list['id'],date.scheduleId)">Cancel</button></span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr *ngIf="list['schedules'].length == 0 && list['isShow'] == true" class="familytab">
+        <td colspan="7"><i style="padding: 0 0 10px 15px; display: inline-block; font-style: normal;"> No Schedule Found </i></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pegination-main totalPosition">
+    <ul>
+      <li>
+        <button (click)="pagination('current','user',0)" [disabled]="notificationList['first'] == true" class="next"> First </button>
+      </li>
+      <li>
+        <button (click)="pagination('prev','user')" [disabled]="notificationList['first'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"[ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+        <button class="numeric">{{i + 1}}</button>
+      </li>
+      <li>
+        <button (click)="pagination('next','user')" [disabled]="notificationList['last'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-right-arrow icon"></i>
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination('current','user',(notificationList['totalPages']-1))" [disabled]="notificationList['last'] == true" class="next"> Last </button>
+      </li>
+    </ul>
+    <div class="totalShow"><span>Total :</span> {{notificationList['totalElements']}}</div>
+  </div>
+</div>

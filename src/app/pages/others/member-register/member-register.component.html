@@ -1,0 +1,890 @@
+<div class="container inner-page-responsive">
+  <div class="mem-register">
+    <h2>
+      {{display['header']}}
+    </h2>
+    <div class="member-responsive">
+      <ul class="progressbar">
+        <li (click)="openActiveTab(list['step'])" *ngFor="let list of step;"
+            [ngClass]="list['active'] == true ? 'active' : ''">
+          <span>Step {{list['stepNo']}}</span>
+          <p>{{list['name']}}</p></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="right-register">
+    <div class="padd-register profiletop">
+      <div class="main-reg-head mem-header">
+        <div class="row row-eq-height no-equal-height">
+          <div class="col-md-8 col-sm-6">
+            <div class="heading-event-detail full-mem-wid">
+              <span>{{eventDetail['name']}}</span>
+              <p class="sm-head">
+                {{eventDetail['details']}}
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <div class="heading-event-detail right-top-reg">
+              <p>
+                <i aria-hidden="true" class="fa fa-map-marker"></i> {{eventDetail['address']}} {{eventDetail['city']}}
+                | {{eventDetail['state']}}
+              </p>
+              <p class="date-mem head-r">
+                {{eventDetail['display_date']}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='MEMBER_REGISTRATION'" class="main-step">
+        <div class="row row-eq-height no-equal-height">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+              <span class="total-fees">
+               {{display['sub_header']}}
+              </span>
+              <div *ngFor="let familyMember of familyData;let i=index" class="term-register family-back">
+                <mat-checkbox (change)="feesCalculation('fee',$event,familyMember.id,familyMember)"
+                              [(ngModel)]="familyMember['checked']" [ngModelOptions]="{standalone: true}">
+                  <span>
+                    <!-- <img alt="" src="assets/images/thumb.png" >  -->
+                    <div class="charactor-nm">
+                        <span>{{familyMember.firstName.charAt(0)}}{{familyMember.lastName.charAt(0)}} </span>
+                    </div>
+                  </span>
+                 <span class="firstfamilyname"> {{familyMember.firstName | titlecase}} {{familyMember.lastName | titlecase}} </span>
+                </mat-checkbox>
+              </div>
+              <!-- <div class="term-register family-back light-blue">
+              <mat-checkbox> <span> <img alt="" src="assets/images/thumb.png" > </span> John McClane </mat-checkbox>
+            </div>
+            <div class="term-register family-back">
+              <mat-checkbox> <span> <img alt="" src="assets/images/thumb.png" > </span> John McClane </mat-checkbox>
+            </div>
+            <div class="term-register family-back">
+              <mat-checkbox> <span> <img alt="" src="assets/images/thumb.png" > </span> John McClane </mat-checkbox>
+            </div> -->
+              <span *ngIf="userType['type']=='user'" class="total-fees total-guest">
+                Guests
+              </span>
+              <div *ngIf="userType['type']=='user'">
+                <div *ngFor="let guestMember of guestData;let i=index" class="term-register family-back">
+                  <mat-checkbox (change)="feesCalculation('fee',$event,guestMember.id,guestMember)" [(ngModel)]="guestMember['checked']"
+                                [ngModelOptions]="{standalone: true}">
+                  <span>
+                    <!-- <img alt="" src="assets/images/thumb.png" >  -->
+                    <div class="charactor-nm">
+                      <span>{{guestMember.firstName.charAt(0)}}{{guestMember.lastName.charAt(0)}}</span>
+                    </div>
+
+                  </span>
+                    {{guestMember.firstName | titlecase}} {{guestMember.lastName | titlecase}}
+                  </mat-checkbox>
+                </div>
+              </div>
+
+              <!-- <div class="term-register family-back">
+                <mat-checkbox>
+                  <span>
+                    <img alt="" src="assets/images/thumb.png"> </span> John McClane </mat-checkbox>
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 member-add">
+            <button class="add-guest add-fam" data-target="#exampleModalAddGuest" data-toggle="modal">
+              + {{display['add_new']}}
+            </button>
+            <div *ngIf="userType['type']=='user'" class="sponsorship">
+              <span class="total-fees fees-top">
+               Sponsorship
+              </span>
+              <div class="border-country">
+                <span>Select Sponsorship</span>
+                <select>
+                  <option value="">Select Sponsorship</option>
+                  <option *ngFor="let sponsor of sponsorList;let i=index"
+                          value="{{sponsor['id']}}">{{sponsor['categoryName']}}</option>
+                </select>
+              </div>
+            </div>
+
+
+            <span class="total-fees fees-top tottal-bor-top">
+              Total Members
+            </span>
+            <div class="tottal-fees-area">
+              <div *ngFor="let user of finalData['userAgeFees'];let i=index" class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>{{user['name']}}  Entry</span>
+                    <p class="marno"> {{user['members']}} Members </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">${{user['totalPrice']}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalAgeFees']" class="adult-dollar">${{finalData['totalAgeFees']}}</span>
+                    <span *ngIf="!finalData['totalAgeFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='SEAT_SELECTION'" class="main-step">
+        <div class="row row-eq-height full-food-beverage">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+              <span class="total-fees">
+                Seating Arrangement
+              </span>
+              <div class="seating-arrangement">
+                <!-- <div class="inner-seating">
+                  <img src="assets/images/thumb.png"> John McClane
+                  <input type="text">
+                </div>
+                <div class="inner-seating">
+                  <img src="assets/images/thumb.png"> John McClane
+                  <input type="text">
+                </div> -->
+
+                <div *ngFor="let member of checkedMember;let i=index" class="inner-seating">
+                  <div class="charactor-nm">
+                    <span>{{member['detail']['firstName'].charAt(0)}}{{member['detail']['lastName'].charAt(0)}}</span>
+                  </div>
+                  {{member['detail']['firstName'] | titlecase}} {{member['detail']['lastName'] | titlecase}}
+                  <!-- <input type="text"> -->
+                  <select #t2 (change)="feesCalculation('seat',t2,i,member)" [(ngModel)]="member['seatNumber']"
+                          class="seating1">
+                    <option value="">Select Seat</option>
+                    <option *ngFor="let seat of member['seat'];let m=index" [value]="seat">{{seat}}</option>
+                  </select>
+                  <select #t3 (change)="userSeatData(t3.value,member,i)" [(ngModel)]="member['seatingCategoryName']"
+                          [ngModelOptions]="{standalone: true}" class="seating"
+                          id="seatType">
+                    <option value="">Select Type</option>
+                    <option
+                      *ngFor="let seatcat of seatingDetail;let n=index">{{seatcat['seatingCategoryName']}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="tottal-fees-area added-member-detail">
+              <h1>Arena Image</h1>
+              <div class="area-img">
+                <img alt="" src="assets/images/seat.png">
+              </div>
+            </div>
+            <span class="total-fees fees-top tottal-bor-top">
+              Total Pricing
+            </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Entry Charges</span>
+                    <p class="marno"> {{totalEntry}} Members </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalAgeFees']" class="adult-dollar">${{finalData['totalAgeFees']}}</span>
+                    <span *ngIf="!finalData['totalAgeFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Food Charges</span>
+                    <p class="marno">{{finalData['userFoodFees'].length}} Item </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalFoodFees']" class="adult-dollar">${{finalData['totalFoodFees']}}</span>
+                    <span *ngIf="!finalData['totalFoodFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['finalAmount']" class="adult-dollar">${{finalData['finalAmount']}}</span>
+                    <span *ngIf="!finalData['finalAmount']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='BOOTH_SELECTION'" class="main-step">
+        <div class="row row-eq-height full-food-beverage">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+            <span class="total-fees">
+              Booth Selection
+            </span>
+              <div class="booth-sele">
+                <div *ngFor="let booth of vendorExpo;let i=index" class="bor-dash">
+                  <div class="row row-eq-height booth-down">
+                    <div class="col-md-6 booth-txt">
+                      <h1>{{booth['name']}} Booth</h1>
+                      <span>Price: ${{booth['price']}}</span>
+                      <p>It includes <b *ngFor="let feature of booth['availableFeatures'];let i=index"><b
+                        *ngIf="i != 0"> & </b>{{feature}}</b></p>
+                    </div>
+                    <div class="col-md-6 text-r">
+                      <div class="plus-minus-counter">
+                        <button (click)="decrementBoothCounter(booth)" class="btn btn-default">-</button>
+                        <input [(ngModel)]="booth['count']" class="counter" name="" placeholder="0" readonly=""
+                               type="text"/>
+                        <button (click)="incrementBoothCounter(booth)" class="btn btn-default fright">+</button>
+                        <div class="clear"></div>
+                      </div>
+                      <span class="adult-dollar">${{booth['totalPrice']}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="tottal-fees-area added-member-detail">
+              <h1>Added Vendor Details</h1>
+              <div *ngFor="let user of finalData['userAgeFees'] ;let i=index" class="main-tb">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>{{user['members']}}   {{user['name']}} Entry </span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">${{user['totalPrice']}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalAgeFees']" class="adult-dollar">${{finalData['totalAgeFees']}}</span>
+                    <span *ngIf="!finalData['totalAgeFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top">
+              <span style="padding-right:10px"> Booth Fees </span>
+              <div class="tooltipmain update-tooltips"><img src="assets/icon/info-tooltip.svg"/>
+                 <span class="tooltiptext"> Text come here</span>
+              </div>
+            </span>
+            <div class="tottal-fees-area">
+              <div *ngFor="let booth of finalData['expoCategories'] ;let i=index">
+                <div *ngIf="booth['count'] != 0" class="main-tb">
+                  <div class="row">
+                    <div class="col-md-7 col-sm-7 col-xs-7">
+                      <span>{{booth['name']}} Booth</span>
+                      <p class="marno"> {{booth['count']}} Booth </p>
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-5">
+                      <span class="adult-dollar">${{booth['finalAmount']}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalExpoAmount']"
+                          class="adult-dollar">${{finalData['totalExpoAmount']}}</span>
+                    <span *ngIf="!finalData['totalExpoAmount']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='SPONSORSHIP'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+            <span class="total-fees">
+                Sponsors Details
+            </span>
+              <form>
+                <div *ngIf="eventDetail['eventConfigurations']['sponsorshipRangeType'] != 'SELECTED'"
+                     class="border-country">
+                  <span>Select Sponsorship</span>
+                  <select [(ngModel)]="donationAmount" [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let sponsor of sponsorList;let i=index"
+                            value="{{sponsor['range']['max']}}"> ${{sponsor['range']['max']}}
+                      - {{sponsor['categoryName']}} Sponsorship
+                    </option>
+                  </select>
+                </div>
+                <div *ngIf="eventDetail['eventConfigurations']['sponsorshipRangeType'] == 'SELECTED'"
+                     class="border-country">
+                  <span>Sponsorship Amount</span>
+                  <input #t1 (change)="feesCalculation('sponsor','amount',t1.value,{})"
+                         [(ngModel)]="postData['donationAmount']"
+                         [ngModelOptions]="{standalone: true}"
+                         type="number">
+                </div>
+                <div class="styled-input notific_msg">
+                  <input [(ngModel)]="sponsorData['title']" [ngModelOptions]="{standalone: true}"
+                         class="ng-dirty ng-valid ng-touched" placeholder="Tech Ancubate Pvt. Ltd." type="text">
+                  <label>Sponsor Title</label>
+                </div>
+                <div>
+                  <!--                  <a class="notification-pic all-imageup"  > <span> Attachments </span>-->
+                  <!--                    <img alt="" src="assets/images/img-icon.svg">-->
+                  <!--                    <p>Upload or Drag Media or File</p>-->
+                  <!--                  </a>-->
+                  <div class="filetype">
+                    *We support .png, .jpg, .doc, .txt, .pdf & .mp4 file type only.
+                  </div>
+                  <div class="image-main-up imageupload">
+                    <div class="imageup">
+                      <span>Upload Attachment</span>
+                      <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                                  (maxFileError)="maxFileError()"
+                                                  (maxFileSizeError)="fileSizeError()"
+                                                  (queueCompleted)="queueCompleted()"
+                                                  (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                                                  [uploadUrl]="mediaUploadUrl">
+                      </app-file-uploader-vertical>
+                    </div>
+                  </div>
+
+                  <button (click)="submitSponsor()" class="sub-sponsor">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="discount-sponsor">
+              <span>Sponsorship Discounts & Details</span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in
+                voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupidatat non proident, sunt in
+                culpa qui officia deserunt mollit anim id est
+              </p>
+              <div class="policy"><i>*</i> Community Connect Administrator has all rights to change discount offers or
+                <a  > Policy</a>.
+              </div>
+              <div class="policy"><i>*</i> <a  > Terms & Conditions </a>changes based on Event
+                Type.
+              </div>
+            </div>
+            <div class="discount-sponsor discount-off">
+              <span>Discount Offers</span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='FOOD_SELECTION'" class="main-step">
+        <div class="row row-eq-height full-food-beverage">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+              <span class="total-fees">
+                Food & Beverages
+              </span>
+              <div *ngFor="let member of checkedMember;let i=index" class="accordian-member-register">
+                <accordion [isAnimated]="true">
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-link btn-block clearfix" type="button">
+                      <div class="charactor-nm">
+                        <span>{{member['detail']['firstName'].charAt(0)}}{{member['detail']['lastName'].charAt(0)}}</span>
+                      </div>
+                      {{member['detail']['firstName'] | titlecase}} {{member['detail']['lastName'] | titlecase}}
+                      <div class="arrow"></div>
+                    </button>
+                    <div *ngFor="let food of foodOptions;let im=index" class="term-register family-back">
+                      <mat-checkbox (change)="foodSelection($event,food,member,i)"  [(ngModel)]="member[food.foodName]" [ngModelOptions]="{standalone: true}">
+                        <div class="food-pack">
+                          {{food.foodName}}
+                          <!-- <p>1 Small Pizza, Cold Drink(100ml)</p> -->
+                          <i>Price: ${{food.price}} each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                  </accordion-group>
+                  <!-- <accordion-group>
+                    <button class="btn btn-block btn-link" accordion-heading type="button">
+                      <img alt="" src="assets/images/thumb.png"> John McClane
+                      <div class="arrow"></div>
+                    </button>
+                    <span>And some HTML here</span>
+                  </accordion-group> -->
+                </accordion>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="tottal-fees-area added-member-detail">
+              <h1>Added Member Details</h1>
+              <div *ngFor="let user of finalData['userAgeFees'] ;let i=index" class="main-tb">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>{{user['members']}}   {{user['name']}} Entry </span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">${{user['totalPrice']}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalAgeFees']" class="adult-dollar">${{finalData['totalAgeFees']}}</span>
+                    <span *ngIf="!finalData['totalAgeFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top tottal-bor-top">
+              Total Food Pricing
+            </span>
+            <div class="tottal-fees-area">
+              <div *ngFor="let food of finalData['userFoodFees'] ;let i=index" class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>{{food['name']}}</span>
+                    <p class="marno"> {{food['members']}} Item </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">{{food['totalPrice']}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalFoodFees']" class="adult-dollar">${{finalData['totalFoodFees']}}</span>
+                    <span *ngIf="!finalData['totalFoodFees']" class="adult-dollar">$0.00</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="activeTabName['step']=='PAYMENT'" class="main-step">
+        <div class="row row-eq-height no-equal-height">
+          <div class="col-md-8 col-sm-8">
+            <div class="borfamily">
+              <span class="total-fees">
+                Select Payment Option
+              </span>
+              <div class="accordian-member-register payment-accordian">
+                <accordion [isAnimated]="true" is-open="group.open">
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-link btn-block clearfix" type="button">
+                      <i class="icon-paypal icon"></i>
+                      PayPal Payment
+                    </button>
+                    <div class="styled-input border-payment">
+                      <input class="ng-dirty ng-valid ng-touched" type="text">
+                      <label>Paypal ID</label>
+                    </div>
+                  </accordion-group>
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-block btn-link" type="button">
+                      <i class="icon-credit-cards-payment icon"></i>
+                      Card Payment
+                    </button>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="bank-card blue-line">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="bank-card">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="bank-card">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="add-new-card" data-target="#AddNewCard" data-toggle="modal">
+                          Add New Card
+                        </button>
+                      </div>
+                    </div>
+                  </accordion-group>
+                </accordion>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="promo-code">
+              <div class="row">
+                <div class="col-lg-12 txt-card">
+                  <img alt="" class="percentace" src="assets/icon/percentage.svg"> <span> Have a promo code ? </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 enter-promo-code">
+                  <input placeholder="Enter Promo Code here" type="text">
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top tottal-bor-top">
+              Total Payable Amount
+            </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Entry Charges</span> 
+                    <p class="marno"> {{totalEntry}} Members </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalAgeFees']" class="adult-dollar">${{finalData['totalAgeFees']}}</span>
+                    <span *ngIf="!finalData['totalAgeFees']" class="adult-dollar">$0.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Food Charges</span>
+                    <p class="marno">{{finalData['userFoodFees'].length}} Item </p>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span *ngIf="finalData['totalFoodFees']" class="adult-dollar">${{finalData['totalFoodFees']}}</span>
+                    <span *ngIf="!finalData['totalFoodFees']" class="adult-dollar">$0.00</span>                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Taxes</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Discount</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7 col-xs-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mem-next">
+        <div class="row">
+          <div class="col-lg-6 col-xs-6">
+            <input (click)="nextBackActiveTab(activeTabName['step'],'back');"
+                   *ngIf="activeTabName['step'] != 'MEMBER_REGISTRATION'" class="save-changes backbtn" type="button"
+                   value="Back">
+          </div>
+          <div class="col-lg-6 col-xs-6">
+            <input (click)="submitValue()" class="save-changes fright" type="button" value="{{lastSubmitBtnValue}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- add Guest -->
+  <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade in" id="exampleModalAddGuest"
+       role="dialog"
+       tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{display['add_new']}}</h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="addguestmodalclosebtn" type="button">
+            <img alt="" src="assets/icon/delete-button.svg">
+          </button>
+        </div>
+
+        <form (ngSubmit)="addGuestMemberFormSubmit()" [formGroup]="addGuestMemberForm" id="addGuestMemberForm">
+          <div class="modal-body rightmodel">
+            <div class="button-in-bottom">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input class="ng-dirty ng-valid ng-touched" formControlName="firstName" type="text">
+                    <label>First Name</label>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.firstName.dirty || addGuestMemberForm.controls.firstName.touched || addGuestMemberForm.controls.firstName.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.firstName.errors && addGuestMemberForm.controls.firstName.errors.required"
+                      class="valid-msg">First Name is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input class="ng-dirty ng-valid ng-touched" formControlName="lastName" type="text">
+                    <label>Last Name</label>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.lastName.dirty || addGuestMemberForm.controls.lastName.touched || addGuestMemberForm.controls.lastName.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.lastName.errors && addGuestMemberForm.controls.lastName.errors.required"
+                      class="valid-msg">Last Name is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="border-country">
+                    <span>Relation</span>
+                    <select formControlName="relation">
+                      <option *ngFor="let list of display['relation'];let i=index"
+                              value="{{list['value']}}">{{list['name']}} </option>
+                    </select>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.relation.dirty || addGuestMemberForm.controls.relation.touched || addGuestMemberForm.controls.relation.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.relation.errors && addGuestMemberForm.controls.relation.errors.required"
+                      class="valid-msg">Relation is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input class="ng-dirty ng-valid ng-touched" formControlName="phone" type="text">
+                    <label>Conatct</label>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.phone.dirty || addGuestMemberForm.controls.phone.touched || addGuestMemberForm.controls.phone.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.phone.errors && addGuestMemberForm.controls.phone.errors.required"
+                      class="valid-msg">Phone is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input class="ng-dirty ng-valid ng-touched" formControlName="email" type="text">
+                    <label>Email Id</label>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.email.dirty || addGuestMemberForm.controls.email.touched || addGuestMemberForm.controls.email.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.email.errors && addGuestMemberForm.controls.email.errors.required"
+                      class="valid-msg">Email is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input class="ng-dirty ng-valid ng-touched" formControlName="birthYear" type="text">
+                    <label>Birth Year</label>
+                  </div>
+                  <div
+                    *ngIf="addGuestMemberForm.controls.birthYear.dirty || addGuestMemberForm.controls.birthYear.touched || addGuestMemberForm.controls.birthYear.valid">
+                    <span
+                      *ngIf="addGuestMemberForm.controls.birthYear.errors && addGuestMemberForm.controls.birthYear.errors.required"
+                      class="valid-msg">BirthYear is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="border-country">
+                    <span>Gender</span>
+                    <mat-radio-group aria-label="Select an option">
+                      <mat-radio-button [checked]='true' value="1">Male</mat-radio-button>
+                      <mat-radio-button value="2">Female</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <!-- <div class="col-md-12">
+                <div class="term-register family-back mar0">
+                  <mat-checkbox>
+                    <span> Register the Guest as a Member. </span>
+                  </mat-checkbox>
+                </div>
+              </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bottom-f">
+            <div class="row">
+              <input class="submit" type="submit" value="Add">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+<!-- add Guest -->
+
+
+<!-- Add New Card -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade" id="AddNewCard" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Card</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="6165 - 4686 - 1464 - 1622" type="text">
+              <label>Card Number</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="Enter Name on Card" type="text">
+              <label>Name on Card</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="12/24" type="text">
+              <label>Expiry</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="cvv" placeholder="Enter CVV" type="password">
+              <label>CVV</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Save Card As</span>
+              <select>
+                <option>BUSINESS</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="term-register family-back">
+              <mat-checkbox> I accept Community Connect’s
+                <a  > T&C </a>
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="col-md-12 card-supp">
+            <span>Cards We Support</span>
+            <div>
+              <img alt="" src="assets/images/visa.png">
+              <img alt="" src="assets/images/master-card.png">
+              <img alt="" src="assets/images/american-express.png">
+              <img alt="" src="assets/images/discover-network.png">
+              <img alt="" src="assets/images/western-union.png">
+            </div>
+          </div>
+          <input class="submit" type="submit" value="Add Card">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add New Card -->

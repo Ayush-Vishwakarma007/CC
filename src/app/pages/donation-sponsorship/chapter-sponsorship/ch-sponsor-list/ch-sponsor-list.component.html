@@ -1,0 +1,232 @@
+<!-- sponsor -->
+<div class="borsponsor" id="page_form">
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <div class="totall-collection">
+        <span>{{'donationSponsorship.chapterSponsorship.list.title' | translate}}</span>
+        <!-- <p>User can upload the images which are part of the event</p>-->
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-8">
+      <div class="searchfilter">
+        <div class="padd-area sponsorsearch nopaid-btm">
+          <div class="main-search-top">
+            <div class="searchmember searchsponsor">
+              <mat-form-field class="example-full-width map-url searchform">
+                <mat-label> {{'donationSponsorship.chapterSponsorship.list.search.text' | translate}}</mat-label>
+                <input (change)="sponsorData($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput type="text">
+              </mat-form-field>
+              <button type="button" class="search-button" (click)="sponsorData()"> Search </button>
+            </div>
+            <div class="page-filter-new">
+              <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid">
+                <mat-label>Page Filter</mat-label>
+                <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+                  <mat-option *ngFor="let list of this.communityService.pagelist"
+                              [value]="list">{{list}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="top-export-button-main filtermember">
+        <button (click)="export()">
+          <img alt="" src="assets/icon/upload.svg"> {{'donationSponsorship.chapterSponsorship.list.export.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sponsor -->
+
+<!-- table -->
+<div class="donation-sponsor notableresp">
+  <table>
+    <tr>
+      <th></th>
+      <th (click)="sort('name')"
+          [ngClass]="reqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || reqData['sort']['sortBy'] == 'FIRST_NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'donationSponsorship.chapterSponsorship.list.tabel.header.name.lbl.text' | translate}}
+      </th>
+      <th width="230">{{'donationSponsorship.chapterSponsorship.list.tabel.header.planType.lbl.text' | translate}}
+      </th>
+      <th>{{'donationSponsorship.chapterSponsorship.list.tabel.header.displayName.lbl.text' | translate}}
+      </th>
+      <th width="140" (click)="sort('date')"
+          [ngClass]="reqData['sort']['sortBy'] != 'DATE' ? '' : '' || reqData['sort']['sortBy'] == 'DATE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'donationSponsorship.chapterSponsorship.list.tabel.header.date.lbl.text' | translate}}
+      </th>
+<!--      <th>{{'donationSponsorship.chapterSponsorship.list.tabel.header.expirydate.lbl.text' | translate}}</th>-->
+      <th width="100" (click)="sort('amount')" [ngClass]="reqData['sort']['sortBy'] != 'TOTAL_PAYMENT' ? '' : '' || reqData['sort']['sortBy'] == 'TOTAL_PAYMENT' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'donationSponsorship.chapterSponsorship.list.tabel.header.amount.lbl.text' | translate}}
+      </th>
+      <th width="130">{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentType.lbl.text' | translate}}</th>
+<!--      <th (click)="sort('paymentStatus')"-->
+<!--          [ngClass]="reqData['sort']['sortBy'] != 'PAYMENT' ? '' : '' || reqData['sort']['sortBy'] == 'PAYMENT' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"-->
+<!--          class="sortable">{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentStatus.lbl.text' | translate }}</th>-->
+      <!--<th>{{'donationSponsorship.chapterSponsorship.list.tabel.header.anonymous.lbl.text' | translate}}</th>-->
+      <th width="60">
+        {{'donationSponsorship.chapterSponsorship.list.tabel.header.action.lbl.text' | translate}}
+      </th>
+    </tr>
+    <tr *ngFor="let list of memberList?.content">
+      <td>
+        <div class="imagealign">
+          <div class="iconsponsors">
+          
+            <div  *ngIf="list['logo'] != null && list['logo'] != ''" >
+              <img alt=""[src]="list['logo'] | eventImages "></div>
+            <img alt="" *ngIf="list['logo'] == null || list['logo'] == ''" src="assets/images/No_Logo_Image.png">
+          </div>
+        </div>
+      </td>
+      <td>
+          {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}}<br>
+          <span>{{list['email']}}</span>
+          <!-- <span>{{list['city']}} <span *ngIf="list['country'] != null && list['country'] != ''">| {{list['country']}}</span>
+          </span> -->
+      </td>
+      <td>
+        {{list?.sponsorshipCategory?.categoryName}}
+      </td>
+      <td>
+        {{list['displayName']}}
+      </td>
+      <td>
+        {{list['dateTime'] |date:this.communityService.publicInfo?.webDateFormat }} -
+        <br>
+        <p *ngIf="list['expiryDate'] != null">{{list['expiryDate'] |date:this.communityService.publicInfo?.webDateFormat }}</p>
+        <p *ngIf="list['expiryDate'] == null"> {{'donationSponsorship.chapterSponsorship.addSponsor.popup.validity.lifeTime.text' | translate}} </p>
+      </td>
+      <td>
+        <p *ngIf="list['refunded'] == false">
+        {{list['finalAmount'] | currency:'USD'}}
+      </p>
+      <p *ngIf="list['refunded'] == true" >{{list['refundedAmount'] | currency:'USD'}}</p>
+      </td>
+
+      <td>
+        {{list['paymentMethodUsed']}}
+        <span>
+          <p *ngIf="list['successfulPayment'] && list['refunded'] == false" >{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentStatus.paid.text' | translate}}</p>
+        <p *ngIf="!list['successfulPayment']">{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentStatus.pending.text' | translate}}</p>
+        <p  *ngIf="list['refunded'] == true">Refund</p>
+        <div class="dropdown dropup moredrop editgallery" *ngIf="list['refunded'] == true">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle iconrefund"
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+             <i class="icon-info newicon"></i>
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu iconrunbold">
+           <p> <b>Amount</b> : ${{list['refundedAmount']}}</p>
+           <p *ngIf="list['refundedManually']==true"> <b>Manually</b> : Yes</p>
+            <p *ngIf="list['refundedManually']==false"> <b>Manually</b> : No</p>
+            <p> <b>Reason</b> : {{list['refundReason']}}</p>
+
+          </div>
+        </div>
+        </span>
+      </td>
+<!--      <td>-->
+<!--        <p *ngIf="list['successfulPayment'] && list['refunded'] == false" >{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentStatus.paid.text' | translate}}</p>-->
+<!--        <p *ngIf="!list['successfulPayment']">{{'donationSponsorship.chapterSponsorship.list.tabel.header.paymentStatus.pending.text' | translate}}</p>-->
+<!--        <p  *ngIf="list['refunded'] == true">Refund</p>-->
+<!--        <div class="dropdown dropup moredrop editgallery" *ngIf="list['refunded'] == true">-->
+<!--          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle iconrefund"-->
+<!--             data-toggle="dropdown"-->
+<!--             href="#" id="dropdownMenuLink" role="button">-->
+<!--             <i class="icon-info newicon"></i>-->
+<!--          </a>-->
+<!--          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu iconrunbold">-->
+<!--           <p> <b>Amount</b> : ${{list['refundedAmount']}}</p>-->
+<!--           <p *ngIf="list['refundedManually']==true"> <b>Manually</b> : Yes</p>-->
+<!--            <p *ngIf="list['refundedManually']==false"> <b>Manually</b> : No</p>-->
+<!--            <p> <b>Reason</b> : {{list['refundReason']}}</p>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--      </td>-->
+      <td>
+        <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a (click)="edit(list)" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i> {{'donationSponsorship.chapterSponsorship.list.tabel.header.action.edit.lbl.text' | translate}}</a>
+            <a (click)="deleteSponosr(list['id'])" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>{{'donationSponsorship.chapterSponsorship.list.tabel.header.action.delete.lbl.text' | translate}}</a>
+            <a (click)="getNotificationReceipt(list['id'])" class="dropdown-item"><i aria-hidden="true" class="fa fa-angle-right"></i> {{'donationSponsorship.chapterSponsorship.list.tabel.header.action.getReceipt.lbl.text' | translate}}</a>
+            <a (click)="viewNotificationReceipt(list['id'])" class="dropdown-item"><i aria-hidden="true" class="fa fa-angle-right"></i> View Receipt </a>
+            <a *ngIf="list['refunded'] == false" (click)="openModalWithClass(template,list['id'])" class="dropdown-item"><i aria-hidden="true" class="fa fa-angle-right"></i> Refund </a>
+            <a *ngIf="list['refunded'] == true" (click)="alredyRefund()" class="dropdown-item"><i aria-hidden="true" class="fa fa-angle-right"></i> Refund </a>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+  <span *ngIf="memberList?.content==''" class="norecord">No record found!</span>
+</div>
+<div class="pegination-main totalPosition"  *ngIf="memberList?.content!=''">
+  <ul>
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true" class="next">
+        First
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+        [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+              [disabled]="memberList['last'] == true" class="next">Last
+      </button>
+    </li>
+  </ul>
+  <div class="totalShow"><span>Total :</span> {{memberList['totalElements']}}</div>
+
+</div>
+<!-- table -->
+
+<ng-template #template>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button (click)="closeModel()" aria-label="Close" class="close-container" data-dismiss="modal" id="closeDonationModel">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <h2 class="refund"> Refund</h2>
+        <div class="notarea">
+          <div class="editor-main">
+            <span class="sub-head"> Reason </span>
+            <ngx-editor  
+            [(ngModel)]="refundreason"
+                            [placeholder]="'Enter Description here...'"
+                            class="editor-icon"></ngx-editor>
+          </div>
+          <p class="txtedit">Please make sure you refund this amount from your Merchant Account for this user.</p>
+        </div>
+        <div class="row">
+          <div class="col-md-12 savecenter">
+            <button class="search-button"  (click)="refundReason();"> Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

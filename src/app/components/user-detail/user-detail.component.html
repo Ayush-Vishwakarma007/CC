@@ -1,0 +1,1439 @@
+<script src="../../../../../bb-final-project/business/dist/services/import-data/import-data.service.js"></script>
+<div class="padd-area new-padding" id="user_form">
+  <!-- top Search Section -->
+  <div class="main-search-top" >
+    <div class="grid-button" *ngIf="type!='family' && type!='guest'">
+      <button (click)="changeList('card')" [ngClass]="listType == 'card' ? 'active' : ''">
+        <!-- <img alt="" class="bluegridicon" src="assets/icon/squares-b.svg">
+        <img alt="" class="whitegridicon" src="assets/icon/squares-w.svg"> -->
+        <i class="icon-squares-b newicon"></i>
+      </button>
+      <button (click)="changeList('table')" [ngClass]="listType == 'table' ? 'active' : ''">
+        <!-- <img alt="" class="bluegridicon" src="assets/icon/menu-b.svg">
+        <img alt="" class="whitegridicon" src="assets/icon/menu-w.svg"> -->
+        <i class="icon-menu-w newicon"></i>
+      </button>
+    </div>
+
+
+
+  <div class="searchmember userdetailsearch" *ngIf="type!='family' && type!='guest'">
+    <mat-form-field class="example-full-width map-url searchform select-btm-no-paid">
+      <mat-label> {{'userDetail.search.text' | translate}}</mat-label>
+      <input (change)="searchFunction($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput type="text">
+    </mat-form-field>
+    <button type="button" class="search-button" (click)="searchClick()"> Search </button>
+  </div>
+
+
+    <mat-form-field class="example-full-width statusmem" *ngIf="pathUrl !='/members-directory' && type!='family' && type!='guest' && type!='subscriber' && this.type !='unsubscriber'">
+    <mat-label>Member Status</mat-label>
+      <!-- <mat-select [(ngModel)]="selectedOtp">
+      <mat-option [value]="'all'">All</mat-option>
+    </mat-select> -->
+    <mat-select [(ngModel)]="tab" (ngModelChange)="changeTab(tab)" >
+      <mat-option *ngFor="let tab of memberState" value="{{tab.value}}" >{{tab.name}}</mat-option>
+    </mat-select>
+    </mat-form-field>
+    <div class="dateuser" >
+      <div *ngIf="type!='family' && type!='guest' && type!='subscriber' && this.type !='unsubscriber'">
+      <input placeholder="Choose Date"  type="text" ngxDaterangepickerMd
+             [(ngModel)]="selected" class="form-control chosedate"  startKey="start"
+             startKey="start" [ranges]="ranges"  [showCustomRangeLabel]="true"  [alwaysShowCalendars]="true" endKey="end" (rangeClicked)="rangeClicked($event)"
+             (datesUpdated)="datesUpdated($event)"    [showDropdowns]="true" [keepCalendarOpeningWithRange]="true"/>
+             <i class="fa fa-calendar"></i>
+             <button class="closebt" (click)="clearDateFilter()">
+               <img src="assets/icon/close-white.png" alt="">
+              </button>
+
+      </div>
+    </div>
+
+      <mat-form-field class="example-full-width membership-type"  *ngIf="type!='family' && type!='guest' && type!='subscriber' && this.type !='unsubscriber'">
+      <mat-label>Membership Type</mat-label>
+      <!--<mat-select [(ngModel)]="selectedOtp"  (ngmodelchange)="changeMemberType($event.value)"  >-->
+        <mat-select [(ngModel)]="selectedOtp"  (selectionChange)="changeMemberType($event.value)"  >
+        <mat-option [value]="'all'">All</mat-option>
+        <mat-option *ngFor="let Type of this.memType" [value]="Type.id">{{Type.name}} </mat-option>
+      </mat-select>
+      </mat-form-field>
+      <!-- <button class="search-button" *ngIf="type!='family' && type!='guest' && type!='subscriber' && this.type !='unsubscriber'" (click)="reset()"> Reset All</button> -->
+      <button class="search-button resetall"  *ngIf="type!='family' && type!='guest' && type!='subscriber' && this.type !='unsubscriber'" (click)="resetNew()"> Reset</button>
+
+    <div class="pagefilter">
+      <mat-form-field class="example-full-width pagefilterwid2 select-btm-no-paid" *ngIf="type!='family' && type!='guest'">
+        <mat-label>Records</mat-label>
+        <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityDetailsService.pagelimit">
+          <mat-option *ngFor="let list of this.communityDetailsService.pagelist" [value]="list">{{list}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="top-export-button-main memexport">
+        <div *ngIf="userPermisssion['EXPORT_MEMBER']  &&  pathUrl !='/members-directory'" style="display: inline-block;">
+          <button  (click)="exportToExport(type)" *ngIf="type!='family' && type!='guest'">
+            <img alt="" src="assets/icon/upload.svg"> {{'userDetail.export.Btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <div class="page-filter">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="example-full-width">
+          <mat-label>Page filter</mat-label>
+          <mat-select (selectionChange)="selected_pagelimit($event)"[(ngModel)]="selected">
+            <mat-option *ngFor="let list of pagefilter"
+                        [value]="list?.value">{{list?.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+</div>
+
+<div class="clear"></div> -->
+  <!-- top Search Section -->
+  <!-- card  Section -->
+  <div *ngIf="listType == 'card'" class="row card-responsive">
+    <div *ngFor="let member of memberList?.content;let i=index" class="col-sm-6 col-md-4 col-lg-3">
+      <div class="grid-card-box" >
+        <div class="topbutton-thumb" >
+          <div *ngIf="member['profileShow'] == true" class="charector-mem imagethumb">
+            <img alt="" src="{{member['profileUrl']}}">
+          </div>
+          <div *ngIf="member['profileShow'] == false" class="charector-mem">
+            <i>{{member['profileUrl']}}</i>
+          </div>
+          <button (click)="approveMember(member['id'])" *ngIf="(currentTab == 'NEW_MEMBER'  || currentTab == 'REJECTED_MEMBER')  &&  userPermisssion['APPROVE_REJECT']" class="emailbutton">
+            <img alt="" src="assets/icon/checked-s.svg">
+          </button>
+          <button (click)="rejectMember(member['id']); openModalWithClass1(template1)"
+                  *ngIf="(currentTab == 'NEW_MEMBER') && userPermisssion['APPROVE_REJECT']"
+                  class="emailbutton"
+                  >
+            <img alt="" class="small-icon" src="assets/icon/close.png">
+          </button>
+          <button  (click)="editMember(member['id'])"
+                  *ngIf="userPermisssion['EDIT_MEMBERS'] &&  pathUrl !='/members-directory' && currentTab!='DELETE_MEMBER' && type!='subscriber' && this.type !='unsubscriber'"  class="emailbutton"
+                  data-target="#exampleModaleditmember"
+                  data-toggle="modal">
+            <!-- <img alt="" src="assets/icon/edit-member.svg"> -->
+            <i aria-hidden="true" class="newicon icon-edit-member"></i>
+          </button>
+          <button class="emailbutton" *ngIf="member?.userState == 'UNPAID_MEMBER' && currentTab != 'DELETE_MEMBER' && type!='subscriber' && this.type !='unsubscriber'" (click)="sendLink(member?.id)">
+            <i class="fa fa-link" aria-hidden="true"></i>
+          </button>
+          <button class="emailbutton recover" *ngIf="currentTab== 'DELETE_MEMBER' && type!='subscriber' && this.type !='unsubscriber'" (click)="RecoverMember(member['id'])" title="Active">
+            <img src="assets/images/recover.png">
+          </button>
+          <button (click)="notificationMember(member.id); openModalWithClassEmail(template3)" *ngIf="userPermisssion['MESSAGE_MEMBERS'] && currentTab!='DELETE_MEMBER' && type!='subscriber' && this.type !='unsubscriber'" class="emailbutton">
+            <!-- <img alt="" src="assets/icon/email-member.svg"> -->
+            <i aria-hidden="true" class="fa fa-envelope"></i>
+          </button>
+          <div class="switch-subs">
+          <div class="btn-edit">
+          <ui-switch *ngIf="type=='unsubscriber'"  [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" (click)="subscribeNewsletter(member['id'],'subscribe')" >
+          </ui-switch>
+          <div class="toolnew"> toolnew </div>
+          </div>
+
+          <ui-switch *ngIf="type=='subscriber'"  [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'"  (click)="subscribeNewsletter(member['id'],'unsubscribe')" checked ></ui-switch>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div style="cursor: pointer;" (click)="clickMemDetail(member['id'])">
+        <h4>{{member['firstName'] | titlecase}} {{member['middleName'] | titlecase}} {{member['lastName'] | titlecase}}
+<!--          <i *ngIf="member['planName']  && currentTab != 'USER'" class="newmem">{{member['planName']}}</i>-->
+          <!-- <i *ngIf="currentTab == 'NEW_MEMBER'" class="newmem">New</i> -->
+          <!--          <i *ngIf="currentTab == 'UNPAID_MEMBER'" class="newmem">Pay</i>-->
+        </h4>
+        <p *ngIf="chapterList.length!=1">{{member['chapterName']}}</p>
+        <p *ngIf="pathUrl !='/members-directory'">{{member['memberNumber']}}</p>
+          <p *ngIf="pathUrl !='/members-directory'"><span *ngIf="member['email']!='' && member['email'] !=null" style="margin-left: 0px;"><i aria-hidden="true" class="fa fa-envelope"></i> {{member['email']}}</span>
+        </p>
+        <span *ngIf="member['country'] && member['city']" class="icon-village newicon"><i> {{member['city']}} </i>
+          <i *ngIf="member['country']">| {{member['country']}}</i>
+        </span>
+        <!--        <span>{{member['addressLine1']}} </span>-->
+        </div>
+       <!-- <div class="familymemberbottom" *ngIf="type!='family' && type!='guest'" style="display: none">
+          <div class="dropdown show">
+            <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
+               data-toggle="dropdown" href="#" id="dropdownMenuLink"
+               role="button">
+              <button (click)="subMembers(member['id'], i)" class="icon-family-member newicon">
+                <i> {{'userDetail.card.viewFamilyMember.text' | translate}}</i></button>
+            </a>
+
+            <div aria-labelledby="dropdownMenuLink" class="dropdown-menu tooltipsmember righthandside">
+              <div class="topheadmem">
+                {{'userDetail.card.viewFamilyMember.familyMember.title' | translate}}
+              </div>
+              <div *ngIf="member['submembers']" class="scrollmember">
+                <ul *ngFor="let sub of member['submembers'];let i=index" class="familymemberdetail">
+                  <li>{{sub['firstName'] | titlecase}} {{sub['lastName'] | titlecase}}</li>
+                  <li class="familyMember_padding">{{sub['relation']}}
+                    <button  *ngIf="userPermisssion['EDIT_MEMBERS'] &&  pathUrl !='/members-directory'" (click)="editMember(sub['id'])" class="buttonicon" data-target="#exampleModaleditmember"
+                            data-toggle="modal">
+                      <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                    </button>
+                  </li>
+                </ul>
+                <div *ngIf="member['submembers'].length == 0" class="nomember">
+                  {{'userDetail.card.viewFamilyMember.nomember.text' | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+  <!-- card  Section -->
+</div>
+<div *ngIf="listType == 'table'" class="new-member-tab remove-td-space" >
+  <table>
+    <thead>
+    <tr class="topbox">
+      <th width="60"></th>
+      <th (click)="sort('name')"
+          [ngClass]="reqData?.sort?.sortBy != 'FIRST_NAME' ? '' : '' || reqData?.sort?.sortBy == 'FIRST_NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'userDetail.table.header.name.text' | translate}}
+      </th>
+      <th width="210" (click)="sort('address')"
+          [ngClass]="reqData?.sort?.sortBy != 'ADDRESS' ? '' : '' || reqData?.sort?.sortBy == 'ADDRESS' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable"
+         >{{'userDetail.table.header.address.text' | translate}}
+      </th>
+      <th *ngIf="chapterList.length!=1">{{'userDetail.table.header.chapterName.text' | translate}}</th>
+      <th width="180" (click)="sort('phone')"
+          [ngClass]="reqData?.sort?.sortBy != 'PHONE' ? '' : '' || reqData?.sort?.sortBy == 'PHONE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'userDetail.table.header.phone.text' | translate}}
+<!--        /{{'userDetail.table.header.email.text' | translate}}-->
+      </th>
+      <!-- <th (click)="sort('email')"
+          [ngClass]="reqData?.sort?.sortBy != 'EMAIL' ? '' : '' || reqData?.sort?.sortBy == 'EMAIL' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'userDetail.table.header.email.text' | translate}}
+      </th> -->
+      <th width="180" *ngIf="type!='subscriber' && type!='unsubscriber' && type != 'family' && type != 'guest'">
+        Member Status
+      </th>
+      <th width="160"  *ngIf="(currentTab != 'USER' ) && type!='subscriber' && type!='unsubscriber'"
+           class="">Membership
+      </th>
+      <!-- <th  *ngIf="(currentTab != 'USER' ) && type!='subscriber' && type!='unsubscriber'"
+      class="">Membership Date
+     </th> -->
+      <th  width="185" *ngIf="(userPermisssion['MESSAGE_MEMBERS'] || userPermisssion['EDIT_MEMBERS']) &&  type!='subscriber' && type!='unsubscriber'"
+          class="">{{'userDetail.table.header.action.text' | translate}}</th>
+      <th width="95" *ngIf="(userPermisssion['MESSAGE_MEMBERS'] || userPermisssion['EDIT_MEMBERS']) &&  type=='subscriber'"
+          class="">Subscribed</th>
+      <th width="110" *ngIf="(userPermisssion['MESSAGE_MEMBERS'] || userPermisssion['EDIT_MEMBERS']) &&  type=='unsubscriber'"
+          class="">Unsubscribed</th>
+      <!-- <th
+        *ngIf="pathUrl !='/members-directory'  && userPermisssion['APPROVE_REJECT']"
+        class="">{{'userDetail.table.header.approveReject.text' | translate}}
+      </th> -->
+
+    </tr>
+  </thead>
+    <tbody *ngFor="let member of memberList?.content;let i=index">
+    <tr>
+
+      <td class="text-center">
+        <button *ngIf="type != 'family' && type != 'guest' && type!='subscriber' && type!='unsubscriber'" (click)=" subMember(member,member.id,i)" class="downarrow">
+          <span [ngClass]="member['sub'] == true ? 'up' : 'down'">
+            <img alt="" src="assets/icon/arrow-white-down.svg">
+          </span>
+        </button>
+
+      </td>
+
+      <td>
+
+        <div style="cursor: pointer;" *ngIf="currentTab != 'DELETE_MEMBER'  && member['roles'] !='NEWSLETTER'" class="ancorlink" (click)="openModal(mymodal,member['id'])">{{member['firstName'] | titlecase}} {{member['middleName'] | titlecase}} {{member['lastName'] | titlecase}}
+        <span *ngIf="pathUrl !='/members-directory' && type!= 'family' && type != 'guest'">{{member['memberNumber']}}
+        </span>
+      </div>
+        <div style="cursor: pointer;" *ngIf="currentTab != 'DELETE_MEMBER' && member['roles'] =='NEWSLETTER'" class="ancorlink" (click)="openModal1(mymodal1,member['id'])">{{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}}
+          <span *ngIf="pathUrl !='/members-directory' && type!= 'family' && type != 'guest'">{{member['memberNumber']}}
+        </span>
+        </div>
+        <div style="cursor: pointer;" *ngIf="currentTab == 'DELETE_MEMBER'" >{{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}}
+          <span *ngIf="pathUrl !='/members-directory' && type!= 'family' && type != 'guest'">{{member['memberNumber']}}
+        </span>
+        </div>
+      </td>
+      <td>{{member['addressLine1']}}
+        <span *ngIf="member['city']">{{member['city']}} </span>
+        <span *ngIf="(member['city']==null && member['addressLine1']==null)|| member['city']=='' && member['addressLine1']==''">-
+        </span>
+      </td>
+      <td *ngIf=" chapterList.length!=1">{{member['chapterName']}}</td>
+      <td><span *ngIf=" (member['phone']!='' && member['phone']!=null) ">{{member['countryPhoneCode']}} {{member['phone']}} </span>
+      <span *ngIf=" (member['phone']=='' || member['phone']==null)"> -</span>
+      <span *ngIf=" (member['email']!='' && member['email']!=null)">{{member['email']}} </span>
+      <span *ngIf="member['email']=='' || member['email']==null">-</span></td>
+      <!-- <td *ngIf=" (member['email']!='' && member['email']!=null)">{{member['email']}} </td>
+      <td *ngIf="member['email']=='' || member['email']==null">-</td> -->
+      <td *ngIf="type!='subscriber' && type!='unsubscriber' && type != 'family' && type != 'guest'">
+        <p class="status-show" *ngIf="currentTab != 'DELETE_MEMBER'">
+          <!-- <img *ngIf="member['userState']=='USER' || member['userState']=='MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073201_5f17135c8613362eb4b1f42a_Active_member.png"> -->
+          <span *ngIf="member['userState']=='USER'">{{'userDetails.list.member.durationType.lable' | translate}}</span>
+          <span *ngIf="(member['userState']=='MEMBER') && member['durationType'] =='LIFETIME'" style="background: #13e07d;" > Life Member </span>
+          <span *ngIf="(member['userState']=='MEMBER') && member['durationType'] !='LIFETIME'" style="background: #13e07d;" >  Member</span>
+
+          <!-- <img *ngIf="member['userState']=='EXPIRED_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073240_5f17135c8613362eb4b1f42a_Expired.png"> -->
+          <span *ngIf="member['userState']=='EXPIRED_MEMBERSHIP'" style="background: #ec703c;"> Expired Membership </span>
+
+          <!-- <img *ngIf="member['userState']=='NEW_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073318_5f17135c8613362eb4b1f42a_Member.png"> -->
+          <span *ngIf="member['userState']=='NEW_MEMBER'" style="background: #0170c1;"> Approval Pending </span>
+
+          <!-- <img *ngIf="member['userState']=='REJECTED_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073351_5f17135c8613362eb4b1f42a_Rejected.png"> -->
+          <span *ngIf="member['userState']=='REJECTED_MEMBER'" style="background: #f83c4a;"> Rejected Member </span>
+
+          <!-- <img *ngIf="member['userState']=='EXPIRING_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073406_5f17135c8613362eb4b1f42a_UPCOMING_EXPIRATION.png"> -->
+          <span *ngIf="member['userState']=='EXPIRING_MEMBERSHIP'" style="background: #fea709;"> Expiring Membership </span>
+
+          <!-- <img *ngIf="member['userState']=='UNPAID_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073632_5f17135c8613362eb4b1f42a_Unpaid.png"> -->
+          <span *ngIf="member['userState']=='UNPAID_MEMBER'" style="background: #f7349c;"> Unpaid Member </span>
+
+        </p>
+        <p class="status-show" *ngIf="currentTab == 'DELETE_MEMBER'">
+          <span style="background: #a2a2a2;"> Inactive Member </span>
+          <!-- <img  style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073300_5f17135c8613362eb4b1f42a_Inactive_member.png"> -->
+        </p>
+        <div class="deletemembtn" *ngIf="this.currentTab=='DELETE_MEMBER'">
+          <button *ngIf="member.deleteReason!=''" mat-raised-button class="" matTooltip="{{member.deleteReason}}"
+          aria-label="Button that displays a tooltip when focused or hovered over" matTooltipClass="custom-tooltip">
+          <i aria-hidden="true" class="newicon icon-info"></i>
+  </button>
+        </div>
+      </td>
+      <td *ngIf="(currentTab != 'USER' ) && type!='subscriber' && type!='unsubscriber'">
+
+        <p *ngIf="member['membershipTypeName'] != null && member['membershipTypeName'] != '' ">
+          {{member['membershipTypeName']}} </p>
+        <p *ngIf="member['membershipTypeName'] ==null  || member['membershipTypeName'] ==''">
+         - </p>
+         <br>
+         <p class="webDateFormate" *ngIf="member['expirationDate'] != null ">{{member['membershipStartDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} - {{member['expirationDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} </p>
+       <p class="webDateFormate"  *ngIf="member['expirationDate'] == null "> {{member['membershipStartDate'] | date:
+        this.communityDetailsService.publicInfo?.webDateFormat}} - {{ member['durationType']}}</p>
+
+      </td>
+
+      <!-- <td *ngIf="(currentTab != 'USER' ) && type!='subscriber' && type!='unsubscriber'">
+        <p *ngIf="member['expirationDate'] != null ">{{member['membershipStartDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} - {{member['expirationDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} </p>
+       <p *ngIf="member['expirationDate'] == null "> {{member['membershipStartDate'] | date:
+        this.communityDetailsService.publicInfo?.webDateFormat}} - {{ member['durationType']}}</p>
+      </td> -->
+
+      <td *ngIf="(userPermisssion['MESSAGE_MEMBERS'] || userPermisssion['EDIT_MEMBERS']) " class="infoalignment">
+        <a *ngIf="pathUrl =='/members-directory'" (click)="notificationMember(member['id']); openModalWithClassEmail2(template4)" class="email-member-directory">
+          <i class="far fa-envelope"></i>
+        </a>
+        <div class="dropdown dropup moredrop editgallery" *ngIf="type!='subscriber' && type!='unsubscriber' && pathUrl !='/members-directory'">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+            data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a (click)="editMember(member['id'],member['mainUser'])" class="dropdown-item" *ngIf="userPermisssion['EDIT_MEMBERS'] && pathUrl !='/members-directory' && currentTab!='DELETE_MEMBER'">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{'event.dashboard.donation.table.header.action.edit.text' | translate}}
+            </a>
+            <a *ngIf="currentTab!='DELETE_MEMBER'" (click)="notificationMember(member['id']); openModalWithClassEmail2(template4)" class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              Send Email
+            </a>
+<!--            <a *ngIf="type!='DELETE_MEMBER'" (click)="clickMemDetail(member['id'])" class="dropdown-item" >-->
+<!--              <i aria-hidden="true" class="fa fa-angle-right"></i>-->
+<!--              View Profile-->
+<!--            </a>-->
+            <!-- <a  (click)="deleteMember(member['id'],member['durationType'],true)" *ngIf="userPermisssion['EDIT_MEMBERS'] && pathUrl !='/members-directory' && type!='DELETE_MEMBER' && member['userState'] !='NEW_MEMBER' " class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{"userDetail.delete.Btn.text" | translate}}
+            </a> -->
+
+
+            <a (click)="reasonForRejection1(template7,member['id'],member['durationType'])" *ngIf="currentTab!='DELETE_MEMBER'" class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{"userDetail.delete.Btn.text" | translate}}
+            </a>
+            <!-- <a  (click)="deleteMember(member['id'],member['durationType'],true)" *ngIf="userPermisssion['EDIT_MEMBERS'] && pathUrl !='/members-directory' && currentTab!='DELETE_MEMBER' && member['userState'] !='NEW_MEMBER' " class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{"userDetail.delete.Btn.text" | translate}}
+            </a> -->
+            <a (click)="RecoverMember(member['id'])" *ngIf="currentTab=='DELETE_MEMBER' " class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              {{"userDetail.recover.Btn.text" | translate}}
+            </a>
+<!--            <a (click)="subscribeNewsletter(member['id'],'unsubscriber')" *ngIf="type!='DELETE_MEMBER' &&  type=='subscriber'" class="dropdown-item">-->
+<!--              <i aria-hidden="true" class="fa fa-angle-right"></i>-->
+<!--              Unsubscriber-->
+<!--            </a>-->
+
+            <!--<a (click)="subscribeNewsletter(member['id'],'subscriber')"  *ngIf="type!='DELETE_MEMBER' &&  type=='unsubscriber'" class="dropdown-item">
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              Subscriber
+            </a>-->
+
+
+          </div>
+        </div>
+        <div >
+        <div *ngIf="type!='subscriber' && type!='unsubscriber'" >
+       <button *ngIf="member['roles'] != null && (member['roles'].includes('ADMIN') || member['roles'].includes('CHAPTER_ADMIN'))" class="icontlog btn-edit" (click)="reasonForUserLog(template8,member['id'],member['firstName'],member['lastName'],member['lastLoginDate'])">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22.734" height="27.453" viewBox="0 0 22.734 27.453">
+          <g id="Group_52649" data-name="Group 52649" transform="translate(-44)">
+            <g id="Group_52648" data-name="Group 52648" transform="translate(44)">
+              <path id="Path_44148" data-name="Path 44148" d="M50.566,22.346a5.1,5.1,0,0,1,5.161-8,6.287,6.287,0,0,1,1.286-3.175,10.672,10.672,0,0,0-11.6,15.722A10.739,10.739,0,0,1,50.566,22.346Z" transform="translate(-44 -10.319)" fill="#e27707"/>
+              <path id="Path_44149" data-name="Path 44149" d="M182.58,103.124a3.485,3.485,0,0,0-3.542,5.791,10.69,10.69,0,0,1,4.893,0,3.461,3.461,0,0,0,.975-1.812A6.326,6.326,0,0,1,182.58,103.124Z" transform="translate(-170.815 -97.425)" fill="#e27707"/>
+              <path id="Path_44150" data-name="Path 44150" d="M97.56,243.45h15.6a9.058,9.058,0,0,0-15.6,0Z" transform="translate(-94.688 -226.185)" fill="#e27707"/>
+              <path id="Path_44151" data-name="Path 44151" d="M320.307,189.441a5.035,5.035,0,0,1-.757,1.491,10.739,10.739,0,0,1,5.151,4.544,10.66,10.66,0,0,0,1.355-6.435A6.316,6.316,0,0,1,320.307,189.441Z" transform="translate(-304.775 -178.904)" fill="#e27707"/>
+              <path id="Path_44152" data-name="Path 44152" d="M296.718,0a4.718,4.718,0,1,0,4.718,4.718A4.719,4.719,0,0,0,296.718,0ZM299,4.483,297.287,6.2a.805.805,0,0,1-1.138,0l-.858-.858A.8.8,0,0,1,296.429,4.2l.289.29,1.147-1.147A.8.8,0,0,1,299,4.483Z" transform="translate(-278.703)" fill="#e27707"/>
+              <path id="Path_44153" data-name="Path 44153" d="M69.981,352H52.609A1.609,1.609,0,0,0,51,353.609v5.362a1.609,1.609,0,0,0,1.609,1.609H69.981a1.609,1.609,0,0,0,1.609-1.609v-5.362A1.609,1.609,0,0,0,69.981,352Zm-15.549,5.04a.8.8,0,1,1,.8-.8A.8.8,0,0,1,54.432,357.04Zm3.432,0a.8.8,0,1,1,.8-.8A.8.8,0,0,1,57.863,357.04Zm3.432,0a.8.8,0,1,1,.8-.8A.8.8,0,0,1,61.295,357.04Zm3.432,0a.8.8,0,1,1,.8-.8A.8.8,0,0,1,64.726,357.04Zm3.432,0a.8.8,0,1,1,.8-.8A.8.8,0,0,1,68.158,357.04Z" transform="translate(-50.625 -333.126)" fill="#e27707"/>
+            </g>
+          </g>
+        </svg>
+        <div class="toolnew toolwid"> Member Log</div>
+       </button>
+      </div>
+    </div>
+
+
+        <div class="btn-edit">
+          <ui-switch  *ngIf="type=='unsubscriber'"  [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" (click)="subscribeNewsletter(member['id'],'subscribe')" >
+          </ui-switch>
+        <div class="toolnew"> Subscribe </div>
+      </div>
+
+      <div class="btn-edit">
+        <ui-switch *ngIf="type=='subscriber'"  [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'"  (click)="subscribeNewsletter(member['id'],'unsubscribe')" checked >
+        </ui-switch>
+        <div class="toolnew"> Unsubscribe </div>
+      </div>
+        <button (click)="reasonForApproval(template6,member['id'])"
+                *ngIf="userPermisssion['APPROVE_REJECT'] && (currentTab == 'NEW_MEMBER' || currentTab == 'REJECTED_MEMBER' || member['userState']=='NEW_MEMBER' && type!='subscriber' && type!='unsubscriber')"
+                class="emailbutton btn-edit checkiconmemmer">
+          <img alt="" class="small-icon" src="assets/icon/checked-s.svg">
+        </button>
+        <button (click)="rejectMember(member['id']); reasonForRejection(template5)"
+                *ngIf="userPermisssion['APPROVE_REJECT'] && (currentTab == 'NEW_MEMBER' || member['userState']=='NEW_MEMBER' && type!='subscriber' && type!='unsubscriber')" class="emailbutton  btn-edit checkiconmemmer">
+          <img alt="" class="small-icon" src="assets/icon/close.png">
+        </button>
+      </td>
+      <!-- <td *ngIf="currentTab == 'NEW_MEMBER' || currentTab == 'REJECTED_MEMBER' || currentTab == 'MEMBER' || member['userState']=='NEW_MEMBER'">
+        <button
+        (click)="reasonForApproval(template6,member['id'])"
+                *ngIf="userPermisssion['APPROVE_REJECT'] && (currentTab == 'NEW_MEMBER' || currentTab == 'REJECTED_MEMBER' || member['userState']=='NEW_MEMBER')"
+                class="emailbutton">
+          <img alt="" class="small-icon" src="assets/icon/checked-s.svg">
+        </button>
+        <button (click)="rejectMember(member['id']); reasonForRejection(template5)"
+                *ngIf="userPermisssion['APPROVE_REJECT'] && (currentTab == 'NEW_MEMBER' || member['userState']=='NEW_MEMBER')" class="emailbutton">
+          <img alt="" class="small-icon" src="assets/icon/close.png">
+        </button>
+      </td> -->
+    </tr>
+    <tr *ngFor="let sub of member['submembers'];let i=index" [ngClass]="member['sub'] == true ? '' : 'hideSubMember'" class="familytab">
+      <td></td>
+      <td>{{sub['firstName']  | titlecase}} {{sub['middleName'] | titlecase}} {{sub['lastName'] | titlecase}}</td>
+      <td>{{sub['addressLine1']}} </td>
+      <td *ngIf="pathUrl !='/members-directory'"> {{sub['countryPhoneCode']}}{{sub['phone']}} </td>
+      <td *ngIf="pathUrl !='/members-directory'">{{sub['email']}} </td>
+      <td>{{sub['relation']}}</td>
+<!--      <td>-->
+<!--        <button *ngIf="userPermisssion['EDIT_MEMBERS'] &&  pathUrl !='/members-directory'"  (click)="editMember(sub['id'])" class="buttonicon" data-target="#exampleModaleditmember"-->
+<!--                data-toggle="modal">-->
+<!--          <i aria-hidden="true" class="newicon icon-edit-member"></i>-->
+<!--        </button>-->
+<!--        &lt;!&ndash;                  <button class="buttonicon"><img alt="" src="assets/icon/edits.svg"></button>&ndash;&gt;-->
+<!--        &lt;!&ndash;                  <button class="buttonicon"><img alt="" src="assets/icon/message.svg"></button>&ndash;&gt;-->
+<!--        &lt;!&ndash;                  <button class="buttonicon"><img alt="" src="assets/icon/delete-icon.svg"></button>&ndash;&gt;-->
+<!--      </td>-->
+      <td></td>
+    </tr>
+    <tr *ngIf="member['submembers']?.length == 0 && member['sub'] == true" class="familytab">
+      <td colspan="8"> {{'userDetail.table.noFamilyMember.text' | translate}}</td>
+    </tr>
+    <tr *ngIf="memberList?.content?.length == 0" class="familytab">
+      <td colspan="8"> {{'userDetail.table.noMember.text' | translate}}</td>
+    </tr>
+    </tbody>
+    <tr *ngIf="memberList?.content?.length == 0" class="familytab">
+      <td colspan="8"> {{'userDetail.table.noMember.text' | translate}}</td>
+    </tr>
+  </table>
+</div>
+<i (click)="openModalWithClass(template)"></i>
+<div *ngIf="memberList?.content?.length != 0" class="pegination-main totalPosition" >
+  <ul *ngIf="type!='family' && type!='guest'">
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true" class="next">
+        First
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+        [ngClass]="reqData?.page?.page == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+              [disabled]="memberList['last'] == true" class="next">Last
+      </button>
+    </li>
+  </ul>
+  <div class="totalShow">
+  <div  *ngIf="type!='family' && type!='guest'"><span>{{'userDetail.table.total.families.text' | translate}} : </span> {{memberList['totalElements']}}</div>
+  <div  *ngIf="type!='family' && type!='guest'"><span>{{'userDetail.table.total.member.text' | translate}} :</span> {{totalFemMeb?.individualCount}}</div>
+  <div  *ngIf="type=='family' || type=='guest'"><span>Total :</span> {{memberList['totalElements']}}</div>
+  </div>
+</div>
+<i (click)="openModalWithClass(template)" id="editBtn"></i>
+<!-- Edit member popup -->
+<ng-template #template>
+  <div class="termsmain editmemberpopup" role="document">
+    <form [formGroup]="editMemberForm" id="editMemberForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel">
+            <i>{{'userDetail.edit.user.popup.title' | translate}}</i>
+            <span *ngIf="currentTab == 'NEW_MEMBER'" class="newmem"> {{'userDetail.edit.user.new.text' | translate}} </span>
+          </h5>
+          <!-- <button (click)="modalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button aria-label="Close" (click)="modalRef.hide()" class="close-container" data-dismiss="modal" id="closeModal" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section class="my-account">
+            <div class="tab-design">
+              <mat-tab-group animationDuration="0ms" (selectedTabChange)="changeTab1($event)">
+                <mat-tab *ngFor="let details of memberDetail;let i=index">
+                  <ng-template mat-tab-label>
+                    {{details?.stepName}}
+                  </ng-template>
+                  <div class="tabmainright">
+                    <h3> {{details?.stepName}} </h3>
+                    <div class="row dafaultmain">
+                      <div *ngFor="let member of details?.fieldValues;let i=index">
+                        <div *ngIf="member.type!='RADIO_BUTTON' && member.type!='CHECK_BOX'" class="col-md-6">
+                          <div *ngIf="member.type=='TEXT'" class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>{{member.name}} <i *ngIf="member.required==true">*</i></mat-label>
+                              <input formControlName="{{member?.fieldName}}" pattern="[a-zA-Z]+" matInput autocomplete="off">
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="member.type=='URL'" class="col-md-12">
+                            <mat-form-field class="example-full-width ">
+                              <mat-label>{{member.name}}
+                                <i *ngIf="member.required == true">*</i>
+                              </mat-label>
+                              <input formControlName="{{member?.fieldName}}" autocomplete="off" matInput>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="member.type=='NUMBER'" class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>{{member.name}}  <i *ngIf="member.required==true">*</i></mat-label>
+                              <input (keypress)="numberOnly($event)" formControlName="{{member?.fieldName}}" matInput>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="member.type=='DATE'" class="col-md-12">
+                            <mat-form-field class="example-full-width datematerial">
+                              <mat-label>{{member.name}}  <i *ngIf="member.required==true">*</i></mat-label>
+                              <input [matDatepicker]="picker" formControlName="{{member?.fieldName}}"
+                                     matInput placeholder="{{member?.fieldName}}" type="text">
+                              <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                              <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="member.type=='DROP_DOWN'" class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>{{member.name}} <i *ngIf="member.required==true">*</i></mat-label>
+                              <mat-select formControlName="{{member?.fieldName}}">
+                                <mat-option>Select {{member.name}}</mat-option>
+                                <mat-option *ngFor="let m of member.options" value="{{m}}">
+                                  {{m}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="member.type=='TEXT_AREA'" class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>{{member.name}} <i *ngIf="member.required==true">*</i></mat-label>
+                              <textarea formControlName="{{member.fieldName}}" matInput placeholder="..."
+                              ></textarea>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row dafaultmain">
+                      <div>
+                        <div *ngFor="let member of details.fieldValues;let i=index">
+                          <div *ngIf="member.type =='RADIO_BUTTON' || member.type=='CHECK_BOX'" class="col-md-6">
+                            <div *ngIf="member.type=='RADIO_BUTTON'" class="col-md-12">
+                              <label class="example-margin">{{member.name}} <i
+                                *ngIf="member.required==true">*</i></label>
+                              <mat-radio-group formControlName="{{member.fieldName}}">
+                                <mat-radio-button *ngFor="let m of member.options" [checked]="m == member.filedValue"
+                                                  class="example-margin" value="{{m}}">{{m}}</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+
+                            <div *ngIf="member.type=='CHECK_BOX'" class="col-md-12">
+                              <label>{{member.name}}  <i *ngIf="member.required==true">*</i></label>
+                              <section class="example-section">
+                                <ng-container *ngFor="let m of member.optionList">
+                                  <mat-checkbox [(ngModel)]="m['check']" [checked]="m['check']==true"
+                                                [ngModelOptions]="{standalone: true}" [value]="m['value']"
+                                                class="example-margin">{{m['value']}}</mat-checkbox>
+                                </ng-container>
+                              </section>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+                <mat-tab *ngIf="this.communityDetailsService.uiPermission['ASSIGN_CHAPTER_ACCESS']">
+                  <ng-template mat-tab-label>
+                    {{'userDetail.edit.user.role.tab.text' | translate}}
+                  </ng-template>
+                  <div class="tabmainright">
+                    <h3>
+                      {{'userDetail.edit.user.role.title' | translate}}
+                    </h3>
+                    <form [formGroup]="accessForm">
+                      <div class="row dafaultmain">
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>{{'userDetail.edit.user.role.lbl.text' | translate}}</mat-label>
+                            <mat-select (selectionChange)=" roleChange($event.value)" formControlName="roles" multiple>
+                              <mat-option *ngFor="let list of rolesList"
+                                          [value]="list.specificRole">{{list?.roleDescription}} </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6" *ngIf="chapterList.length!=1">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>{{'userDetail.edit.user.chapterAccess.lbl.text' | translate}}</mat-label>
+                            <mat-select (selectionChange)="chapterChange($event.value)" formControlName="access"
+                                        multiple>
+                              <mat-option *ngFor="let list of chapterList"
+                                          [value]="list?.id">{{list?.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </mat-tab>
+                <mat-tab *ngIf="this.communityDetailsService.uiPermission['ASSIGN_CHAPTER_ACCESS']">
+                  <ng-template mat-tab-label>
+                    {{'userDetail.edit.user.changePassword.tab.text' | translate}}
+                  </ng-template>
+                  <div class="tabmainright">
+                    <h3>
+                      {{'userDetail.edit.user.changePassword.tab.text' | translate}}</h3>
+                      <div class="row dafaultmain" >
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <mat-label> {{'userDetail.edit.user.changePassword.input.text' | translate}}</mat-label>
+                            <input [type]="hide ? 'password' : 'text'" [(ngModel)]="changePassword"  [ngModelOptions]="{standalone: true}" matInput>
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6 footrbtn">
+              <button type="button" (click)="deleteMember(memberId)" *ngIf="this.type =='subscriber' && this.type =='unsubscriber'" class="deletebtnmem">
+                <i
+                  class="icon-delete newicon"></i> {{'userDetail.edit.user.footer.unsubscribeMember.lbl.text' | translate}}
+              </button>
+              <button type="button" (click)="deleteMember(memberId)" *ngIf="this.type !='subscriber' && this.type !='unsubscriber'" class="deletebtnmem">
+                <i class="icon-delete newicon"></i> {{'userDetail.edit.user.footer.deleteuser.lbl.text' | translate}}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button (click)="modalRef.hide()" class="btn btn-secondary" data-dismiss="modal" id="delete_btn"
+                      type="button">{{'userDetail.edit.user.footer.cancel.Btn.text' | translate}}
+              </button>
+              <button (click)="editMemberFormSubmit()" class="save-changes"
+                      type="submit">{{'userDetail.edit.user.footer.update.Btn.text' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<!--<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModaleditmember" role="dialog"
+     tabindex="-1">
+
+</div>-->
+<!-- Edit member popup -->
+
+<ng-template #template1>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">{{'userDetail.rejectMember.popup.title' | translate}} </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" data-dismiss="modal" id="delReject" type="button" class="close-container delReject" (click)="modalRef.hide()">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>{{'userDetail.rejectMember.popup.reason.title' | translate}}</h3>
+        <div class="main-radio">
+          <mat-radio-group [(ngModel)]="rejectedData.reason" aria-label="Select an option">
+            <mat-radio-button *ngFor="let reject of rejectDetails;" value="{{reject}}">{{reject }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="otherreason">
+          <mat-form-field class="example-full-width">
+            <mat-label>{{'userDetail.rejectMember.popup.otherReason.lbl.text' | translate}}</mat-label>
+            <textarea [(ngModel)]="rejectedData.message" matInput
+                      placeholder="{{'userDetail.rejectMember.popup.otherReason.ph.text' | translate}}"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer  text-aligncenter">
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button" (click)="modalRef.hide()">{{'userDetail.rejectMember.popup.cancel.Btn.text' | translate}}</button>
+            <button (click)="submitRejectMember()" class="save-changes" type="button">{{'userDetail.rejectMember.popup.save.Btn.text' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- reject member -->
+
+<ng-template #template5>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">{{'userDetail.rejectMember.popup.title' | translate}} </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" (click)="modalRef.hide()" type="button" class="close-container delReject">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>{{'userDetail.rejectMember.popup.reason.title' | translate}}</h3>
+        <div class="main-radio">
+          <mat-radio-group [(ngModel)]="rejectedData.reason" aria-label="Select an option">
+            <mat-radio-button *ngFor="let reject of rejectDetails;" value="{{reject}}">{{reject }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="otherreason">
+          <mat-form-field class="example-full-width">
+            <mat-label>{{'userDetail.rejectMember.popup.otherReason.lbl.text' | translate}}</mat-label>
+            <textarea [(ngModel)]="rejectedData.message" matInput
+                      placeholder="{{'userDetail.rejectMember.popup.otherReason.ph.text' | translate}}"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer  text-aligncenter">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="cancelRejectMember()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                    type="button">{{'userDetail.rejectMember.popup.cancel.Btn.text' | translate}}</button>
+            <button (click)="submitRejectMember()" class="save-changes"
+                    type="button">{{'userDetail.rejectMember.popup.save.Btn.text' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalreject" role="dialog" tabindex="-1">
+  <div class="modal-dialog termsmain rejectmem" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">{{'userDetail.rejectMember.popup.title' | translate}} sfds </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" data-dismiss="modal" id="delReject" type="button" class="close-container delReject">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3>{{'userDetail.rejectMember.popup.reason.title' | translate}}</h3>
+        <div class="main-radio">
+          <mat-radio-group [(ngModel)]="rejectedData.reason" aria-label="Select an option">
+            <mat-radio-button *ngFor="let reject of rejectDetails;" value="{{reject}}">{{reject }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="otherreason">
+          <mat-form-field class="example-full-width">
+            <mat-label>{{'userDetail.rejectMember.popup.otherReason.lbl.text' | translate}}</mat-label>
+            <textarea [(ngModel)]="rejectedData.message" matInput
+                      placeholder="{{'userDetail.rejectMember.popup.otherReason.ph.text' | translate}}"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer  text-aligncenter">
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                    type="button">{{'userDetail.rejectMember.popup.cancel.Btn.text' | translate}}</button>
+            <button (click)="submitRejectMember()" class="save-changes"
+                    type="button">{{'userDetail.rejectMember.popup.save.Btn.text' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- reject member -->
+
+<ng-template #template3>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel"> {{'userDetail.email.popup.title' | translate}}  </h5>
+        <button aria-label="Close" (click)="NotificationClear(); modalRef.hide()" class="close-container"  id="closeModal" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="notarea">
+          <div class="editor-main">
+            <span class="sub-head"> {{'userDetail.email.popup.message.lbl.text' | translate}} </span>
+            <ngx-editor [(ngModel)]="notificationData.message" 
+                            [placeholder]="'Enter Description here...'"
+                            class="editor-icon"></ngx-editor>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-aligncenter">
+        <button (click)="NotificationClear(); modalRef.hide()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">
+          {{'userDetail.email.popup.cancel.Btn.text' | translate}}
+        </button>
+        <button (click)="submitNotification()" class="save-changes" type="button">
+          {{'userDetail.email.popup.send.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template4>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel"> {{'userDetail.email.popup.title' | translate}} </h5>
+        <button aria-label="Close" (click)="NotificationClear(); modalRef.hide()" class="close-container" data-dismiss="modal" id="closeModal" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="notarea">
+          <div class="editor-main">
+            <span class="sub-head"> {{'userDetail.email.popup.message.lbl.text' | translate}} </span>
+            <ngx-editor [editor]="editor" [(ngModel)]="notificationData.message" 
+                            [placeholder]="'Enter Description here...'"
+                            class="editor-icon"></ngx-editor>
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-aligncenter">
+        <button (click)="NotificationClear()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                type="button">{{'userDetail.email.popup.cancel.Btn.text' | translate}}
+        </button>
+        <button (click)="submitNotification()" class="save-changes"
+                type="button">{{'userDetail.email.popup.send.Btn.text' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalemail" role="dialog" tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel"> {{'userDetail.email.popup.title' | translate}} fg  </h5>
+        <button aria-label="Close" (click)="NotificationClear()" class="close-container" data-dismiss="modal" id="closeModal" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="notarea">
+          <div class="editor-main">
+            <span class="sub-head"> {{'userDetail.email.popup.message.lbl.text' | translate}} </span>
+            <ngx-editor [(ngModel)]="notificationData.message" 
+                            [placeholder]="'Enter Description here...'"
+                            class="editor-icon"></ngx-editor>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-aligncenter">
+        <button (click)="NotificationClear()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                type="button">{{'userDetail.email.popup.cancel.Btn.text' | translate}}
+        </button>
+        <button (click)="submitNotification()" class="save-changes"
+                type="button">{{'userDetail.email.popup.send.Btn.text' | translate}}</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="rejectMModal" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">Reason For Rejection </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="notarea">
+          <div class="editor-main">
+            <span class="sub-head"> Message </span>
+            <ngx-editor [(ngModel)]="rejectedData.reason" 
+                            [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer text-aligncenter">
+        <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+        <button (click)="submitRejectMember()" class="save-changes" type="button">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #mymodal>
+  <div class="modal-header headline">
+    <h4 class="modal-title pull-left">Member Details </h4>
+    <button class="search-button editnew" routerLink="/member-details/{{this.ModalSelectedUser}}" (click)="modalRef.hide()"> <img src="assets/icon/editicon.svg" alt=""> Edit </button>
+    <button (click)="modalRef.hide()" aria-label="Close" class="close-container evendash memberdetailicon" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+</div>
+
+<div class="modal-body">
+<div class="row">
+  <div class="col-sm-8">
+      <ul class="profilemain">
+        <li>
+          <div class="profile-img">
+            <img alt="" src="{{profilesrc}}" class="" *ngIf="showProfile">
+            <div class="profilecarector big-charectorname" *ngIf="!showProfile">
+              <span class="chrtr-big"> {{logoName}}  </span>
+            </div>
+          </div>
+        </li>
+        <li>
+           <p class="fnamebig">  {{this.userDetail?.firstName}} {{this.userDetail?.middleName}} {{this.userDetail?.lastName}} </p>
+           <p> {{this.userDetail?.email}} </p>
+           <p> {{this.userDetail?.countryPhoneCode}} {{this.userDetail?.phone}} </p>
+           <p>{{this.userDetail?.gender}}</p>
+        </li>
+      </ul>
+  </div>
+  <div class="col-sm-4">
+    <p class="status-show popupstatus" *ngIf="currentTab != 'DELETE_MEMBER' && type!='subscriber' && type!='unsubscriber' && type != 'family' && type != 'guest'">
+      <!-- <img *ngIf="member['userState']=='USER' || member['userState']=='MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073201_5f17135c8613362eb4b1f42a_Active_member.png"> -->
+
+      <span *ngIf="this.userDetail['userState']=='USER'" style="color: #13e07d;"> <i style="background: #13e07d;"></i> {{'userDetails.list.member.durationType.lable' | translate}} </span>
+
+      <span *ngIf="(this.userDetail['userState']=='MEMBER') && this.userDetail['durationType']=='LIFETIME'" style="color: #13e07d;"> <i style="background: #13e07d;"></i> Life Member </span>
+      <span *ngIf="(this.userDetail['userState']=='MEMBER') && this.userDetail['durationType'] !='LIFETIME'" style="color: #13e07d;" > <i style="background: #13e07d;"></i> Member </span>
+
+      <!-- <img *ngIf="member['userState']=='EXPIRED_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073240_5f17135c8613362eb4b1f42a_Expired.png"> -->
+      <span *ngIf="this.userDetail['userState']=='EXPIRED_MEMBERSHIP'" style="color: #a5a19f;"> <i style="background: #a5a19f;"></i> Expired Membership </span>
+
+      <!-- <img *ngIf="member['userState']=='NEW_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073318_5f17135c8613362eb4b1f42a_Member.png"> -->
+      <span *ngIf="this.userDetail['userState']=='NEW_MEMBER'" style="color: #0170c1;"> <i style="background: #0170c1;"></i> Approval Pending </span>
+
+      <!-- <img *ngIf="member['userState']=='REJECTED_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073351_5f17135c8613362eb4b1f42a_Rejected.png"> -->
+      <span *ngIf="this.userDetail['userState']=='REJECTED_MEMBER'" style="color: #f83c4a;"> <i style="background: #f83c4a;"></i> Rejected Member </span>
+
+      <!-- <img *ngIf="member['userState']=='EXPIRING_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073406_5f17135c8613362eb4b1f42a_UPCOMING_EXPIRATION.png"> -->
+      <span *ngIf="this.userDetail['userState']=='EXPIRING_MEMBERSHIP'" style="color: #fea709;"> <i style="background: #fea709;"></i> Expiring Membership </span>
+
+      <!-- <img *ngIf="member['userState']=='UNPAID_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073632_5f17135c8613362eb4b1f42a_Unpaid.png"> -->
+      <span *ngIf="this.userDetail['userState']=='UNPAID_MEMBER'" style="color: #f7349c;"> <i style="background: #f7349c;"></i> Unpaid Member </span>
+      <button class="search-button sendlink" *ngIf="this.userDetail['userState'] == 'UNPAID_MEMBER' && currentTab != 'DELETE_MEMBER' && type!='subscriber' && this.type !='unsubscriber'" (click)="sendLink(this.userDetail['id'])">
+        Send payment link
+      </button>
+    </p>
+    <p  class="memid" *ngIf="this.userDetail?.memberNumber!='' && this.userDetail?.memberNumber !=null"> {{this.userDetail['memberNumber']}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-8">
+    <div class="mainship">
+    <span class="memship">Membership</span>
+    <span class="lifememlife" *ngIf="(this.userDetail?.membershipTypeName != null && this.userDetail?.membershipTypeName != '')&& this.userDetail?.userState!='USER'">{{this.userDetail?.membershipTypeName}}</span>
+    <!-- *ngIf="this.userDetail['fieldValues']['source']" -->
+    <p *ngIf="this.userDetail?.fieldValues?.source"  class="noitalic" ><b>Source: </b> {{this.userDetail['fieldValues']['source']}}</p>
+    <!-- *ngIf="this.userDetail['memberId']!='' && this.userDetail['memberId'] !=null" -->
+    <p *ngIf="this.userDetail?.memberId!='' && this.userDetail?.memberId !=null" class="noitalic" ><b>Old Member ID: </b> {{this.userDetail['memberId']}}</p>
+    <p class="noitalic" *ngIf="userDetail?.durationType =='LIFETIME'">
+      <b>Member Since : </b>
+      <i class="datebol" *ngIf="this.userDetail?.expirationDate != null ">{{this.userDetail?.membershipStartDate | date:
+        this.communityDetailsService.publicInfo?.webDateFormat}} - {{this.userDetail?.expirationDate| date:
+        this.communityDetailsService.publicInfo?.webDateFormat}}</i>
+        <i class="datebol" *ngIf="this.userDetail?.expirationDate == null ">{{this.userDetail?.membershipStartDate | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} </i>
+    </p>
+       <p class="noitalic" *ngIf="userDetail?.durationType !='LIFETIME'">
+      <b>Validity : </b>
+      <i class="datebol" *ngIf="this.userDetail?.expirationDate != null ">{{this.userDetail?.membershipStartDate | date:
+        this.communityDetailsService.publicInfo?.webDateFormat}} - {{this.userDetail?.expirationDate | date:
+        this.communityDetailsService.publicInfo?.webDateFormat}}</i>
+        <i class="datebol" *ngIf="this.userDetail?.expirationDate == null ">{{this.userDetail['membershipStartDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} - {{userDetail['durationType']}}</i>
+    </p>
+    </div>
+  </div>
+<!--  <div class="col-sm-4">-->
+<!--    <select class="active-bg">-->
+<!--      <option value="">-->
+<!--        Active-->
+<!--      </option>-->
+<!--    </select>-->
+<!--  </div>-->
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="mainship addresscolor">
+    <span class="memship">Address</span>
+      <div class="row">
+        <div class="col-sm-12 ">
+          <b>Address</b><span> {{this.userDetail?.addressLine1}} {{this.userDetail?.addressLine2}} {{this.userDetail?.addressLine3}}</span>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <b>City </b><span>{{this.userDetail?.city}}</span>
+        </div>
+        <div class="col-sm-6">
+          <b>Zipcode </b><span>{{this.userDetail?.zipCode}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <b>Country </b><span>{{this.userDetail?.country}}</span>
+        </div>
+        <div class="col-sm-6">
+          <b>State </b><span>{{this.userDetail?.state}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <b>Chapter </b><span>{{this.userDetail?.chapterName}}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="familymemtab" *ngIf="this.familyArray.length!=0">
+  <h4> Family Members</h4>
+<table style="width:100%" >
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+  </tr>
+  <tr *ngFor="let family of this.familyArray;let i = index">
+    <td>{{family.firstName}}</td>
+    <td>{{family.lastName}}</td>
+    <td>{{family.email}}</td>
+  </tr>
+</table>
+</div>
+
+<!-- <div class="row"  *ngIf="this.familyArray.length!=0">
+  <div class="col-sm-8" *ngFor="let family of this.familyArray;let i = index">
+   <span>Family Members</span>
+    <div class="mainship addresscolor" >
+      <div class="row">
+        <div class="col-sm-6">
+          <b>First Name </b><span>{{family.firstName}}</span>
+        </div>
+        <div class="col-sm-6">
+          <b>Last Name </b><span>{{family.lastName}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <b>Email </b><span>{{family.email}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+  <!-- <div class="row">
+    <div class="col-sm-3">
+      <div class="profile-img">
+        <img alt="" src="{{profilesrc}}" class="" *ngIf="showProfile">
+        <div class="profilecarector big-charectorname" *ngIf="!showProfile">
+          <span class="chrtr-big"> {{logoName}}  </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-9 paddtopname">
+      <p class="noitalic">
+      <b>Name: </b><span>{{this.userDetail?.firstName}} {{this.userDetail?.lastName}}</span><br>
+      <b>Email: </b><span>{{this.userDetail?.email}}</span><br>
+      <b>Contact No: </b><span>{{this.userDetail.countryPhoneCode}} {{this.userDetail?.phone}}</span>
+      </p>
+      <p  class="noitalic">
+        <b>Membership: </b>
+        <i *ngIf="this.userDetail?.membershipTypeName != null && this.userDetail?.membershipTypeName != '' "> {{this.userDetail?.membershipTypeName}} </i>
+        <i *ngIf="this.userDetail?.membershipTypeName ==null  || this.userDetail?.membershipTypeName ==''"> - </i>
+      </p>
+
+      <p  class="noitalic" *ngIf="this.userDetail['fieldValues']['source']"><b>Source: </b> {{this.userDetail['fieldValues']['source']}}</p>
+      <p  class="noitalic" *ngIf="this.userDetail['memberId']!='' && this.userDetail['memberId'] !=null"><b>Old Member ID: </b> {{this.userDetail['memberId']}}</p>
+      <p  class="noitalic" *ngIf="this.userDetail['memberNumber']!='' && this.userDetail['memberNumber'] !=null"><b>Member ID: </b> {{this.userDetail['memberNumber']}}</p>
+
+      <span>
+      <p class="noitalic" *ngIf="userDetail['durationType'] =='LIFETIME'">
+        <b>Member Since : </b>
+        <i class="datebol" *ngIf="this.userDetail['expirationDate'] != null ">{{this.userDetail['membershipStartDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} - {{this.userDetail['expirationDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}}</i>
+          <i class="datebol" *ngIf="this.userDetail['expirationDate'] == null ">{{this.userDetail['membershipStartDate'] | date:
+            this.communityDetailsService.publicInfo?.webDateFormat}} </i>
+      </p>
+         <p class="noitalic" *ngIf="userDetail['durationType'] !='LIFETIME'">
+        <b>Validity : </b>
+        <i class="datebol" *ngIf="this.userDetail['expirationDate'] != null ">{{this.userDetail['membershipStartDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}} - {{this.userDetail['expirationDate'] | date:
+          this.communityDetailsService.publicInfo?.webDateFormat}}</i>
+          <i class="datebol" *ngIf="this.userDetail['expirationDate'] == null ">{{this.userDetail['membershipStartDate'] | date:
+            this.communityDetailsService.publicInfo?.webDateFormat}} - {{userDetail['durationType']}}</i>
+      </p>
+
+      <p class="status-show" *ngIf="this.userDetail.softDelete == true && type!='subscriber' && type!='unsubscriber' && type != 'family' && type != 'guest'">
+        <span style="background: #a2a2a2;"> Inactive Member </span>
+
+      </p>
+      </span>
+    </div>
+  </div> -->
+</div>
+<!-- <div class="modal-body textlinenews">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="padtxtuser">
+      <b>Address : </b><span>{{this.userDetail?.addressLine1}} {{this.userDetail?.addressLine2}} {{this.userDetail?.addressLine3}}</span><br>
+      <b>City : </b><span>{{this.userDetail?.city}}</span><br>
+      <b>Zip : </b><span>{{this.userDetail?.zipcode}}</span><br>
+      <b>Country : </b><span>{{this.userDetail?.country}}</span><br>
+      <b>State : </b><span>{{this.userDetail?.state}}</span><br>
+      <b>Gender : </b><span>{{this.userDetail?.gender}}</span><br>
+      </div>
+    </div>
+    <div class="col-sm-12 text-center">
+      <button type="button" class="search-button" routerLink="/member-details/{{this.ModalSelectedUser}}" (click)="modalRef.hide()">Edit</button>
+    </div>
+  </div>
+</div> -->
+
+
+</ng-template>
+<ng-template #mymodal1>
+  <div class="modal-header headline">
+    <h4 class="modal-title pull-left">Newsletter Subscriber Details </h4>
+    <button (click)="modalRef.hide()" aria-label="Close" class="close-container evendash memberdetailicon" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <form id="profileForm" [formGroup]="profileForm" (ngSubmit)="profileFormSubmit()" >
+        <div class="profiletop paddnewlettermain">
+          <div class="row">
+            <!--<div class="col-md-3">
+               <div class="profile-img">
+                <img alt="" src="{{profilesrc}}" class="" *ngIf="showProfile">
+                <div class="profilecarector big-charectorname" *ngIf="!showProfile">
+                  <span class="chrtr-big"> {{logoName}} </span>
+                </div>
+                <br>
+                <a   (click)="uploadphotoclick();">Upload Photo</a><br>
+                <a *ngIf="showProfile"   (click)="removeProfile();">Remove Photo</a>
+              </div>
+            </div> -->
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="styled-input">
+                    <input type="text"  [maxLength]="15" size="15" (keydown.space)="$event.preventDefault();" formControlName="firstName" ng-pattern="/^[a-zA-Z\s]*$/">
+                    <label>First Name</label>
+                    <div *ngIf="this.submittedPform == false && f.firstName.errors">
+                      <div *ngIf="this.submittedPform == false && f.firstName.errors.required" class="valid-msg">First Name is required</div>
+                      <div *ngIf="this.submittedPform == false && f.firstName.errors.pattern" class="valid-msg">Only allowed character</div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="styled-input">
+                    <input type="text"  [maxLength]="15" size="15" formControlName="middleName"  ng-pattern="/^[a-zA-Z\s]*$/">
+                    <label>Middle Name</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="styled-input lastnamemar">
+                    <input type="text" [maxLength]="15" size="15" formControlName="lastName" (keydown.space)="$event.preventDefault();">
+                    <label>Last Name</label>
+                    <div *ngIf="this.submittedPform == false && f.lastName.errors">
+                      <div *ngIf="this.submittedPform == false && f.lastName.errors.required" class="valid-msg">Last Name is required</div>
+                      <div *ngIf="this.submittedPform == false && f.lastName.errors.pattern" class="valid-msg">Only allowed character</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="styled-input lastnamemar">
+                    <label>Email ID</label>
+                    <input type="text" formControlName="email" >
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="styled-input lastnamemar">
+                    <label>Contact</label>
+                     <select formControlName="countryPhoneCode" class="profile_cntc" >
+                      <option  *ngFor="let country of countryData;let i=index" [ngValue]="country.phoneCode">
+                        <span>{{country.name}} ({{country.phoneCode}})</span>
+                      </option>
+                    </select>
+                    <input type="text" formControlName="phone" (keypress)="numberOnly($event)" class="contact-inp" >
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <input type="submit" value="Update" class="save-changes" [disabled]="!profileForm.dirty">
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 martop-date ">
+                  <mat-checkbox [(ngModel)]="subscribeNewsLetter" [ngModelOptions]="{standalone: true}"
+                                 (change)="newsletterChanges($event)" class="pull-right">Subscribe
+                    Newsletter
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<!-- approval template -->
+
+
+
+<ng-template #template6>
+  <div class="" role="document">
+    <div >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">Approve Member </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" (click)="cancelApprovedMember()"  type="button" class="close-container delReject">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h3>Approve Member</h3> -->
+        <!-- <div class="main-radio">
+          <mat-radio-group [(ngModel)]="rejectedData.reason" aria-label="Select an option">
+            <mat-radio-button *ngFor="let reject of rejectDetails;" value="{{reject}}">{{reject }}</mat-radio-button>
+          </mat-radio-group> -->
+        </div>
+        <div class="otherreason">
+          <mat-form-field class="example-full-width">
+            <mat-label>Approval Reason</mat-label>
+            <textarea [(ngModel)]="approveData.reason"matInput
+                      placeholder="Reason for Approval"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer  text-aligncenter">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="cancelApprovedMember()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                    type="button">Cancel</button>
+            <button  (click)="submitApproveMember()" class="save-changes"
+                    type="button" >Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</ng-template>
+
+
+
+<ng-template #template7>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">Inactive Member</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" (click)="inactiveMdlHide()" type="button" class="close-container delReject">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h3>Reason to Inactivate Member</h3> -->
+        <div class="otherreason">
+          <mat-form-field class="example-full-width">
+            <mat-label>Reason</mat-label>
+            <!-- {{delId}} -->
+            <textarea [(ngModel)]="deleteReason" matInput placeholder=""></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="modal-footer  text-aligncenter">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="inactiveMdlHide()" class="btn btn-secondary" data-dismiss="modal" id="deleteNoti"
+                    type="button">{{'userDetail.rejectMember.popup.cancel.Btn.text' | translate}}</button>
+            <button (click)="deleteMember(delId,duration,true);" class="save-changes"
+                    type="button">{{'userDetail.rejectMember.popup.save.Btn.text' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #template8>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">Admin Log</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="delReject" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" (click)="modalRef.hide()" type="button" class="close-container evendash memberdetailicon">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body userlog">
+        <h4>{{adminFirstName}} {{adminLastName}}</h4>
+        <span> <i>Last Modified:</i> {{loginDate | date : 'dd-MM-yyyy'}} </span>
+        <ul *ngFor="let log of storeActivityLog?.content ">
+          <li>
+            <h3>{{log.title}}</h3>
+            <p>{{log.message}}</p>
+          </li>
+          <li>
+            <h2>{{log.dateTime | date: 'dd-MM-yyyy'}}</h2>
+            <span>{{log.dateTime | date: 'h:mm a '}}</span>
+          </li>
+        </ul>
+        <div class="pegination-main" *ngIf="storeActivityLog?.content?.length!=0">
+          <ul class="pegination-userlog">
+            <li>
+              <button (click)="pagination1('current','user',0)" [disabled]="storeActivityLog['first'] == true"
+                      class="next">
+                First
+              </button>
+            </li>
+            <li>
+              <button (click)="pagination1('prev','user')" [disabled]="storeActivityLog['first'] == true"
+                      class="arrow">
+                <i aria-hidden="true" class="icon-left-arrow icon"></i>
+              </button>
+            </li>
+            <li (click)="pagination1('current','user',i)" *ngFor="let i of totalPages1"
+                [ngClass]="reqActivity.page.page == i ?  'blue-peg' : ''">
+              <button class="numeric">{{i + 1}}</button>
+            </li>
+            <li>
+              <button (click)="pagination1('next','user')" [disabled]="storeActivityLog['last'] == true"
+                      class="arrow">
+                <i aria-hidden="true" class="icon-right-arrow icon"></i>
+              </button>
+            </li>
+            <li>
+              <button (click)="pagination1('current','user',(storeActivityLog['totalPages']-1))"
+              [disabled]="storeActivityLog['last'] == true" class="next">Last
+      </button>
+            </li>
+
+          </ul>
+          <div class="totalShow userlogtotal"><span>Total :</span> {{storeActivityLog['totalElements']}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,108 @@
+<div class="scholarshiplistmain">
+  <div class="iner-scholarship">
+    <h1> Scholarship 
+      <span> Lorem Ipsum is simply dummy text of the printing </span>
+    </h1>
+    <div class="container-fluid">
+      <div class="row borbotm">
+        <div class="col-sm-8 col-md-9">
+          <div class="padd-area">
+            <!-- top Search Section -->
+            <div class="main-search-top">
+              <div class="grid-button">
+                <button (click)="changeList('card')" [ngClass]="listType == 'card' ? 'active' : ''">
+                  <i class="icon-squares-b newicon"></i>
+                </button>
+                <button (click)="changeList('table')" [ngClass]="listType == 'table' ? 'active' : ''">
+                  <i class="icon-menu-w newicon"></i>
+                </button>
+              </div>
+              <div class="searchmember">
+                <mat-form-field class="example-full-width map-url searchform">
+                  <mat-label> Search....</mat-label>
+                  <input   autocomplete="off" matInput type="text">
+                </mat-form-field>
+                <button type="button" class="search-button"> Search </button>
+              </div>
+              <!-- <div *ngIf="userPermisssion['EXPORT_MEMBER']  &&  pathUrl !='/members-directory'"
+                  class="top-export-button-main memexport">
+                <button (click)="exportToExport()">
+                  <img alt="" src="assets/icon/upload.svg"> {{'userDetail.export.Btn.text' | translate}}
+                </button>
+              </div> -->
+              <div class="clear"></div>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-3">
+          <div class="top-export-button-main">
+            <button> + Add Scholarship </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table -->
+    <div class="admingallery">
+      <table>
+        <tr>
+          <th> Scholarship </th>
+          <th> Last Update</th>
+          <th> Total Applicant</th>
+          <th width="70"> Action</th>
+        </tr>
+        <tr>
+          <td>
+            Udaan Scholarship Program
+          </td>
+          <td>10</td>
+          <td>20 May, 2020</td>
+          <td>
+            <div class="buttonright">
+              <div>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> View </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> Edit </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> close</a>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Udaan Scholarship Program
+          </td>
+          <td>10</td>
+          <td>20 May, 2020</td>
+          <td>
+            <div class="buttonright">
+              <div>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> View </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> Edit </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> close</a>
+                  </div>
+                </div>
+              </div> 
+            </div>
+          </td>
+        </tr>
+       </table>
+    </div>
+    <!-- table -->
+  </div>
+</div>

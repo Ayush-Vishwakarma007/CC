@@ -1,0 +1,268 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <!-- <div class="dashboard-heading">My Hosted Events</div> -->
+  <div class="white-area-create-event new-dashboard">
+    <!-- tab section  -->
+    <div class="row member-header m-0">
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <h1>
+          {{'admin.event.myRegisterEvent.title' | translate}}
+          <span> {{'admin.event.myRegisterEvent.title' | translate}}</span>
+        </h1>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4" >
+        <mat-form-field class="example-full-width" *ngIf="chapterList.length!=1">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select (selectionChange)="getChapterDetail($event.value)" multiple="true" [(ngModel)]="chapterIds">
+            <mat-checkbox [checked]="selectAllChapter" (change)="selectAllChange($event)">
+              Select All</mat-checkbox>
+            <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+              {{chapter['name']}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-9 col-md-6 col-lg-3">
+        <div class="searchmyevent">
+          <mat-form-field class="example-full-width">
+            <mat-label> Search Here..</mat-label>
+            <input (change)="onLoad($event.target.value)" [(ngModel)]="search"   autocomplete="off"   matInput type="text">
+            <!--<button class="closebt" (click)="clearSearch()">close</button>-->
+          </mat-form-field>
+        </div>
+        <button *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'" type="button" class="search-button" (click)="searchClick()"> Search </button>
+      </div>
+      <div class="col-sm-3 col-md-2 col-lg-2 text-right">
+          <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid">
+            <mat-label>Page Filter</mat-label>
+            <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+              <mat-option *ngFor="let list of this.communityService.pagelist" [value]="list">{{list}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+
+    </div>
+    <div class="tab-main">
+      <mat-tab-group (selectedTabChange)="changeTab($event)" [selectedIndex]="activeTab">
+        <mat-tab label="ongoing">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>{{'event.myregistervent.ongoing.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------on going-------->
+          <div *ngIf="eventList.length != 0" class="on-going-event">
+
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture | eventImages)+')'"></div>
+                        <img alt="hosted-event" [src]="e.profilePicture | eventImages">
+                      </li>
+                      <li class="hosted-title">
+                        <a   [routerLink]="'/event-details/'+e['id']"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description  | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }}  </span>
+                  </div>
+                  <a class="upcomming-event"   [routerLink]="'/event-details/'+e['id']">
+                    <i class="icon-statistics newicon"></i>
+                    {{'event.myregistervent.ongoing.eventDetail.Btn.text' | translate}}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="eventList.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">
+                <div class="empty-screen">
+                  <img src="assets/images/event-not.svg">
+                  <p>{{'event.myregistervent.ongoing.noEventFound.text' | translate}}</p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="eventList.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of arrayTwo(eventList['totalPages'])"
+                    [ngClass]="data.page.pageNumber == i ? 'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="upcoming">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>{{'event.myregistervent.upcoming.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------UP COMMING-------->
+          <div  *ngIf="eventList.length != 0"  class="on-going-event">
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture | eventImages)+')'"></div>
+                        <img alt="hosted-event"  [src]="e.profilePicture| eventImages" >
+                      </li>
+                      <li class="hosted-title">
+                        <a [routerLink]="'/event-details/'+e['id']"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description  | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }} </span>
+                  </div>
+                  <a   class="upcomming-event"   [routerLink]="'/event-details/'+e['id']" >
+                    <i class="icon-statistics newicon"></i>
+                    {{'event.myregistervent.upcoming.eventDetail.Btn.text' | translate}} </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf=" eventList?.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">
+                <div class="empty-screen">
+                  <img src="assets/images/event-not.svg">
+                  <p>{{'event.myregistervent.upcoming.noEventFound.text' | translate}}</p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="eventList?.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of arrayTwo(eventList['totalPages'])"
+                    [ngClass]="data.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="past">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>{{'event.myregistervent.past.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------past-------->
+          <div *ngIf="eventList.length != 0"  class="on-going-event">
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture | eventImages)+')'"></div>
+                        <img alt="hosted-event"  [src]="e.profilePicture | eventImages" >
+                      </li>
+                      <li class="hosted-title">
+                        <a   [routerLink]="'/event-details/'+e['id']"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description  | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }} </span>
+                  </div>
+                  <a [routerLink]="'/event-details/'+e['id']"   class="upcomming-event">
+                    <i class="icon-statistics newicon"></i>
+                    {{'event.myregistervent.past.eventDetail.Btn.text' | translate}} </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf=" eventList?.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">
+                  <div class="empty-screen">
+                    <img src="assets/images/event-not.svg">
+                    <p>{{'event.myregistervent.past.noEventFound.text' | translate}}</p>
+                  </div>
+              </div>
+            </div>
+            <div *ngIf="eventList?.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of arrayTwo(eventList['totalPages'])"
+                    [ngClass]="data.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

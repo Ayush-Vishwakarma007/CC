@@ -1,0 +1,145 @@
+
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+
+
+$font20: var(--font20);
+$font13: var(--font13);
+$heandingpage: var(--heandingpage);
+
+.main-live-streaming{
+    padding: 23px 47px ; display: block;
+    .livestrm{ margin: 0px 0 0 0; padding: 0px; list-style: none; display: flex; width: 100%;
+        .fisrmar{ margin-right: 15px; position: relative; overflow: hidden;
+          .blurevent-image { z-index: -1; position: absolute;  right: 0px;  left: 0px;  top: 0px;  bottom: 0px;  filter: blur(10px);  background-repeat: no-repeat;  background-size: 100% 100%; }
+          img{ width: 130px; height: 130px;}
+        }
+        .main-text{ width: calc(100% - 350px);}
+        .lastmain{ text-align: right; width: 350px;
+          .fa{ color: var(--primary-color);}
+          .btn-bookmark .fa:before {
+            color: var(--primary-color);
+          }
+        }
+        li{  list-style: none; float: left;
+        span{ display: block; color: var(--primary-color); font-size: 14px; font-weight: 600; text-transform: none; font-family: "Montserrat", sans-serif;}
+        p{ margin: 0px; padding: 0px;  font-size: 25px; font-weight: 600; color: #404040; font-family: "Montserrat", sans-serif;  }
+
+        }
+        li.imagethumb{ padding-right: 30px;
+          img{ width: 80px; height: 80px; border-radius: 10px;
+          }
+        }
+        .category-donation{  margin-top: 17px;
+          li{ float: left; font-size: 12px; color: $gray75;
+            span{ font-size: 12px;  font-weight: 100; text-transform: none; display: block;
+              .location{ width: 9px; height: auto; margin-right: 5px; margin-top: -4px;}
+              .clock { width: 14px; height: auto; margin-right: 5px; margin-top: -4px; margin-left: 10px;}
+            }
+          }
+        }
+      }
+      .timestream{ display: flex; align-items: center; margin-top: 10px;
+        li{ height: 25px; display: inline-flex; align-items: center; font-family: "Montserrat", sans-serif;
+            img{ margin-right: 5px;  }
+            
+        }
+        li:first-child{ margin-right: 15px; padding-right: 15px; border-right: 2px solid #ccc;}
+    }
+    .timestream-add{ display: flex; align-items: center; margin-top: 10px;
+        li{ height: 25px; display: inline-flex; align-items: center; font-family: "Montserrat", sans-serif;
+            img{ margin-right: 5px; width: 9px; }
+        }
+    }
+    .createbystream{ display: block; margin-top: 30px; font-family: "Montserrat", sans-serif;  font-size: 14px; color: #404040; text-align: right;
+        span.main{ font-size: 14px!important; font-family: "Montserrat", sans-serif; display: block; font-weight: 600; color: #404040!important; }
+    }
+    .videobanner{ display: block; margin-top: 13px;
+      .videowid{ width: 100%; height: 432px;}
+    }
+  .videowid{ iframe{  }}
+  .session{ display: block; margin-top: 30px; font-family: "Montserrat", sans-serif;  font-size: 18px; font-weight: 700; color: var(--primary-color); }
+    .session-acc{ margin-top: 15px;
+        .mat-expansion-panel{ box-shadow: 1px 3px 8px 0px rgba(0, 0, 0, 0.1)!important; background: #fff;  border-radius: 10px;
+            .mat-expansion-panel-header{ background: #fff;     border-radius: 0px;}
+            .mat-expansion-panel-body{ padding-top: 15px;}
+        }
+        .usermain{ color: var(--text-clr);
+            li:first-child{ color: #111111;  font-family: "Montserrat", sans-serif;  font-size: 18px; font-weight: 700;}
+        }
+      }
+}
+.mat-expansion-panel-body {
+    padding: 16px 24px 16px;
+}
+.fa-clock-o::before{ color: var(--primary-color); margin-right: 5px;}
+.fa-calendar::before{ color: var(--primary-color); margin-right: 5px;}
+.usermain{ color: var(--text-clr);
+  li{
+    img{ width: 9px; margin-top: -5px;}
+  }
+}
+@media screen and ( max-width: 1024px ) {
+    .main-live-streaming .livestrm li p { font-size: 25px; }
+    .main-live-streaming .livestrm li span { font-size: 16px; }
+    .main-live-streaming .timestream li{ font-size: 13px; }
+    .main-live-streaming .timestream-add li { font-size: 16px;}
+
+}
+
+@media screen and ( max-width: 991px ) {
+  .aditional-info{ padding-left: 10px;}
+    .main-live-streaming .timestream {
+        display: inline-block; margin-top: 0px;
+        li:first-child{ border-right: 0px;}
+        li{ font-size: 13px; width: 100%; }
+    }
+    .main-live-streaming {  padding: 23px 20px; }
+    .timestream-add { margin-top: 0px!important;}
+
+.main-live-streaming .videobanner .videowid { width: 100%; height: 332px; }
+
+
+}
+
+@media screen and ( max-width: 767px ) {
+  .aditional-info { width: 100%; float: left; }
+    .main-live-streaming .livestrm { display: block;}
+    .main-live-streaming .livestrm li { width: 100%; float: none; }
+  .main-live-streaming .livestrm li.arrowleft{ height: 60px;}
+
+  .main-live-streaming .livestrm li.fisrmar{ text-align: center; height: 120px;
+      img{ width: auto; height: auto; max-height: 100%;  padding-right: 10px;vertical-align: middle; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+    }
+    .main-live-streaming .videobanner .videowid { height: 180px; margin-top: 20px; }
+    .main-live-streaming { padding: 10px; }
+    .main-text { width: 100%!important; padding-top: 15px; }
+    .lastmain { width: 100%!important; padding-top: 20px; }
+    .main-live-streaming .createbystream { float: left; text-align: left; margin-top: 0px; }
+    .datail-list-date { margin-top: 0px;}
+
+}
+

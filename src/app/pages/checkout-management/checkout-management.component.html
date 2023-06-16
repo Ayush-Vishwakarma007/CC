@@ -1,0 +1,51 @@
+<div class="main-heading-top">
+  <p> <button><img src="assets/icon/download-arrow.svg" alt=""></button> Sponsor </p>
+  <span>The Most Wonderful Time of the Year Christmas, or Christmas Day is an annual holiday celebrated on December 25th. It’s the biggest holiday of the year for Western and Western-influenced countries</span>
+</div>
+
+<!-- content area -->
+<div class="contentarea-checkout">
+  <div class="">
+    <div class="col-md-8">
+      <app-donation-sponsor-checkout  [discount]="discountSubject" *ngIf="guestShow ==false" [type]="type" [eventId]="eventId"  (completed)="paymentStep()"  [(paymentDetail)] = "paymentDetail"  [(categoryDetail)] = "categoryList"></app-donation-sponsor-checkout>
+      <!-- Vendor  -->
+      <div>
+        <div class="row">
+          <div class="col-sm-12 marbottomdiamond">
+            <mat-radio-group aria-label="Select an option">
+              <div class="row" >
+                <div class="borcard">
+                  <div class="col-sm-8">
+                    <mat-radio-button>
+                      <ul class="diamond-txt">
+                        <li><span> thsi </span></li>
+                        <li> adsasd</li>
+                        <li><i>sdasd</i></li>
+                      </ul>
+                    </mat-radio-button>
+                  </div>
+                  <div class="col-sm-4" >
+                    <input type="text" placeholder="Enter Amount" class="enteramount">
+                  </div>
+                  <div class="clear"></div>
+                </div>
+              </div>
+              <mat-radio-button value="2">Option 2</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <!-- Vendor End  -->
+      <div class="clear"></div>
+      <!-- Accordian section -->
+     <!-- <div class="col-md-12">
+        <app-ticket></app-ticket>
+      </div>-->
+      <!-- Accordian section -->
+    </div>
+    <div class="col-md-4">
+      <app-payments-checkout   (discountChange)="addDiscount()" [(discount)]="discountCode" [type]="type" (completePayment)="paymentCheckout()" [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentDetail"></app-payments-checkout>
+    </div>
+  </div>
+</div>
+

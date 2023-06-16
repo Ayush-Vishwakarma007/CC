@@ -1,0 +1,98 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+.addsection {
+  background: transparent;
+  border: 1px dashed $blue-dark;
+  color: $blue-dark;
+  padding: 10px 25px;
+  border-radius: 3px;
+  float: right!important;
+  margin-top: 20px;
+
+}
+
+
+.removeBtn button {
+  background: transparent;
+  margin: 0px 10px 0 0px;
+  float: right;
+  border: 0px;
+  border-radius: 50px;
+  padding: 5px;
+  position: relative;
+
+  .icon-delete-blue:before{
+    color: $secondary-color;
+  }
+}
+.removeBtn button img {
+  width: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.pre-btn {
+  margin-top: 0px !important;
+}
+
+
+.invoice-upload {
+
+  padding: 0px!important;
+
+  .uploader{
+
+    background:$blue-light url(../../../../assets/images/upload-invoice.png) no-repeat center center!important;
+    height: 51px;
+    border-radius: 5px;
+
+  }
+
+  br{
+
+    display: none;
+  }
+}
+.previewinvoice{ float: none; color: #fff; }
+.previewinvoice:hover{ color: #fff; background: var(--secondary-color); transition: all 0.5e ease 0s; opacity: 0.8; }
+
+
+@media screen and (max-width:991px){
+
+  .previewinvoice{ float: left; margin-top: 25px!important;}
+  .removeBtn button { margin-top: 30px;}
+
+}
+
+@media screen and (max-width: 1199px){
+  .white-area-create-event {
+   margin: 20px !important;  
+    padding: 0px 23px 23px 23px !important;  
+}
+}

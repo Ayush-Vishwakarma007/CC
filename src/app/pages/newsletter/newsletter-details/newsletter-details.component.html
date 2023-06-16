@@ -1,0 +1,45 @@
+
+<div class="main-screen mainnewsscreendetailpage">
+  <div class="over-x-h">
+      <section class="inner-banner commontopmargin">
+        <div class="blue-bg-banner"><span></span></div>
+        <div class="slid-left-blue-dots">
+          <img alt="" src="assets/images/inner-left-dots.png">
+        </div>
+        <div class="container">
+          <div class="red-inner">
+            <div class="row">
+              <div  animationName="animated slideInLeft" class="col-md-8 col-sm-8">
+                <h2 class="inner-page-tlt newstitle">
+                  <span routerLink="/newsletter" style="cursor: pointer; display: inline-block; margin-right: 15px; outline: none;">
+                    <img src="assets/icon/back-button.svg" style="width: 30px;" width="100px"/>
+                  </span>
+                  <span> {{newsLetterDetail?.name}} </span>
+                </h2>
+              </div>
+              <div  animationName="animated slideInRight" class="col-md-4 col-sm-4 news-bread">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li aria-current="page" class="breadcrumb-item active">{{newsLetterDetail?.dateTime | date :"MMM dd, yyy"}}</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="news-announcement-details">
+        <div class="container">
+          <div class="detail-text">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="detail-contant">
+                  <p [innerHTML]="newsLetterDetail?.template  | safeHtml"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  </div>
+</div>

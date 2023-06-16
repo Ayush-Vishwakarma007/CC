@@ -1,0 +1,225 @@
+<ng-template mat-tab-label>
+  <ul>
+    <li>
+      <!-- <img alt="" class="tab-gray" src="assets/icon/tab1.svg">
+      <img alt="" class="tab-blue" src="assets/icon/tab1-b.svg"> -->
+      <i class="icon-statistics newicon"></i>
+    </li>
+    <li>
+      <span>{{'memberList.statistics.text' | translate}}</span>
+    </li>
+  </ul>
+</ng-template>
+<div class="dashboard-chart">
+  <div class="top-chart">
+    <div class="row row-eq-height nomemequal">
+      <!-- <div class="col-md-12 col-lg-6 col-sm-12">
+        <div class="pad-right">
+          <div class="row">
+            <div class="col-sm-7 col-md-7 registrationmain">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/value.svg">
+                </li>
+                <li>
+                  Membership Count
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-5 col-md-5 monthlybutton" style="text-align: right">
+              <button type="button" class="btn marginR"
+                      [ngClass]="MembershipChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'"
+                      (click)="msChartClick('DAY')">D
+              </button>
+              <button type="button" class="btn marginR"
+                      [ngClass]="MembershipChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'"
+                      (click)="msChartClick('MONTH')">M
+              </button>
+              <button type="button" class="btn marginR"
+                      [ngClass]="MembershipChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'"
+                      (click)="msChartClick('QUARTER')">Q
+              </button>
+              <button type="button" class="btn marginR"
+                      [ngClass]="MembershipChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'"
+                      (click)="msChartClick('YEAR')">Y
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart" id="memberChart" *ngIf="memberChartOptions?.memberChart">
+                <apx-chart
+                  [chart]="memberChartOptions.memberChart"
+                  [dataLabels]="memberChartOptions.dataLabels"
+                  [fill]="memberChartOptions.fill"
+                  [grid]="memberChartOptions.grid"
+                  [markers]="memberChartOptions.markers"
+                  [series]="memberChartOptions.series"
+                  [stroke]="memberChartOptions.stroke"
+                  [plotOptions]="paymentChartOptions.plotOptions"
+                  [legend]="memberChartOptions.legend"
+                  [title]="memberChartOptions.title"
+                  [tooltip]="memberChartOptions.tooltip"
+                  [xaxis]="memberChartOptions.xaxis"
+                  [yaxis]="memberChartOptions.yaxis"
+                ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-md-12 col-lg-6 col-sm-12 border-right-chart">
+        <div class="pad-left">
+          <div class="row">
+            <div class="col-md-12">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/value.svg">
+                </li>
+                <li>
+                  {{'memberList.statistics.pieChart.title' | translate}}
+                  <p>{{'memberList.statistics.pieChart.text' | translate}}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart" id="diffChart" *ngIf="diffChartOptions">
+                <apx-chart
+                  [chart]="diffChartOptions.diffChart"
+                  [dataLabels]="diffChartOptions.dataLabels"
+                  [fill]="diffChartOptions.fill"
+                  [xaxis]="diffChartOptions.xaxis"
+                  [plotOptions]="diffChartOptions.plotOptions"
+                  [labels]="diffChartOptions.labels"
+                  [legend]="diffChartOptions.legend"
+                  [title]="diffChartOptions.title"
+                  [tooltip]="diffChartOptions.tooltip"
+                  [responsive]="diffChartOptions.responsive"
+                  [series]="diffChartOptions.series" ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="top-chart">
+    <div class="row row-eq-height no-equal-height-sm">
+      <div class="col-md-7 col-sm-12 border-right-chart">
+        <div class="pad-left">
+          <div class="row">
+            <div class="col-md-12">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/value.svg">
+                </li>
+                <li>
+                  {{'memberList.statistics.columnChart.title' | translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart" id="revenueChart" *ngIf="revenueChartOptions?.revenueChart">
+                <apx-chart
+                  [chart]="revenueChartOptions.revenueChart"
+                  [dataLabels]="revenueChartOptions.dataLabels"
+                  [fill]="revenueChartOptions.fill"
+                  [grid]="revenueChartOptions.grid"
+                  [markers]="revenueChartOptions.markers"
+                  [series]="revenueChartOptions.series"
+                  [stroke]="revenueChartOptions.stroke"
+                  [plotOptions]="revenueChartOptions.plotOptions"
+                  [legend]="revenueChartOptions.legend"
+                  [title]="revenueChartOptions.title"
+                  [tooltip]="revenueChartOptions.tooltip"
+                  [xaxis]="revenueChartOptions.xaxis"
+                  [yaxis]="revenueChartOptions.yaxis"
+                ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-12">
+        <div class="pad-right">
+          <div class="row">
+            <div class="col-md-8 col-sm-8">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/earning-money.svg">
+                </li>
+                <li>
+                  {{'memberList.statistics.map.title' | translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart">
+                <div #mapChart id="mapChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="top-chart">
+    <div class="row">
+      <div class="col-md-8">
+        <ul class="registration-admn">
+          <li class="icon-registran">
+            <img alt="" src="assets/icon/value.svg">
+          </li>
+          <li>
+            Payment Count
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4" style="text-align: right">
+        <button type="button" class="btn marginR"
+                [ngClass]="paymentChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'"
+                (click)="pChartClick('DAY')">D
+        </button>
+        <button type="button" class="btn marginR"
+                [ngClass]="paymentChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'"
+                (click)="pChartClick('MONTH')">M
+        </button>
+        <button type="button" class="btn marginR"
+                [ngClass]="paymentChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'"
+                (click)="pChartClick('QUARTER')">Q
+        </button>
+        <button type="button" class="btn marginR"
+                [ngClass]="paymentChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'"
+                (click)="pChartClick('YEAR')">Y
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="chart" id="paymentChart" *ngIf="paymentChartOptions?.paymentChart">
+          <apx-chart height="380"
+            [chart]="paymentChartOptions.paymentChart"
+            [dataLabels]="paymentChartOptions.dataLabels"
+            [fill]="paymentChartOptions.fill"
+            [grid]="paymentChartOptions.grid"
+            [markers]="paymentChartOptions.markers"
+            [series]="paymentChartOptions.series"
+            [stroke]="paymentChartOptions.stroke"
+            [plotOptions]="paymentChartOptions.plotOptions"
+            [legend]="paymentChartOptions.legend"
+            [title]="paymentChartOptions.title"
+            [tooltip]="paymentChartOptions.tooltip"
+            [xaxis]="paymentChartOptions.xaxis"
+            [yaxis]="paymentChartOptions.yaxis"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

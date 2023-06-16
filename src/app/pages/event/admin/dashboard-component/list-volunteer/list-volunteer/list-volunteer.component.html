@@ -1,0 +1,242 @@
+<div class="padd-area">
+  <!-- top Search Section -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="top-export-button-main memexport">
+        <button (click)="openModalWithClass3(template1)">Add volunteer</button>
+      </div>
+    </div>
+  </div>
+  <!-- top Search Section -->
+  <!-- <div class="clear"></div> -->
+  <!-- table  Section -->
+  <div class="new-member-tab">
+    <table>
+      <tr class="topbox">
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th width="80">Action</th>
+        <!-- <th (click)="sort('address')"
+          [ngClass]="reqData['sort']['sortBy'] != 'ADDRESS' ? '' : '' || reqData['sort']['sortBy'] == 'ADDRESS' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.donation.table.header.address.text' | translate}}
+      </th> -->
+        <!-- <th (click)="sort('phone')" *ngIf="eventDetail['admin']"
+          [ngClass]="reqData['sort']['sortBy'] != 'PHONE' ? '' : '' || reqData['sort']['sortBy'] == 'PHONE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.donation.table.header.phone.text' | translate}}
+      </th> -->
+      </tr>
+      <tbody>
+        <div *ngIf="volunteerList.length==0">NO record found</div>
+        <tr *ngFor="let list of volunteerList">
+          <td>{{list.firstName}}</td>
+          <td>{{list.lastName}}</td>
+          <td>{{list.email}}</td>
+          <td>{{list.phone}}</td>
+          <td>
+            <button (click)="deleteVolunteer(list.id)" class="btn-edit">
+              <i aria-hidden="true" class="icon-delete newicon"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- table  Section -->
+
+  <!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> {{'event.dashboard.donation.notification.popup.title' | translate}}  </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> {{'event.dashboard.donation.notification.popup.subjectlbl.text' | translate}}</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> {{'event.dashboard.donation.notification.popup.messagelbl.text' | translate}} </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">{{'event.dashboard.donation.notification.popup.cancel.Btn.text' | translate}}</button>
+          <button (click)="submitNotification()" class="save-changes" type="button">{{'event.dashboard.donation.notification.popup.send.Btn.text' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> -->
+
+  <!-- Add Sponsor Modal -->
+
+  <!-- Add Sponsor Modal -->
+
+  <!-- Add Donation Modal -->
+
+  <!-- Add Donation Modal -->
+
+  <!-- Member search modal -->
+
+  <!-- Member search modal -->
+
+  <ng-template #template1>
+    <!-- <i id="editSponsorModal" (click)="openModalWithClass2(template1)"></i> -->
+    <div class="" role="document">
+      <div class="modal-content padd-area">
+        <div class="modal-header">
+          <button
+            (click)="modalRef1.hide()"
+            aria-label="Close"
+            id="closeModel"
+            class="close-container"
+            data-dismiss="modal"
+          >
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+          <h5 class="modal-title tabhead-icon">
+            <!-- <i  class="icon-sponsors newicon"></i>  -->
+            Become volunteer
+          </h5>
+        </div>
+        <div class="modal-body">
+          <div class="volunteer-pop">
+            <form [formGroup]="addVolunteerForm" class="volunteer-form">
+              <div class="row">
+                <div class="col-md-12 text-center"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>First Name <i>*</i></mat-label>
+                    <input
+                      formControlName="firstName"
+                      (keydown.space)="$event.preventDefault();"
+                      [maxLength]="15"
+                      size="15"
+                      matInput
+                      placeholder="Enter First Name"
+                      (keypress)="charOnly($event)"
+                    />
+                  </mat-form-field>
+                  <span
+                    *ngIf="addVolunteerForm.controls.firstName.errors && isSubmit"
+                  >
+                    <div
+                      *ngIf="addVolunteerForm.controls.firstName.errors"
+                      class="valid-msg"
+                    >
+                      Please enter valid First Name
+                    </div>
+                  </span>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>last Name <i>*</i></mat-label>
+                    <input
+                      formControlName="lastName"
+                      (keydown.space)="$event.preventDefault();"
+                      [maxLength]="15"
+                      size="15"
+                      matInput
+                      placeholder="Enter Last Name"
+                      (keypress)="charOnly($event)"
+                    />
+                  </mat-form-field>
+                  <span
+                    *ngIf="addVolunteerForm.controls.lastName.errors && isSubmit"
+                  >
+                    <div
+                      *ngIf="addVolunteerForm.controls.lastName.errors"
+                      class="valid-msg"
+                    >
+                      Please enter valid Last Name
+                    </div>
+                  </span>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Email <i>*</i></mat-label>
+                    <input
+                      formControlName="email"
+                      (keydown.space)="$event.preventDefault();"
+                      [maxLength]="50"
+                      size="50"
+                      matInput
+                      placeholder="Enter Email"
+                    />
+                  </mat-form-field>
+                  <span
+                    *ngIf="addVolunteerForm.controls.email.errors && isSubmit"
+                  >
+                    <div
+                      *ngIf="addVolunteerForm.controls.email.errors"
+                      class="valid-msg"
+                    >
+                      Please enter valid email
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Phone </mat-label>
+                    <input
+                      (keypress)="numberOnly($event)"
+                      appPhoneMask
+                      formControlName="phone"
+                      matInput
+                      placeholder="Enter Phone Number"
+                    />
+                  </mat-form-field>
+                  <span
+                    *ngIf="addVolunteerForm.controls.phone.errors && isSubmit"
+                  >
+                    <div
+                      *ngIf="addVolunteerForm.controls.phone.errors.minlength"
+                      class="valid-msg"
+                    >
+                      Please enter valid Phone Number
+                    </div>
+                  </span>
+                </div>
+
+                <!--   <div class="col-md-4 col-sm-4 " *ngIf="paymentMethod != ''">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterSponsorship.addSponsor.popup.paymentType.lbl.text' | translate}} <i>*</i></mat-label>
+                <input [value]="paymentMethod" matInput formControlName="paymentMethodUsed">
+              </mat-form-field>
+            </div>-->
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-sm-12 sub-btn">
+                  <button class="btn-general" (click)="submit()">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

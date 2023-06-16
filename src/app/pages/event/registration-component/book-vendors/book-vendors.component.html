@@ -1,0 +1,59 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <div class="becomeheight">
+      <h5>
+        {{'event.registrationComponent.bookVendor.title' | translate}}
+      </h5>
+      <div class="becomevendor">
+        <mat-radio-group aria-label="Select an option">
+          <div class="row">
+            <div class="col-md-12" *ngFor="let list of vendorDetail;let i = index">
+              <mat-radio-button id="{{list['id']}}" (change)="vendorChange($event.source.checked,i)" [checked]="list['checked'] == true"  [value]="list['id']"> {{list['name']}}</mat-radio-button>
+              <div class="vendorcheckout">
+                <span class="top">${{list['price']}}</span>
+                <ul class="regstartdate">
+                  <li>
+                    {{'event.registrationComponent.bookVendor.regStartDate.text' | translate}}
+                    <span>{{list['startDateTime'] | date : "MMM dd yyyy, hh:m a" }}</span>
+                  </li>
+                  <li>
+                    {{'event.registrationComponent.bookVendor.regEndDate.text' | translate}}
+                    <span>{{list['endDateTime'] | date : "MMM dd yyyy, hh:m a" }}</span>
+                  </li>
+                </ul>
+                <ul class="regstartdate">
+                  <li>
+                    {{'event.registrationComponent.bookVendor.memberAllownce.text' | translate}}
+                    <span>{{list['memberAllowed']}} Member</span>
+                  </li>
+                  <li>
+                    {{'event.registrationComponent.bookVendor.discount.text' | translate}}
+                    <span *ngIf="list['discountType'] == 'PERCENT'">{{list['discount']}}%</span>
+                    <span *ngIf="list['discountType'] == 'AMOUNT'">${{list['discount']}}</span>
+                    <span *ngIf="list['discountType'] == 'TICKET'">{{list['discount']}} {{'event.registrationComponent.bookVendor.ticketFree.text' | translate}}</span>
+                  </li>
+                </ul>
+                <p [innerHTML]="list['description']"></p>
+              </div>
+            </div>
+          </div>
+        </mat-radio-group>
+      </div>
+    </div>
+    <button  (click)="submitSubject.next(null);" *ngIf="eventDetail?.eventConfigurations?.allowDonor == true || eventDetail?.eventConfigurations?.allowSponsorship  == true"
+      class="sponsorevnt">
+      <ul>
+        <li><i class="icon-donors newicon"></i></li>
+        <li>
+          <h6>Want to
+            <span *ngIf="eventDetail?.eventConfigurations?.allowDonor == true">donate </span>
+            <span *ngIf="eventDetail?.eventConfigurations?.allowDonor == true  &&
+                      eventDetail?.eventConfigurations?.allowSponsorship  == true">or </span>
+            <span *ngIf="eventDetail?.eventConfigurations?.allowSponsorship == true">Sponsor</span>
+            this event?</h6>
+        </li>
+      </ul>
+    </button>
+  </div>
+</div>
+<app-donation-sponsorship [eventId]="eventId" [(categoryDetail)]="donorSponsorDetail"  (completed)="calculateAmount()" [save]="submitSubject"></app-donation-sponsorship>

@@ -1,0 +1,19 @@
+.additionnaltop{  margin: 0px -20px;
+    .addanothersection{ margin-top: 20px; width: calc(100% - 40px); margin-left: 20px; }
+}
+.main-section-membership .bluenumber .right-member { padding-bottom: 0px; }
+
+.removeBtn{ background: transparent; border: 0px; margin-top: 10px; margin-left: 10px; float: left;
+        .icon-delete-blue:before { color: var(--secondary-color); }
+    }
+.dropfield{ width: calc(100% - 35px); float: left;}
+.addsection { width: 100%; text-align: left; background: transparent; border: 2px solid #EFEFEF; padding: 15px 5px; border-radius: 5px; margin-bottom: 15px; text-transform: capitalize; overflow: hidden;}
+
+@media screen and (max-width: 1365px) {
+    .lightarea .lightinner { width: calc(100% - 40px); margin-left: 20px; }
+    .additionnaltop{ 
+        .addanothersection{ margin-top: 20px;}
+    }
+    .additionnaltop { margin: 0px -10px; }
+    .white-area-create-event h1 { margin: 0px 0px 20px; }
+}

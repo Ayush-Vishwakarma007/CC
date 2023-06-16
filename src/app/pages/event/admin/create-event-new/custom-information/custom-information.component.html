@@ -1,0 +1,121 @@
+<div class="sections-main">
+  <h1>
+    <div class="img-create">
+      <img alt="note" src="assets/images/note.png">
+    </div>
+    Custom Info
+    <span>Provide general information about your event & make it stand unique.</span>
+  </h1>
+  <form [formGroup]="dynamicFieldAddForm" id="dynamicFieldAddForm">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Field Name</mat-label>
+          <input formControlName="fieldName" matInput>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && dynamicFieldAddForm.controls.fieldName.errors ">
+          <span *ngIf="this.submitBtn == false && dynamicFieldAddForm.controls.fieldName.errors " class="valid-msg">Field Name is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="price-inp fild-type height-auto">
+          <span>Field Type</span>
+          <button (click)="dynamicSelectedBtn(list.value,list.allowOption);" *ngFor="let list of dynamicField; let i = index; " class="active-btn">
+            <i class="icon"></i>
+            <p class="fieldname"> {{list.name}}</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="martopevent">
+
+      <div *ngIf="optionshow" class="row">
+        <div *ngFor="let option of optionList;let i = index" class="col-md-5 col-sm-8 col-sm-7 col-xs-7 margin-01 dynamic-op">
+          <mat-form-field class="example-full-width ">
+            <mat-label>Option – {{i + 1}}</mat-label>
+            <input [(ngModel)]="option.name" [ngModelOptions]="{standalone: true}" matInput placeholder="Add option here" type="text">
+          </mat-form-field>
+        </div>
+        <div class="row add-btn-create evnt-pr maradd">
+          <div>
+            <button (click)="addNewOption()" class="add_food" type="button">
+              <i aria-hidden="true" class="fa fa-plus"></i> Add new option
+            </button>
+            <button (click)="removeLastOption()" *ngIf="optionList.length != 1" class="add_food" type="button">
+              <i aria-hidden="true" class="fa fa-minus"></i> Remove Last Option
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-5 martopevent">
+          <mat-form-field class="example-full-width">
+            <mat-label>field By</mat-label>
+            <mat-select formControlName="answerLevel">
+              <mat-option value="">Select Filed By</mat-option>
+              <mat-option *ngFor="let list of levelList;" value="{{list['value']}}">{{list['name']}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="this.submitBtn == false && dynamicFieldAddForm.controls.answerLevel.errors ">
+            <span *ngIf="this.submitBtn == false && dynamicFieldAddForm.controls.answerLevel.errors " class="valid-msg">Filed By is required</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="user-fill">
+          <mat-checkbox [checked]="false" formControlName="required"> Check if Question is Mandatory to be filled by User
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="dashed-border">
+    <div class="row">
+      <div class="col-md-12">
+        <input (click)="addDynamicField()" class="save-changes fright" type="button" value="Add Filled">
+      </div>
+    </div>
+  </div>
+  <div class="added-ticket-section border-bottom-gray">
+    <h2>
+      Added Custom Info
+    </h2>
+    <div class="scroll-tab-event">
+      <table class="table100  custom-info-tab">
+        <tr *ngFor="let list of customInfo;let i = index">
+          <td class="first-col">
+            <img alt="" src="assets/images/two-line.png">
+          </td>
+          <td class="txt-second-col">
+            <span>field Name</span>
+
+            {{list['fieldName']}}
+          </td>
+          <td class="txt-second-col tdcenter2">
+            <span>field By</span>
+            {{list['answerLevel']}}
+          </td>
+          <td class="more-option">
+            <div class="more">
+              <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton"
+                type="button">
+                <img alt="" src="assets/icon/more.svg">
+              </button>
+              <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                <a (click)="edit(list,'custom_info')" class="dropdown-item"  > Edit</a>
+                <a (click)="delete(list,'custom_info')" class="dropdown-item"  > Delete </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event new-dashboard memberdireno-paid">
+    <div class="row member-header">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <h1>
+              {{'memberList.title' | translate}}
+              <span> {{'memberList.text' | translate}}</span>
+            </h1>
+            <!-- <h1 class="alltext">
+              {{this.currentActiveTab}}
+            </h1> -->
+            <!-- <div class="col-sm-12 col-md-6 col-lg-4 martop-memberdirectory">
+              <mat-form-field>
+              <mat-label>Select Module</mat-label>
+              <mat-select [(ngModel)]="tab" (selectionChange)="changeTab(tab)" >
+              <mat-option *ngFor="let list of memberState" value="{{list.value}}" >{{list?.name}}</mat-option>
+              </mat-select>
+              </mat-form-field>
+            </div> -->
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6 martop-memberdirectory" *ngIf="chapterList.length!=1">
+            <!-- <mat-form-field class="allright" >
+              <mat-label>Select Status</mat-label>
+              <mat-select [(ngModel)]="tab"  (ngModelChange)="changeTab(tab)" >
+                <mat-option value="dashboard" >Statistics</mat-option>
+                <mat-option *ngFor="let tab of memberState" value="{{tab.value}}" >{{tab.name}}</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+            <mat-form-field class="example-full-width chapter-name">
+              <mat-label>Select Chapter</mat-label>
+              <mat-select [(ngModel)]="chapterId" (selectionChange)="selectAllChapter= false;getChapterDetail($event.value)"
+                multiple="true">
+                <mat-checkbox [checked]="selectAllChapter" (change)="selectAllChange($event)">
+                  Select All</mat-checkbox>
+                <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          <!-- <button (click)="reset()" class="search-button">Reset</button> -->
+        </div>
+        </div>
+      </div>
+
+    <div class="tab-main membertab">
+      <app-statistics [hidden]="this.currentTab != 'dashboard'" [chapterId]="chapterId" [save]="statisticSubject" [currentTab]="currentTab"
+                      [userPermisssion]="userPermisssion"></app-statistics>
+      <app-user-detail [hidden]="this.currentTab == 'dashboard'" [chapterId]="chapterId" [(userDetailArray)]="userDetailArray" [reseFilter]="resetbtn" [type]="this.currentTab" [reqData]="reqData" [save]="memberSubject" [currentTab]="currentTab"
+        [userPermisssion]="userPermisssion" ></app-user-detail>
+    </div>
+  </div>
+</div>

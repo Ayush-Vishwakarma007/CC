@@ -1,0 +1,129 @@
+<div class="card-details payment-info1">
+  <fieldset>
+    <legend><img src="assets/icon/secure-payment-green.svg" /></legend>
+    <form class="example-form" id="paymentForm">
+      <div class="row" style="margin-top: -34px;">
+        <div class="col-md-4 paymentMember">
+          <div class="row">
+            <div class="row" style="margin: 0px 0px 0px;">
+              <div class="col-md-12">
+                <label
+                  >Account Holder Type <span style="color: red;">*</span></label
+                >
+              </div>
+            </div>
+            <mat-radio-group aria-label="Select an option">
+                <div class="col-sm-6 col-md-6">
+                  <div class="mainrodio">
+                    <mat-radio-button
+                      (change)="changeRadio($event,'business')"
+                      id="business_radio"
+                      class="business-radio"
+                      name="account_holder_type_radio"
+                      type="radio"
+                      value="business"
+                      checked
+                      >Business</mat-radio-button
+                    >
+                    <!--                <input (change)="changeRadio($event,'business')" id="business_radio" class="business-radio" name="account_holder_type_radio" type="radio" value="business" checked>-->
+                    <!--                <label class="cardheading" for="business_radio">Business</label>-->
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                  <div class="mainrodio">
+                    <mat-radio-button
+                      value="2"
+                      (change)="changeRadio($event,'personal')"
+                      id="personal_radio"
+                      name="account_holder_type_radio"
+                      type="radio"
+                      value="personal"
+                      >Personal
+                    </mat-radio-button>
+                    <!--                <input  (change)="changeRadio($event,'personal')" id="personal_radio" name="account_holder_type_radio" type="radio" value="personal">-->
+                    <!--                <label class="cardheading" for="personal_radio">Personal</label>-->
+                  </div>
+                </div>
+            </mat-radio-group>
+          </div>
+          <div class="row">
+            <div class="row" style="margin: 0px 0px 0px;">
+              <div class="col-md-12">
+                <label>Account Type <span style="color: red;">*</span></label>
+              </div>
+            </div>
+            <mat-radio-group aria-label="Select an option">
+              <div class="col-sm-6 col-md-6">
+                <div class="mainrodio">
+                  <mat-radio-button
+                    id="checking_radio"
+                    name="account_type_radio"
+                    type="radio"
+                    value="business"
+                    checked
+                    >Checking
+                  </mat-radio-button>
+                  <!--                <input id="checking_radio" name="account_type_radio" type="radio" value="business" checked>-->
+                  <!--                <label class="cardheading" for="checking_radio">Checking</label>-->
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="mainrodio">
+                  <mat-radio-button
+                    id="savings_radio"
+                    name="account_type_radio"
+                    type="radio"
+                    value="personal"
+                    >Savings</mat-radio-button
+                  >
+                  <!--                <input id="savings_radio" name="account_type_radio" type="radio" value="personal">-->
+                  <!--                <label class="cardheading" for="savings_radio">Savings</label>-->
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="col-md-8 paymentMember">
+          <div class="row">
+            <div class="col-md-4">
+              <label for="my_routing_number_id"
+                >Routing Number <span style="color: red;">*</span></label
+              >
+              <div id="my_routing_number_id"></div>
+            </div>
+            <div class="col-md-4">
+              <label for="my_bank_account_number_id"
+                >Account Number <span style="color: red;">*</span></label
+              >
+              <div id="my_bank_account_number_id"></div>
+            </div>
+            <div class="col-md-4">
+              <label class="cardheading" for="name">Bank Name </label>
+              <input id="name" type="text" name="name" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" *ngIf="type =='personal'">
+              <label class="cardheading" for="given_name"
+                >First Name <span style="color: red;">*</span></label
+              >
+              <input id="given_name" type="text" name="name" />
+            </div>
+            <div class="col-md-4" *ngIf="type =='personal'">
+              <label class="cardheading" for="surname"
+                >Last Name <span style="color: red;">*</span></label
+              >
+              <input id="surname" type="text" name="surname" />
+            </div>
+            <div class="col-md-4" *ngIf="type =='business'">
+              <label class="cardheading" for="business_name"
+                >Business Name <span style="color: red;">*</span></label
+              >
+              <input id="business_name" type="text" name="business_name" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </fieldset>
+</div>

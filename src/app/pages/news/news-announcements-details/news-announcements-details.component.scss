@@ -1,0 +1,45 @@
+
+.detail-head{
+    a{display: inline-block; vertical-align: middle; margin-left: -5px;
+        img{width: 30px; vertical-align: middle;}
+    }
+    h3{vertical-align: middle; margin: 0 7px 0 !important;}
+}
+
+.detail-contant{padding-top: 6px !important;
+    table{width: 100% !important;
+        td{
+            img{margin: 10px 0 !important;}
+        }
+    }
+}
+
+.news-announcement-details { padding: 0px 0 30px;
+    .detail-text{margin-top: -460px !important;}
+}
+
+.main-screen .news-announcement-details .detail-text .detail-head h3{padding-left: 25px;}
+.main-screen .news-announcement-details .detail-head a { position: absolute; left: 0; top: 0;
+    img{width: 30px;}
+}
+.blur-image{ position: absolute; right: 0px; left: 0px; top: 0px; bottom: 0px; z-index: 0; filter: blur(20px); background-repeat: no-repeat; background-size: 100% 100%; }
+.imageblurmain{ text-align: center; position: relative; overflow: hidden; margin-top: 10px;
+    img{ position: relative; z-index: 1;}
+}
+@media screen and (max-width: 1300px) {
+    .news-announcement-details .detail-text{margin-top: -360px !important;}
+}
+
+@media screen and (max-width: 991px) {
+    .news-announcement-details .detail-text {  margin-top: -231px!important; }
+}
+
+@media screen and (max-width: 767px) {
+    .detail-head a { margin-bottom: 0px;  margin-top: 3px; }
+    .detail-text .detail-head h3 { padding-left: 30px; font-size: 16px; }
+    .news-announcement-details .detail-text {  margin-top: -100px!important; }
+    .detail-head a{display: inline;}
+    .main-screen .news-announcement-details .detail-head a { position: absolute; left: 0; top: 0;
+        img{width: 20px !important;}
+    }
+}

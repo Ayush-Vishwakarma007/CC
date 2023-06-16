@@ -1,0 +1,320 @@
+<section class="membership-plan-main">
+  <div class="row row-eq-height m-0">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+      <div class="left-part-plan">
+        <div class="header-tlt">
+          <div class="row row_become_member">
+            <div class="col-sm-12 main_become_member">
+              <img  (click)=" goBack()"  src="assets/icon/close-new.svg" class="close_become_member"> 
+              <img src="assets/icon/logo/3.png" alt="" class="logo-become-member">
+              <h1> Become a Member of DFW Gujarati Samaj
+                <span>Thank you for supporting community</span></h1>
+          </div>
+          </div>
+        </div>
+        <div class="tabs-part-plan">
+            <h2><span>Basic Information</span></h2>
+            <!-- <h2><span>Thank you for supporting community</span></h2> -->
+            
+            <div class="guest-details">
+              <form [formGroup]="userForm"  class="example-form">
+                <div class="row">
+                  <div class="col-md-3">                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>First Name <i>*</i></mat-label>
+                      <input formControlName="firstName" [maxLength]="15" (keypress)="charOnly($event)" size="15" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Middle Name </mat-label>
+                      <input formControlName="middleName" [maxLength]="15" size="15" (keypress)="charOnly($event)" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <mat-form-field class="example-full-width" >
+                      <mat-label>Last Name <i>*</i></mat-label>
+                      <input formControlName="lastName"  [maxLength]="15" size="15" (keypress)="charOnly($event)" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Email <i>*</i></mat-label>
+                      <input formControlName="email" matInput  placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Phone <i>*</i></mat-label>
+                    <!-- <input [max]="16" (keypress)="numberOnly($event)" appPhoneMask formControlName="phone" matInput placeholder=""> -->
+                    <input formControlName="phone" [max]="16" appPhoneMask matInput type="text">
+                  </mat-form-field>
+                    </div>
+
+                  <div class="col-md-3">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Address-1 <i>*</i></mat-label>
+                      <input #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" [options]='maploc' formControlName="addressLine1" matInput placeholder="" matInput ngx-google-places-autocomplete>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Address-2</mat-label>
+                      <input  formControlName="addressLine2" matInput placeholder="" matInput >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>City <i>*</i></mat-label>
+                      <input 
+                             formControlName="city" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>State <i>*</i></mat-label>
+                      <input 
+                             formControlName="state" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-2">
+                    
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Zipcode</mat-label>
+                      <input 
+                             formControlName="zipCode" matInput placeholder="" >
+                    </mat-form-field>
+                  </div>
+                  
+                </div>
+              </form>
+            </div>
+            <h2><span>Options Selection</span></h2>
+          </div>
+          <div class="tabs-part-plan new-plan becomememberriplan">
+            <mat-tab-group (selectedTabChange)="changeTypeTab($event);" mat-align-tabs="center">
+              <mat-tab *ngFor="let type of durationTypeList" label="{{type?.value}}_{{type?.allowDuration}}_{{type.durationValue}}">
+                <ng-template mat-tab-label >
+                  {{type?.displayName}}
+                </ng-template>
+                <div class="tab-data-plan">
+                  <div class="row" style="padding-top: 9px; margin: 0;">
+                    <div class="col-md-6 col-lg-8" ><h2 style="font-size:15px; padding-top:0px; text-align: center;">YOUR MEMBERSHIP TO {{communityService?.communityDetail?.basicInformation?.name}}</h2></div>     
+                    <div class="col-md-6 col-lg-4">
+                      <mat-form-field class="example-full-width chapter-name pull-right mar80" *ngIf ="chapterList.length > 1">
+                        <mat-label>Select Chapter</mat-label>
+                        <mat-select (selectionChange)="changeChapter();" [(ngModel)]="chapterId">
+                          <mat-option value="">Select Chapter</mat-option>
+                          <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field  class="readonly-input" appearance="Chapter" *ngIf = "chapterList.length == 1">
+                        <mat-label>select chapter</mat-label>
+                        <input matInput [(ngModel)]="chapterId" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div *ngIf="membershipDetail.length !=0" class=" plan-main ">
+                    <mat-radio-group (change)="changePlan()" [(ngModel)]="this.checkoutArray['selectedMembershipId']">
+                      <div class="row membership-center">
+                        <div  *ngFor="let list of membershipDetail" class="col-lg-4 " >
+                          <div *ngIf="list.disabled==false" class="card-data">
+                            <mat-card >
+                              <div class="text-part radio-custom">
+                                <mat-radio-button  value="{{list?.id}}" [disabled]="!this.userForm.valid"> <h4>{{list?.name}}</h4></mat-radio-button>
+                                
+                                <h3> {{list?.plans[0]?.price |currency:'USD'}}</h3>
+                                <p>{{list?.description}}</p>
+                              </div>
+                            </mat-card>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+          <div class="tabs-part-plan" *ngIf="checkoutArray['summery']">
+            <h2><span>Payment</span></h2>
+            <div class="row membership-center sm-paid-left-right">
+              <div class="col-sm-12 col-md-12 col-lg-6">
+                <div class="select-payment-options-part button-creditcard">
+                  <mat-tab-group (selectedTabChange)="changeTypeTabPayment($event);" mat-align-tabs="start"  >
+                    <mat-tab *ngFor="let list of checkoutArray['paymentMethod']" data-id="{{list?.achPayment}}" label="{{list?.value}}">
+                      <ng-template mat-tab-label >
+                        <i class="fa fa-circle-thin uncheck"></i>
+                        <i class="fa fa-check-circle check"></i>
+                        {{list?.displayName}}
+                      </ng-template>
+                      <div class="row" style="padding: 5px 0px 0px 0px;" *ngIf="checkoutArray['summery']">
+                        <div class="col-md-12" style="text-align: center;">
+                          <h4  style="font-size: 15px;font-weight: 700;color: var(--primary-color);margin: 0 0 5px 0;">You will be charged : {{this.checkoutArray['finalAmount'] |currency:'USD'}}</h4>
+                        </div>
+                      </div>
+                      <div class="row button-creditcard" *ngIf="paymentType == 'PAYPAL'">
+                        <div class="col-md-7">
+                          
+                          <div *ngIf="paymentType == 'PAYPAL'" class="tab-data-plan">
+                            <div class="paypal-data paypaltext">
+                              <img src="assets/images/paypal.svg">
+                              <p>You will be redirected to PayPal secure Checkout for Payment</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5">                          
+                          <div *ngIf=" paymentType =='CLOVER_PAYMENT'" class="tab-data-plan cards-icon">
+                            <div class="card-icon">
+                              <ul>
+                                <li><img src="assets/images/master-card-new.png"></li>
+                                <li><img src="assets/images/visa-new.png"></li>
+                                <li><img src="assets/images/american-express-new.png"></li>
+                                <li><img src="assets/images/discover-network-new.png"></li>
+                              </ul>
+                            </div>
+                            <app-clover-new (completed)="checkNonce()" *ngIf="paymentType =='CLOVER_PAYMENT' && publicKey!=''"
+                                            [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                                            [save]="paymentSubject"></app-clover-new>
+                          </div>
+                        </div>
+                      </div>                     
+                      <div class="col-md-12">
+                        <div *ngIf=" paymentType =='AFFINY_PAY'" class="tab-data-plan">
+                        </div>
+                      </div>
+                      
+                    </mat-tab>
+                  </mat-tab-group>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div *ngIf="publicKey!='' && this.checkoutArray?.finalAmount>0">
+                            <app-e-check (completed)="checkNonce()" *ngIf=" checkoutArray?.achPayment == true"
+                                         [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                                         [save]="paymentSubject"></app-e-check>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="publicKey!=''&& this.checkoutArray?.finalAmount>0">
+                        <app-affiny-pay-new (completed)="checkNonce()" *ngIf=" checkoutArray?.achPayment == false && paymentType =='AFFINY_PAY'"
+                                            [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                                            [save]="paymentSubject"></app-affiny-pay-new>
+        
+                        <app-square class="creditcard" *ngIf="paymentType =='SQUARE_PAYMENT'" (completed)="checkNonce()"
+                                            [(checkoutArray)]="checkoutArray"
+                                          [publicKey]="publicKey" [save]="paymentSubject"></app-square>
+        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-data-plan">
+              <!-- <div class="row membership-center">
+                <div class="col-md-6">
+                  <h2><span>Select Payment Options  <img src="assets/icon/secure-payment-tlt.svg"> </span>
+                    <div class="card-icon text-center">
+                      <ul>
+                        <li><img src="assets/images/master-card-new.png"></li>
+                        <li><img src="assets/images/visa-new.png"></li>
+                        <li><img src="assets/images/american-express-new.png"></li>
+                        <li><img src="assets/images/discover-network-new.png"></li>
+                      </ul>
+                    </div>
+                  </h2>
+                </div>
+              </div> -->
+              <!-- <div class="select-payment-options-part">
+                <div class="row membership-center" >
+                  <div class="col-lg-6">
+                <mat-tab-group  mat-align-tabs="start">
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <i class="fa fa-circle-thin uncheck"></i>
+                      <i class="fa fa-check-circle check"></i>
+                      Credit/Debit Card 
+                    </ng-template>
+                  </mat-tab>
+                </mat-tab-group>
+                </div>
+                </div>
+                <div class="row membership-center" >
+                  <div class="col-lg-6">
+                    <app-square class="creditcard"></app-square>
+                  </div>
+                  
+              </div>
+              </div> -->
+              
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="tems-conditions">
+                    <h4>
+                      <mat-checkbox [(ngModel)]="acceptTerms"></mat-checkbox>
+                      Accept <a data-target="#exampleModalTerms" data-toggle="modal">Terms & Conditions</a></h4>
+                  </div>
+                </div>
+                <div class="col-lg-12 text-center">
+                  <button (click)="getPayemnt()" class="paynow">Pay Now <i class="fa fa-check"></i></button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalTerms" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" >Terms and Conditions</h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<i id="openSuccessModel" (click)="openModalWithClass(template)"></i>
+<ng-template #template>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your membership registration is successfully done.</h4>
+        <p>{{alertText}}</p>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

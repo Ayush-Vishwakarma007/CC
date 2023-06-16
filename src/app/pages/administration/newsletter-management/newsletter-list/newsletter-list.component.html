@@ -1,0 +1,166 @@
+<!-- sponsor -->
+<div class="borsponsor" id="news_form">
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="totall-collection">
+        <span>Newsletters list</span>
+
+        <!-- <p>User can upload the images which are part of the event</p> -->
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6 text-right">
+      <div class="searchfilter">
+        <div class="padd-area sponsorsearch newsnopad">
+          <div class="main-search-top">
+            <div class="searchmember searchsponsor ">
+              <mat-form-field class="example-full-width map-url searchform">
+                <mat-label> Search Here..</mat-label>
+                <input (change)="getNewsletterList()" autocomplete="off" [(ngModel)]="search" matInput type="text">
+              </mat-form-field>
+              <button type="button" class="search-button"> Search </button>
+            </div>
+            <div class="page-filter-new">
+              <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid">
+                <mat-label>Page Filter</mat-label>
+                <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+                  <mat-option *ngFor="let list of this.communityService.pagelist"
+                              [value]="list">{{list}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- <mat-form-field class="filtermember">
+           <i class="fa fa-filter" aria-hidden="true"></i>
+           <mat-label>filter</mat-label>
+           <mat-select>
+             <mat-option>
+               filter
+             </mat-option>
+           </mat-select>
+         </mat-form-field>-->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sponsor -->
+
+<!-- table -->
+<div class="donation-sponsor">
+  <table>
+    <tr>
+      <th class="sortable" (click)="sort('name')"
+          [ngClass]="reqData['sort']['sortBy'] != 'NAME' ? '' : '' || reqData['sort']['sortBy'] == 'NAME' &&
+          reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'">
+        Newsletters
+      </th>
+      <th>
+        Sent to
+      </th>
+      <th>
+        Viewed by
+      </th>
+      <th class="sortable" (click)="sort('date')"
+          [ngClass]="reqData['sort']['sortBy'] != 'DATE_TIME' ? '' : '' || reqData['sort']['sortBy'] == 'DATE_TIME' &&
+          reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'">
+        Date of Release
+      </th>
+      <th>
+        Status
+      </th>
+      <th width="70">
+        Action
+      </th>
+    </tr>
+    <tr *ngFor="let list  of newsletterList?.content">
+      <td style="cursor:pointer" (click)="getNewsletterDetail(list['id'])">
+       <span class="ancorlink"> {{list['name']}} </span>
+      </td>
+      <td>
+        {{list['totalSentCount']}}
+      </td>
+      <td>
+        {{list['totalViewCount']}}
+      </td>
+      <td>
+        {{list['dateTime'] | date : this.communityService.publicInfo?.webDateFormat }}  {{list['dateTime'] | date : 'hh:mm a' }}
+      </td>
+      <td>
+        <p *ngIf="list['publish'] == false">Draft </p>
+        <p *ngIf="list['publish'] == true"> Published </p>
+      </td>
+      <td>
+        <button data-toggle="tooltip" class="btn-edit" *ngIf="list['publish'] == false" [routerLink]="'/management/edit-newsletter/'+list['id']">
+          <i aria-hidden="true" class="newicon icon-edit-member"></i>
+        </button>
+        <button data-toggle="tooltip"  class="btn-edit" *ngIf="list['publish'] == true"  [routerLink]="'/management/copy-newsletter/'+list['id']">
+          <i aria-hidden="true" class="newicon icon-edit-member"></i>
+          <div class="toolnew">
+            This newsletter is published,so It will create a new copy of newsletter.
+          </div>
+        </button>
+        <button class="btn-edit" (click)="deleteNewsletter(list['id'])">
+          <i aria-hidden="true" class="icon-delete newicon"></i>
+        </button>
+        <!-- <div class="dropdown dropup moredrop editgallery">
+
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a class="dropdown-item" *ngIf="list['publish'] == false" [routerLink]="'/management/edit-newsletter/'+list['id']"  ><i
+              class="fa fa-angle-right" aria-hidden="true"></i> Edit</a>
+            <a class="dropdown-item"  *ngIf="list['publish'] == true"  [routerLink]="'/management/copy-newsletter/'+list['id']">
+              <i
+                class="fa fa-angle-right" aria-hidden="true"></i> Edit
+            </a>
+            <a class="dropdown-item" (click)="deleteNewsletter(list['id'])"  >
+              <i class="fa fa-angle-right" aria-hidden="true" ></i>
+              Delete
+            </a>
+          </div>
+        </div> -->
+
+      </td>
+    </tr>
+
+  </table>
+  <div class="pegination-main totalPosition">
+    <ul>
+      <li>
+        <button (click)="pagination('current','user',0)" [disabled]="newsletterList['first'] == true"
+                class="next">First
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination('prev','user')" [disabled]="newsletterList['first'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+          [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+        <button class="numeric">{{i + 1}}</button>
+      </li>
+      <li>
+        <button (click)="pagination('next','user')" [disabled]="newsletterList['last'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-right-arrow icon"></i>
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination('current','user',(newsletterList['totalPages']-1))" [disabled]="newsletterList['last'] == true" class="next">Last</button>
+      </li>
+    </ul>
+    <div class="totalShow"><span>Total :</span> {{newsletterList['totalElements']}}</div>
+
+  </div>
+
+</div>
+<!-- table -->
+
+<ng-template #template>
+  sfsdfs
+</ng-template>

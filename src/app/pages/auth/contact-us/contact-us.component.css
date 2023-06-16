@@ -1,0 +1,21 @@
+
+
+.valid-msg{ color :red;    /* margin-top: -10px; */}
+.commmonadd h5{  font-size: 16px; text-transform: uppercase; color: #202020; font-weight: bold; font-family: "Montserrat", sans-serif; display: block; margin-bottom: 20px;  }
+.commmonadd p{ font-size: 13px; font-weight: 600; margin-bottom: 0px; font-family: "Montserrat", sans-serif; color: var(--text-clr);}
+.commmonadd span{ font-size: 15px; font-weight: 600; margin-bottom: 0px; font-family: "Montserrat", sans-serif; color: var(--text-clr);}
+iframe { width: 100%!important; height: 510px; margin-top: 15px; }
+.showChapter .col-lg-6 {  width: 50%; }
+.showChapter .col-lg-12 {  width: 50%; }
+
+.left-icon-part ul{margin: 0; padding: 0;}
+.left-icon-part li{list-style: none; display: inline-block; margin: 0px 2px 0 0;}
+.left-icon-part a{text-decoration: none; color: #fff; font-size: 20px; padding: 0px 10px; transition: all 0.3s; }
+.paddcontact{ padding-bottom: 30px!important;}
+.mapHideDiv{width: 100%;}
+.select-chaptercontact{ margin-top: 0px!important;}
+@media screen and (max-width: 767px) {
+    .commmonadd h5 { margin-bottom: 5px; margin-top: 25px; }
+    .showChapter .col-lg-6 {  width: 100%; }
+    .showChapter .col-lg-12 {  width: 100%; }
+}

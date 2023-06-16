@@ -1,0 +1,279 @@
+<div class="sections-main">
+  <h1>
+    <div class="img-create">
+      <img alt="discount" src="assets/images/discount.png"></div>
+    Discount
+    <span>Provide general information about your event & make it stand unique.</span>
+  </h1>
+
+  <form [formGroup]="discountForm" id="discountForm">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Coupon Title</mat-label>
+          <input formControlName="code" matInput>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.code.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.code.errors "
+              class="valid-msg">Coupon Title is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="row martopevent">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Purchase Type</mat-label>
+          <mat-select formControlName="purchaseType">
+            <mat-option *ngFor="let list of donationTypeList" [value]="list['value']">
+              {{list['name']}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.purchaseType.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.purchaseType.errors "
+              class="valid-msg">Purchase Type is required</span>
+        </div>
+      </div>
+      <div class="col-md-6 sm-paid">
+        <mat-form-field class="example-full-width">
+          <mat-label>Purchase Value</mat-label>
+          <input (keypress)="numberOnly($event)" formControlName="purchaseValue" matInput type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.purchaseValue.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.purchaseValue.errors "
+              class="valid-msg">Purchase Value is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="row martopevent">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width">
+          <mat-label>Discount Type</mat-label>
+          <mat-select formControlName="discountType">
+            <mat-option *ngFor="let list of donationTypeList" [value]="list['value']">
+              {{list['name']}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.discountType.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.discountType.errors "
+              class="valid-msg">Discount Type is required</span>
+        </div>
+      </div>
+      <div class="col-md-4 sm-paid">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Discount Value</mat-label>
+          <input (keypress)="numberOnly($event)" formControlName="discountValue" matInput type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.discountValue.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.discountValue.errors "
+              class="valid-msg">Discount Value is required</span>
+        </div>
+      </div>
+      <div class="col-md-4 sm-paid">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Max. Amount for Discount</mat-label>
+          <input (keypress)="numberOnly($event)" formControlName="maxDiscount" matInput type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.maxDiscount.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.maxDiscount.errors "
+              class="valid-msg">Max. Amount for Discount is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="row martopevent">
+      <div class="col-md-4">
+        <mat-form-field class="example-full-width dateinfo">
+          <mat-label>Start Date</mat-label>
+          <input [matDatepicker]="picker015" formControlName="minDate" matInput>
+          <mat-datepicker-toggle [for]="picker015" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #picker015></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.minDate.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.minDate.errors "
+              class="valid-msg">Start Date is required</span>
+        </div>
+      </div>
+      <div class="col-md-4 sm-paid">
+        <mat-form-field class="example-full-width dateinfo">
+          <mat-label>End Date</mat-label>
+          <input [matDatepicker]="picker016" formControlName="maxDate" matInput>
+          <mat-datepicker-toggle [for]="picker016" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #picker016></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.maxDate.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.maxDate.errors "
+              class="valid-msg">End Date is required</span>
+        </div>
+      </div>
+      <div class="col-md-4 sm-paid">
+        <mat-form-field class="example-full-width ">
+          <mat-label>Max. Redemptions</mat-label>
+          <input (keypress)="numberOnly($event)" formControlName="maxUsage" matInput type="text">
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && discountForm.controls.maxUsage.errors ">
+            <span
+              *ngIf="this.submitBtn == false && discountForm.controls.maxUsage.errors "
+              class="valid-msg">Max. Redemptions is required</span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="dashed-border">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="user-fill ticket-free-first">
+          <mat-checkbox> lowest price ticket free first?</mat-checkbox>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <input (click)="submitDiscount()" class="save-changes fright no-fright" type="button" value="Add Discount">
+      </div>
+    </div>
+  </div>
+  <div class="added-ticket-section border-bottom-gray">
+    <h2>
+      Added Discount
+    </h2>
+    <div class="scroll-tab-event">
+      <table class="table100">
+        <tr *ngFor="let list of discount_list; let i = index; ">
+          <td class="first-col">
+            <img alt="" src="assets/images/two-line.png">
+          </td>
+          <td class="txt-second-col">
+            {{list['code']}}
+            <span> {{list['minDate']  | date : "MMM dd,yyyy"}} -  {{list['maxDate']  | date : "MMM dd,yyyy"}}</span>
+          </td>
+          <td class="txt-second-col tdcenter">
+            <span>Purchase Value</span>
+            $ {{list['purchaseValue']}}
+          </td>
+          <td class="txt-second-col tdcenter2">
+            <span>Max. Redemptions</span>
+            {{list['maxUsage']}}
+          </td>
+          <td class="txt-second-col tdcenter">
+            <span>Discount</span>
+            {{list['discountValue']}}
+          </td>
+          <td class="more-option">
+            <div class="more">
+              <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown"
+                      id="dropdownMenuButton"
+                      type="button">
+                <img alt="" src="assets/icon/more.svg">
+              </button>
+              <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                <a (click)="edit(list,'discount')" class="dropdown-item"  > Edit</a>
+                <a (click)="delete(list,'discount')" class="dropdown-item"  > Delete </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <h1>
+    <div class="img-create">
+      <img alt="refund" src="assets/images/refund.png"></div>
+    Refund Payment
+    <span>Provide Duration of your event so people can reserve their timings.</span>
+  </h1>
+  <div class="border-line-bottom ">
+    <form [formGroup]="refundForm" id="refundForm">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="example-full-width ">
+            <mat-label>Refund Policy Name</mat-label>
+            <input formControlName="name" matInput>
+          </mat-form-field>
+          <div *ngIf="this.submitRefundBtn == false && refundForm.controls.name.errors ">
+              <span
+                *ngIf="this.submitRefundBtn == false && refundForm.controls.name.errors "
+                class="valid-msg">Refund Policy Name is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row martopevent">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width dateinfo">
+            <mat-label>Before Event Date & Time</mat-label>
+            <mat-datetimepicker-toggle [for]="datetimePicker2" matSuffix></mat-datetimepicker-toggle>
+            <mat-datetimepicker #datetimePicker2 openOnFocus="true" timeInterval="5"
+                                type="datetime"></mat-datetimepicker>
+            <input [matDatetimepicker]="datetimePicker2" autocomplete="false" formControlName="beforeDateTime" matInput
+                   required>
+          </mat-form-field>
+          <div *ngIf="this.submitRefundBtn == false && refundForm.controls.beforeDateTime.errors ">
+            <span
+              *ngIf="this.submitRefundBtn == false && refundForm.controls.beforeDateTime.errors "
+              class="valid-msg">Before Event Date & Time is required</span>
+          </div>
+        </div>
+        <div class="col-md-6 sm-paid">
+          <mat-form-field class="example-full-width ">
+            <mat-label>Refund Percentage</mat-label>
+            <input formControlName="refundPercentage" matInput>
+          </mat-form-field>
+          <div *ngIf="this.submitRefundBtn == false && refundForm.controls.refundPercentage.errors ">
+            <span
+              *ngIf="this.submitRefundBtn == false && refundForm.controls.refundPercentage.errors "
+              class="valid-msg">Refund Percentage is required</span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="dashed-border">
+      <div class="row">
+        <div class="col-md-12">
+          <input (click)="submitRefund()" class="save-changes fright" type="button" value="Add Refund">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="added-ticket-section border-bottom-gray">
+    <h2>
+      Added Refund
+    </h2>
+    <div class="scroll-tab-event">
+      <table class="table100">
+        <tr *ngFor="let list of refund_list; let i = index; ">
+          <td class="first-col">
+            <img alt="" src="assets/images/two-line.png">
+          </td>
+          <td class="txt-second-col">
+            {{list['name']}}
+            <span> {{list['beforeDateTime']  | date : "MMM dd,yyyy H:m"}} </span>
+          </td>
+          <td class="txt-second-col tdcenter2">
+            <span>Refund Percentage</span>
+            {{list['refundPercentage']}}%
+          </td>
+          <td class="more-option">
+            <div class="more">
+              <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown"
+                      id="dropdownMenuButton"
+                      type="button">
+                <img alt="" src="assets/icon/more.svg">
+              </button>
+              <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                <a (click)="edit(list,'refund')" class="dropdown-item"  > Edit</a>
+                <a (click)="delete(list,'refund')" class="dropdown-item"  > Delete </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

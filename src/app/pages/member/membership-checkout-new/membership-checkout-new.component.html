@@ -1,0 +1,41 @@
+
+<div  *ngIf=" !authDetail">
+  
+  <app-membership-as-guest *ngIf=" currentStep ==0"   [title]="'Member'" [(checkoutArray)]="checkoutArray" (completed)="calculateAmount()" [(currentStep)]="currentStep" ></app-membership-as-guest>
+  <app-membership-plan-new *ngIf="currentStep==2 " [(checkoutArray)]="checkoutArray" (completed)="calculateAmount();" (currentStepChange)="getPaymentMethod()" [(currentStep)]="currentStep"  [hidden]="currentStep!=2"></app-membership-plan-new>
+  <app-membership-plan-payment-new [paymentType]="paymentType"  [(checkoutArray)]="checkoutArray" (checkoutArrayChange)="calculateAmount()" (completed)="finalPayment()"  [(currentStep)]="currentStep" *ngIf="currentStep==3 && this.checkoutArray['userDetail'] "></app-membership-plan-payment-new>
+</div>
+
+<div  *ngIf=" authDetail">
+ 
+  <app-membership-plan-new [(checkoutArray)]="checkoutArray" (completed)="calculateAmount();" (currentStepChange)="getPaymentMethod()" [(currentStep)]="currentStep"  [hidden]="currentStep!=2"></app-membership-plan-new>
+  <app-membership-plan-details-new  *ngIf="this.checkoutArray['userDetail']" [(checkoutArray)]="checkoutArray" (completed)="calculateAmount()" [(currentStep)]="currentStep"  [hidden]="currentStep!=1"></app-membership-plan-details-new>
+  <app-membership-plan-payment-new [paymentType]="paymentType"  [(checkoutArray)]="checkoutArray" (checkoutArrayChange)="calculateAmount()" (completed)="finalPayment()"  [(currentStep)]="currentStep" *ngIf="currentStep==3 "></app-membership-plan-payment-new>
+</div>
+
+<!-- <button (click)="openModalWithClass(template)">button</button> -->
+<i id="openSuccessModel" (click)="openModalWithClass(template)"></i>
+<ng-template #template>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your membership registration is successfully done.</h4>
+        <p>{{alertText}}</p>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

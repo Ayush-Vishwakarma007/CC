@@ -1,0 +1,128 @@
+<div class="main-screen mainnewsscreen main-about">
+  <div class="white-bgbanner"></div>
+  <div class="over-x-h">
+    <!-- Inner Banner Section Start -->
+    <section class="inner-banner commontopmargin">
+      <div class="blue-bg-banner"><span></span></div>
+      <div class="slid-left-blue-dots">
+        <img alt="" src="assets/images/inner-left-dots.png">
+      </div>
+      <div class="container">
+        <div class="red-inner">
+          <div class="row">
+            <div  animationName="animated slideInLeft" class="col-md-6 col-sm-6">
+              <h2 class="inner-page-tlt">{{'newsTitle' | translate}}</h2>
+            </div>
+            <div  animationName="animated slideInRight" class="col-md-6 col-sm-6 news-bread">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">{{'home'| translate}}</a></li>
+                  <li aria-current="page" class="breadcrumb-item active">{{'newsTitle' | translate}}</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Inner Banner Section End -->
+
+    <section class="news-announcement-inner">
+      <div class="container">
+        <!-- <div class="row">
+          <div  animationName="animated slideInUp" class="col-md-12">
+            <h2 class="section-tlt">ALL NEWS & ANNOUNCEMENTS</h2>
+          </div>
+        </div> -->
+        <div  animationName="animated fadeInUpBig">
+          <app-news [newsList]="newsList"></app-news>
+        </div>
+      </div>
+    </section>
+  <!--  <div  animationName="animated fadeInUpBig" class="pagination-main">-->
+  <!--    <div class="container">-->
+  <!--      <div class="row">-->
+  <!--        <div class="col-sm-12">-->
+  <!--          <nav aria-label="Page navigation example">-->
+  <!--            <ul class="pagination justify-content-end">-->
+  <!--              <li (click)="pagination('prev')" [ngClass]="news['first'] == true ? 'not-active' : ''" class="page-item">-->
+  <!--                <a aria-label="Previous" class="page-link"  >-->
+  <!--                  <span aria-hidden="true">&laquo;</span>-->
+  <!--                  <span class="sr-only">Previous</span>-->
+  <!--                </a>-->
+  <!--              </li>-->
+  <!--              <li (click)="pagination('current',i)" *ngFor="let i of arrayTwo(news['totalPages'])" [ngClass]="pageNumber == i ?  'active' : ''"-->
+  <!--                  class="page-item"><a class="page-link"-->
+  <!--                                                                     >{{i + 1}}</a></li>-->
+  <!--              <li (click)="pagination('next')" [ngClass]="news['last'] == true ? 'not-active' : ''" class="page-item">-->
+  <!--                <a aria-label="Next" class="page-link"  >-->
+  <!--                  <span aria-hidden="true">&raquo;</span>-->
+  <!--                  <span class="sr-only">Next</span>-->
+  <!--                </a>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </nav>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+    <div *ngIf="newsList?.length == 0">
+<!--
+      <img  src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210416122428_5df218464cedfd0001f80e63_MicrosoftTeams-image_(11).png">
+-->
+      <div style="text-align: center;"><img src="assets/images/noNewsfound.svg" width="300px" height="300px"><br><span style="padding-bottom: 25px; padding-top: 10px; display: block; font-weight: 600;">No News & Announcements</span></div>
+    </div>
+    <div  animationName="animated fadeInUpBig" class="pegination-main" *ngIf="news?.content?.length!=0">
+      <ul>
+        <li>
+          <button (click)="pagination('current',0)" [disabled]="news['first'] == true"
+                  class="next">First
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination('prev','user')" [disabled]="news['first'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-left-arrow icon"></i></button>
+        </li>
+        <li (click)="pagination('current',i)"
+            *ngFor="let i of arrayTwo(news['totalPages'])"
+            [ngClass]="pageNumber == i ?  'blue-peg' : ''">
+          <button class="numeric">{{i + 1}}</button>
+        </li>
+        <!--                  <li> <button class="numeric">2</button></li>-->
+        <!--                  <li> <button class="numeric">3</button></li>-->
+        <!--                  <li> <button class="numeric">4</button></li>-->
+        <!--                  <li> <button class="numeric">5</button></li>-->
+        <li>
+          <button (click)="pagination('next','user')" [disabled]="news['last'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-right-arrow icon"></i></button>
+        </li>
+        <li>
+          <button (click)="pagination('current',(news['totalPages']-1))"
+                  [disabled]="news['last'] == true"
+                  class="next">Last
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button class="close" data-dismiss="modal" type="button">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal" type="button">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

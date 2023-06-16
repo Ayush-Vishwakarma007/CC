@@ -1,0 +1,912 @@
+<div class="row">
+  <div class="col-md-6 performancestxt">
+    <span>{{'event.dashboard.performance.title' | translate}}</span>
+    {{'event.dashboard.performance.text' | translate}}
+  </div>
+  <div class="col-md-6 perfermanceright-btn">
+    <!-- <button class="print">
+      <i class="icon-print newicon"></i>
+    </button> -->
+    <button *ngIf="eventDetail['selfCreated'] || eventDetail['admin']" (click)="formReset(); openModalWithClass(template)" class="add">+ Add Performance</button>
+  </div>
+</div>
+
+<div class="donation-sponsor">
+  <table>
+    <tr>
+      <th>
+        {{'event.dashboard.performance.table.header.performance.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.performance.table.header.choreographer.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.performance.table.header.duration.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.performance.table.header.participant.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.performance.table.header.status.text' | translate}}
+      </th>
+      <!-- <th>
+        Time
+      </th> -->
+      <th width="70" *ngIf="eventDetail['selfCreated'] || eventDetail['admin']">
+        {{'event.dashboard.performance.table.header.action.text' | translate}}
+      </th>
+    </tr>
+    <tr *ngFor="let p of performanceList?.content">
+      <td width="30%" (click)="participantDetail(p); openModalWithClass3(template3)">
+        <span style="cursor: pointer;"> {{p?.eventPerformance?.name}}
+          <i class="subtxt"
+            style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+            {{p?.eventPerformance?.description}}
+          </i>
+        </span>
+      </td>
+      <td>
+        {{p?.eventPerformance?.contactFirstName | titlecase}} {{p?.eventPerformance?.contactLastName | titlecase}}
+      </td>
+      <td>
+        {{p?.performanceDuration}} {{'event.dashboard.performance.table.header.duration.value.text' | translate}}
+      </td>
+      <td>
+        {{p?.participants?.length}}
+      </td>
+      <td>
+        {{p?.status}}
+      </td>
+      <!-- <td>
+        {{p?.startDateTime | date : "MMM dd, yyyy"}}
+        <i class="time">{{p?.startDateTime | date : "shortTime"}}</i>
+      </td> -->
+      <td *ngIf="eventDetail['selfCreated'] || eventDetail['admin']  || (type=='self' && p.status == 'PENDING')  ">
+        <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+            data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a (click)="editPerformance(p); openModalWithClass(template)" class="dropdown-item"  ><i class="fa fa-angle-right" aria-hidden="true"></i>
+              {{'event.dashboard.performance.table.action.edit.text' | translate}}</a>
+            <a *ngIf="(p.status == 'REJECTED' || p.status == 'PENDING') &&  type!='self'" (click)="approveRejectPerformance(p,'APPROVED')"
+              class="dropdown-item"><i class="fa fa-angle-right" aria-hidden="true"></i>
+              {{'event.dashboard.performance.table.action.approve.text' | translate}}</a>
+            <a *ngIf="(p.status == 'APPROVED' || p.status == 'PENDING') &&  type!='self'" (click)="approveRejectPerformance(p,'REJECTED')"
+              class="dropdown-item"><i class="fa fa-angle-right" aria-hidden="true"></i>
+              {{'event.dashboard.performance.table.action.reject.text' | translate}}</a>
+            <a (click)="deletePerformance(p.id)" class="dropdown-item"><i class="fa fa-angle-right"
+                aria-hidden="true"></i>
+              {{'event.dashboard.performance.table.action.close.text' | translate}}</a>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- pagination -->
+<div class="pegination-main">
+  <ul>
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="performanceList['first'] == true" class="next">First
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="performanceList['first'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)" *ngFor="let i of arrayTwo(performanceList['totalPages'])"
+      [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="performanceList['last'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current','user',(performanceList['totalPages']-1))"
+        [disabled]="performanceList['last'] == true" class="next">Last
+      </button>
+    </li>
+  </ul>
+</div>
+<!-- pagination end -->
+
+<ng-template #template3>
+  <!-- <div class="modal-dialog" role="document"> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{performanceDetail?.eventPerformance?.name}}
+          <span>By {{performanceDetail?.eventPerformance?.contactFirstName | titlecase}}
+            {{performanceDetail?.eventPerformance?.contactLastName | titlecase}}</span>
+        </h5>
+        <button type="button" class="close"  class="close-container" (click)="modalRef3.hide()">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- tabs -->
+        <div class="tabsection modleperformance">
+          <mat-tab-group>
+            <!-- =========================== Dashboard ================================ -->
+            <mat-tab label="participants">
+              <ng-template>
+                {{'event.dashboard.performance.view.participant.tab.text' | translate}}
+              </ng-template>
+              <div class="donation-sponsor">
+                <table>
+                  <tr>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.name.text' | translate}}
+                    </th>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.age.text' | translate}}
+                    </th>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.email.text' | translate}}
+                    </th>
+                    <th>
+
+                    </th>
+                  </tr>
+                  <tr *ngFor="let p of performanceDetail?.participants">
+                    <!-- <td>
+                      <span class="thumb-tx">{{p?.firstName.charAt(0)}}{{p?.lastName.charAt(0)}}</span> {{p?.firstName | titlecase}}
+                      {{p?.lastName}}
+                    </td> -->
+
+                    <td>
+                      <span class="thumb-tx"></span> {{p?.firstName | titlecase}}
+                      {{p?.lastName}}
+                    </td>
+                    <td>
+                      {{p?.age}}
+                    </td>
+                    <td>
+                      {{p?.email}}
+                    </td>
+                    <td>
+
+                      <!-- <button class="email-button" (click)="userNoti(performanceDetail['id'])"
+                                                   data-target="#exampleModalnotification"
+                                                   data-toggle="modal">
+                        <i aria-hidden="true" class="fa fa-envelope"></i>
+                      </button>
+
+                      <button class="email-button">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                      </button> -->
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </mat-tab>
+            <!-- <mat-tab label="media-files">
+              <ng-template>
+                Media Files
+              </ng-template>
+             <div class="thumbimg">
+              <ul class="in-thumb">
+                <li><img src="assets/icon/img-thumb.svg" alt=""></li> <li>Tech Ancubate Logo.png <span>Size: 236kb</span></li>
+              </ul>
+             </div>
+             <div class="thumbimg">
+              <ul class="in-thumb">
+                <li><img src="assets/icon/you-thumb.svg" alt=""></li> <li>Tech Ancubate Logo.png <span>Size: 236kb</span></li>
+              </ul>
+             </div>
+             <div class="thumbimg">
+              <ul class="in-thumb">
+                <li><img src="assets/icon/pdf-icon.svg" alt=""></li> <li>Tech Ancubate Logo.png <span>Size: 236kb</span></li>
+              </ul>
+             </div>
+             <div class="thumbimg">
+              <ul class="in-thumb">
+                <li><img src="assets/icon/mp4-icon.svg" alt=""></li> <li>Tech Ancubate Logo.png <span>Size: 236kb</span></li>
+              </ul>
+             </div>
+            </mat-tab> -->
+            <mat-tab label="choreographer-details">
+              <ng-template>
+                {{'event.dashboard.performance.view.choreographer.tab.text' | translate}}
+              </ng-template>
+              <div class="tab-detail">
+                <table>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.name.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.contactFirstName | titlecase}}
+                      {{performanceDetail?.eventPerformance?.contactLastName}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.performanceName.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.description.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.description}}</td>
+                  </tr>
+                  <!-- <tr>
+                  <td>Contact Name</td> <td> Bollywood Dance Performance(3-6 Years Kids)</td>
+                </tr> -->
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.email.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.duration.text' | translate}}</td>
+                    <td> {{performanceDetail?.performanceDuration}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.participants.text' | translate}}</td>
+                    <td> {{performanceDetail?.participants?.length}}</td>
+                  </tr>
+
+
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+          <!-- tabs -->
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</ng-template>
+
+<!-- Modal -->
+<!-- <div class="modal right fade sidebar performance-mod performance-guest" id="exampleModal1" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{performanceDetail?.eventPerformance?.name}}
+          <span>By {{performanceDetail?.eventPerformance?.contactFirstName}}
+            {{performanceDetail?.eventPerformance?.contactLastName}}</span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tabsection modleperformance">
+          <mat-tab-group>
+            <mat-tab label="participants">
+              <ng-template>
+                {{'event.dashboard.performance.view.participant.tab.text' | translate}}
+              </ng-template>
+              <div class="donation-sponsor">
+                <table>
+                  <tr>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.name.text' | translate}}
+                    </th>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.age.text' | translate}}
+                    </th>
+                    <th>
+                      {{'event.dashboard.performance.view.participant.table.header.email.text' | translate}}
+                    </th>
+                    <th>
+
+                    </th>
+                  </tr>
+                  <tr *ngFor="let p of performanceDetail?.participants">
+                    <td>
+                      <span class="thumb-tx">{{p?.firstName.charAt(0)}}{{p?.lastName.charAt(0)}}</span> {{p?.firstName}}
+                      {{p?.lastName}}
+                    </td>
+                    <td>
+                      {{p?.age}}
+                    </td>
+                    <td>
+                      {{p?.email}}
+                    </td>
+                    <td>
+
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="choreographer-details">
+              <ng-template>
+                {{'event.dashboard.performance.view.choreographer.tab.text' | translate}}
+              </ng-template>
+              <div class="tab-detail">
+                <table>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.name.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.contactFirstName}}
+                      {{performanceDetail?.eventPerformance?.contactLastName}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.performanceName.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.description.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.description}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.email.text' | translate}}</td>
+                    <td> {{performanceDetail?.eventPerformance?.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.duration.text' | translate}}</td>
+                    <td> {{performanceDetail?.performanceDuration}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{'event.dashboard.performance.view.choreographer.participants.text' | translate}}</td>
+                    <td> {{performanceDetail?.participants?.length}}</td>
+                  </tr>
+
+
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- email model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalnotification"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> Notification </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> Subject</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors "
+                class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> Message </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                class="valid-msg martopmsg">Message is Required</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button>
+          <button (click)="submitNotification()" class="save-changes" type="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- email model -->
+<!-- Add Performace Modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Performance</h5>
+    <!-- <button (click)="modalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeButton" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button> -->
+    <button (click)="modalRef.hide()" aria-label="Close" class="close-container eventclose" data-dismiss="modal" id="closeModel">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- tab -->
+    <section class="my-account">
+      <div class="tab-design">
+        <mat-tab-group (selectedIndexChange)="changeTab($event)" [selectedIndex]="activeIndex">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Choreographer Details
+            </ng-template>
+            <div class="">
+              <div class="col-sm-12">
+                <button (click)="search = ''; memberList= []; openModalWithClass2(template2)" class="save-changes" style="float: right; min-width: 150px; padding: 10px 0px;">
+                  Search Member
+                </button>
+                <button (click)="openModalWithClass1(template1); participantFormReset()" class="save-changes" style="float: right; margin-right: 10px; min-width: 150px; padding: 10px 0px;">
+                  Add Participant
+                </button>
+              </div>
+            </div>
+            <form [formGroup]="performanceForm" class="example-form" id="performanceForm">
+              <div class="">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.fname.lbl.text' | translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();"   [maxLength]="15" size="15" formControlName="contactFirstName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.contactFirstName.errors">
+                        <div *ngIf="isSubmit && performanceForm.controls.contactFirstName.errors" class="valid-msg"> First Name is required </div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.lname.lbl.text' | translate}}
+                          <i>*</i></mat-label>
+                        <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();"  [maxLength]="15" size="15" formControlName="contactLastName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.contactLastName.errors">
+                        <div *ngIf="performanceForm.controls.contactLastName.errors" class="valid-msg">Last Name is required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.email.lbl.text' | translate}}
+                          <i>*</i></mat-label>
+                        <input formControlName="choreographeremail" (keydown.space)="$event.preventDefault();"  [maxLength]="50" size="50" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.choreographeremail.errors">
+                        <div *ngIf="performanceForm.controls.choreographeremail.errors.required" class="valid-msg">
+                          Email is required
+                        </div>
+                        <div *ngIf="performanceForm.controls.choreographeremail.errors.pattern" class="valid-msg">
+                          Please enter valid email.
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.phone.lbl.text' | translate}}
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" [maxLength]="10" [minLength]="10" formControlName="phone"
+                          matInput>
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.phone.errors">
+                        <div *ngIf="performanceForm.controls.phone.errors.minLength" class="valid-msg">Please enter valid Phone Number </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <mat-form-field class="example-full-width address-evnt">
+                            <mat-label>
+                              {{'event.registrationComponent.participantRegister.choreographer.performanceName.lbl.text' | translate}}
+                              <i>*</i></mat-label>
+                            <input (keypress)="charOnly($event)"  [maxLength]="10" size="10" formControlName="name" matInput type="text">
+                          </mat-form-field>
+                          <span *ngIf="isSubmit && performanceForm.controls.name.errors">
+                            <div *ngIf="performanceForm.controls.name.errors" class="valid-msg"> Performance Name is
+                              required</div>
+                          </span>
+                        </div>
+                        <div class="col-md-12 paddperformance">
+                          <mat-form-field class="example-full-width address-evnt">
+                            <mat-label>
+                              {{'event.registrationComponent.participantRegister.choreographer.duration.lbl.text' | translate}}
+                              <i>*</i></mat-label>
+                            <input (keypress)="numberOnly($event)" formControlName="performanceDuration" matInput
+                              type="text">
+                          </mat-form-field>
+                          <span *ngIf="isSubmit && performanceForm.controls.performanceDuration.errors">
+                            <div *ngIf="isSubmit && performanceForm.controls.performanceDuration.errors" class="valid-msg">
+                              Performance Duration is required</div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.description.lbl.text' | translate}}
+                          <i>*</i></mat-label>
+                        <textarea formControlName="description" matInput type="text"></textarea>
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.description.errors">
+                        <div *ngIf="performanceForm.controls.description.errors" class="valid-msg">Description is
+                          required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width dateinfo">
+                        <mat-label>Performance Start Date <i>*</i></mat-label>
+                        <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                        <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+                        </mat-datetimepicker>
+                        <input formControlName="startDateTime" [matDatetimepicker]="datetimePicker" autocomplete="false"
+                          [min]="startDate" matInput>
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.startDateTime.errors">
+                        <div *ngIf="performanceForm.controls.startDateTime.errors" class="valid-msg">Performance Start
+                          date is required</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width dateinfo">
+                        <mat-label>Performance End Date <i>*</i></mat-label>
+                        <mat-datetimepicker-toggle [for]="datetimePicker1" matSuffix></mat-datetimepicker-toggle>
+                        <mat-datetimepicker #datetimePicker1 openOnFocus="true" timeInterval="5" type="datetime">
+                        </mat-datetimepicker>
+                        <input formControlName="endDateTime" [matDatetimepicker]="datetimePicker1" autocomplete="false"
+                               [min]="endDate" matInput>
+                      </mat-form-field>
+                      <span *ngIf="isSubmit && performanceForm.controls.endDateTime.errors">
+                        <div *ngIf="performanceForm.controls.endDateTime.errors" class="valid-msg">Performance End date
+                          is required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-12">
+                      <h3>
+                        <img alt="community" src="assets/icon/picture.svg">
+                        Attach Media
+                      </h3>
+                      <div class="border-line-bottom">
+                        <div class="image-main-up">
+                          <div class="imageup create-img-upload">
+                            <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                              (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                              (queueCompleted)="imageQueueCompleted()" (uploadStarted)="uploadStarted()"
+                              [(uploadedFiles)]="imageList" [maxFileCount]="100" [uploadUrl]="mediaUploadUrl">
+                            </app-file-uploader-vertical>
+                          </div>
+                          <div class="col-md-12">
+                            <div *ngIf="uploadedImageList?.length != 0" class="main-thumbs-model">
+                              <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+                                <div [style.backgroundImage]="'url('+image+')'" class="blurimageabout"
+                                  style="background: no-repeat;"></div>
+                                <img alt="" src="{{image}}">
+                                <button (click)="removeMedia(image,i)"><img alt=""
+                                    src="assets/icon/cancel.svg"></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="committi-tab" *ngIf="participantList?.length != 0">
+              <h3>Added Participants</h3>
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th width="60">Action</th>
+                </tr>
+                <tr *ngFor="let list of participantList; let i = index">
+                  <td>{{list.firstName | titlecase}} {{list.lastName | titlecase}}</td>
+                  <td>{{list.email}}</td>
+                  <td>{{list.age}}</td>
+                  <td>
+                    <div class="dropdown dropup moredrop editgallery">
+                      <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                        data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                        <img alt="" src="assets/icon/interface.svg">
+                      </a>
+                      <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                        <a (click)="editParticipant(list,i);openModalWithClass1(template1)" class="dropdown-item"><i aria-hidden="true"
+                            class="fa fa-angle-right"></i> Edit</a>
+                        <a (click)="deleteParticipant(i)" class="dropdown-item"><i aria-hidden="true"
+                            class="fa fa-angle-right"></i> Delete</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Business Information
+            </ng-template>
+            <form [formGroup]="businessDetailForm" class="example-form" id="businessDetailForm">
+              <div class="paddbusiness">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Business Name
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="businessName" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Website
+                        </mat-label>
+                        <input formControlName="website" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Business Detail
+                        </mat-label>
+                        <textarea formControlName="businessDetail" matInput type="text"></textarea>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Address
+                        </mat-label>
+                        <textarea (keypress)="charOnly($event)" formControlName="address" matInput
+                          type="text"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </section>
+    <!-- tab -->
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="activeIndex == 0" (click)="next()" class="save-changes" type="button">Next</button>
+    <button *ngIf="activeIndex == 1" (click)="savePerformance()" class="save-changes" type="button">Save</button>
+  </div>
+</ng-template>
+<!-- Add Performace Modal -->
+
+
+<ng-template #template1>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Participant</h5>
+    <!-- <button (click)="modalRef1.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeButton"
+      type="button">
+      <img alt="" src="assets/icon/delete-button.svg">
+    </button> -->
+    <button (click)="modalRef1.hide()" aria-label="Close" class="close-container add-participant-mod" >
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="participantForm" class="example-form" id="participantForm" autocomplete="off">
+      <div class="">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width address-evnt">
+                <mat-label>
+                  First Name
+                  <i>*</i></mat-label>
+                <input (keypress)="charOnly($event)" [maxLength]="15" size="15" (keydown.space)="$event.preventDefault();"  formControlName="firstName" matInput type="text">
+              </mat-form-field>
+              <div *ngIf="isSubmitted && participantForm.controls.firstName.errors ">
+                <span *ngIf="isSubmitted && participantForm.controls.firstName.errors " class="valid-msg">First Name is
+                  Required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width address-evnt">
+                <mat-label>
+                  Last Name
+                  <i>*</i></mat-label>
+                <input (keypress)="charOnly($event)" [maxLength]="15" size="15" (keydown.space)="$event.preventDefault();"  formControlName="lastName" matInput type="text">
+              </mat-form-field>
+              <div *ngIf="isSubmitted && participantForm.controls.lastName.errors ">
+                <span *ngIf="isSubmitted && participantForm.controls.lastName.errors " class="valid-msg">Last Name is
+                  Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row martopevent">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width address-evnt">
+                <mat-label>
+                  Email
+                  <i>*</i></mat-label>
+                <input formControlName="email" (keydown.space)="$event.preventDefault();"  [maxLength]="50" size="50"  matInput type="text">
+              </mat-form-field>
+              <div *ngIf="isSubmitted && participantForm.controls.email.errors ">
+                <span *ngIf="isSubmitted && participantForm.controls.email.errors.required"
+                  class="valid-msg">Email is Required</span>
+                <span *ngIf="isSubmitted && participantForm.controls.email.errors.pattern"
+                  class="valid-msg">Please
+                  enter valid email</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width address-evnt">
+                <mat-label>
+                  Age
+                  <i>*</i></mat-label>
+                <input (keypress)="numberOnly($event)"  [maxLength]="2" size="2"  formControlName="age" matInput type="text">
+              </mat-form-field>
+              <div *ngIf="isSubmitted && participantForm.controls.age.errors">
+                <span *ngIf="isSubmitted && participantForm.controls.age.errors " class="valid-msg">Age is
+                  Required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- table -->
+    <!-- <div class="committi-tab" *ngIf="participantList?.length != 0">
+      <h3>Added Participants</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th width="60">Action</th>
+        </tr>
+        <tr *ngFor="let list of participantList; let i = index">
+          <td>{{list.firstName | titlecase}} {{list.lastName | titlecase}}</td>
+          <td>{{list.email}}</td>
+          <td>{{list.age}}</td>
+          <td>
+            <div class="dropdown dropup moredrop editgallery">
+              <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                <img alt="" src="assets/icon/interface.svg">
+              </a>
+              <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                <a (click)="editParticipant(list,i)" class="dropdown-item"><i aria-hidden="true"
+                    class="fa fa-angle-right"></i> Edit</a>
+                <a (click)="deleteParticipant(i)" class="dropdown-item"><i aria-hidden="true"
+                    class="fa fa-angle-right"></i> Delete</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div> -->
+    <!-- table -->
+
+  </div>
+  <div class="modal-footer marbobtt">
+    <button (click)="addParticipant()" class="save-changes" type="button"> Submit </button>
+  </div>
+</ng-template>
+
+
+<ng-template #template2>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.title' | translate}} </h5>
+        <!-- <button (click)="modalRef2.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeModal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button (click)="modalRef2.hide()" aria-label="Close" class="close-container add-participant-mod" >
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="searchmain">
+          <form class="example-form">
+            <mat-form-field class="example-full-width search-popup-main">
+              <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.search.text' | translate}}</mat-label>
+              <input (change)="searchNewData()" [(ngModel)]="search" [ngModelOptions]="{standalone: true}"
+                matInput placeholder="Type here...">
+            </mat-form-field>
+            <button class="save-changes searchmem" type="submit">Search</button>
+          </form>
+        </div>
+        <div class="committi-main">
+          <div class="committi-tab">
+            <table>
+              <tr>
+                <th width="40"></th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.member.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.chapter.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.email.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.phone.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.address.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.action.lbl.text' | translate}}</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let list of memberList?.content;">
+                  <td></td>
+                  <td class="mem-name">
+                    <div *ngIf="list['profileShow'] == true" class="charector">
+                      <img alt="" src="{{list['profileUrl']}}">
+                    </div>
+                    <div *ngIf="list['profileShow'] == false" class="charector">
+                      <i>{{list['profileUrl']}}</i>
+                    </div>
+                    <ul class="firstnameandemail">
+                      <li> {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}} </li>
+                      <li> {{list['memberNumber']}} </li>
+                    </ul>
+                  </td>
+                  <td>{{list['chapterName']}}</td>
+                  <td>{{list['email']}}</td>
+                  <td>{{list['phone']}}</td>
+                  <td>{{list['city']}} {{list['country']}}</td>
+                  <td>
+                    <p *ngIf="list['mainUser']">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.yes.lbl.text' | translate}}</p>
+                    <p *ngIf="!list['mainUser']">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.no.lbl.text' | translate}}</p>
+                  </td>
+                  <td>
+                    <button (click)="addMember(list)" class="addbtn " type="button"> {{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.action.add.Btn.text' | translate}}</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="memberList?.content && memberList?.numberOfElements != memberList?.totalElements"
+          class="pegination-main">
+          <ul>
+            <li>
+              <button (click)="paginationNewMember('current','user',0)" [disabled]="memberList['first'] == true"
+                class="next">
+                First
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('prev','user')" [disabled]="memberList['first'] == true"
+                class="arrow">
+                <i aria-hidden="true" class="icon-left-arrow icon"></i>
+              </button>
+            </li>
+            <li (click)="paginationNewMember('current','user',i)"
+              *ngFor="let i of totalPages"
+              [ngClass]="reqNewData.page.page == i ?  'blue-peg' : ''">
+              <button class="numeric">{{i + 1}}</button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('next','user')" [disabled]="memberList['last'] == true"
+                class="arrow">
+                <i aria-hidden="true" class="icon-right-arrow icon"></i>
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('current','user',(memberList['totalPages']-1))"
+                [disabled]="memberList['last'] == true" class="next">Last
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ng-template>

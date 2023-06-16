@@ -1,0 +1,525 @@
+<!-- <ngx-alerts></ngx-alerts> -->
+
+<div class="create-event-right-side common-page" [ngClass]="null==this.authDetail ? 'without-login' : ''">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="'/my-event'">Home</a></li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="'/my-event/'+ events">{{events}}</a>
+      </li>
+      <li [routerLink]="'/event-details/'+eventId" aria-current="page" class="breadcrumb-item active">
+        {{eventDetail?.name}}
+      </li>
+    </ol>
+  </nav>
+  <!-- top section -->
+  <div class="whitebox">
+    <ul class="dashboard-donation">
+      <li class="arrowleft">
+        <button [routerLink]="'/event-details/'+eventId">
+          <!-- <img alt="" src="assets/icon/arrow-left.svg"> -->
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li class="imagethumb">
+        <img [src]="eventDetail?.profilePicture |  eventImages " />
+      </li>
+      <li class="interior-txt">
+        <h1 [routerLink]="'/event-details/'+eventId">
+          {{eventDetail?.name}}
+          <span *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == false ">{{eventDetail.type}}
+          </span>
+          <span *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == true ">FundRaising
+          </span>
+        </h1>
+        <ul class="category-donation">
+          <li>
+            <span>
+              <i aria-hidden="true" class="fa fa-map-marker"></i>
+              {{eventDetail['city']}} | {{eventDetail['state']}}
+            </span>
+          </li>
+          <li>
+            <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i> {{
+              eventDetail['dates'] }} {{eventDetail['times']}}
+            </span>
+          </li>
+        </ul>
+      </li>
+      <!-- <li *ngIf="eventDetail.admin == true">
+        <button *ngIf="eventDetail['liveStreaming'] == true" class="save-changes" (click)="liveStream()" type="button">
+          {{'event.dashboard.live.streaming.stop.text' | translate}}
+        </button>
+        <button *ngIf="eventDetail['liveStreaming'] == false" class="save-changes" (click)="liveStream()" type="button">
+          {{'event.dashboard.live.streaming.start.text' | translate}}
+        </button>
+      </li> -->
+      <!-- <li *ngIf="eventDetail.admin == true">
+        <button (click)="edit()" title="Edit Event" class="edit-event-btn"   type="button">
+          <i class="newicon icon-edit-member" aria-hidden="true"></i>
+        </button>
+      </li> -->
+      <li>
+        <span class="mainbtn-publish">
+          <span *ngIf="eventDetail.admin == true" class="stramingbtn">
+            <button *ngIf="eventDetail['liveStreaming'] == true" class="save-changes" (click)="liveStream()"
+              type="button">
+              {{'event.dashboard.live.streaming.stop.text' | translate}}
+            </button>
+            <button *ngIf="eventDetail['liveStreaming'] == false" class="save-changes" (click)="liveStream()"
+              type="button">
+              {{'event.dashboard.live.streaming.start.text' | translate}}
+            </button>
+          </span>
+          <span class="publicevnt" *ngIf="eventDetail.admin == true">
+            <button class="republic" title="UnPublish Event" (click)="unPublish()"
+              *ngIf="eventDetail.eventState == 'PUBLISHED'">
+              <img src="assets/icon/unpublish.svg" alt="" />
+              <span>UnPublish</span>
+            </button>
+            <button title="Republish Event" class="republic" (click)="publish()"
+              *ngIf="eventDetail.eventState == 'UNDER_REVIEW' || eventDetail.eventState == 'CANCELED'">
+              <img src="assets/icon/unpublish.svg" alt="" />
+              <span>Republish</span>
+            </button>
+          </span>
+        </span>
+        <span *ngIf="eventDetail.admin == true" class="edit-main">
+          <button (click)="edit()" title="Edit Event" class="edit-event-btn" type="button">
+            <i class="newicon icon-edit-member" aria-hidden="true"></i>
+            Edit
+          </button>
+          <button (click)="cancel()" class="cancelevnt" title="Cancel Event"
+            *ngIf="eventDetail.eventState == 'PUBLISHED'" data-target="#modalCancelEvent">
+            <img src="assets/icon/noun_cancel.svg" alt="" /> Cancel
+          </button>
+        </span>
+        <!-- <div class="dropdown show moredrop editgallery">
+            <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
+               data-toggle="dropdown"
+               href="#" id="dropdownMenuLink" role="button">
+              <img alt="" src="assets/icon/interface.svg">
+            </a>
+            <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+              <button *ngIf="eventDetail.eventState == 'PUBLISHED'" data-target="#modalCancelEvent" data-toggle="modal">
+                <i
+                  aria-hidden="true" class="fa fa-angle-right"></i> {{'event.dashboard.dropdown.cancel.text' | translate}}
+              </button>
+              <a (click)="unPublish()" *ngIf="eventDetail.eventState == 'PUBLISHED'" class="dropdown-item"
+                  ><i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.dashboard.dropdown.unPublish.text' | translate}}</a>
+              <a (click)="publish()"
+                 *ngIf="eventDetail.eventState == 'UNDER_REVIEW' || eventDetail.eventState == 'CANCELED'"
+                 class="dropdown-item"
+                  ><i aria-hidden="true" class="fa fa-angle-right"></i> {{'event.dashboard.dropdown.rePublish.text' | translate}}</a>
+            </div>
+          </div> -->
+      </li>
+    </ul>
+  </div>
+  <!-- tab section -->
+  <div class="whitebox tab-main membertab">
+    <mat-tab-group (selectedTabChange)="changeTab($event)" class="overview-height">
+      <!-- =========================== Dashboard ================================ -->
+      <mat-tab label="dashboard" *ngIf="eventId!='' && eventDetail!=''">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-statistics newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab1.svg">
+                      <img alt="" class="tab-blue" src="assets/icon/tab1-b.svg"> -->
+                {{'event.dashboard.overView.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-statistic *ngIf="eventId!='' && eventDetail!=''" [eventDetail]="eventDetail" [eventId]="eventId"
+          [save]="statisticSubject"></app-statistic>
+      </mat-tab>
+      <mat-tab
+        *ngIf="eventDetail?.eventConfigurations?.allowVisitorDisplayPublic == true || eventDetail.admin == true && eventDetail?.eventConfigurations?.fundRaisingEvent == false "
+        label="participant">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-metro-user newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/metro-user-g.svg">
+                    <img alt="" class="tab-blue" src="assets/icon/metro-user-b.svg"> -->
+                {{'event.dashboard.participant.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-participant-vendor-detail [currentTab]="currentTab" [eventDetail]="eventDetail" [eventId]="eventId"
+          [save]="participantSubject"></app-participant-vendor-detail>
+      </mat-tab>
+      <mat-tab label="participant"
+        *ngIf="eventDetail?.eventConfigurations?.allowFood== true && eventDetail.admin == true">
+        <ng-template mat-tab-label>
+          <ul>
+            <li class="foodicon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="19.539" height="17.623" viewBox="0 0 15.539 13.623">
+                <path id="Icon_map-food" data-name="Icon map-food"
+                  d="M16.225,6.461l-1.274,9.986h-4.3L9.38,6.411h5.253l1.038-3.586L16.26,3l-1,3.451.962.007ZM8.772,12.238s.161-1.295-2.07-1.295H3.148c-2.228,0-2.07,1.295-2.07,1.295H8.772ZM1.077,15.152s-.158,1.295,2.07,1.295H6.7c2.231,0,2.07-1.295,2.07-1.295H1.077Zm7.36-.647A.745.745,0,0,0,9.1,13.7a.744.744,0,0,0-.66-.81H1.38a.826.826,0,0,0,0,1.619H8.438Z"
+                  transform="translate(-0.721 -2.824)" fill="#e27707" />
+              </svg>
+              <span>
+                Food
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-food [eventId]="eventId"></app-food>
+      </mat-tab>
+      <mat-tab label="participant"
+        *ngIf="eventDetail.admin == true && eventDetail?.eventConfigurations?.allowParking == true">
+        <ng-template mat-tab-label>
+          <ul>
+            <li class="foodicon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18.793" height="13.623" viewBox="0 0 18.793 13.623">
+                <g id="Group_53744" data-name="Group 53744" transform="translate(0 -37.486)">
+                  <path id="Path_44181" data-name="Path 44181" d="M13.327,84.751a.7.7,0,0,0-.185.026l-.7.193L11.713,83.2a1.59,1.59,0,0,0-1.36-.912H3.537a1.589,1.589,0,0,0-1.36.912L1.45,84.968l-.693-.191a.7.7,0,0,0-.185-.026.568.568,0,0,0-.572.6v.413a.74.74,0,0,0,.739.739H.818L.7,86.792a5.541,5.541,0,0,0-.348,1.763v3.525a.74.74,0,0,0,.739.739h.965a.74.74,0,0,0,.739-.739V91.2h8.3v.88a.74.74,0,0,0,.739.739H12.8a.74.74,0,0,0,.739-.739V88.554a5.541,5.541,0,0,0-.348-1.762l-.118-.286h.089a.74.74,0,0,0,.739-.739v-.413A.568.568,0,0,0,13.327,84.751ZM1.979,86.1l1.1-2.684a.955.955,0,0,1,.815-.547h6.1a.955.955,0,0,1,.815.547l1.1,2.684a.369.369,0,0,1-.367.547h-9.2A.369.369,0,0,1,1.979,86.1ZM4.439,89.5a.3.3,0,0,1-.3.3H2.05a.3.3,0,0,1-.3-.3v-1a.3.3,0,0,1,.3-.3H4.143a.3.3,0,0,1,.3.3Zm7.677,0a.3.3,0,0,1-.3.3H9.727a.3.3,0,0,1-.3-.3v-1a.3.3,0,0,1,.3-.3H11.82a.3.3,0,0,1,.3.3Z" transform="translate(0 -41.709)" fill="#e27707" />
+                  <g id="Group_53743" data-name="Group 53743" transform="translate(13.447 37.486)">
+                    <path id="Path_44182" data-name="Path 44182" d="M199.415,37.486h-3.5a.925.925,0,0,0-.924.924v3.5a.925.925,0,0,0,.924.924h1.4v7.853a.345.345,0,1,0,.69,0V42.833h1.4a.925.925,0,0,0,.924-.924v-3.5A.925.925,0,0,0,199.415,37.486Zm-.792,2.9a1.281,1.281,0,0,1-.881.273h-.507a.111.111,0,0,0-.11.11v.854a.168.168,0,0,1-.168.168h-.384a.168.168,0,0,1-.168-.168v-2.93a.169.169,0,0,1,.168-.168h.967a1.479,1.479,0,0,1,1.076.263,1,1,0,0,1,.312.8A1.023,1.023,0,0,1,198.622,40.387Z" transform="translate(-194.992 -37.486)" fill="#e27707" />
+                    <path id="Path_44183" data-name="Path 44183" d="M226.862,61.387a.848.848,0,0,0-.492-.106h-.347a.11.11,0,0,0-.11.11v.7a.11.11,0,0,0,.11.11h.208c.076,0,.2-.006.275-.013a.943.943,0,0,0,.355-.094.528.528,0,0,0,0-.71Z" transform="translate(-223.781 -59.64)" fill="#e27707" />
+                  </g>
+                </g>
+              </svg>
+
+              <span>
+                Parking
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-parking [eventId]="eventId"></app-parking>
+      </mat-tab>
+      <mat-tab *ngIf="eventDetail.admin == true && eventDetail?.eventConfigurations?.vendorExpo == true" label="vendor">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-vendor newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab3.svg">
+                  <img alt="" class="tab-blue" src="assets/icon/tab3-b.svg"> -->
+                {{'event.dashboard.vendor.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-participant-vendor-detail [currentTab]="currentTab" [eventDetail]="eventDetail" [eventId]="eventId"
+          [save]="participantSubject"></app-participant-vendor-detail>
+      </mat-tab>
+      <mat-tab
+        *ngIf="(eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true || eventDetail.admin == true) && eventDetail?.eventConfigurations?.allowDonor == true"
+        label="donor">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-donors newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab4.svg">
+                      <img alt="" class="tab-blue" src="assets/icon/tab4-b.svg"> -->
+                {{'event.dashboard.donor.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-donation-sponsor-detail *ngIf="eventId!='' && eventDetail.admin == true   " [currentTab]="currentTab"
+          [eventDetail]="eventDetail" [eventId]="eventId" [save]="donationSubject"></app-donation-sponsor-detail>
+
+        <app-statistic *ngIf="eventId!='' && eventDetail!='' && eventDetail.admin == false " [eventDetail]="eventDetail"
+          [eventId]="eventId" [save]="statisticSubject"></app-statistic>
+      </mat-tab>
+      <mat-tab
+        *ngIf="(eventDetail?.eventConfigurations?.allowSponsorInfoDisplayPublic == true || eventDetail.admin == true) && eventDetail?.eventConfigurations?.allowSponsorship == true"
+        label="sponsor">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-sponsors newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab5.svg">
+                      <img alt="" class="tab-blue" src="assets/icon/tab5-b.svg"> -->
+                {{'event.dashboard.sponsor.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-donation-sponsor-detail *ngIf="eventId!=''" [currentTab]="currentTab" [eventDetail]="eventDetail"
+          [eventId]="eventId" [save]="donationSubject">
+        </app-donation-sponsor-detail>
+      </mat-tab>
+
+      <!-- <mat-tab label="gallery">
+         <ng-template mat-tab-label>
+           <ul>
+             <li>
+               <span>
+                 <img alt="" class="tab-gray" src="assets/icon/tab22.svg">
+                 <img alt="" class="tab-blue" src="assets/icon/tab22-b.svg">
+                 Gallery
+             </span>
+             </li>
+           </ul>
+         </ng-template>
+
+         <app-event-gallery></app-event-gallery>
+
+       </mat-tab> -->
+      <mat-tab label="session"
+        *ngIf="eventDetail?.eventConfigurations?.allowSessionInfoDisplayPublic == true || eventDetail?.admin == true && eventDetail?.eventConfigurations?.allowSession == true">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-session-icon newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab20.svg">
+                  <img alt="" class="tab-blue" src="assets/icon/tab20-b.svg"> -->
+                {{'event.dashboard.session.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-event-session *ngIf="eventId!=''" [currentTab]="currentTab" [eventDetail]="eventDetail" [eventId]="eventId"
+          [save]="sessionSubject"></app-event-session>
+      </mat-tab>
+      <mat-tab label="performances"
+        *ngIf="(eventDetail?.eventConfigurations?.allowPerformanceDisplayPublic == true || eventDetail?.admin == true) && eventDetail?.eventConfigurations?.allowParticipation == true">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-performances newicon"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab30.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab30-b.svg"> -->
+                {{'event.dashboard.performance.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+
+        <app-event-performance *ngIf="eventId!=''" [currentTab]="currentTab" [eventId]="eventId"
+          [eventDetail]="eventDetail" [save]="performanceSubject"></app-event-performance>
+      </mat-tab>
+      <!-- <mat-tab label="feedback">
+         <ng-template mat-tab-label>
+           <ul>
+             <li>
+               <span>
+                 <img alt="" class="tab-gray" src="assets/icon/tab21.svg">
+                 <img alt="" class="tab-blue" src="assets/icon/tab21-b.svg">
+                 Feedback
+             </span>
+             </li>
+           </ul>
+         </ng-template>
+         text will come here
+       </mat-tab>
+
+       <mat-tab label="volunteer">
+         <ng-template mat-tab-label>
+           <ul>
+             <li>
+               <span>
+                 <img alt="" class="tab-gray" src="assets/icon/tab23.svg">
+                 <img alt="" class="tab-blue" src="assets/icon/tab23-b.svg">
+                 volunteer
+             </span>
+             </li>
+           </ul>
+         </ng-template>
+         text will come here
+       </mat-tab>-->
+      <mat-tab *ngIf="eventDetail?.admin == true" label="setting">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i aria-hidden="true" class="fa fa-cog"></i>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab9.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab9-b.svg"> -->
+                {{'event.dashboard.setting.tab.text' | translate}}
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-setting *ngIf="eventId!=''" [eventDetail]="eventDetail" [eventId]="eventId" [save]="settingSubject">
+        </app-setting>
+      </mat-tab>
+
+      <mat-tab *ngIf="eventDetail?.admin == true" label="volunteer">
+        <ng-template mat-tab-label>
+          <ul>
+            <li class="volunteericon">
+              <!-- <img src="../../../../../assets/icons/volunteer.svg" alt="" /> -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="15.012" height="20.999" viewBox="0 0 41.012 63.999"
+                style="opacity:0.6">
+                <g id="Group_53887" data-name="Group 53887" transform="translate(-11.494)">
+                  <path id="Path_44241" data-name="Path 44241" d="M52.505,7.135V62.006A1.993,1.993,0,0,1,50.511,64H13.488a1.994,1.994,0,0,1-1.994-1.993V7.135a1.994,1.994,0,0,1,1.994-1.994H50.512A1.994,1.994,0,0,1,52.505,7.135Z"/>
+                  <rect id="Rectangle_19364" data-name="Rectangle 19364" width="19.781" height="1.895" transform="translate(22.109 46.706)" fill="#e5e5e5"/>
+                  <rect id="Rectangle_19365" data-name="Rectangle 19365" width="19.781" height="1.895" transform="translate(22.109 51.211)" fill="#e5e5e5"/>
+                  <rect id="Rectangle_19366" data-name="Rectangle 19366" width="29.981" height="1.895" transform="translate(17.009 55.717)" fill="#e5e5e5"/>
+                  <rect id="Rectangle_19367" data-name="Rectangle 19367" width="19.126" height="1.937" transform="translate(22.437 7.835)" fill="#fff"/>
+                  <path id="Path_44242" data-name="Path 44242" d="M36.9,8.364h-9.42L25.629,0H38.746Z"/>
+                  <rect id="Rectangle_19368" data-name="Rectangle 19368" width="23.16" height="25.626" transform="translate(20.42 14.495)" fill="#fff"/>
+                  <path id="Path_44243" data-name="Path 44243" d="M39.816,40.121H24.184V36.5A7.816,7.816,0,0,1,32,28.68h0A7.816,7.816,0,0,1,39.816,36.5Z"/>
+                  <circle id="Ellipse_2800" data-name="Ellipse 2800" cx="4.305" cy="4.305" r="4.305" transform="translate(27.695 18.485)"/>
+                </g>
+              </svg>
+              <span>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab9.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab9-b.svg"> -->
+                Volunteer
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-list-volunteer [eventId]="eventId" [currentTab]="currentTab" [eventDetail]="eventDetail"
+          [save]="volunteerSubject"></app-list-volunteer>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabe1" class="modal fade" id="modalCancelEvent" role="dialog">
+  <div class="modal-dialog cancel-model" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="examplesLabel" style="font-size: 19px;">
+          {{'event.dashboard.cancelEvent.modal.title' | translate}}
+        </h5>
+        <button (click)="modalRef.hide()" aria-label="Close" class="close-container evendash" data-dismiss="modal"
+          id="closeModal" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <div class="area-paidregistration">
+        </div>
+      </div> -->
+      <div class="modal-footer text-aligncenter">
+        <!-- <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button> -->
+        <button (click)="cancel('true')" class="save-changes" type="button">
+          {{'event.dashboard.cancelEvent.modal.send.Btn.text' | translate}}
+        </button>
+        <div class="orline"><span>Or</span></div>
+        <button (click)="cancel('false')" class="save-changes confirm-pay" type="button">
+          {{'event.dashboard.cancelEvent.modal.skip.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="exampleModal"
+  role="dialog" tabindex="1">
+  <div class="modal-dialog add-donation" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button aria-label="Close" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <div class="tabhead-icon">
+          <img alt="" src="assets/icon/tab4-b.svg" />
+        </div>
+        <h5>Add Donation</h5>
+        <form class="example-form">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <mat-form-field class="example-full-width donationamnt">
+                <mat-label>Donation Amount <i>*</i></mat-label>
+                <input matInput placeholder="Enter Amount" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <mat-form-field class="paymenttyep">
+                <mat-label>Payment Type</mat-label>
+                <mat-select>
+                  <mat-option> Payment Type</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row marbott">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>First Name <i>*</i></mat-label>
+                <input matInput placeholder="Enter First Name" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Last Name <i>*</i></mat-label>
+                <input matInput placeholder="Enter Last Name" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row marbott">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Email <i>*</i></mat-label>
+                <input matInput placeholder="Enter Email" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row marbott">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Phone Number <i>*</i></mat-label>
+                <input matInput placeholder="Enter Phone Number" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>City <i>*</i></mat-label>
+                <input matInput placeholder="Enter City" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row marbott">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>State <i>*</i></mat-label>
+                <input matInput placeholder="Enter State" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Zipcode <i>*</i></mat-label>
+                <input matInput placeholder="Enter Zipcode" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row marbott">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Address <i>*</i></mat-label>
+                <input matInput placeholder="Enter Address" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-checkbox>Keep my Donation Annonymouns</mat-checkbox>
+            </div>
+          </div>
+          <div class="row savetop">
+            <div class="col-md-12 main-screen">
+              <div class="btn-general" ng-reflect-router-link="/eventlist/all" routerlink="/eventlist/all" tabindex="0">
+                <div class="eff-5"></div>
+                <a>Save changes</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

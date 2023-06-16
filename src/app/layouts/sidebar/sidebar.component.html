@@ -1,0 +1,398 @@
+<div [ngClass]="{'mat-elevation-z5' : true, 'stickymenu' : isSticky}">
+  <div class="sidebar">
+    <div class="leftprofile">
+      <ul class="menuleftnew">
+        <li *ngFor="let list of this.menuService.menus;let i = index;" [class]="list?.active == true ? 'active' : ''">
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'dashboard'" class="icon-w" type="button">
+            <!-- <img alt="" class="gray" src="assets/icon/dots-menu.svg">
+            <img alt="" class="blue" src="assets/icon/dots-menu-b.svg"> -->
+            <i class="icon-dots-menu newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{ menu.name }}</p>
+                  </a></li>
+                <!-- <li>  <a href="#"> <i aria-hidden="true" class="fa fa-angle-right"></i>  My Contributions </a> </li> -->
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'my-contribution'" class="icon-w my-contributionicon" type="button">
+            <svg class="my-contribution-icn" viewBox="0 -21 512 512" xmlns="http://www.w3.org/2000/svg">
+              <path class="my-contributionicon"
+                d="m0 455c0 8.285156 6.714844 15 15 15h482c8.285156 0 15-6.714844 15-15v-285h-512zm241-222.421875v-7.578125c0-8.285156 6.714844-15 15-15s15 6.714844 15 15v5h15c8.285156 0 15 6.714844 15 15s-6.714844 15-15 15h-30c-8.269531 0-15 6.730469-15 15s6.730469 15 15 15c24.8125 0 45 20.1875 45 45 0 19.554688-12.539062 36.226562-30 42.421875v7.578125c0 8.285156-6.714844 15-15 15s-15-6.714844-15-15v-5h-11.84375c-8.28125 0-15-6.714844-15-15s6.71875-15 15-15h26.84375c8.269531 0 15-6.730469 15-15s-6.730469-15-15-15c-24.8125 0-45-20.1875-45-45 0-19.554688 12.539062-36.226562 30-42.421875zm0 0" />
+              <path
+                d="m497 20h-148.851562c11.28125 17.265625 17.851562 37.878906 17.851562 60v.871094c5.820312 2.0625 10 7.601562 10 14.128906 0 8.285156-6.714844 15-15 15h-210c-8.285156 0-15-6.714844-15-15 0-6.527344 4.179688-12.066406 10-14.128906v-.871094c0-22.121094 6.570312-42.734375 17.851562-60h-148.851562c-8.285156 0-15 6.714844-15 15v105h512v-105c0-8.285156-6.714844-15-15-15zm0 0" />
+              <path d="m256 0c-44.183594 0-80 35.816406-80 80h160c0-44.183594-35.816406-80-80-80zm0 0" />
+            </svg>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'chapter'" class="icon-w" type="button">
+            <i class="icon-settings1 newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a></li>
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'event'" class="icon-w" type="button">
+            <i class="icon-membershipicon newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </span>
+
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'my-event'" class="icon-w" type="button">
+            <i class="icon-laptop newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g,menu.name);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a></li>
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'member'" class="icon-w" type="button">
+            <i class="icon-members newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'directory'" class="icon-w" type="button">
+            <i class="icon-directory newicon"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a></li>
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'newsletter-management'" class="icon-w  newsletter-management" type="button">
+            <!-- <img alt="" class="gray" src="assets/icon/directory-selected.svg">
+            <img alt="" class="blue" src="assets/icon/directory.svg">  -->
+
+            <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+            <svg class="my-contribution-icn" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 477.867 477.867"
+              style="enable-background:new 0 0 477.867 477.867;" xml:space="preserve">
+              <g>
+                <g>
+                  <path
+                    d="M460.8,119.467h-85.333v-102.4C375.467,7.641,367.826,0,358.4,0H17.067C7.641,0,0,7.641,0,17.067V409.6
+                    c0,37.703,30.564,68.267,68.267,68.267H409.6c37.703,0,68.267-30.564,68.267-68.267V136.533
+                    C477.867,127.108,470.226,119.467,460.8,119.467z M136.533,85.333h102.4c9.426,0,17.067,7.641,17.067,17.067
+                    s-7.641,17.067-17.067,17.067h-102.4c-9.426,0-17.067-7.641-17.067-17.067S127.108,85.333,136.533,85.333z M290.133,409.6h-204.8
+                    c-9.426,0-17.067-7.641-17.067-17.067s7.641-17.067,17.067-17.067h204.8c9.426,0,17.067,7.641,17.067,17.067
+                    S299.559,409.6,290.133,409.6z M290.133,341.333h-204.8c-9.426,0-17.067-7.641-17.067-17.067c0-9.426,7.641-17.067,17.067-17.067
+                    h204.8c9.426,0,17.067,7.641,17.067,17.067C307.2,333.692,299.559,341.333,290.133,341.333z M290.133,273.067h-204.8
+                    c-9.426,0-17.067-7.641-17.067-17.067c0-9.426,7.641-17.067,17.067-17.067h204.8c9.426,0,17.067,7.641,17.067,17.067
+                    C307.2,265.426,299.559,273.067,290.133,273.067z M290.133,204.8h-204.8c-9.426,0-17.067-7.641-17.067-17.067
+                    c0-9.426,7.641-17.067,17.067-17.067h204.8c9.426,0,17.067,7.641,17.067,17.067C307.2,197.159,299.559,204.8,290.133,204.8z
+                    M443.733,409.6c0,18.851-15.282,34.133-34.133,34.133s-34.133-15.282-34.133-34.133v-256h68.267V409.6z" />
+                </g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+              <g>
+              </g>
+            </svg>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a></li>
+                <!-- <li>  <a href="#"> <i aria-hidden="true" class="fa fa-angle-right"></i>  My Contributions </a> </li> -->
+              </ul>
+            </div>
+          </span>
+          <!-- (click)="openMenu(i);this.menuService.currentMenu = list?.iconClass;" -->
+          <span *ngIf="list?.iconClass == 'administrator'" class="icon-w setting-last-menu" type="button">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            <div class="subleft-menu">
+              <ul>
+                <li>
+                  <a (click)="linkActive(i,undefined);" [ngClass]="isShow == true ? '' : 'display-none'"
+                    [routerLink]="list.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p class="main-menu"> {{list.name}}</p>
+                  </a>
+                </li>
+                <li *ngFor="let menu of list.menuItems;let g = index;"> <a (click)="linkActive(i,g);"
+                    [ngClass]="isShow == true ? '' : 'display-none'" [routerLink]="menu.link" type="button">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    <p [class]="menu?.active == true ? 'active' : ''">{{menu.name}}</p>
+                  </a>
+                </li>
+                <!-- <li>  <a href="#"> <i aria-hidden="true" class="fa fa-angle-right"></i>  My Contributions </a> </li> -->
+              </ul>
+            </div>
+          </span>
+          <!-- <a type="button" *ngIf="list?.menuItems?.length == 0 &&  list?.iconClass == currentMenu" [routerLink]="list.link"  >
+             <p> {{list.name}}</p>
+           </a>
+           <a type="button" *ngIf="list?.menuItems?.length != 0 &&  list?.iconClass == currentMenu" aria-expanded="true" aria-haspopup="true" class="dropdown-toggle"
+              data-toggle="dropdown"   id="dropdownMenuLink" role="button">
+             <p> {{list.name}}</p>
+           </a>
+ -->
+          <!--   <div *ngIf="list?.menuItems?.length != 0" aria-labelledby="dropdownMenuLink2"
+                  class="dropdown-menu event-drop">
+               <a type="button" *ngFor="let menu of list.menuItems" [routerLink]="menu.link" class="dropdown-item"
+                   >
+                 {{menu.name}}
+               </a>
+             </div>-->
+
+        </li>
+      </ul>
+      <!-- <div class="menuleftnewDiv">
+        <div *ngFor="let list of this.menuService.menus;let i = index;"
+             [ngClass]="!showProfileMenu && list?.iconClass == this.menuService.currentMenu ? '' : 'display-none'"
+             [routerLinkActiveOptions]="{ exact: true }"
+             routerLinkActive="active">
+          <div *ngIf="collapseMenu == false">
+            <a (click)="linkActive(i,undefined);"
+               [ngClass]="isShow == true ? '' : 'display-none'"
+               [routerLink]="list.link"
+                 type="button">
+              <p class="main-menu"> {{list.name}}</p>
+            </a>
+            <a (click)="linkActive(i,g);" *ngFor="let menu of list.menuItems;let g = index;"
+               [ngClass]="isShow == true ? '' : 'display-none'"
+               [routerLink]="menu.link"
+               type="button">
+              <p [class]="menu?.active == true ? 'active' : ''" >{{menu.name}}</p>
+
+            </a>
+
+          </div>
+        </div>
+        <div *ngIf="showProfileMenu && collapseMenu == false">
+          <div>
+            <a  *ngIf="showProfileMenu" [routerLink]="'/profile/'"><p class="main-menu">Profile</p></a>
+            <a  *ngIf="showProfileMenu" [routerLink]="'/profile/Additional'"><p  [class]="urlPath== 'Additional' ? 'active' : ''">Additional Information</p></a>
+            <a  *ngIf="showProfileMenu" [routerLink]="'/profile/Family'"><p [class]="urlPath== 'Family' ? 'active' : ''">Family Members</p></a>
+            <span *ngIf="communityService.communityDetail?.allowGuest"> <a  *ngIf="showProfileMenu" [routerLink]="'/profile/Guest' " ><p  [class]="urlPath== 'Guest' ? 'active' : ''">Event Guests</p></a></span>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+
+    <!-- profile -->
+    <!-- <ul class="menuleftnew profileleft">
+      <li [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="active">
+        <a   title="Profile">
+          <div (click)="openProfile()" [routerLink]="'/profile'" style="outline: none;">
+             <span *ngIf="menuService?.profileDetail?.profileShow == true" class="thumb-image">
+             <img alt="" src="{{menuService?.profileDetail?.profileUrl}}">
+           </span>
+            <div *ngIf="menuService?.profileDetail?.profileShow == false" class="profilecarector numprofile">
+              <span class="thumb-image"><i>{{menuService?.profileDetail?.profileUrl}}</i></span>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a (click)=" logout()"   title="Logout">
+          <span class="thumb-image">
+             <img alt="" class="gray" src="assets/icon/logout.svg"> 
+            <img alt="" class="blue" src="assets/icon/logout-b.svg">
+            <i class="newicon icon-logout" aria-hidden="true"></i>
+          </span>
+          <p> Log out</p>
+        </a>
+      </li>-->
+    <!-- <li class="closebtn">
+        <button (click)="changeCollapseMenu()"><i aria-hidden="true" class="fa fa-angle-double-left"></i></button>
+      </li> 
+    </ul> -->
+    <!-- profile -->
+
+    <!-- Modal -->
+    <!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal left fade main-munu-model" id="sidemodal"
+          role="dialog" tabindex="-1">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button aria-label="Close" class="close-menu" data-dismiss="modal" type="button">
+               <img alt="" src="assets/icon/arrow-menu.svg">
+             </button>
+             <h5>Navigation</h5>
+           </div>
+           <div class="modal-body">
+             <ul class="menu-common">
+               <li><a><p></p></a></li>
+               <li><a><p></p></a></li>
+               <li><a   routerLink="/member-list" routerLinkActive="active"><p>Member List</p>
+               </a></li>
+               <li><a   routerLink="/create-membership" routerLinkActive="active"><p>Create
+                 Membership Plan </p></a></li>
+               <li><a   routerLink="/create-membership-new" routerLinkActive="active"><p>
+                 Membership Form Setup</p></a></li>
+             </ul>
+           </div>
+         </div>
+       </div>
+     </div>
+     <div class="left-signout">
+       <ul class="top-full">
+         &lt;!&ndash;            <li>&ndash;&gt;
+         &lt;!&ndash;                <button class="notification-bel" routerLink="/notifications">&ndash;&gt;
+         &lt;!&ndash;                    <i class="fa fa-bell" aria-hidden="true"></i>&ndash;&gt;
+         &lt;!&ndash;                </button>&ndash;&gt;
+         &lt;!&ndash;            </li>&ndash;&gt;
+         &lt;!&ndash; <li class="right-top">
+         <div class="dropdown profiledrop menu">
+             <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <img alt="" src="{{profilesrc}}" class="" *ngIf="showProfile" id="UserImg">
+             <div class="profilecarector numprofile" *ngIf="!showProfile">
+                 <span> {{logoName}} </span>
+             </div>
+             <span class="txt-main">
+                 {{username | titlecase}}
+                 </span>
+             </button>
+             <div class="profiledropdown" aria-labelledby="dropdownMenuButton">
+             <span class="profilename">{{username | titlecase}}</span>
+             <a class="dropdown-item"   routerLink="/profile">Proﬁle</a>
+             <a class="dropdown-item"   (click)="showDiv('Additional');"> Additional Details </a>
+             <a class="dropdown-item"   (click)="Logout()">Logout</a>
+             </div>
+         </div>
+         </li> &ndash;&gt;
+       </ul>
+     </div>-->
+    <!--    <button type="button" class="settingsbottm" >-->
+    <!--        <img alt="" src="assets/icon/settings-g.svg" >-->
+    <!--    </button>-->
+  </div>
+  <div>
+  </div>
+</div>

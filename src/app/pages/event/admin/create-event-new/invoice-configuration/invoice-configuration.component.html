@@ -1,0 +1,217 @@
+<h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="img-create">
+        <img alt="note" src="assets/images/note.png"></div>
+      {{'event.create.invoice.title' | translate}}
+      <span>{{'event.create.invoice.text' | translate}}</span>
+    </div>
+    <div class="col-md-6">
+      <button (click)="preview()" class="btn pre-btn save-changes pull-right">{{'event.create.invoice.priviewBtn.text' | translate}}</button>
+    </div>
+  </div>
+</h1>
+<form [formGroup]="invoiceForm" id="invoiceForm">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>{{'event.create.invoice.templateNamelbl.text' | translate}} </mat-label>
+        <mat-select formControlName="templateName">
+          <mat-option *ngFor="let template of invoiceTemplate?.content " value="{{template.name}}">{{template.displayName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.templateName.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.templateName.errors "
+          class="valid-msg">Template Name is required</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.organizationNamelbl.text' | translate}} </mat-label>
+        <input formControlName="orgName" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.orgName.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.orgName.errors "
+          class="valid-msg">Organization Name is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.addresslbl.text' | translate}} </mat-label>
+        <input formControlName="address" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.address.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.address.errors "
+          class="valid-msg">Address is required</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.tagLinelbl.text' | translate}} </mat-label>
+        <input formControlName="tagLine" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.tagLine.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.tagLine.errors "
+          class="valid-msg">Tag Line is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-12">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.descriptionlbl.text' | translate}} </mat-label>
+        <input formControlName="description" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.description.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.description.errors "
+          class="valid-msg">Description is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.emaillbl.text' | translate}} </mat-label>
+        <input formControlName="email" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.email.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.email.errors "
+          class="valid-msg">Email is Invalid</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.phonelbl.text' | translate}}</mat-label>
+        <input (keypress)="numberOnly($event)" [max]="16" appPhoneMask formControlName="phone" matInput>
+      </mat-form-field>
+      <!-- <div *ngIf="this.submitBtn == false && invoiceForm.controls.phone.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.phone.errors "
+          class="valid-msg">Phone is required</span>
+      </div> -->
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.faxNolbl.text' | translate}}</mat-label>
+        <input formControlName="faxId" matInput>
+      </mat-form-field>
+      <!-- <div *ngIf="this.submitBtn == false && invoiceForm.controls.faxId.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.faxId.errors "
+          class="valid-msg">Fax No. is required</span>
+      </div> -->
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.nonProfitIdlbl.text' | translate}} </mat-label>
+        <input formControlName="taxId" matInput>
+      </mat-form-field>
+      <!-- <div *ngIf="this.submitBtn == false && invoiceForm.controls.taxId.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.taxId.errors "
+          class="valid-msg">Non profit tax id is required</span>
+      </div> -->
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.receiptPrefixNolbl.text' | translate}} </mat-label>
+        <input formControlName="receiptPrefix" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.receiptPrefix.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.receiptPrefix.errors "
+          class="valid-msg">Receipt prefix no. is required</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.receiptStartNolbl.text' | translate}} </mat-label>
+        <input formControlName="receiptStartNo" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.receiptStartNo.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.receiptStartNo.errors "
+          class="valid-msg">Receipt start no. is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.referenceNolbl.text' | translate}} <i>*</i></mat-label>
+        <input formControlName="referenceNo" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && invoiceForm.controls.referenceNo.errors ">
+        <span
+          *ngIf="this.submitBtn == false && invoiceForm.controls.referenceNo.errors "
+          class="valid-msg">Reference No is required</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="imageup create-img-upload small-upload invoice-upload">
+        <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                                    (maxFileSizeError)="fileSizeError()"
+                                    (queueCompleted)="queueCompleted()"
+                                    (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                                    [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                    [uploaderText]="'Add Logo'">
+        </app-file-uploader-vertical>
+      </div>
+
+    </div>
+  </div>
+  <div class="row martop-date">
+    <div class="col-md-6">
+      <h3>
+        {{'event.create.invoice.footerLinelbl.text' | translate}}
+      </h3>
+    </div>
+    <div class="col-md-6">
+      <button (click)="addFooter()" class="addsection addReminder" type="button">{{'event.create.invoice.addfooterLineBtn.text' | translate}}</button>
+    </div>
+
+  </div>
+  <div *ngFor="let list of footerList;let i = index;" class="row martop-date">
+    <div class="col-md-3 col-lg-3">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.footerLineNamelbl.text' | translate}} <i>*</i></mat-label>
+        <input [(ngModel)]="list.name" [ngModelOptions]="{standalone: true}" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-md-3 col-lg-4 martoprole">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.invoice.footerLineRolelbl.text' | translate}} <i>*</i></mat-label>
+        <input [(ngModel)]="list.role" [ngModelOptions]="{standalone: true}" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-md-5 col-lg-4 col-sm-11">
+      <div class="imageup create-img-upload small-upload signature-upload">
+        <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                                    (maxFileSizeError)="fileSizeError()"
+                                    (queueCompleted)="queueCompleted1(i,list)"
+                                    (uploadStarted)="uploadStarted()" [(uploadedFiles)]="list['img']"
+                                    [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                    [uploaderText]="'Add Logo'">
+        </app-file-uploader-vertical>
+      </div>
+
+    </div>
+    <div class="removeBtn col-md-1 col-sm-1">
+      <button (click)="removeFooter(i)" *ngIf="i != 0">
+        <i  class="icon-delete-blue newicon"></i>
+      </button>
+    </div>
+  </div>
+</form>

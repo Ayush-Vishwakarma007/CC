@@ -1,0 +1,182 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+    Assign Form
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="totalcommitteemem">
+      <div class="row">
+        <div class="page-content">
+          <div class="hotel-details">
+            <div class="row">
+              <div class="col-md-6">
+                <h3>{{formDetails['formName']}}</h3>
+                <span>{{formDetails['description']}}</span>
+              </div>
+              <div class="col-md-6 text-right">
+                <div class="round-btn-design">
+                  <button type="button" (click)="assignFormModal('model')">
+                    <img src="assets/icon/assign.svg">
+                    Assign
+                  </button>
+                </div>
+                <div class="round-btn-design" *ngIf="formDetails['assigneForm'] == true">
+                  <button type="button" (click)="assignFormModal('model')">
+                    <img src="assets/icon/assign.svg"> Assign
+                  </button>
+                </div>
+                <div class="round-btn-design">
+                  <button type="button" (click)="viewForm(formDetails['formId'])">
+                    <img src="assets/icon/view.svg"> View Form
+                  </button>
+                </div>
+                <div class="round-btn-design">
+                  <button type="button" (click)="copyForm()"><img src="assets/icon/copy.svg"> Copy form</button>
+                </div>
+                <div class="round-btn-design">
+                  <button type="button" (click)="editForm()"> <img src="assets/icon/edit-icon-white.svg"> Edit form</button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="formDetails['assigneForm'] == false">
+              <span style="font-size: 15px">Form not assigned yet</span>
+            </div>
+            <div class="hotel-info" *ngIf="formDetails['assigneForm'] == true">
+              <div class="row">
+                <div class="col-md-6 bdr-r">
+                  <div class="left-text">
+                    <ul>
+                      <li><span>Assigned By</span> {{formDetails['createdBy']}}</li>
+                      <li><span>Start Date</span>{{formDetails['date']}}</li>
+                      <li><span>Due Date</span> {{formDetails['dueDate']}}</li>
+                      <li><span>Assign Type</span> {{formDetails['assignType']}}</li>
+                      <li style="word-wrap: break-word;"><span>Description</span> {{formDetails['comment']}}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="user-table">
+                    <h5>{{formDetails['displayName']}}</h5>
+                    <div class="table-responsive">
+                      <table class="table">
+
+                        <tbody *ngIf="formDetails['showTeamTable'] == true">
+                        <tr class="link-text" *ngFor="let value of formDetails['arrayList'];let i=index">
+                          <td
+                            (click)="openModalWithUser(userTemplate,value,formDetails['modelFilter'])">{{value.teamName}}</td>
+                          <td>{{value.description}}</td>
+                          <td>-</td>
+                          <td>-</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody *ngIf="formDetails['showRoleTable'] == true">
+                        <tr class="link-text" *ngFor="let value of formDetails['arrayList'];let i=index">
+                          <td (click)="openModalWithUser(userTemplate,value,formDetails['modelFilter'])">{{value}}</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody *ngIf="formDetails['showUserTable'] == true">
+                        <tr *ngFor="let value of formDetails['userList'];let i=index">
+                          <td>{{value.firstName | titlecase}}</td>
+                          <td>{{value.lastName}}</td>
+                          <td>{{value.email}}</td>
+                          <td>{{value.phone}}</td>
+                        </tr>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="click-btn" *ngIf="formDetails['showUserTable'] == true">
+                      <a
+                        (click)="openModalWithUser(userTemplate,formDetails['assignees'],formDetails['modelFilter'])">More</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #userTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">List of users </h4>
+    <button type="button" class="close round-btn" aria-label="Close" (click)="modalUserListHide()">
+      <span class="fa fa-close"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-data">
+      <div class="form-data">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="user-table">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Id</th>
+                    <th>Phone</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let user of userList ?.content;let i=index">
+                    <td>{{user['firstName'] | titlecase}}</td>
+                    <td>{{user['lastName'] | titlecase}}</td>
+                    <td>{{user['email']}}</td>
+                    <td>{{user['phone']}}</td>
+                  </tr>
+                  <tr *ngIf="userList['content']==''">
+                    <td colspan="4"><b>No Users</b></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pegination-main">
+                <ul>
+                  <li>
+                    <button (click)="pagination('current','user',0)" [disabled]="userList['first'] == true"
+                            class="next">
+                      First
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('prev','user')" [disabled]="userList['first'] == true"
+                            class="arrow">
+                      <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li (click)="pagination('current','user',i)"
+                      *ngFor="let i of arrayTwo(userList['totalPages'])"
+                      [ngClass]="userFilter?.page?.page == i ?  'blue-peg' : ''">
+                    <button class="numeric">{{i + 1}}</button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('next','user')" [disabled]="userList['last'] == true"
+                            class="arrow">
+                      <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('current','user',(userList['totalPages']-1))"
+                            [disabled]="userList['last'] == true" class="next">Last
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+
+</ng-template>
+<app-assign-form-modal [openModelSubject]="openModelSubject"></app-assign-form-modal>
+

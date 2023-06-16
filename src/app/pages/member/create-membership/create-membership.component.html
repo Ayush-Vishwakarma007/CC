@@ -1,0 +1,24 @@
+<div class="reg-left">
+  <div class="reg-inner">
+    <h1>
+      Create <br>Membership Plan
+    </h1>
+  </div>
+  <ul class="stepprogress">
+    <li class="stepprogress-item "  [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'" (click)="openActiveTab(step['step'])" *ngFor="let step of step;let i = index" >
+      <strong><i class="{{step.class}} newicon"></i> {{step.name}}</strong>
+    </li>
+  </ul>
+</div>
+<div class="create-event-right-side create-new-evnt">
+  <div class="white-area-create-event">
+    <!-- basic information -->
+    <app-basic-information *ngIf="activeTabName=='BASIC_INFO'" (completed)="nextBackActiveTab(this.activeTabName,'next')"  [(membershipDetail)]="membershipDetail"  [save]="submitSubject"></app-basic-information>
+    <!-- basic information -->
+    <!-- membership number -->
+    <app-membership-number *ngIf="activeTabName=='MEMBERSHIP_NUMBER'"></app-membership-number>
+    <!-- membership number -->
+
+  </div>
+</div>
+

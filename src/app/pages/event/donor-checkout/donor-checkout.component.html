@@ -1,0 +1,15 @@
+<div  class="donorcheckout-header">
+  <ul>
+    <li class="button"> <button [routerLink]="'/event-details/'+eventId"><img src="assets/icon/arow-g.svg" alt=""></button> </li>
+    <li>
+      <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;"> {{eventDetail['name']}}</h4>
+      <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px;" [innerHTML]="eventDetail['description']"></p>
+    </li>
+  </ul>
+</div>
+
+<app-new-user-register *ngIf="guestShow == true" (completed)="addGuest()" [(guestDetail)]="guestDetail" ></app-new-user-register>
+<app-donor-sponsor  [discount]="discountSubject" *ngIf="guestShow ==false" [type]="type" [eventId]="eventId"  (completed)="paymentStep()"  [(paymentDetail)] = "paymentDetail"  [(categoryDetail)] = "categoryList"></app-donor-sponsor>
+
+<app-payment-detail  (discountChange)="addDiscount()" [(discount)]="discountCode" [type]="type" (completePayment)="paymentCheckout()" [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentDetail"></app-payment-detail>
+

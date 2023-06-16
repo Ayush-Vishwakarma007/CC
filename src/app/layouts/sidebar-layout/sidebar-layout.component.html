@@ -1,0 +1,9 @@
+
+<div class="main cc-web-main" [ngClass]="collapseMenu == false ? '' : 'collapse-left-menu'" >
+<!--   <app-platform-header *ngIf="communityService.uiPermission['PLATFORM']"></app-platform-header>-->
+<!--  <app-header *ngIf="communityService.uiPermission['WHITELABEL']"></app-header>-->
+ <app-admin-header></app-admin-header>
+  <app-sidebar *ngIf="authDetail" [(collapseMenu)]="collapseMenu" [(showProfileMenu)]="showProfileMenu" (completed)="collapseMenu = !collapseMenu"></app-sidebar>
+  <router-outlet> </router-outlet>
+  <app-footer  [footer]="'admin'"></app-footer>
+</div>

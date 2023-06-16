@@ -1,0 +1,452 @@
+<div class="scrolltab">
+  <h3>
+    <!--<span> Please enter the Qty of tickets </span>-->
+  </h3>
+
+  <!-- Fill details For Ticket box -->
+
+  <div>
+    <div class="clear">
+      <h3 style="margin-top: 20px">Fill details for ticket</h3>
+    </div>
+    <div *ngIf="registrationType!='FREE'">
+    <div *ngFor="let option of eventcategory; let i1 = index">
+
+      <h4 class="subhead">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 nowbutton" >
+              <div class="optionname">
+                {{ option.name }} <span class="ageoption" *ngIf="option.registrationType == 'AGE'">
+<!--                  {{ option.minAge }}-{{ option.maxAge }}-->
+                </span>
+                <div class="ticketage">
+                  <span *ngIf="option.registrationType == 'CATEGORY' && option.seatType != null">
+                  {{ option.seatType }}</span>
+                </div>
+
+                <div class="perticket2 toolselec">{{option.amountValue}} Per Ticket
+                  <br>
+  <!--                  <span> Remaining seats : {{option.allowedSeats}} </span>-->
+                  <div class="deletemembtn">
+                  <button class="">
+                    <i aria-hidden="true" class="newicon icon-info"></i>
+                    <div class="tooltipscustom">
+                      <p>Reg End Date : {{option.endDateTime | date : "MMM dd,yyyy" }} </p>
+                      <div class="view-all-price-tooltips">
+                        <div class="adult-borddr" *ngFor="let age of option.ageRules">
+                          <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                              {{age['name']}}
+                            </div>
+                            <div class="col-md-6 col-xs-6 price-ad">
+                              ${{age['price']}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                  </div>
+                </div>
+              </div>
+              <div class="main-btn-new">
+                  <button
+                    *ngIf="authDetail"
+                    (click)="
+
+                  openModalWithClass3(template2, option,i1,option.minAge,option.maxAge)
+                "
+                class="addmember"
+                data-target="#memberRecord"
+                data-toggle="modal"
+                type="button"
+              >
+                select
+              </button>
+            <!-- <div>${{option.amount}}</div> -->
+
+              <button class="skip new-participants" *ngIf="option.allowMember==false || (option.allowMember==true && option.allowNonMember==true)" (click)="addDynamicField(i1,option)">+ Add Ticket</button>
+
+                  <button class="skip new-participants" *ngIf="option.allowMember==false || (option.allowMember==true && option.allowNonMember==true)" (click)="addDynamicField(i1,option)">+ Add Ticket</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h4>
+      <form class="" *ngFor="let option1 of option?.sub; let j =index" >
+        <div class="memberticket">
+          <div class="col-xs-6 col-sm-6 col-lg-2">
+            <mat-form-field class="example-full-width">
+              <mat-label>Birth year </mat-label>
+              <input
+                matInput
+                [(ngModel)]="option1.birth"
+                [maxLength]="4"
+                (keypress)="numberOnly($event)"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder=""
+                type="text"
+                min="10"
+                max="20"
+                [value]="birth"
+                (change)="mychange1(option1, j)"
+
+                (ngModelChange)="authDetailInfo()"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-lg-2">
+            <mat-form-field class="example-full-width">
+              <mat-label>First Name  <i> *</i></mat-label>
+              <input
+                matInput
+                [(ngModel)]="option1.firstname"
+                (keyup)="mychange1(option1, j)"
+                (ngModelChange)="authDetailInfo()"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder=""
+                type="text"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-lg-2 lastClear" >
+            <mat-form-field class="example-full-width">
+              <mat-label>last Name  <i> *</i></mat-label>
+              <input
+                matInput
+                [(ngModel)]="option1.lastname"
+                (keyup)="mychange1(option1, j)"
+                (ngModelChange)="authDetailInfo()"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder=""
+                type="text"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email  </mat-label>
+              <input
+                matInput
+                placeholder=""
+                (keyup)="mychange1(option1, j)"
+                value="email"
+                [(ngModel)]="option1.email"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="authDetailInfo()"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-lg-3 removeBtn">
+            <mat-form-field class="example-full-width phone-num">
+              <mat-label>Phone Number </mat-label>
+              <input
+                matInput
+                appNgModelPhoneMask
+                placeholder=""
+                value="phone"
+                maxlength="15"
+                (keyup)="mychange1(option1, j)"
+                [(ngModel)]="option1.phone"
+                (keypress)="numberOnly($event)"
+                [ngModelOptions]="{ standalone: true }"
+                (ngModelChange)="authDetailInfo()"
+              />
+            </mat-form-field>
+            <button *ngIf="j!=0" (click)="removeLastOption(j, i1)" >
+              <i class="icon-delete-blue newicon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!--   <h4 class="subhead"> Details for vVIP 1 Ticket
+        <button>Select</button>
+      </h4>
+      <div class="fullw">
+        <div class="col-sm-6 col-lg-3">
+          <mat-form-field class="example-full-width" floatLabel="never">
+            <input matInput placeholder="First Name Last Name" value="">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 col-lg-2">
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label></mat-label>
+            <mat-select placeholder="Birth Year">
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <mat-form-field class="example-full-width" floatLabel="never">
+            <input matInput placeholder="Email Address" value="">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 col-lg-4 removeBtn">
+          <mat-form-field class="example-full-width phone-num " floatLabel="never">
+            <input matInput placeholder="Phone Number" value="">
+          </mat-form-field>
+          <button>
+            <i class="icon-delete-blue newicon"></i>
+          </button>
+        </div>
+      </div> -->
+      </form>
+    </div>
+  </div>
+    <div *ngIf="registrationType=='FREE'">
+      <div *ngFor="let option1 of optionList; let j =index" >
+        <h4 class="subhead">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12 nowbutton">
+                <button
+                  *ngIf="authDetail"
+                  (click)="
+                    search = '';
+                    memberList = [];
+                    openModalWithClass3(template2,j)
+                  "
+                  class="addmember selectdrop"
+                  data-target="#memberRecord"
+                  data-toggle="modal"
+                  type="button"
+                >
+                  select
+                </button>
+              <div> Tickets</div>
+                <button class="skip new-participants" (click)="addDynamicField()">+ Add Ticket</button>
+              </div>
+            </div>
+          </div>
+        </h4>
+        <form class="" >
+          <div class="memberticket">
+            <div class="col-sm-6 col-lg-2">
+              <mat-form-field class="example-full-width">
+                <mat-label>Birth year </mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="option1.birth"
+                  [maxLength]="4"
+                  (keypress)="numberOnly($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder=""
+                  type="text"
+                  min="10"
+                  max="20"
+                  [value]="birth"
+                  (focusout)="mychange1(option1, j)"
+                  (ngModelChange)="authDetailInfo()"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+              <mat-form-field class="example-full-width">
+                <mat-label>First name <i> *</i></mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="option1.firstname"
+                  (focus)="mychange1(option1, j)"
+                  (ngModelChange)="authDetailInfo()"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder=""
+                  type="text"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+              <mat-form-field class="example-full-width">
+                <mat-label>Last name <i> *</i> </mat-label>
+                <input
+                  matInput
+                  [(ngModel)]="option1.lastname"
+                  (focus)="mychange1(option1, j)"
+                  (ngModelChange)="authDetailInfo()"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder=""
+                  type="text"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <mat-form-field class="example-full-width">
+                <mat-label>Email </mat-label>
+                <input
+                  matInput
+                  placeholder=""
+                  (blur)="mychange1(option1, j)"
+                  value="email"
+                  [(ngModel)]="option1.email"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="authDetailInfo()"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-lg-3 removeBtn">
+              <mat-form-field class="example-full-width phone-num">
+                <mat-label>Phone number </mat-label>
+                <input
+                  matInput
+                  appNgModelPhoneMask
+                  placeholder=""
+                  value="phone"
+                  maxlength="15"
+                  (blur)="mychange1(option1, j)"
+                  [(ngModel)]="option1.phone"
+                  (keypress)="numberOnly($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="authDetailInfo()"
+                />
+              </mat-form-field>
+              <button *ngIf="j!=0" (click)="removeLastOption(j)" >
+                <i class="icon-delete-blue newicon"></i>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Fill details For Ticket box -->
+</div>
+
+
+<ng-template #template2>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">User List</h5>
+        <!-- <button (click)="modalRef1.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeModal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button
+          (click)="modalRef.hide()"
+          aria-label="Close"
+          id="closeModel"
+          class="close-container"
+        >
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--        <div class="searchmain">-->
+        <!--          <form class="example-form">-->
+        <!--            <mat-form-field class="example-full-width searchform">-->
+        <!--              <mat-label> </mat-label>-->
+        <!--              <input (change)="searchNewData()" [(ngModel)]="search" [ngModelOptions]="{standalone: true}"-->
+        <!--                matInput placeholder="Type here...">-->
+        <!--            </mat-form-field>-->
+        <!--            <button type="button" class="search-button"> Search </button>-->
+        <!--          </form>-->
+        <!--        </div>-->
+        <div class="committi-main">
+          <div class="committi-tab ticket-member-add">
+            <table>
+              <tr>
+                <th width="40"></th>
+
+                <!--<th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.member.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.chapter.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.email.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.phone.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.address.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.lbl.text' | translate}}</th>
+                 <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.action.lbl.text' | translate}}</th>-->
+                <th>Member</th>
+                <th>Chapter</th>
+                <th>Email Id</th>
+                <th>Phone number</th>
+                <th>Address</th>
+                <th>Birth year</th>
+<!--                <th>Action</th>-->
+
+              </tr>
+              <tbody *ngFor="let list of memberList; let i=index">
+
+                <tr >
+                  <td></td>
+                  <td class="mem-name">
+                    <mat-checkbox [checked]="checkCheckbox(list)"   (change)="addMember($event.checked,list,i)"></mat-checkbox>
+
+                    <div *ngIf="list['profileShow'] == true" class="charector">
+                      <img alt="" [src]=" list['profileUrl'] | eventImages " />
+                    </div>
+                    <div *ngIf="list['profileShow'] == false" class="charector">
+                      <i>{{ list["profileUrl"] }}</i>
+                    </div>
+                    <ul class="firstnameandemail">
+                      <li>
+                        {{ list["firstName"] | titlecase }}
+                        {{ list["lastName"] | titlecase }}
+                      </li>
+                      <li>{{ list["memberNumber"] }}</li>
+                    </ul>
+                  </td>
+                  <td>{{ list["chapterName"] }}</td>
+                  <td>{{ list["email"] }}</td>
+                  <td>{{ list["phone"] }}</td>
+                  <td>{{ list["city"] }} {{ list["country"] }}</td>
+                  <td>
+                    {{ list.birthYear }}
+                  </td>
+<!--                  <td>-->
+<!--                  &lt;!&ndash;  <mat-checkbox  [checked]="checkCheckbox(list)" disabled={{checkotherTickitcheckbox(list,i1)}} (change)="addMember($event,list)"></mat-checkbox>&ndash;&gt;-->
+<!--                    &lt;!&ndash;  <button (click)="addMember(list)" class="addbtn " type="button"> Add</button>&ndash;&gt;-->
+<!--                  </td>-->
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row ticket-selection-addbtn">
+          <div class="col-sm-6 col-xs-6">
+            <div class="totalShow"><span>Total :</span> {{ totalMember }}</div>
+          </div>
+          <div class="col-sm-6 col-xs-6">
+            <button (click)="changeSelection()" class="addbtnadd" type="button">
+              Add
+            </button>
+            </div>
+
+        </div>
+        <!-- <div class="pegination-main totalPosition"> -->
+        <!--          <ul>-->
+        <!--            <li>-->
+        <!--              <button (click)="paginationNewMember('current','user',0)" [disabled]="memberList['first'] == true"-->
+        <!--                class="next">-->
+        <!--                First-->
+        <!--              </button>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <button (click)="paginationNewMember('prev','user')" [disabled]="memberList['first'] == true"-->
+        <!--                class="arrow">-->
+        <!--                <i aria-hidden="true" class="icon-left-arrow icon"></i>-->
+        <!--              </button>-->
+        <!--            </li>-->
+        <!--            <li (click)="paginationNewMember('current','user',i)"-->
+        <!--              *ngFor="let i of totalPages"-->
+        <!--              [ngClass]="reqNewData.page.page == i ?  'blue-peg' : ''">-->
+        <!--              <button class="numeric">{{i + 1}}</button>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <button (click)="paginationNewMember('next','user')" [disabled]="memberList['last'] == true"-->
+        <!--                class="arrow">-->
+        <!--                <i aria-hidden="true" class="icon-right-arrow icon"></i>-->
+        <!--              </button>-->
+        <!--            </li>-->
+        <!--            <li>-->
+        <!--              <button (click)="paginationNewMember('current','user',(memberList['totalPages']-1))"-->
+        <!--                [disabled]="memberList['last'] == true" class="next">Last-->
+        <!--              </button>-->
+        <!--            </li>-->
+        <!--          </ul>-->
+
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

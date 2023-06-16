@@ -1,0 +1,67 @@
+.scroll-tab-event {
+  padding-bottom: 6%;
+}
+.more button { width: 45px; height: 45px;  border: 1px solid #ccc;  border-radius: 50px; }
+.tickettype{ font-size: 19px; font-weight: 500; font-family: "Montserrat", sans-serif; margin: 0px 0 0px 0; padding: 0px;}
+.agewise{ font-size: 18px; font-weight: 500; font-family: "Montserrat", sans-serif; float: right;
+  .mat-radio-button{ margin-left: 15px;}
+}
+.allocated-seat-wid{ width: 155px; text-align: center;}
+.userdetail{ 
+  .tickettype{ margin: 32px 0 0 0!important; font-size: 15px!important; display: inline-block;}
+  .agewise{ margin-top: 27px;}
+}
+.save-changes.fright { background: var(--secondary-color)!important; }
+.accomo-img{ width: 72px; margin-top: 6px; }
+.accomoda-main{ width: 160px; word-break: break-all; padding: 0px 0px 0px 15px; }
+.vendorimg{ width: 70px; margin-top: 6px; }
+.vendortabscroll{ overflow-x: auto;
+  table{ width: 1550px;}
+}
+.memcheckbox{ margin-right: 15px;}
+.paddtopcheck{ padding-top: 28px; margin-bottom: 20px; }
+.ticketColor{ margin-top: -21px;}
+.memberCategory{ margin-top: 10px;}
+.priority-high{ 
+  .mat-radio-button { margin-right: 25px; margin-top: 17px; }
+}
+.amountwid{ width: calc(100% - 40px); float: left; }
+.deletebut{ background: transparent; border: 0px; margin-left: 11px; margin-top: 29px; }
+.add-btn{ background: var(--secondary-color); min-width: 100px!important;  position: absolute;  right: 19px;  top: -60px; }
+.end-seat-number{ width: calc(100% - 38px);}
+.end-seat-number-btn{ margin-top: 0px;}
+.deletemartop{ margin-top: 0px;}
+.totalseatcount{ display: flex; margin-top: 28px; align-items: center;}
+@media screen and (max-width: 1199px) {
+  .userdetail{ 
+    .tickettype{ font-size: 15px;}
+    .agewise{ font-size: 15px;}
+  }
+}
+@media screen and (max-width: 991px) {
+  .agewise {  font-size: 13px;  float: left; 
+    .mat-radio-button { margin: 20px 15px 0px 0; }
+  }
+  .userdetail{ 
+    .agewise{  float: none!important; margin-left: 20px;}
+  }
+  .userdetail .tickettype { margin: 15px 0 0 0 !important; }
+  .paddtopcheck { padding-top: 18px; }
+  .add-btn { min-width: 74px; padding: 10px 19px; }
+}
+.required:after {
+  content:" *";
+  color: red;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+

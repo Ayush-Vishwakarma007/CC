@@ -1,0 +1,74 @@
+.hideSubMember
+{
+  display: none !important;
+}
+.small-icon{
+  width: 23%;margin-bottom: 14%;
+}
+.emailbutton {
+  background: #fff;
+  margin-top: -18px;
+  margin-left: 7px;
+  width: 37px;
+  height: 37px;
+  border-radius: 100%;
+  border: 1px solid #dfdfdf;
+  position: relative;
+}
+
+.filterBtn{
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+
+}
+
+.blueup{ width: 20px; }
+.dashboard-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #757575;
+  margin: 15px 40px 0px;
+  padding-bottom: 23px;
+}
+.member-header{
+  margin: 1px 1px 18px 1px;
+  margin-top: 24px;
+}
+.mar80{
+  //margin-top: 23px;
+}
+.white-area-create-event h1 {
+  margin: 0px 0px;
+  padding: 0px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-clr);
+}
+
+
+
+// @media screen and (max-width: 767px){
+//   .common-page {
+//       width: calc(100% - 270px) !important;
+//       margin: 0px 0 0 270px !important;
+//   }
+// }
+
+@media screen and (max-width: 767px){
+  .main-search-top .grid-button{    width: 90px;    margin: 0 auto;}
+  .searchmember {
+    width: 100% !important;
+    margin: 10px 0 0 !important;
+    float: none !important;
+  }
+  
+
+}
+@media screen and (max-width: 1199px){
+  .padd-area .grid-card-box .topbutton-thumb .emailbutton {
+    margin-top: -15px;
+    width: 40px !important;
+    height: 40px !important;
+}
+}
+

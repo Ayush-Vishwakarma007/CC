@@ -1,0 +1,78 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row m-0">
+        <div class="col-md-12">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'admin.t&cManagement.title' | translate}}
+          <span>{{'admin.t&cManagement.text' | translate}}</span>
+        </div>
+      </div>
+    </h1>
+    <!--  Website Terms & Conditions -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.t&cManagement.websiteT&C.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>1</span>
+          </div> 
+          <div class="right-member">
+            <ngx-editor [editor]="generalTermsEditor"  [(ngModel)]="T_CDetail['generalTermsAndConditions']" [ngModelOptions]="{standalone: true}"  [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!--  Website Terms & Conditions -->
+    <!--  Event default Terms & Conditions -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.t&cManagement.eventT&C.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>2</span>
+          </div>
+          <div class="right-member">
+            <ngx-editor [editor]="eventTermsEditor" [(ngModel)]="T_CDetail['eventTermsAndConditions']" [ngModelOptions]="{standalone: true}"  [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!--  Event default Terms & Conditions -->
+
+    <!--  Member Terms & Conditions -->
+    <ng-container>
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.t&cManagement.memberT&C.title' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>3</span>
+          </div>
+          <div class="right-member">
+            <ngx-editor [editor]="memberTermsEditor" [(ngModel)]="T_CDetail['memberTermsAndConditions']" [ngModelOptions]="{standalone: true}"  [placeholder]="'Enter Description here...'" class="editor-icon"></ngx-editor>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!--  Website Terms & Conditions -->
+
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 text-right">
+          <button (click)="submit()" class="save-changes">
+            {{'admin.t&cManagement.save.Btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

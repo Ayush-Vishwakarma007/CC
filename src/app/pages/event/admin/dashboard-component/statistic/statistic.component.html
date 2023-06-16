@@ -1,0 +1,129 @@
+<div *ngIf="status == true && eventDetail?.eventConfigurations?.fundRaisingEvent == false " class="padd-area">
+  <div class="row overviewchart">
+    <div class="col-lg-6" id="chart">
+      <apx-chart *ngIf="lineChartOptions?.chart" [chart]="lineChartOptions.chart"
+        [dataLabels]="lineChartOptions.dataLabels" [fill]="lineChartOptions.fill" [grid]="lineChartOptions.grid"
+        [markers]="lineChartOptions.markers" [series]="lineChartOptions.series" [stroke]="lineChartOptions.stroke"
+        [title]="lineChartOptions.title" [tooltip]="lineChartOptions.tooltip" [xaxis]="lineChartOptions.xaxis"
+        [yaxis]="lineChartOptions.yaxis"></apx-chart>
+    </div>
+    <!-- <div class="col-lg-6" id="chartPer">
+           <apx-chart *ngIf="circleChartOptions?.chartPer"
+               [chart]="circleChartOptions.chartPer"
+               [fill]="circleChartOptions.fill"
+               [labels]="circleChartOptions.labels"
+               [plotOptions]="circleChartOptions.plotOptions"
+               [series]="circleChartOptions.series"
+               [stroke]="circleChartOptions.stroke"
+               [title]="circleChartOptions.title"
+             ></apx-chart>
+
+   </div>-->
+    <div class="col-lg-6" id="countsChart">
+      <apx-chart *ngIf="countsChartOptions?.countsChart" [chart]="countsChartOptions.countsChart"
+        [dataLabels]="countsChartOptions.dataLabels" [fill]="countsChartOptions.fill"
+        [labels]="countsChartOptions.labels" [legend]="countsChartOptions.legend"
+        [plotOptions]="countsChartOptions.plotOptions" [responsive]="countsChartOptions.responsive"
+        [series]="countsChartOptions.series" [title]="countsChartOptions.title" [tooltip]="countsChartOptions.tooltip"
+        [xaxis]="countsChartOptions.xaxis"></apx-chart>
+    </div>
+  </div>
+</div>
+<div class="padd-area" style="padding-top:0px" *ngIf="seatSelection">
+  <div class="row">
+    <div class="col-sm-12">
+      <span class="section-seat">Seat Selection Tickets </span> 
+      <apx-chart *ngIf="TicketsChartOptions?.ticketsChart" 
+      [series]="TicketsChartOptions.series"
+      [chart]="TicketsChartOptions.ticketsChart"
+      [dataLabels]="TicketsChartOptions.dataLabels "
+      [plotOptions]="TicketsChartOptions.plotOptions"
+      [xaxis]="TicketsChartOptions.xaxis"
+      [colors]="TicketsChartOptions.colors"
+      [grid]="TicketsChartOptions.grid"
+      [yaxis]="TicketsChartOptions.yaxis"
+      [stroke]="TicketsChartOptions.stroke"
+      [fill]="TicketsChartOptions.fill"
+      [legend]="TicketsChartOptions.legends"
+      
+      ></apx-chart>
+    </div>
+  </div>
+
+</div>
+
+<div
+  *ngIf="status == true && eventDetail?.eventConfigurations?.fundRaisingEvent == true || eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true "
+  class="whitebox">
+  <div class="row">
+    <div class="col-sm-12 col-md-7">
+      <div class="amount">
+        ${{totalDonorcollection}} <span>raised of ${{eventDetail?.eventConfigurations?.donationGoal}} goal</span>
+      </div>
+      <div class="progress-tooltip">
+        <span class="rightprogress">${{eventDetail?.eventConfigurations?.donationGoal}}</span>
+        <span [ngStyle]="{'left':width + '% '}" class="progress-tooltip-info">
+          <img alt="" src="assets/icon/miscellaneous.svg">
+        </span>
+        <progress class="progress" max="100" value="{{width}}">{{width}}%</progress>
+      </div>
+      <div class="dailydonation">
+        <!--      Daily Donations-->
+      </div>
+      <!-- chart box  -->
+      <div class="chartmain">
+        <div id="donationChart">
+          <apx-chart *ngIf="donationChartOptions?.donationChart" [chart]="donationChartOptions.donationChart"
+            [dataLabels]="donationChartOptions.dataLabels" [fill]="donationChartOptions.fill"
+            [grid]="donationChartOptions.grid" [markers]="donationChartOptions.markers"
+            [series]="donationChartOptions.series" [stroke]="donationChartOptions.stroke"
+            [title]="donationChartOptions.title" [tooltip]="donationChartOptions.tooltip"
+            [xaxis]="donationChartOptions.xaxis" [yaxis]="donationChartOptions.yaxis"></apx-chart>
+        </div>
+
+      </div>
+      <!-- chart box  -->
+    </div>
+    <div class="col-sm-12 col-md-5 donation-main-no-wid">
+      <app-donation-list [allDonors]="allDonors" [donorList]="donorList" [eventId]="eventId"
+        [topDonorList]="topDonorList" [isShowDonateButton]="isShowDonateButton"></app-donation-list>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="authDetail">
+  <div class="border-line-bottom"></div>
+  <h3>My Contribution</h3>
+  <div class="whitebox tab-main membertab">
+    <mat-tab-group (selectedTabChange)="changeTab($event)" class="overview-height">
+      <mat-tab label="donation">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-donors newicon"></i>
+              <span>
+                My Donation
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-my-contribution [eventId]="eventId" [save]="donationSubject" [currentTab]="currentTab"
+          [eventDetail]="eventDetail"></app-my-contribution>
+      </mat-tab>
+      <mat-tab label="sponsorship">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>
+              <i class="icon-sponsors newicon"></i>
+              <span>
+                My Sponsorship
+              </span>
+            </li>
+          </ul>
+        </ng-template>
+        <app-my-contribution [eventId]="eventId" [save]="donationSubject" [currentTab]="currentTab"
+          [eventDetail]="eventDetail"></app-my-contribution>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="submain">
+  <span> <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}"></span>
+  <div class="box">
+    <h3> Unsubscribe</h3>
+    <p> You will be unsubscribed and won’t receive any further emails from us.
+    <br>
+      Please take a moment to tell us why you unsubscribed from us: </p>
+
+
+<form >
+      <div class="form-check">
+
+        <input class="form-check-input" (change)="myFunction($event.target.value)" type="radio"  name="flexRadioDefault" id="flexRadioDefault2"  value="I no longer want to recieve this emails" [(ngModel)]="flexRadioDefault"  checked>
+        <label class="form-check-label" for="flexRadioDefault2">
+          I no longer want to recieve this emails
+        </label>
+<br>
+        <input class="form-check-input" (change)="myFunction($event.target.value)" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="I never signed up for this mailing list" [(ngModel)]="flexRadioDefault">
+        <label class="form-check-label" for="flexRadioDefault2">
+         I never signed up for this mailing list
+        </label>
+<br>
+        <input class="form-check-input" (change)="myFunction($event.target.value)" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="The emails are innappropriate" [(ngModel)]="flexRadioDefault">
+        <label class="form-check-label" for="flexRadioDefault2">
+         The emails are inappropriate
+        </label>
+<br>
+        <!-- <input class="form-check-input" (change)="myFunction($event.target.value)" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  value="The emails are spam and should be reported" [(ngModel)]="flexRadioDefault">
+        <label class="form-check-label" for="flexRadioDefault2">
+        The emails are spam and should be reported
+        </label>
+<br> -->
+<input  class="form-check-input" (change)="myFunction('other')"  name="flexRadioDefault"  [(ngModel)]="flexRadioDefault"  [ngModelOptions]="{standalone: true}" type="radio" value="1" /> 
+<label class="form-check-label">Other </label>
+</div>
+<textarea *ngIf="flexRadioDefault == 1" placeholder="Enter Message Here" class="textarea" [(ngModel)]="reason"  [ngModelOptions]="{standalone: true}"></textarea>
+<div class="savebtn">
+      <button  (click)="submit()"> Save </button>
+    </div>
+
+  </form>
+  </div>
+</div>
+
+
+

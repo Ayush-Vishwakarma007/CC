@@ -1,0 +1,308 @@
+<section class="membership-plan-main">
+  <div class="row row-eq-height m-0">
+    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 p-0">
+      <div class="left-part-plan">
+        <div class="header-tlt">
+          <h1><img (click)="goBack()" src="assets/icon/close-new.svg"> Payment Checkout</h1>
+        </div>
+       <!-- <div class="page-staps-details">
+          <ul>
+            <li class="selected green-clr"><span class="fa fa-check-circle"></span>Options Selection</li>
+            <li class="selected green-clr"><span class="fa fa-check-circle"></span>Information</li>
+            <li class="selected"><span class="fa fa-check-circle"></span>Payment</li>
+          </ul>
+        </div>-->
+        <div class="tabs-part-plan">
+          <div class="tab-data-plan">
+
+            <div class="plan-main">
+              <div class="card-data">
+                <mat-card>
+                  <div class="text-part">
+                    <div class="text-data">
+                      <h4>  {{checkoutArray?.type | titlecase}} : {{checkoutArray?.title}}</h4>
+                    </div>
+<!--                    <h3>$ {{checkoutArray?.selectedPlan?.price}}</h3>-->
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+            <div class="row" *ngIf="checkoutArray['paymentMethod']?.length !=0">
+              <div class="col-md-6">
+                <h2>Select Payment Options <img src="assets/icon/secure-payment-tlt.svg"></h2>
+              </div>
+              <div class="col-md-6" *ngIf="paymentType =='AFFINY_PAY'">
+                <div class="card-icon">
+                  <ul>
+                    <li><img src="assets/images/master-card-new.png"></li>
+                    <li><img src="assets/images/visa-new.png"></li>
+                    <li><img src="assets/images/american-express-new.png"></li>
+                    <li><img src="assets/images/discover-network-new.png"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="select-payment-options-part">
+              <mat-tab-group (selectedTabChange)="changeTypeTab($event);" mat-align-tabs="start">
+                <mat-tab *ngFor="let list of checkoutArray['paymentMethods']" data-id="{{list?.achPayment}}"
+                         label="{{list?.value}}">
+                  <ng-template mat-tab-label>
+                    <i class="fa fa-circle-thin uncheck"></i>
+                    <i class="fa fa-check-circle check"></i>
+                    {{list?.displayName}}
+                  </ng-template>
+                  <div *ngIf="paymentType == 'PAYPAL'" class="tab-data-plan">
+                    <div class="paypal-data">
+                      <img src="assets/images/paypal.svg">
+                      <p>You will be redirected to PayPal secure Checkout for Payment</p>
+                    </div>
+                  </div>
+                  <div *ngIf=" paymentType =='CLOVER_PAYMENT'" class="tab-data-plan">
+                    <div class="card-icon">
+                      <ul>
+                        <li><img src="assets/images/master-card-new.png"></li>
+                        <li><img src="assets/images/visa-new.png"></li>
+                        <li><img src="assets/images/american-express-new.png"></li>
+                        <li><img src="assets/images/discover-network-new.png"></li>
+                      </ul>
+                    </div>
+                    <app-clover-new (completed)="checkNonce()" *ngIf="paymentType =='CLOVER_PAYMENT' && publicKey!=''"
+                                    [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                                    [save]="paymentSubject"></app-clover-new>
+                  </div>
+                  <div *ngIf=" paymentType =='AFFINY_PAY'" class="tab-data-plan">
+                  </div>
+                </mat-tab>
+                <!--<mat-tab>
+                  <ng-template mat-tab-label>
+                    <i class="fa fa-circle-thin uncheck"></i>
+                    <i class="fa fa-check-circle check"></i>
+                    Credit card
+                  </ng-template>
+
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <i class="fa fa-circle-thin uncheck"></i>
+                    <i class="fa fa-check-circle check"></i>
+                    Debit card
+                  </ng-template>
+                  <div class="tab-data-plan">
+                      <div class="card-icon">
+                        <ul>
+                            <li><img src="assets/images/master-card-new.png"></li>
+                            <li><img src="assets/images/visa-new.png"></li>
+                            <li><img src="assets/images/american-express-new.png"></li>
+                            <li><img src="assets/images/discover-network-new.png"></li>
+                        </ul>
+                      </div>
+                      <div class="card-details">
+                          <fieldset>
+                            <legend><img src="assets/icon/secure-payment-green.svg"></legend>
+                              <form class="example-form">
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <mat-label>Name</mat-label>
+                                          <mat-form-field class="example-full-width" floatLabel="never">
+                                            <input matInput  placeholder="Name on Card" value="">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <mat-label>Card Number</mat-label>
+                                          <mat-form-field class="example-full-width" floatLabel="never">
+                                            <input matInput placeholder="Enter Card Number" value="">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <mat-label>Expiry  Date</mat-label>
+                                          <mat-form-field class="example-full-width" floatLabel="never">
+                                            <input matInput placeholder="MM / YY" value="">
+                                            <img matSuffix src="assets/icon/calendar-payment.svg">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <mat-label>CVV</mat-label>
+                                          <mat-form-field class="example-full-width" floatLabel="never">
+                                            <input matInput placeholder="CVV" value="">
+                                            <img matSuffix src="assets/icon/secure-payment.svg">
+                                          </mat-form-field>
+                                      </div>
+                                  </div>
+                              </form>
+                          </fieldset>
+                      </div>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <ng-template mat-tab-label>
+                    <i class="fa fa-circle-thin uncheck"></i>
+                    <i class="fa fa-check-circle check"></i>
+                    e-Check
+                  </ng-template>
+                  <div class="tab-data-plan">
+                      <div class="card-icon">
+                        <ul>
+                            <li><img src="assets/images/master-card-new.png"></li>
+                            <li><img src="assets/images/visa-new.png"></li>
+                            <li><img src="assets/images/american-express-new.png"></li>
+                            <li><img src="assets/images/discover-network-new.png"></li>
+                        </ul>
+                      </div>
+                      <div class="col-xs-6 col-md-6 p-0 text-right">
+                          <div class="next-back next">
+                              <button  (click)="changeStep('next')" (click)="openModalWithClass(template)">Pay Now <i class="fa fa-check"></i> </button>
+
+                          </div>
+                      </div>
+                  </div>
+                </mat-tab>-->
+              </mat-tab-group>
+              <div *ngIf="publicKey!=''">
+                <app-e-check (completed)="checkNonce()" *ngIf=" checkoutArray?.achPayment == true"
+                             [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                             [save]="paymentSubject"></app-e-check>
+              </div>
+              <div *ngIf="publicKey!=''">
+                <app-affiny-pay-new (completed)="checkNonce()" *ngIf=" checkoutArray?.achPayment == false && paymentType =='AFFINY_PAY'"
+                                    [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                                    [save]="paymentSubject"></app-affiny-pay-new>
+                                    <app-square class="creditcard" *ngIf="paymentType =='SQUARE_PAYMENT'" (completed)="checkNonce()"
+                                    [(checkoutArray)]="checkoutArray"
+                                    [publicKey]="publicKey" [save]="paymentSubject"></app-square>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="tems-conditions">
+          <h4>
+            <mat-checkbox [(ngModel)]="acceptTerms"></mat-checkbox>
+            Accept <a data-target="#exampleModalTerms" data-toggle="modal">Terms & Conditions</a></h4>
+        </div>-->
+        <div class="left-footer">
+          <div class="row m-0">
+            <div class="col-xs-6 col-md-6 p-0">
+              <div class="next-back back">
+<!--                <button><i class="fa fa-arrow-left"></i> Back</button>-->
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-6 p-0 text-right">
+              <div class="next-back next">
+                <button (click)="changeStep('next')">Pay Now <i class="fa fa-check"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3  col-lg-3 p-0">
+      <div class="right-part-plan">
+       <!-- <div class="promocode-part">
+          <h4>
+            <i class="icon-percentage-b newicon"></i> Have a promo code ?</h4>
+          <form method="post">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Promo Code here</mat-label>
+              <input [formControl]="promoBox" matInput value="">
+            </mat-form-field>
+          </form>
+        </div>-->
+
+        <h2>Summary</h2>
+        <div *ngIf="checkoutArray['summery']" class="table-part">
+          <table>
+            <tr *ngFor="let list of checkoutArray['summery']">
+              <td>{{list['name']}}</td>
+              <td class="blue-clr-text" nowrap>{{checkoutArray['currency']}} {{list['amount']}} </td>
+            </tr>
+            <tfoot>
+            <tr>
+              <td class="blue-clr-text">Grand Total</td>
+              <td class="blue-clr-text" nowrap>{{checkoutArray['currency']}} {{this.checkoutArray['finalAmount']}}</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalTerms" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" >Terms and Conditions</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="hideModal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p [innerHTML]="communityService.communityDetail?.memberTermsAndConditions"></p>
+          <!--          <h2>-->
+          <!--            Heading will come Heading will come-->
+          <!--          </h2>-->
+          <!--          <p>-->
+          <!--           Text will come here Text will come hereText will come hereText will come hereText will come hereText will come hereText will come hereText will come here-->
+          <!--          </p>-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<i id="openSuccessModel" (click)="openModalWithClass(template)"></i>
+<i id="openDoneModel" (click)="openModalWithClass(template1)"></i>
+<ng-template #template>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your Payment is successfully done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #template1>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your payment is already done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

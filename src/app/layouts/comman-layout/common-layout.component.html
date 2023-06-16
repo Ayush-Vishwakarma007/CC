@@ -1,0 +1,45 @@
+<div class="main cc-web-main"  [ngClass]="communityService.uiPermission['WHITELABEL'] ? 'spcs-only' : ''">
+  <app-platform-header *ngIf="communityService.uiPermission['PLATFORM']"></app-platform-header>
+  <app-header *ngIf="communityService.uiPermission['WHITELABEL']"></app-header>
+  <router-outlet></router-outlet>
+</div>
+
+
+<!-- Right Side menu model -->
+<div class="modal right fade" id="rightsidemenumodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg menu-model-right" role="document">
+    <div class="modal-content">
+      <div class="menu-scrl">
+        <div class="modal-header cls-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel"></h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i  class="icon-delete-blue newicon"></i>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body select-chep">
+            <ul class="right-m">
+              <li *ngFor="let menu of menus;let i=index"><a   routerLink="{{menu.link}}" routerLinkActive="active"><p> {{menu.name}} </p> <span> 
+               
+              </span>
+              </a></li>
+            </ul>
+          </div>
+        </form>
+      </div>
+      <div class="social-icon-menu">
+        <span>FOLLOW US</span>
+        <a  ><i aria-hidden="true" class="icon-facebook icon" title="Facebook"></i></a>
+        <a  ><i aria-hidden="true" class="icon-linkedin icon" title="Linkedin"></i></a>
+        <a  ><i aria-hidden="true" class="icon-instagram icon" title="Instagram"></i></a>
+        <a  ><i aria-hidden="true" class="icon-twitter icon" title="Twitter"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer *ngIf="communityService.uiPermission['WHITELABEL']" [footer]="'client'"></app-footer>
+<app-footer *ngIf="communityService.uiPermission['PLATFORM']" [footer]="'admin'"></app-footer>
+
+<!-- Right Side menu model -->
+

@@ -1,0 +1,95 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+.title-news{ padding: 0px 30px 25px 30px;  align-items: center;  font-size: 20px; font-weight: 700; background: $gray-dark2;
+    ul{ margin: 0px; padding: 0px; list-style: none;
+        li{ display: inline-block; font-size: 14px; font-weight: 100; padding-top: 10px;}
+        li:first-child{ font-weight: 700; padding-right: 7px;}
+    }
+    span{ padding: 10px 0 20px 0px; display: block;}
+    .row{ width: 100%;}
+}
+.tab-main { display: block; margin-top: 0px;}
+.main-thumbs-model{ display: block; height: 300px; overflow-y: scroll; padding: 0px 20px;
+    .thumb{ width: 300px; height: 150px; cursor: pointer; border-radius: 7px; display: inline-block; margin:15px 15px 0px 0px; position: relative; overflow: hidden; 
+        .blurimageabout { position: absolute; right: 0px; left: 0px; top: 0px; bottom: 0px; filter: blur(15px); z-index: -1; }
+        img{ display: inline-block; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); max-height: 100%; }
+        button{ background: #fff; border: 0px; position: absolute; right: 10px; top: 10px; border-radius: 50px; width: 20px; height: 20px;
+            img{ width: 9px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            }
+        }
+        .checked{ right: 40px;
+            img{ width: 13px; }
+        }
+        label{ cursor: pointer;}
+    }
+}
+.new-dashboard .mat-tab-label-container { background:#fff!important; }
+.table-structure-front{  box-shadow: 0px 2px 12px #ccc;  border-radius: 5px;
+    .thumb{ display: flex; align-items: center; 
+        button{ background: transparent; border: transparent; margin-right: 15px; display: inline-block;}
+        img{ width: 50px; height: 50px; border-radius: 10px;  }
+    }
+    .edit-button{  background: transparent; border: transparent; margin-right: 15px;
+        img{  width: 15px!important;}
+    }
+    tr{ border-bottom: 1px solid $gray-light!important;}
+    td { border-bottom: 0px!important;}
+    .stutus-pen{ background: $gray-light; font-size: 12px; padding: 5px; margin-right: 10px; width: auto;}
+    .action{ width: 70px;}
+    .status{ width: 120px;}
+    .date{ width: 100px;}
+    .uploaded{ width: 150px;}
+    .chapter{ width: 130px;}
+    .category{ width: 150px;}
+    .photos{ width: 130px;}
+    span.name{ display: inline-block; width: calc(100% - 87px);}
+}
+.addmember { background:$green-dark; font-size: 15px; padding: 10px 20px; color: #fff; border-radius: 5px; display: inline-block; border: 0px; font-weight: 100; float: right; }
+.rejectmember { background: #E5334F; font-size: 15px; padding: 10px 20px; color: #fff; border-radius: 5px; display: inline-block; border: 0px; font-weight: 100; float: right; }
+.delete{ background: #E5334F; margin-left: 15px; color: #fff;}
+.padding-addmember{ padding: 20px; display: 20px;}
+.selectall{ display: flex; align-items: center; margin: 23px 0 0 20px;
+    input{  cursor: pointer; border: 2px solid #fff;  width: 17px; height: 17px; background: transparent!important; margin: 0px;}
+    label{ background: transparent; cursor: pointer; color: #666!important; font-size: 15px; top: 0px!important; margin: 0px!important;}
+}
+.borbotom{ border-bottom: 1px solid #ccc; padding-bottom: 15px;}
+.checkb { position: absolute; cursor: pointer; border: 2px solid #fff; right: 10px; top: 5px; width: 17px; height: 17px; background:transparent!important; }
+.selecttype{ padding: 10px 0 20px 0px; display: block;
+    img{ margin-top: -6px;}
+}
+
+.gallery-media-table {
+    table { width: 100%;
+      thead { background: $blue-light; color: $blue-dark; font-weight: 600;  
+        th { height: 54px; }
+      }
+      tbody {
+        td { font-size: 12px; font-weight: 600; padding: 15px 0px; }
+      }
+    }
+  }

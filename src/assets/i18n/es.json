@@ -1,0 +1,7 @@
+{
+    "LOGIN":{
+        "title" :"Iniciar sesión",
+        "subtitle": "Bienvenido a seguir mi tratamiento",
+        "subtitleone" : "Ingrese correo electrónico o número de teléfono para iniciar sesión"
+    }
+}

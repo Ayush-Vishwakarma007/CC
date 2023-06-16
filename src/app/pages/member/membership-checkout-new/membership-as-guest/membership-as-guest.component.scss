@@ -1,0 +1,68 @@
+.membership-plan-main{padding: 20px 50px 50px; background: #F4F6FC; height: 100vh;
+    .left-part-plan{background: #fff; padding: 15px 0 0; position: relative; height: calc(100vh - 38px);
+        .header-tlt{position: sticky; top: 0; z-index: 999; background: #fff; padding: 10px;
+            h1{font-size: 25px; font-weight: 700; color: var(--primary-color); margin: 0; position: relative; padding-left: 40px;
+                img{width: 30px; position: absolute; top: 0; left: 0; cursor: pointer;}
+            }
+        }
+        .tabs-part-plan{height: calc(100vh - 217px); background: #fff;  overflow: auto;
+            h2{font-size: 22px; font-weight: 700; color: var(--text-clr); margin: 0px 0 0; padding-left: 20px;}
+            .guest-details{padding: 15px 20px;
+                // mat-label{color: var(--text-clr); font-weight: 400; font-size: 14px;}
+                mat-form-field{margin-bottom: 10px; margin-top: 10px;}
+            }
+        }
+        .left-footer{ padding: 10px; position: sticky; bottom: 0; width: 100%; z-index: 999; background: #fff; box-shadow: 0 0 10px #ccc;
+            .next-back{padding: 0 10px;
+                button{border-radius: 50px; font-size: 15px; font-weight: 700; padding: 6px 5px; border: 0; outline: none; width: 114px; display: flex; justify-content: space-around;
+                    i{font-size: 20px;}
+                }
+                &.back{
+                    button{background: #F5F5F5; color: var(--text-clr); box-shadow: 0 0 10px #C4B7B7;
+                        i{ color: var(--text-clr);}
+                    }
+                }
+                &.next{ float: right;
+                    button{background: var(--primary-color); color: #fff; box-shadow: 0 0 10px #797979;
+                        i{ color: #fff;}
+                    }
+                }
+            }
+        }
+    }
+    .right-part-plan{background: #F1F1F1; padding: 15px 20px; height: 100%;
+        &.login-bg{background: url(../../../../../assets/images/login-left-bg.png); background-size: cover; background-repeat: no-repeat; border-radius: 6px; display: flex; align-items: center; flex-flow: column; justify-content: center; text-align: left;background-position: right bottom !important}
+        h2{font-size: 32px; font-weight: 700; color: #fff; margin: 0 0 15px; padding-left: 0px; text-transform: uppercase;}
+        p{font-size: 22px; font-weight: 500; color: #fff; margin: 0;}
+        .btn-login{text-align: left; width: 100%; margin-top: 20px;
+            button{background: #fff; color: var(--primary-color); box-shadow: 0 0 10px #ccc; border-radius: 50px; font-size: 15px; font-weight: 700; padding: 7px 30px; border: 0; outline: none; text-transform: uppercase;}
+        }
+    }
+    .p-0{padding: 0 !important;}
+    .m-0{margin: 0 !important;}
+}
+
+textarea { min-height: 160px; }
+
+.page-staps-details{padding: 10px 15px;
+    ul{margin: 0; padding: 0; background: #F5F5F5; padding: 10px; border-radius: 50px; display: flex; justify-content: space-around;
+        li{list-style: none; display: inline-block; color: var(--text-clr); font-size: 18px; font-weight: 400;
+            span{font-size: 20px; color: var(--text-clr); margin-right: 10px;}
+            &.selected{ color: var(--primary-color);
+                span{color: var(--primary-color);}
+            }
+            &.green-clr{color: #4CAF50;
+                span{color: #4CAF50;}
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .membership-plan-main .right-part-plan { margin-bottom: 15px!important;}
+    .membership-plan-main .left-part-plan .header-tlt h1{ font-size: 18px;}
+    .membership-plan-main .left-part-plan .tabs-part-plan h2{ font-size: 17px;}
+    .membership-plan-main .right-part-plan h2 { font-size: 20px; }
+    .membership-plan-main .right-part-plan p{ font-size: 17px;}
+}
+

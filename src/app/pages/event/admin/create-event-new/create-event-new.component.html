@@ -1,0 +1,344 @@
+<!--<app-event-config [(customTemplate)]="customTemplate" *ngIf="eventConfigDetail.length != 0 && !eventConfigStatus" [(eventConfigDetail)]="eventConfigDetail" [(currentConfigDetail)]="currentConfigDetail" [save]="submitConfig" (completed)="completeConfig()"></app-event-config>-->
+<div>
+  <div class="reg-left">
+    <div class="reg-inner">
+      <h1 *ngIf="editTime == undefined">
+        {{'event.create.title' | translate}}
+      </h1>
+      <h1 *ngIf="editTime != undefined">
+        {{'event.edit.title' | translate}}
+      </h1>
+    </div>
+    <ul *ngIf="step.length != 0" class="stepprogress cr-event">
+      <!-- <li class="stepprogress-item is-done"> <a href="#"> <strong><i class="icon-file icon"></i> Basic Information</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item "> <a href="#"> <strong> <i class="icon-insert-picture-icon icon"></i> Image & Description</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item "> <a href="#"> <strong> <i class="icon-gear icon"></i> Configuration</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item  complete-three-step" > <a href="#"> <strong> <i class="icon-wallet icon"></i> Pricing</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item complete-three-step"> <a href="#"> <strong> <i class="icon-sale icon"></i> Discount & Refund</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item complete-three-step"> <a href="#"> <strong> <i class="icon-businessman icon"></i> Session</strong> </a> </li>-->
+      <!-- <li class="stepprogress-item  complete-three-step"> <a href="#"> <strong> <i class="icon-capitalize icon"></i> Custom Information</strong> </a></li>-->
+
+      <li *ngFor="let step of step;let i = index" [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'"
+        (click)="openActiveTab(step['step'])" class="stepprogress-item {{step.cssClass}}">
+        <strong>
+          <i class="newicon " aria-hidden="true"></i>
+          <svg class="additional-icn" xmlns="http://www.w3.org/2000/svg" width="20.674" height="22.627"
+            viewBox="0 0 586.674 607.627">
+            <g id="Group_39724" data-name="Group 39724" transform="translate(-10.476)">
+              <g id="Group_39723" data-name="Group 39723">
+                <g id="Page-1_85_">
+                  <g id="_x30_86---Information">
+                    <path id="Shape_147_"
+                      d="M471.434,356.2A125.716,125.716,0,1,0,597.15,481.911,125.716,125.716,0,0,0,471.434,356.2Zm31.429,199.05a31.429,31.429,0,0,1-62.858,0V481.911a31.429,31.429,0,0,1,62.858,0Zm-31.429-115.24a31.429,31.429,0,1,1,31.429-31.429A31.429,31.429,0,0,1,471.434,440.005Z" />
+                    <path id="Path_238_"
+                      d="M471.434,471.434a10.476,10.476,0,0,0-10.476,10.476v73.334a10.476,10.476,0,0,0,20.952,0V481.91a10.476,10.476,0,0,0-10.476-10.476Z"
+                      fill-rule="evenodd" />
+                    <circle id="Oval_35_" cx="10.476" cy="10.476" r="10.476" transform="translate(460.958 398.1)" />
+                    <path id="Shape_146_"
+                      d="M471.434,157.145V94.287a31.429,31.429,0,0,0-31.429-31.429H408.576V10.476a10.476,10.476,0,0,0-20.952,0V62.858H303.813V10.476a10.476,10.476,0,0,0-20.952,0V62.858H199.05V10.476a10.476,10.476,0,1,0-20.952,0V62.858H94.287V10.476a10.476,10.476,0,0,0-20.953,0V62.858H41.9A31.429,31.429,0,0,0,10.476,94.287v62.858a10.476,10.476,0,1,1,0,20.952V576.2A31.429,31.429,0,0,0,41.9,607.626H396.277a146.522,146.522,0,0,1,75.157-272.384V178.1a10.476,10.476,0,1,1,0-20.952Zm-83.81-81.883v29.5a10.476,10.476,0,0,0,20.952,0v-29.5a31.429,31.429,0,1,1-20.952,0Zm-20.953,81.883h10.476a10.476,10.476,0,1,1,0,20.952H366.671a10.476,10.476,0,1,1,0-20.952Zm-31.429,10.476A10.476,10.476,0,0,1,324.766,178.1H314.29a10.476,10.476,0,1,1,0-20.952h10.476A10.476,10.476,0,0,1,335.242,167.621ZM282.861,75.262v29.5a10.476,10.476,0,0,0,20.952,0v-29.5a31.429,31.429,0,1,1-20.952,0Zm-20.953,81.883h10.476a10.476,10.476,0,1,1,0,20.952H261.908a10.476,10.476,0,0,1,0-20.952Zm-31.429,10.476A10.476,10.476,0,0,1,220,178.1H209.527a10.476,10.476,0,1,1,0-20.952H220A10.476,10.476,0,0,1,230.479,167.621ZM178.1,75.262v29.5a10.476,10.476,0,1,0,20.952,0v-29.5a31.429,31.429,0,1,1-20.952,0Zm-20.952,81.883h10.476a10.476,10.476,0,0,1,0,20.952H157.145a10.476,10.476,0,1,1,0-20.952Zm-10.477,73.334a10.476,10.476,0,0,1-10.476,10.476H73.334a10.476,10.476,0,0,1,0-20.952h62.858A10.476,10.476,0,0,1,146.668,230.479Zm-20.952-62.858A10.476,10.476,0,0,1,115.24,178.1H104.764a10.476,10.476,0,1,1,0-20.952H115.24A10.476,10.476,0,0,1,125.716,167.621ZM73.334,75.262v29.5a10.476,10.476,0,0,0,20.952,0v-29.5a31.429,31.429,0,1,1-20.952,0ZM41.9,167.621a10.476,10.476,0,0,1,10.476-10.476H62.857a10.476,10.476,0,0,1,0,20.952H52.382A10.477,10.477,0,0,1,41.9,167.621ZM282.861,429.529H73.334a10.476,10.476,0,0,1,0-20.952H282.86a10.476,10.476,0,0,1,0,20.952Zm-220-73.334a10.476,10.476,0,0,1,10.476-10.476h115.24a10.476,10.476,0,0,1,0,20.952H73.334A10.476,10.476,0,0,1,62.858,356.2Zm345.718-52.382H73.334a10.476,10.476,0,0,1,0-20.952H408.576a10.476,10.476,0,1,1,0,20.952Zm0-62.858H178.1a10.476,10.476,0,1,1,0-20.952H408.576a10.476,10.476,0,1,1,0,20.952ZM429.529,178.1H419.053a10.476,10.476,0,1,1,0-20.952h10.476a10.476,10.476,0,1,1,0,20.952Z" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+          {{step.name}}</strong>
+
+      </li>
+    </ul>
+  </div>
+  <div class="create-event-right-side create-new-evnt">
+    <div class="white-area-create-event">
+
+      <!-- Basic Information Section -->
+      <app-basic-information [currentConfigDetail]="currentConfigDetail"
+        (completed)="completeStep();nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName=='BASIC_INFO'"
+        [(basicInformation)]="basicInformation" [eventId]="eventId" [save]="submitSubject"></app-basic-information>
+      <!-- Basic Information Section End -->
+
+      <!-- Image & Description Section -->
+      <app-image-description (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName=='IMAGE_DESCRIPTION'" [(imageDescription)]="imageDescription" [eventId]="eventId"
+        [save]="submitSubject"></app-image-description>
+      <!-- Image & Description Section End -->
+
+      <!-- configuration Section -->
+      <app-configuration-pricing (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName=='CONFIGURATION'" [(configuration)]="configuration" [eventId]="eventId"
+        [save]="submitSubject"></app-configuration-pricing>
+      <!-- configuration Section End-->
+
+      <!-- Pricing Section-->
+      <app-pricing (completed)="completeStep();nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName=='PRICING'"
+        [(pricing)]="pricing" [(register)]="register" [configuration]="configuration" [eventId]="eventId"
+        [save]="submitSubject"></app-pricing>
+      <!-- Pricing Section End -->
+
+      <!-- PAYMENT CONFIGURATION Section -->
+      <app-payment-configuration (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName =='PAYMENT_CONFIGURATION'" [eventId]="eventId"
+        [save]="submitSubject"></app-payment-configuration>
+      <!-- PAYMENT CONFIGURATION Section End-->
+      <!--  INVOICE CONFIGURATION Section -->
+      <app-invoice-configuration (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName=='INVOICE_CONFIGURATION'" [(invoice)]="invoiceInfo" [eventId]="eventId"
+        [save]="submitSubject"></app-invoice-configuration>
+      <!-- INVOICE CONFIGURATION Section End-->
+      <!-- Discount Section -->
+      <app-discount-refund (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName=='DISCOUNT_REFUND'" [(discountRefund)]="discountRefund" [eventId]="eventId"
+        [save]="submitSubject"></app-discount-refund>
+      <!-- Discount Section End-->
+
+      <!-- Session Section -->
+      <app-session (completed)="completeStep();nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName=='SESSION'"
+        [(session)]="session" [eventId]="eventId" [save]="submitSubject"></app-session>
+      <!-- Session Section End-->
+
+      <!-- Custom info -->
+      <app-custom-information (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName=='CUSTOM_INFO'" [(customInfo)]="customInfo" [eventId]="eventId"
+        [save]="submitSubject"></app-custom-information>
+      <!--  Custom info End -->
+
+      <!--Additional information-->
+      <app-additional-information (completed)="completeStep();nextBackActiveTab(activeTabName,'next')"
+        *ngIf="activeTabName == 'ADDITIONAL_INFORMATION'" [eventId]="eventId"
+        [save]="submitSubject"></app-additional-information>
+      <!--Additional information end-->
+
+      <!-- back and next button -->
+      <div class="row button-save-create">
+        <div *ngIf="step.length != 0" class="col-md-4 col-sm-4 col-xs-4">
+          <input *ngIf="activeTabName != 'BASIC_INFO'" (click)="nextBackActiveTab(activeTabName,'back')"
+            class="save-changes backbtn" type="button" value="{{'event.create.backBtn.text' | translate}}">
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+          <input type="button" (click)="save(true);nextBackActiveTab(activeTabName,'finish')"
+            *ngIf="activeTabName=='BASIC_INFO'" class="save-changes confirm-pay fright" value="Save & Exit">
+
+          <input (click)="nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName=='INVOICE_CONFIGURATION'"
+            class="save-changes backbtn fright" type="button" value="{{'event.create.skipBtn.text' | translate}}">
+
+          <!-- <input (click)="submitSubject.next(null);" *ngIf="lastStep == activeTabName" class="save-changes fright"
+                 type="button" value="Save"> -->
+          <!-- <input (click)="save();nextBackActiveTab(activeTabName,'next')" *ngIf="lastStep == activeTabName"
+                 class="save-changes fright"
+                 type="button" value="{{'event.create.saveBtn.text' | translate}}"> -->
+          <input (click)="save(false);" *ngIf="lastStep != activeTabName" class="save-changes fright" type="button"
+            value="{{'event.create.nextBtn.text' | translate}}">
+          <input (click)="nextBackActiveTab(activeTabName,'finish');toast();save(true)"
+            *ngIf="lastStep == activeTabName" class="save-changes fright" type="button"
+            value="{{'event.create.saveBtn.text' | translate}}">
+          <input (click)="save();click('publish');" *ngIf="lastStep == activeTabName"
+            class="save-changes confirm-pay fright" type="button"
+            value="{{'event.create.publishBtn.text' | translate}}">
+        </div>
+      </div>
+      <!-- back and next button -->
+    </div>
+  </div>
+</div>
+
+
+<!-- Paypal Configuration Details model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model" id="configuremodel"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Paypal Configuration Details</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="paypal-configure">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Client ID</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width ">
+              <mat-label>Secret Key</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-md-12 saveinfo">
+              <input class="save-changes fright" type="button" value="Configure">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Paypal Configuration Details model -->
+
+<!-- Stripe Configuration Details model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model" id="stripeconfiguremodel"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Stripe Configuration Details</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="paypal-configure">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Application Name</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width ">
+              <mat-label>Application Id</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width ">
+              <mat-label>Sandbox Application Id</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width ">
+              <mat-label>Access Token</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-md-12 saveinfo">
+              <input class="save-changes fright" type="button" value="Configure">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Stripe Configuration Details model -->
+
+<!-- Stripe Configuration Details model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model" id="squareconfiguremodel"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Square Configuration Details</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="paypal-configure">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Secret Key</mat-label>
+              <input matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width ">
+              <mat-label>Publishable Key</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-md-12 saveinfo">
+              <input class="save-changes fright" type="button" value="Configure">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Stripe Configuration Details model -->
+
+
+<!--
+<div class="row martopevent">
+  <div class="col-md-6">
+    <mat-checkbox>Recurring Event</mat-checkbox>
+  </div>
+</div>
+<div class="row martopevent">
+  <div class="col-md-6 col-sm-6">
+    <mat-form-field class="example-full-width">
+      <mat-label>Recurrence</mat-label>
+      <mat-select>
+        <mat-option>Recurrence</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <mat-form-field class="example-full-width dateinfo">
+      <mat-label>End Date</mat-label>
+      <input matInput [matDatepicker]="myDatepicker">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row martopevent">
+  <div class="col-md-12">
+    <ul class="weakly-recurring">
+      <li>Repeat on</li>
+      <li>
+        <mat-checkbox>Mon</mat-checkbox>
+        <mat-checkbox>Tue</mat-checkbox>
+        <mat-checkbox>Wen</mat-checkbox>
+        <mat-checkbox>Thu</mat-checkbox>
+        <mat-checkbox>Fri</mat-checkbox>
+        <mat-checkbox>Sat</mat-checkbox>
+        <mat-checkbox>Sun</mat-checkbox>
+
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row martopevent">
+  <mat-radio-group aria-label="Select an option">
+    <div class="col-md-12">
+      <mat-radio-button value="1"></mat-radio-button>
+      <mat-form-field class="occur">
+        <mat-label>Occurs on</mat-label>
+        <mat-select>
+          <mat-option>Occurs on</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span class="month"> of the month </span>
+    </div>
+    <div class="col-md-12 martopevent">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-radio-button value="2" class="martopcuso">Customize your dates</mat-radio-button>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-2 col-sm-2">
+              <div class="martopcuso2">
+                <mat-checkbox >Jan</mat-checkbox>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-5">
+              <mat-form-field class="example-full-width dateinfo">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="myDatepicker2">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5 col-sm-5">
+              <mat-form-field class="example-full-width dateinfo">
+                <mat-label>Time</mat-label>
+                <input matInput [matDatepicker]="myDatepicker3">
+                <mat-datepicker-toggle matSuffix [for]="myDatepicker3"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker3></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-radio-group>
+</div>-->

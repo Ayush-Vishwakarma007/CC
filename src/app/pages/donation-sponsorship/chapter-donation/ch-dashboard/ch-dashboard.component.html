@@ -1,0 +1,48 @@
+<div *ngIf="status == true " class="">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-6 whitebox">
+      <div class="dailydonation">
+        <!--      Daily Donations-->
+      </div>
+      <!-- chart box  -->
+      <div class="chartmain">
+        <div id="donationChart" *ngIf="donationChartOptions?.donationChart">
+          <apx-chart
+            [chart]="donationChartOptions.donationChart"
+            [dataLabels]="donationChartOptions.dataLabels"
+            [fill]="donationChartOptions.fill"
+            [grid]="donationChartOptions.grid"
+            [markers]="donationChartOptions.markers"
+            [series]="donationChartOptions.series"
+            [stroke]="donationChartOptions.stroke"
+            [title]="donationChartOptions.title"
+            [tooltip]="donationChartOptions.tooltip"
+            [xaxis]="donationChartOptions.xaxis"
+            [yaxis]="donationChartOptions.yaxis"
+          ></apx-chart>
+        </div>
+
+      </div>
+      <!-- chart box  -->
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-6 whitebox">
+      <div class="chartmain">
+        <div id="sponsorCategoryChart" *ngIf="pieChartOptions">
+          <apx-chart
+            [chart]="pieChartOptions.sponsorCategoryChart"
+            [dataLabels]="pieChartOptions.dataLabels"
+            [fill]="pieChartOptions.fill"
+            [xaxis]="pieChartOptions.xaxis"
+            [plotOptions]="pieChartOptions.plotOptions"
+            [labels]="pieChartOptions.labels"
+            [title]="pieChartOptions.title"
+            [tooltip]="pieChartOptions.tooltip"
+            [responsive]="pieChartOptions.responsive"
+            [series]="pieChartOptions.series"
+          ></apx-chart>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

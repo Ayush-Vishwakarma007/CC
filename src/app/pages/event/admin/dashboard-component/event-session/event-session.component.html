@@ -1,0 +1,209 @@
+<div class="row">
+  <div class="col-md-6 performancestxt">
+    <span>{{'event.dashboard.session.title' | translate}}</span>
+    {{'event.dashboard.session.text' | translate}}
+  </div>
+  <!--  <div class="col-md-6 perfermanceright-btn">-->
+  <!--    <button class="print">-->
+  <!--      <i class="icon-print newicon"></i>-->
+  <!--    </button>-->
+  <!--    <button class="add">+ Add</button>-->
+  <!--  </div>-->
+</div>
+
+<div class="donation-sponsor">
+  <table>
+    <tr>
+      <th>
+        {{'event.dashboard.session.table.header.sessionTitle.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.session.table.header.venue.text' | translate}}
+      </th>
+      <th>
+        {{'event.dashboard.session.table.header.time.text' | translate}}
+      </th>
+      <th width="70" *ngIf="eventDetail['selfCreated'] || eventDetail['admin']">
+        {{'event.dashboard.session.table.header.action.text' | translate}}
+      </th>
+    </tr>
+    <tr *ngFor="let list of sessionList">
+      <td width="30%">
+        {{list?.name}}
+        <i class="subtxt"
+           style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+          {{list?.description}}
+        </i>
+      </td>
+      <td>
+        {{list?.address}}
+      </td>
+      <td>
+        {{list?.startDateTime | date:"MMM dd, yyyy hh:mm a"}} - {{ list?.endDateTime | date:"MMM dd, yyyy hh:mm a"}}
+      </td>
+      <td *ngIf="eventDetail['selfCreated'] || eventDetail['admin']">
+        <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a class="dropdown-item" (click)="getSessionDetail(list); openModalWithClass(template)" >
+              <i class="fa fa-angle-right" aria-hidden="true"></i> {{'event.dashboard.session.table.header.action.view.text' | translate}}
+            </a>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+  </table>
+</div>
+
+<ng-template #template>
+  <!-- <div class="modal-dialog" role="document"> -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{sessionDetail?.name}}
+          <span>{{sessionDetail?.description}}</span>
+        </h5>
+        <button type="button" (click)="modalRef.hide()" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body tabsection">
+        <div class="row">
+          <div class="col-md-6 performancestxt">
+            <span>{{'event.dashboard.session.view.popup.title' | translate}}</span>
+            {{'event.dashboard.session.view.popup.text' | translate}}
+          </div>
+        </div>
+        <div class="donation-sponsor">
+          <table>
+            <tr>
+              <th>
+               {{'event.dashboard.session.view.popup.table.header.name.text' | translate}}
+              </th>
+              <th>
+                {{'event.dashboard.session.view.popup.table.header.email.text' | translate}}
+              </th>
+              <th>
+                {{'event.dashboard.session.view.popup.table.header.phone.text' | translate}}
+              </th>
+              <th>
+               {{'event.dashboard.session.view.popup.table.header.checkingTime.text' | translate}}
+              </th>
+            </tr>
+            <tr *ngFor="let list of sessionDetail?.attendees">
+              <td width="30%">
+                {{list?.registration?.lastName}} {{list?.registration?.lastName}}
+              </td>
+              <td>
+                {{list?.registration?.email}}
+              </td>
+              <td>
+                {{list?.registration?.phone}}
+              </td>
+              <td>
+                {{list?.checkinTime | date:"MMM dd, yyyy hh:mm a"}}
+              </td>
+              <!--<td>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item" (click)="getSessionDetail(list)" data-toggle="modal"
+                       data-target="#sessionModel">
+                      <i class="fa fa-angle-right" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                </div>
+
+              </td>-->
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</ng-template>
+
+
+<!-- Modal -->
+<div class="modal right fade sidebar performance-mod " id="sessionModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{sessionDetail?.name}}
+          <span>{{sessionDetail?.description}}</span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body tabsection">
+        <div class="row">
+          <div class="col-md-6 performancestxt">
+            <span>{{'event.dashboard.session.view.popup.title' | translate}}</span>
+            {{'event.dashboard.session.view.popup.text' | translate}}
+          </div>
+        </div>
+        <div class="donation-sponsor">
+          <table>
+            <tr>
+              <th>
+               {{'event.dashboard.session.view.popup.table.header.name.text' | translate}}
+              </th>
+              <th>
+                {{'event.dashboard.session.view.popup.table.header.email.text' | translate}}
+              </th>
+              <th>
+                {{'event.dashboard.session.view.popup.table.header.phone.text' | translate}}
+              </th>
+              <th>
+               {{'event.dashboard.session.view.popup.table.header.checkingTime.text' | translate}} hfgh
+              </th>
+            </tr>
+            <tr *ngFor="let list of sessionDetail?.attendees">
+              <td width="30%">
+                {{list?.registration?.lastName}} {{list?.registration?.lastName}}
+              </td>
+              <td>
+                {{list?.registration?.email}}
+              </td>
+              <td>
+                {{list?.registration?.phone}}
+              </td>
+              <td>
+                {{list?.checkinTime | date:"MMM dd, yyyy hh:mm a"}}
+              </td>
+              <!--<td>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item" (click)="getSessionDetail(list)" data-toggle="modal"
+                       data-target="#sessionModel">
+                      <i class="fa fa-angle-right" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                </div>
+
+              </td>-->
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

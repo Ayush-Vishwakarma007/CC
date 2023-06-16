@@ -1,0 +1,195 @@
+<div class="reg-left">
+  <ul class="menuleft becomemembermenu">
+    <li (click)="addMemberFormSubmit(details,'')" *ngFor="let details of memberDetail;let i=index"
+        [ngClass]="activeIndex >= i ? 'active' : ''">
+      <a  >
+        <p> {{details.stepName}} </p>
+      </a>
+      <span></span>
+    </li>
+  </ul>
+</div>
+
+<div class="create-event-right-side create-new-evnt">
+  <div class="white-area-create-event">
+    <div *ngIf="!paymentDiv" class="">
+      <form [formGroup]="addMemberForm" id="addMemberForm">
+        <!-- first step -->
+        <div class="stepmin">
+          <h1>{{showName}}</h1>
+          <div class="row">
+            <div *ngFor="let member of showArray;let i=index">
+              <div *ngIf="member.type!='RADIO_BUTTON' && member.type!='CHECK_BOX'" class="col-md-6 martop-date">
+                <!-- text-->
+                <div *ngIf="member.type=='TEXT'" class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{member.name}}
+                      <span *ngIf="member.required == true">*</span>
+                    </mat-label>
+                    <input formControlName="{{member.fieldName}}" matInput>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!-- text-->
+                <!-- NUMBER-->
+                <div *ngIf="member.type=='NUMBER'" class="col-md-12">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{member.name}}  <i *ngIf="member.required==true">*</i></mat-label>
+                    <input (keypress)="numberOnly($event)" formControlName="{{member.fieldName}}" matInput>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!-- NUMBER-->
+                <!-- URL-->
+                <div *ngIf="member.type=='URL'" class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{member.name}}
+                      <span *ngIf="member.required == true">*</span>
+                    </mat-label>
+                    <input formControlName="{{member.fieldName}}" matInput>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!-- URL-->
+                <!-- DATE-->
+                <div *ngIf="member.type=='DATE'" class="col-md-12">
+                  <mat-form-field class="example-full-width datematerial">
+                    <mat-label>{{member.name}}  <i *ngIf="member.required==true">*</i></mat-label>
+                    <input [matDatepicker]="picker" formControlName="{{member.fieldName}}"
+                           matInput placeholder="{{member.fieldName}}" type="text">
+                    <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!-- DATE-->
+                <!-- DROP_DOWN-->
+                <div *ngIf="member.type=='DROP_DOWN'" class="col-md-12">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>{{member.name}}<i *ngIf="member.required==true">*</i></mat-label>
+                    <mat-select formControlName="{{member.fieldName}}">
+                      <mat-option>Select {{member.name}}</mat-option>
+                      <mat-option *ngFor="let m of member.options" value="{{m}}">
+                        {{m}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!-- DROP_DOWN-->
+                <!--TEXT_AREA-->
+                <div *ngIf="member.type=='TEXT_AREA'" class="col-md-12">
+                  <mat-form-field class="example-full-width address-evnt">
+                    <mat-label>{{member.name}}<i *ngIf="member.required==true">*</i></mat-label>
+                    <textarea formControlName="{{member.fieldName}}" matInput placeholder="..." rows="2"
+                              value="{{m}}">{{m}}</textarea>
+                  </mat-form-field>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!--TEXT_AREA-->
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <span *ngFor="let member of showArray;let i=index">
+              <div *ngIf="member.type=='RADIO_BUTTON'" class="col-md-6 martop-date">
+                <!--RADIO_BUTTON-->
+                <div *ngIf="member.type=='RADIO_BUTTON'" class="{{member.type}}">
+                  <label class="example-margin">{{member.name}}<i *ngIf="member.required==true">*</i></label>
+                  <section class="example-section">
+                    <mat-radio-group formControlName="{{member.fieldName}}">
+                      <mat-radio-button *ngFor="let m of member.options" [checked]="m == member.filedValue"
+                                        class="example-margin" value="{{m}}">{{m}}</mat-radio-button>
+                    </mat-radio-group>
+                  </section>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                <!--RADIO_BUTTON-->
+              </div>
+               <div *ngIf="member.type=='CHECK_BOX'" class="col-md-6 martop-date">
+                <!--RADIO_BUTTON-->
+                <div *ngIf="member.type=='CHECK_BOX'" class="{{member.type}}">
+                  <label class="example-margin">{{member.name}}<i *ngIf="member.required==true">*</i></label>
+                  <section class="example-section">
+                     <ng-container *ngFor="let m of member.optionList">
+                    <mat-checkbox class="example-margin" [(ngModel)]="m['check']" [ngModelOptions]="{standalone: true}" [value]="m['value']" [checked]="m['check']==true">{{m['value']}}</mat-checkbox>
+                  </ng-container>
+                  </section>
+                  <div>
+                    <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                  </div>
+                </div>
+                   <!--RADIO_BUTTON-->
+              </div>
+            </span>
+          </div>
+        </div>
+
+        <div class="row button-save-create">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <input (click)="backTab()" class="save-changes backbtn" type="button" value="Back">
+          </div>
+          <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+            <input (click)="addMemberFormSubmit(undefined,null)" *ngIf="!lastStep " class="save-changes fright"
+                   type="button"
+                   value="Next">
+            <input (click)="onPaymentStatus(null)" *ngIf="lastStep"
+                   class="save-changes fright" type="button" value="Submit">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="paymentDiv" class="">
+      <div class="main-become-member paymentDiv mainnewsscreen">
+        <div class="padd-member">
+          <!--  Payment info  -->
+          <div class="payment-info">
+            <h5>
+              Payment info
+            </h5>
+            <p>
+              <!--              <img alt="" src="assets/icon/lock.svg"> Credit Card / Debit Card Info</p>-->
+            <div class="row">
+              <div class="col-md-5">
+                <div class="lifetime-membership">
+                  <h6>{{membershipDetail['name']}} ( {{otherData['durationType']}} )</h6>
+                  <span>$ {{price}}</span>
+                  <button (click)="onPaymentStatus(null)">Pay Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  Payment info  -->
+        </div>
+        <div class="row button-save-create">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <input (click)="backTab()" class="save-changes backbtn" type="button" value="Back">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

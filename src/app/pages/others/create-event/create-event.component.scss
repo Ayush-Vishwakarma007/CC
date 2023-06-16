@@ -1,0 +1,66 @@
+.valid-msg{
+  color:red;
+}
+
+.event-datailslider {
+
+  width: 479px;
+  margin: auto;
+
+}
+
+.icon-user:before {
+
+  content: '\0044';
+
+}
+
+.fa-times-circle:before {
+
+  content: "\f057"!important;
+  
+}
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  align-content: center;
+  align-items: center;
+
+  .mat-checkbox-background{
+
+ 
+  }
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+.mb-5
+{
+  margin-bottom: 5%;
+}
+.mt-5
+{
+  margin-top: 5%;
+  margin-left: 5%,
+}
+.edit-btn-dynamic
+{
+    background: transparent;
+    border: 0px;
+    position: absolute;
+}
+.create-event li
+{
+  width: 11%;
+}
+
+
+@media screen and (max-width: 1199px){
+  .white-area-create-event {
+   margin: 20px !important;  
+    padding: 0px 23px 23px 23px !important;  
+  }
+}

@@ -1,0 +1,391 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="selecttype titlecenter nomargintop">
+          <a [routerLink]="'/banner-management-list'">
+            <img alt="" src="assets/icon/arrow-news.svg">
+          </a>
+          <h2 *ngIf="bannerId  == '' || bannerId == undefined">Add Banner</h2>
+          <h2 *ngIf="bannerId  != '' && bannerId != undefined">Edit Banner</h2>
+        </div>
+      </div>
+    </div>
+    <!-- <button (click)="resetForm()" class="addmember" type="button" data-toggle="modal" data-target="#viewDetailModal">+ Add Banner </button> -->
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="row borrbottm">
+      <form [formGroup]="bannerDataForm" class="example-form" id="bannerDataForm">
+        <div class="col-sm-6">
+          <div>
+            <mat-form-field class="select-chap example-full-width" *ngIf="chapterList.length >1">
+              <mat-label>Chapter</mat-label>
+              <mat-select (selectionChange)="changeChapterSelection($event.value)"
+              formControlName="chapterId">
+              <!-- <mat-checkbox (change)="selectAllChange($event)" [checked]="selectAllChapter">
+                Select All
+              </mat-checkbox> -->
+                <mat-option>Select Chapter</mat-option>
+                <mat-option *ngFor="let chapter of chapterList;let i = index"
+                                    value="{{chapter['id']}}">
+                          {{chapter['name']}}
+                        </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" *ngIf="chapterList.length ==1">
+              <mat-label>Select Chapter</mat-label>
+              <mat-select [value]="myselectchapter"  >
+                <mat-option *ngFor="let list of chapterList" value="{{list.id}}"  >{{list.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isSubmit && bannerDataForm.controls.chapterId.errors">
+              <span *ngIf="isSubmit && bannerDataForm.controls.chapterId.errors" class="valid-msg">Chapter is required</span>
+            </div>
+          </div>
+          <div>
+            <mat-form-field class="select-chap bannertype example-full-width">
+              <mat-label>Banner Type</mat-label>
+              <input formControlName="bannerType" [matAutocomplete]="auto" aria-label="Number" matInput type="text">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div *ngIf="isSubmit && bannerDataForm.controls.bannerType.errors ">
+              <span *ngIf="isSubmit && bannerDataForm.controls.bannerType.errors" class="valid-msg">
+                Banner Type is required
+              </span>
+            </div>
+          </div>
+          <div>
+            <mat-form-field class="select-chap bannertype example-full-width">
+              <mat-label>Rotation Time(In Sec.)</mat-label>
+              <input formControlName="intervalTime" matInput (keypress)="numberOnly($event)" type="text">
+            </mat-form-field>
+            <div *ngIf="isSubmit && bannerDataForm.controls.intervalTime.errors ">
+              <span *ngIf="isSubmit && bannerDataForm.controls.intervalTime.errors" class="valid-msg">Rotation Time is
+                required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 discriptionchp">
+          <mat-form-field class="example-full-width">
+            <mat-label>Enter Description</mat-label>
+            <textarea formControlName="details" matInput placeholder="Enter Description"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+    <div class="banner-thumb-main">
+      <div class="banner-box" *ngIf="bannerList?.length != 0">
+        <div class="imagethumb" *ngFor="let banner of bannerList;let i = index">
+
+          <div *ngIf="banner.bannerType == 'IMAGE'" [style.backgroundImage]="'url('+(banner.bannerUrl| authImages )+')'"
+            class="bgblur"></div>
+           <div   *ngIf="banner.bannerUrl.indexOf(banner.bannerUrl) !== -1"  >
+          <img *ngIf="banner.bannerType == 'IMAGE'" [src]="banner.bannerUrl |  authImages  " alt="" class="img-banner-center"></div>
+          <div   *ngIf=" banner.bannerUrl .includes('http')" >
+            <img *ngIf="banner.bannerType == 'IMAGE'" [src]="banner.bannerUrl  " alt="" class="img-banner-center">
+          </div>
+          <video *ngIf="banner.bannerType == 'VIDEO'" class="videowid" controls>
+           
+            <source [src]="banner.bannerUrl  | communityImages">
+         
+          </video>
+          <button (click)="deleteBanner(i)" class="emailbutton">
+            <img alt="" class="small-icon" src="assets/icon/close.png">
+          </button>
+          <button (click)="editBanner(banner,i)" class="emailbutton edit"><i aria-hidden="true"
+              class="newicon icon-edit-member"></i></button>
+          <ui-switch (change)="onChange($event,i)" [checked]="!banner.disable" class="switchbtn"> </ui-switch>
+        </div>
+      </div>
+      <button class="addbutton-plus" (click)="resetForm(); openModalWithClass1(template1)" type="button" data-toggle="modal"
+        data-target="#viewDetailModal">
+        <img src="assets/icon/plus.svg" alt=""><br>
+        Add Banner
+      </button>
+    </div>
+    <div class="row clearsm">
+      <div class="col-md-12 sub-btn thumbdone">
+        <button (click)="saveBanner()"> Save </button> <button routerLink="/banner-management-list" class="cancel">
+          Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #template1>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content padd-area">
+      <div class="modal-header">
+        <h5 class="modal-title"> Banner Details</h5>
+        <button (click)="modalRef.hide()" id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="imageUrl != ''" class="imagedisplayarea">
+          <div class="bgblur" [style.backgroundImage]="'url('+(imageUrl| communityImages)+')'"></div>
+          <img *ngIf="isImage" [src]="imageUrl | communityImages" alt="">
+          <video *ngIf="isVideo" width="100%" height="200" controls>
+            <source [src]="imageUrl | communityImages"></video>
+          <button (click)="removeBanner()"><img alt="" src="assets/icon/cancel.svg"></button>
+        </div>
+        <div class="row " style="margin-top: 15px;">
+          <div class="col-sm-8">
+            <mat-form-field class="select-chap example-full-width">
+              <mat-label>Media Type<i>*</i></mat-label>
+              <mat-select (selectionChange)="onSelectionChange($event.value)" [(ngModel)]="bannerDetail.bannerType"
+                [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let media of mediaType" value="{{media['value']}}">{{media['name']}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <div class="image-main-up">
+              <div class="imageup create-img-upload gallery-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                  (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                  (queueCompleted)="imageQueueCompleted()" (uploadStarted)="uploadStarted()"
+                  (uploadedFilesChange)="uploadedFilesChange()" [(uploadedFiles)]="imageList" [maxFileCount]="1"
+                  [uploadUrl]="mediaUploadUrl" [validTypes]="validTypes" [maxFileSize]="maxFileSize">
+                </app-file-uploader-vertical>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-sm-2 ortxt">
+            Or
+          </div>
+          <div class="col-sm-5">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Url</mat-label>
+              <input matInput placeholder="Enter Url">
+            </mat-form-field>
+          </div> -->
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Title</mat-label>
+              <input matInput placeholder="Enter Title" [(ngModel)]="bannerDetail.bannerName"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 colorpicker">
+            <input readonly [style.background]="this.colorList['nameColor']['foregroundColorCode']"
+              [colorPicker]="this.colorList['nameColor']['foregroundColorCode']" [cpPosition]="'left'"
+              [cpPositionOffset]="'0%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+              [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+              [(colorPicker)]="this.colorList['nameColor']['foregroundColorCode']" />
+            <label><b class="label-margin"> {{'banner.color.title' | translate}} </b>
+            </label>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Detail</mat-label>
+              <textarea matInput placeholder="Enter Detail" [(ngModel)]="bannerDetail.bannerDisplayText"
+                [ngModelOptions]="{standalone: true}"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 colorpicker">
+            <input readonly [style.background]="this.colorList['textColor']['foregroundColorCode']"
+              [colorPicker]="this.colorList['textColor']['foregroundColorCode']" [cpPosition]="'top'"
+              [cpPositionOffset]="'0%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+              [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+              [(colorPicker)]="this.colorList['textColor']['foregroundColorCode']" />
+            <label><b class="label-margin">{{'banner.color.text' | translate}} </b>
+            </label>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Button Text</mat-label>
+              <input matInput placeholder="Enter Button Text" [(ngModel)]="bannerDetail.buttonText"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Button link</mat-label>
+              <input matInput placeholder="Enter Button link" [(ngModel)]="bannerDetail.buttonAction"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-12 colorpicker">
+                <input readonly [style.background]="this.colorList['buttonColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['buttonColor']['foregroundColorCode']" [cpPosition]="'top'"
+                  [cpPositionOffset]="'0%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['buttonColor']['foregroundColorCode']" />
+                <label><b class="label-margin">{{'banner.color.button' | translate}} </b>
+                </label>
+              </div>
+              <div class="col-sm-12 colorpicker clr-top">
+                <input readonly [style.background]="this.colorList['buttonTextColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['buttonTextColor']['foregroundColorCode']" [cpPosition]="'top'"
+                  [cpPositionOffset]="'0%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['buttonTextColor']['foregroundColorCode']" />
+                <label><b class="label-margin">{{'banner.color.button.text' | translate}}</b>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-12 sub-btn">
+            <button (click)="saveBannerDetail()"> Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<i id="openModel" (click)="openModalWithClass1(template1)"></i>
+ <!--<div class="modal right fade performance-mod" id="viewDetailModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content padd-area">
+      <div class="modal-header  ">
+        <button id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container leftarrow">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="imageUrl != ''" class="imagedisplayarea">
+          <div class="bgblur" [style.backgroundImage]="'url('+imageUrl+')'"></div>
+          <img *ngIf="isImage" src="{{imageUrl}}" alt="">
+          <video *ngIf="isVideo" width="100%" height="200" controls>
+            <source src="{{imageUrl}}"></video>
+          <button (click)="removeBanner()"><img alt="" src="assets/icon/cancel.svg"></button>
+        </div>
+        <div class="row " style="margin-top: 15px;">
+          <div class="col-sm-8">
+            <mat-form-field class="select-chap example-full-width">
+              <mat-label>Media Type<i>*</i></mat-label>
+              <mat-select (selectionChange)="onSelectionChange($event.value)" [(ngModel)]="bannerDetail.bannerType"
+                [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let media of mediaType" value="{{media['value']}}">{{media['name']}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <div class="image-main-up">
+              <div class="imageup create-img-upload gallery-upload">
+                <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                  (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                  (queueCompleted)="imageQueueCompleted()" (uploadStarted)="uploadStarted()"
+                  (uploadedFilesChange)="uploadedFilesChange()" [(uploadedFiles)]="imageList" [maxFileCount]="1"
+                  [uploadUrl]="mediaUploadUrl" [validTypes]="validTypes" [maxFileSize]="maxFileSize">
+                </app-file-uploader-vertical>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Title</mat-label>
+              <input matInput placeholder="Enter Title" [(ngModel)]="bannerDetail.bannerName"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 colorpicker">
+            <input readonly [style.background]="this.colorList['nameColor']['foregroundColorCode']"
+              [colorPicker]="this.colorList['nameColor']['foregroundColorCode']" [cpPosition]="'left'"
+              [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+              [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+              [(colorPicker)]="this.colorList['nameColor']['foregroundColorCode']" />
+            <label><b class="label-margin"> {{'banner.color.title' | translate}} </b>
+            </label>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Enter Detail</mat-label>
+              <textarea matInput placeholder="Enter Detail" [(ngModel)]="bannerDetail.bannerDisplayText"
+                [ngModelOptions]="{standalone: true}"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 colorpicker">
+            <input readonly [style.background]="this.colorList['textColor']['foregroundColorCode']"
+              [colorPicker]="this.colorList['textColor']['foregroundColorCode']" [cpPosition]="'top'"
+              [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+              [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+              [(colorPicker)]="this.colorList['textColor']['foregroundColorCode']" />
+            <label><b class="label-margin">{{'banner.color.text' | translate}} </b>
+            </label>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Button Text</mat-label>
+              <input matInput placeholder="Enter Button Text" [(ngModel)]="bannerDetail.buttonText"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-12 colorpicker">
+                <input readonly [style.background]="this.colorList['buttonColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['buttonColor']['foregroundColorCode']" [cpPosition]="'top'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['buttonColor']['foregroundColorCode']" />
+                <label><b class="label-margin">{{'banner.color.button' | translate}} </b>
+                </label>
+              </div>
+              <div class="col-sm-12 colorpicker">
+                <input readonly [style.background]="this.colorList['buttonTextColor']['foregroundColorCode']"
+                  [colorPicker]="this.colorList['buttonTextColor']['foregroundColorCode']" [cpPosition]="'top'"
+                  [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [cpCancelButton]="true"
+                  [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                  [(colorPicker)]="this.colorList['buttonTextColor']['foregroundColorCode']" />
+                <label><b class="label-margin">{{'banner.color.button.text' | translate}}</b>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-8">
+            <mat-form-field class="example-full-width">
+              <mat-label>Button link</mat-label>
+              <input matInput placeholder="Enter Button link" [(ngModel)]="bannerDetail.buttonAction"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-sm-12 sub-btn">
+            <button (click)="saveBannerDetail()"> Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

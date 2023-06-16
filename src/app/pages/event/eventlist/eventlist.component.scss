@@ -1,0 +1,64 @@
+// .activeBookmark{
+//     color: #0979c2 !important;
+// }
+.bookmarkActive button {
+  background: #0979c2 !important;
+}
+
+.blur-image{ position: absolute; right: 0px; left: 0px; top: 0px; bottom: 0px; z-index: -1; filter: blur(20px); background-repeat: no-repeat;
+  background-size: 100% 100%;  }
+
+body {
+
+  background: #f5f5f5 !important;
+}
+
+.eventlistpagecontent .mat-card-content {
+  margin: 0 !important;
+}
+
+.eventlistpagecontent .mat-card {
+  height: 470px !important;
+}
+
+.event_slctlist {  font-size: 20px;  border: 1px solid #e8e9e9;  padding: 0px;margin-left: 0px;outline: none;color: #666;width: 100%;}
+.blur-image{ position: absolute; right: 0px; left: 0px; top: 0px; bottom: 0px; z-index: -1; filter: blur(20px); background-repeat: no-repeat;
+  background-size: 100% 100%;  }
+.slider {
+  .item{ text-align: center; width: 100%; height: 550px;
+    img{ display: inline-block; position: absolute; left: 50%; top: 50%;  transform: translate(-50%, -50%); max-height: 100%; }
+  }
+}
+.near-me {  margin-top: 48px;  display: inline-block;  float: right; }
+.videobanner{ width: 100%; height: 550px; }
+.filtermain{ background: transparent; border: 0px; float: right; margin:20px 0 10px 0 ;
+  [class*='fa-']:before{ font-size: 29px; }
+}
+.white_boxfrm { margin-top: 62px; display: none; padding: 0px 20px 0px 20px; }
+.filterarea{ display: block;  transition: max-height .5s ease-in;  }
+.filterareaheight0{ max-height: 0;
+  transition: max-height .5s ease-out;}
+  .searchinp{ width: calc(100% - 100px); display: inline-block;}
+  .searchuser button.closebt { position: absolute; right: 10px; top: 15px; background: #333; border: 0px; width: 15px; height: 15px; border-radius: 50px;
+    img { margin-top: -11px; width: 8px; }
+}
+@media screen and (max-width: 1199px) {
+  .eventlistbanner .sub_title { font-size: 60px; }
+  .videobanner { height: 450px; }
+}
+@media screen and (max-width: 1024px) {
+  .videobanner { height: 350px; }
+}
+
+@media screen and (max-width: 991px) {
+  .eventlistbanner .sub_title { font-size: 40px; }
+
+  .videobanner { height: 300px; }
+}
+
+@media screen and (max-width: 767px) {
+  .eventlistbanner .sub_title { font-size: 20px; }  
+  .videobanner { height: 150px; }
+}
+
+

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15.664" height="15.669" viewBox="0 0 15.664 15.669">
+  <g id="Layer_2" data-name="Layer 2" transform="translate(0)">
+    <g id="Layer_1" data-name="Layer 1" transform="translate(0 0)">
+      <g id="edit" transform="translate(0)">
+        <path id="Path_1111" data-name="Path 1111" d="M.665,15.673a.675.675,0,0,1-.47-.194.667.667,0,0,1-.173-.635l.823-3.219a.675.675,0,0,1,.173-.305L12.142.2a.669.669,0,0,1,.94,0l2.39,2.39a.667.667,0,0,1,0,.94L4.354,14.656a.675.675,0,0,1-.305.173L.83,15.652A.7.7,0,0,1,.665,15.673Zm3.219-1.487Zm-1.8-2.056-.491,1.949,1.957-.5L14.078,3.062,12.612,1.6Z" transform="translate(-0.002 -0.004)" fill="#fff"/>
+        <path id="Path_1112" data-name="Path 1112" d="M40.319,11.454a.672.672,0,0,1-.467-.2l-2.39-2.39a.665.665,0,1,1,.94-.94l2.39,2.39a.664.664,0,0,1-.47,1.134Z" transform="translate(-27.369 -5.676)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

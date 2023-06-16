@@ -1,0 +1,914 @@
+<div id="vvveb-builder">
+
+  <div id="top-panel">
+    <img src="assets/editor/img/logo.png" alt="Vvveb" class="float-left" id="logo">
+
+
+    <div class="btn-group float-left" role="group">
+      <button class="btn btn-light" title="Toggle file manager" id="toggle-file-manager-btn"
+        data-vvveb-action="toggleFileManager" data-toggle="button" aria-pressed="false">
+        <img src="assets/editor/libs/builder/icons/file-manager-layout.svg" width="20px" height="20px">
+      </button>
+
+      <button class="btn btn-light" title="Toggle left column" id="toggle-left-column-btn"
+        data-vvveb-action="toggleLeftColumn" data-toggle="button" aria-pressed="false">
+        <img src="assets/editor/libs/builder/icons/left-column-layout.svg" width="20px" height="20px">
+      </button>
+
+      <button class="btn btn-light" title="Toggle right column" id="toggle-right-column-btn"
+        data-vvveb-action="toggleRightColumn" data-toggle="button" aria-pressed="false">
+        <img src="assets/editor/libs/builder/icons/right-column-layout.svg" width="20px" height="20px">
+      </button>
+    </div>
+
+    <div class="btn-group mr-3" role="group">
+      <button class="btn btn-light" title="Undo (Ctrl/Cmd + Z)" id="undo-btn" data-vvveb-action="undo"
+        data-vvveb-shortcut="ctrl+z">
+        <i class="la la-undo"></i>
+      </button>
+
+      <button class="btn btn-light" title="Redo (Ctrl/Cmd + Shift + Z)" id="redo-btn" data-vvveb-action="redo"
+        data-vvveb-shortcut="ctrl+shift+z">
+        <i class="la la-undo la-flip-horizontal"></i>
+      </button>
+    </div>
+
+
+    <div class="btn-group mr-3" role="group">
+      <button class="btn btn-light" title="Designer Mode (Free component dragging)" id="designer-mode-btn"
+        data-toggle="button" aria-pressed="false" data-vvveb-action="setDesignerMode">
+        <i class="la la-hand-grab-o"></i>
+      </button>
+
+      <button class="btn btn-light" title="Preview" id="preview-btn" type="button" data-toggle="button"
+        aria-pressed="false" data-vvveb-action="preview">
+        <i class="la la-eye"></i>
+      </button>
+
+      <button class="btn btn-light" title="Fullscreen (F11)" id="fullscreen-btn" data-toggle="button"
+        aria-pressed="false" data-vvveb-action="fullscreen">
+        <i class="la la-arrows"></i>
+      </button>
+
+      <button class="btn btn-light" title="Download" id="download-btn" data-vvveb-action="download"
+        data-download="index.html">
+        <i class="la la-download"></i>
+      </button>
+
+    </div>
+
+
+    <div class="btn-group mr-3 float-right" role="group">
+      <button class="btn btn-primary btn-icon" (click)="save()">
+        <i class="la la-save"></i> <span data-v-gettext>Save page</span>
+      </button>
+    </div>
+
+    <div class="btn-group float-right mr-3 responsive-btns" role="group">
+      <button id="mobile-view" data-view="mobile" class="btn btn-light" title="Mobile view"
+        data-vvveb-action="viewport">
+        <i class="la la-mobile-phone"></i>
+      </button>
+
+      <button id="tablet-view" data-view="tablet" class="btn btn-light" title="Tablet view"
+        data-vvveb-action="viewport">
+        <i class="la la-tablet"></i>
+      </button>
+
+      <button id="desktop-view" data-view="" class="btn btn-light" title="Desktop view" data-vvveb-action="viewport">
+        <i class="la la-laptop"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <div id="left-panel">
+    <div class="drag-elements">
+
+      <div class="header">
+        <ul class="nav nav-tabs  nav-fill" id="elements-tabs" role="tablist">
+          <li class="nav-item component-tab">
+            <a class="nav-link active" id="components-tab" data-toggle="tab" href="#components" role="tab"
+              aria-controls="components" aria-selected="true" title="Components"><img
+                src="assets/editor/libs/builder/icons/product.svg" height="23">
+              <div><small>Components</small></div>
+            </a>
+          </li>
+          <li class="nav-item blocks-tab">
+            <a class="nav-link" id="blocks-tab" data-toggle="tab" href="#blocks" role="tab" aria-controls="blocks"
+              aria-selected="false" title="Blocks"><img src="assets/editor/libs/builder/icons/list_group.svg"
+                height="23">
+              <div><small>Sections</small></div>
+            </a>
+          </li>
+          <li class="nav-item component-properties-tab" style="display:none">
+            <a class="nav-link" id="properties-tab" data-toggle="tab" href="#properties" role="tab"
+              aria-controls="blocks" aria-selected="false" title="Properties"><img
+                src="assets/editor/libs/builder/icons/filters.svg" height="23">
+              <div><small>Properties</small></div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="components" role="tabpanel" aria-labelledby="components-tab">
+
+            <div class="search">
+              <input class="form-control form-control-sm component-search" placeholder="Search components" type="text"
+                data-vvveb-action="componentSearch" data-vvveb-on="keyup">
+              <button class="clear-backspace" data-vvveb-action="clearComponentSearch">
+                <i class="la la-close"></i>
+              </button>
+            </div>
+
+            <div class="drag-elements-sidepane sidepane">
+              <div>
+
+                <ul class="components-list clearfix" data-type="leftpanel">
+                </ul>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="blocks" role="tabpanel" aria-labelledby="blocks-tab">
+
+
+            <ul class="nav nav-tabs nav-fill sections-tabs" id="properties-tabs" role="tablist">
+              <li class="nav-item content-tab">
+                <a class="nav-link active" data-toggle="tab" href="#sections-new-tab" role="tab"
+                  aria-controls="components" aria-selected="true">
+                  <i class="la la-plus"></i>
+                  <div><span>Add section</span></div>
+                </a>
+              </li>
+              <li class="nav-item style-tab">
+                <a class="nav-link" data-toggle="tab" href="#sections-list" role="tab" aria-controls="blocks"
+                  aria-selected="false">
+                  <i class="la la-bars"></i>
+                  <div><span>Page Sections</span></div>
+                </a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="sections-new-tab" data-section="content" role="tabpanel"
+                aria-labelledby="content-tab">
+
+
+                <div class="search">
+                  <input class="form-control form-control-sm block-search" placeholder="Search sections" type="text"
+                    data-vvveb-action="blockSearch" data-vvveb-on="keyup">
+                  <button class="clear-backspace" data-vvveb-action="clearBlockSearch">
+                    <i class="la la-close"></i>
+                  </button>
+                </div>
+
+
+                <div class="drag-elements-sidepane sidepane">
+                  <div>
+
+                    <ul class="blocks-list clearfix" data-type="leftpanel">
+                    </ul>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade show" id="sections-list" data-section="style" role="tabpanel"
+                aria-labelledby="style-tab">
+
+                <div class="sections">
+
+                  <div class="section-item">
+                    <div class="handle"></div>
+                    <div>
+
+                      <div class="name">Top header <div class="type">header</div>
+                      </div>
+
+                    </div>
+                    <div class="buttons">
+                      <a class="delete-btn" href="" title="Remove element"><i class="la la-trash text-danger"></i></a>
+                      <a class="up-btn" href="" title="Move element up"><i class="la la-arrow-up"></i></a>
+                      <a class="down-btn" href="" title="Move element down"><i class="la la-arrow-down"></i></a>
+                      <a class="properties-btn" href="" title="Properties"><i class="la la-cog"></i></a>
+                    </div>
+                  </div>
+                  <div class="section-item">
+                    <div class="handle"></div>
+                    <div>
+
+                      <div class="name">Welcome area <div class="type">section</div>
+                      </div>
+
+                    </div>
+                    <div class="buttons">
+                      <a class="delete-btn" href="" title="Remove element"><i class="la la-trash text-danger"></i></a>
+                      <a class="up-btn" href="" title="Move element up"><i class="la la-arrow-up"></i></a>
+                      <a class="down-btn" href="" title="Move element down"><i class="la la-arrow-down"></i></a>
+                      <a class="properties-btn" href="" title="Properties"><i class="la la-cog"></i></a>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="tab-pane fade" id="properties" role="tabpanel" aria-labelledby="blocks-tab">
+            <div class="component-properties-sidepane">
+              <div>
+                <div class="component-properties">
+                  <ul class="nav nav-tabs nav-fill" id="properties-tabs" role="tablist">
+                    <li class="nav-item content-tab">
+                      <a class="nav-link active" data-toggle="tab" href="#content-left-panel-tab" role="tab"
+                        aria-controls="components" aria-selected="true">
+                        <i class="la la-lg la-cube"></i>
+                        <div><span>Content</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item style-tab">
+                      <a class="nav-link" data-toggle="tab" href="#style-left-panel-tab" role="tab"
+                        aria-controls="blocks" aria-selected="false">
+                        <i class="la la-lg la-image"></i>
+                        <div><span>Style</span></div>
+                      </a>
+                    </li>
+                    <li class="nav-item advanced-tab">
+                      <a class="nav-link" data-toggle="tab" href="#advanced-left-panel-tab" role="tab"
+                        aria-controls="blocks" aria-selected="false">
+                        <i class="la la-lg la-cog"></i>
+                        <div><span>Advanced</span></div>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="content-left-panel-tab" data-section="content"
+                      role="tabpanel" aria-labelledby="content-tab">
+                      <div class="mt-4 text-center">Click on an element to edit.</div>
+                    </div>
+
+                    <div class="tab-pane fade show" id="style-left-panel-tab" data-section="style" role="tabpanel"
+                      aria-labelledby="style-tab">
+                    </div>
+
+                    <div class="tab-pane fade show" id="advanced-left-panel-tab" data-section="advanced" role="tabpanel"
+                      aria-labelledby="advanced-tab">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="canvas">
+    <div id="iframe-wrapper">
+      <div id="iframe-layer">
+
+        <div id="highlight-box">
+          <div id="highlight-name"></div>
+
+          <!-- <div id="section-actions">
+                      <a id="add-section-btn" href="" title="Add element"><i class="la la-plus"></i></a>
+                  </div> -->
+        </div>
+
+        <div id="select-box">
+
+          <div id="wysiwyg-editor">
+            <a id="bold-btn" href="" title="Bold"><i class="la la-bold"></i></a>
+            <a id="italic-btn" href="" title="Italic"><i class="la la-italic"></i></a>
+            <a id="underline-btn" href="" title="Underline"><i class="la la-underline"></i></a>
+            <a id="strike-btn" href="" title="Strikeout"><del>S</del></a>
+            <a id="link-btn" href="" title="Create link"><i class="la la-link"></i></a>
+
+            <div class="dropdown">
+              <a class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="la la-align-left"></i>
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#"><i class="la la-lg la-align-left"></i> Align Left</a>
+                <a class="dropdown-item" href="#"><i class="la la-lg la-align-center"></i> Align Center</a>
+                <a class="dropdown-item" href="#"><i class="la la-lg la-align-right"></i> Align Right</a>
+                <a class="dropdown-item" href="#"><i class="la la-lg la-align-justify"></i> Align Justify</a>
+              </div>
+            </div>
+
+            <input name="color" type="color" pattern="#[a-f0-9]{6}" class="form-control">
+
+            <select class="custom-select">
+              <option value="">Default</option>
+              <option value="Arial, Helvetica, sans-serif">Arial</option>
+              <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Grande</option>
+              <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino Linotype</option>
+              <option value="'Times New Roman', Times, serif">Times New Roman</option>
+              <option value="Georgia, serif">Georgia, serif</option>
+              <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+              <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans</option>
+              <option value="Verdana, Geneva, sans-serif">Verdana</option>
+              <option value="Impact, Charcoal, sans-serif">Impact</option>
+              <option value="'Arial Black', Gadget, sans-serif">Arial Black</option>
+              <option value="'Trebuchet MS', Helvetica, sans-serif">Trebuchet</option>
+              <option value="'Courier New', Courier, monospace">Courier New</option>
+              <option value="'Brush Script MT', sans-serif">Brush Script</option>
+            </select>
+          </div>
+
+          <div id="select-actions">
+            <a id="drag-btn" href="" title="Drag element"><i class="la la-arrows"></i></a>
+            <a id="parent-btn" href="" title="Select parent"><i class="la la-level-down la-rotate-180"></i></a>
+
+            <a id="up-btn" href="" title="Move element up"><i class="la la-arrow-up"></i></a>
+            <a id="down-btn" href="" title="Move element down"><i class="la la-arrow-down"></i></a>
+            <a id="clone-btn" href="" title="Clone element"><i class="la la-copy"></i></a>
+            <a id="delete-btn" href="" title="Remove element"><i class="la la-trash"></i></a>
+          </div>
+        </div>
+
+        <!-- add section box -->
+        <div id="add-section-box" class="drag-elements">
+
+          <div class="header">
+            <ul class="nav nav-tabs" id="box-elements-tabs" role="tablist">
+              <li class="nav-item component-tab">
+                <a class="nav-link active" id="box-components-tab" data-toggle="tab" href="#box-components" role="tab"
+                  aria-controls="components" aria-selected="true"><i class="la la-lg la-cube"></i>
+                  <div><small>Components</small></div>
+                </a>
+              </li>
+              <li class="nav-item blocks-tab">
+                <a class="nav-link" id="box-blocks-tab" data-toggle="tab" href="#box-blocks" role="tab"
+                  aria-controls="blocks" aria-selected="false"><i class="la la-lg la-image"></i>
+                  <div><small>Blocks</small></div>
+                </a>
+              </li>
+              <li class="nav-item component-properties-tab" style="display:none">
+                <a class="nav-link" id="box-properties-tab" data-toggle="tab" href="#box-properties" role="tab"
+                  aria-controls="blocks" aria-selected="false"><i class="la la-lg la-cog"></i>
+                  <div><small>Properties</small></div>
+                </a>
+              </li>
+            </ul>
+
+            <div class="section-box-actions">
+
+              <div id="close-section-btn" class="btn btn-light btn-sm bg-white btn-sm float-right"><i
+                  class="la la-close"></i></div>
+
+              <div class="small mt-1 mr-3 float-right">
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="add-section-insert-mode-after" value="after" checked="checked"
+                    name="add-section-insert-mode" class="custom-control-input">
+                  <label class="custom-control-label" for="add-section-insert-mode-after">After</label>
+                </div>
+
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="add-section-insert-mode-inside" value="inside" name="add-section-insert-mode"
+                    class="custom-control-input">
+                  <label class="custom-control-label" for="add-section-insert-mode-inside">Inside</label>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="box-components" role="tabpanel"
+                aria-labelledby="components-tab">
+
+                <div class="search">
+                  <input class="form-control form-control-sm component-search" placeholder="Search components"
+                    type="text" data-vvveb-action="addBoxComponentSearch" data-vvveb-on="keyup">
+                  <button class="clear-backspace" data-vvveb-action="clearComponentSearch">
+                    <i class="la la-close"></i>
+                  </button>
+                </div>
+
+                <div>
+                  <div>
+
+                    <ul class="components-list clearfix" data-type="addbox">
+                    </ul>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="box-blocks" role="tabpanel" aria-labelledby="blocks-tab">
+
+                <div class="search">
+                  <input class="form-control form-control-sm block-search" placeholder="Search blocks" type="text"
+                    data-vvveb-action="addBoxBlockSearch" data-vvveb-on="keyup">
+                  <button class="clear-backspace" data-vvveb-action="clearBlockSearch">
+                    <i class="la la-close"></i>
+                  </button>
+                </div>
+
+                <div>
+                  <div>
+
+                    <ul class="blocks-list clearfix" data-type="addbox">
+                    </ul>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- div class="tab-pane fade" id="box-properties" role="tabpanel" aria-labelledby="blocks-tab">
+                                  <div class="component-properties-sidepane">
+                                      <div>
+                                          <div class="component-properties">
+                                              <div class="mt-4 text-center">Click on an element to edit.</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div -->
+            </div>
+          </div>
+
+        </div>
+        <!-- //add section box -->
+      </div>
+      <iframe src="about:none" id="iframe1"></iframe>
+    </div>
+
+
+  </div>
+
+  <div id="right-panel">
+    <div class="component-properties">
+
+      <ul class="nav nav-tabs nav-fill" id="properties-tabs" role="tablist">
+        <li class="nav-item content-tab">
+          <a class="nav-link active" data-toggle="tab" href="#content-tab" role="tab" aria-controls="components"
+            aria-selected="true">
+            <i class="la la-lg la-cube"></i>
+            <div><span>Content</span></div>
+          </a>
+        </li>
+        <li class="nav-item style-tab">
+          <a class="nav-link" data-toggle="tab" href="#style-tab" role="tab" aria-controls="blocks"
+            aria-selected="false">
+            <i class="la la-lg la-image"></i>
+            <div><span>Style</span></div>
+          </a>
+        </li>
+        <li class="nav-item advanced-tab">
+          <a class="nav-link" data-toggle="tab" href="#advanced-tab" role="tab" aria-controls="blocks"
+            aria-selected="false">
+            <i class="la la-lg la-cog"></i>
+            <div><span>Advanced</span></div>
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="content-tab" data-section="content" role="tabpanel"
+          aria-labelledby="content-tab">
+        </div>
+
+        <div class="tab-pane fade show" id="style-tab" data-section="style" role="tabpanel" aria-labelledby="style-tab">
+        </div>
+
+        <div class="tab-pane fade show" id="advanced-tab" data-section="advanced" role="tabpanel"
+          aria-labelledby="advanced-tab">
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- <div id="bottom-panel">
+
+  <div class="btn-group" role="group">
+
+        <button id="code-editor-btn" data-view="mobile" class="btn btn-sm btn-light btn-sm"  title="Code editor" data-vvveb-action="toggleEditor">
+            <i class="la la-code"></i> Code editor
+        </button>
+       
+          <div id="toggleEditorJsExecute" class="custom-control custom-checkbox mt-1" style="display:none">
+              <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" data-vvveb-action="toggleEditorJsExecute">
+              <label class="custom-control-label" for="customCheck"><small>Run javascript code on edit</small></label>
+          </div>
+      </div>
+      
+      <div id="vvveb-code-editor">
+          <textarea class="form-control"></textarea>
+      <div>
+
+  </div>	
+</div>
+  </div> -->
+
+</div>
+
+<!-- <script id="vvveb-input-textinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="text" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</div>
+	
+</script>
+
+<script id="vvveb-input-textareainput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<textarea name="{%=key%}" rows="3" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: auto;resize: vertical;display: block;width: 100%;height: auto;padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</textarea></div>
+	
+</script>
+
+<script id="vvveb-input-checkboxinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div class="custom-control custom-checkbox" style="box-sizing: border-box;position: relative;display: block;min-height: 1.5rem;padding-left: 1.5rem;">
+		  <input name="{%=key%}" class="custom-control-input" type="checkbox" id="{%=key%}_check" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;position: absolute;z-index: -1;opacity: 0;padding: 0;">
+		  <label class="custom-control-label" for="{%=key%}_check" style="box-sizing: border-box;display: inline-block;margin-bottom: 0;position: relative;vertical-align: top;">{% if (typeof text !== 'undefined') { %} {%=text%} {% } %}</label>
+	</div>
+	
+</script>
+
+<script id="vvveb-input-radioinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+	
+		{% for ( var i = 0; i < options.length; i++ ) { %}
+
+		<label class="custom-control custom-radio  {% if (typeof inline !== 'undefined' && inline == true) { %}custom-control-inline{% } %}" title="{%=options[i].title%}" style="box-sizing: border-box;display: block;margin-bottom: .5rem;position: relative;min-height: 1.5rem;padding-left: 1.5rem;">
+		  <input name="{%=key%}" class="custom-control-input" type="radio" value="{%=options[i].value%}" id="{%=key%}{%=i%}" {%if (options[i].checked) { %}checked="{%=options[i].checked%}" {% } %} style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;position: absolute;z-index: -1;opacity: 0;padding: 0;">
+		  </label><label class="custom-control-label" for="{%=key%}{%=i%}" style="box-sizing: border-box;display: inline-block;margin-bottom: 0;position: relative;vertical-align: top;">{%=options[i].text%}</label>
+		
+
+		{% } %}
+
+	</div>
+	
+</script>
+
+<script id="vvveb-input-radiobuttoninput" type="text/html" style="box-sizing: border-box;">
+	
+	<div class="btn-group btn-group-toggle  {%if (extraclass) { %}{%=extraclass%}{% } %} clearfix" data-toggle="buttons" style="box-sizing: border-box;position: relative;display: inline-flex;vertical-align: middle;">
+	
+		{% for ( var i = 0; i < options.length; i++ ) { %}
+
+		<label class="btn  btn-outline-primary  {%if (options[i].checked) { %}active{% } %}  {%if (options[i].extraclass) { %}{%=options[i].extraclass%}{% } %}" for="{%=key%}{%=i%} " title="{%=options[i].title%}" style="box-sizing: border-box;display: inline-block;margin-bottom: 0;font-weight: 400;color: #007bff;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: transparent;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #007bff;position: relative;-ms-flex: 1 1 auto;flex: 1 1 auto;">
+		  <input name="{%=key%}" class="custom-control-input" type="radio" value="{%=options[i].value%}" id="{%=key%}{%=i%}" {%if (options[i].checked) { %}checked="{%=options[i].checked%}" {% } %} style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;position: absolute;z-index: -1;opacity: 0;padding: 0;clip: rect(0,0,0,0);pointer-events: none;">
+		  {%if (options[i].icon) { %}<i class="{%=options[i].icon%}" style="box-sizing: border-box;"></i>{% } %}
+		  {%=options[i].text%}
+		</label>
+
+		{% } %}
+				
+	</div>
+	
+</script>
+
+
+<script id="vvveb-input-toggle" type="text/html" style="box-sizing: border-box;">
+	
+    <div class="toggle" style="box-sizing: border-box;">
+        <input type="checkbox" name="{%=key%}" value="{%=on%}" {%if (off) { %} data-value-off="{%=off%}" {% } (on) data-value-on="{%=on%}" class="toggle-checkbox" id="{%=key%}" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;padding: 0;">
+        <label class="toggle-label" for="{%=key%}" style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">
+            <span class="toggle-inner" style="box-sizing: border-box;"></span>
+            <span class="toggle-switch" style="box-sizing: border-box;"></span>
+        </label>
+    </div>
+	
+</script>
+
+<script id="vvveb-input-header" type="text/html" style="box-sizing: border-box;">
+
+		<h6 class="header" style="box-sizing: border-box;margin-top: 0;margin-bottom: .5rem;font-family: inherit;font-weight: 500;line-height: 1.2;color: inherit;font-size: 1rem;">{%=header%}</h6>
+	
+</script>
+
+	
+<script id="vvveb-input-select" type="text/html" style="box-sizing: border-box;">
+
+	<div style="box-sizing: border-box;">
+
+		<select class="form-control custom-select" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+			{% for ( var i = 0; i < options.length; i++ ) { %}
+			<option value="{%=options[i].value%}" style="box-sizing: border-box;">{%=options[i].text%}</option>
+			{% } %}
+		</select>
+	
+	</div>
+	
+</script>
+
+
+<script id="vvveb-input-listinput" type="text/html" style="box-sizing: border-box;">
+
+	<div class="row" style="box-sizing: border-box;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
+
+		{% for ( var i = 0; i < options.length; i++ ) { %}
+		<div class="col-6" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;">
+			<div class="input-group" style="box-sizing: border-box;position: relative;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;-ms-flex-align: stretch;align-items: stretch;width: 100%;">
+				<input name="{%=key%}_{%=i%}" type="text" class="form-control" value="{%=options[i].text%}" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 1%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;position: relative;-ms-flex: 1 1 auto;flex: 1 1 auto;margin-bottom: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
+				<div class="input-group-append" style="box-sizing: border-box;display: flex;margin-left: -1px;">
+					<button class="input-group-text btn btn-sm btn-danger" style="box-sizing: border-box;border-radius: .25rem;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;text-transform: none;-webkit-appearance: button;display: flex;font-weight: 400;color: #495057;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: #e9ecef;border: 1px solid #ced4da;padding: .375rem .75rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #dc3545;-ms-flex-align: center;align-items: center;margin-bottom: 0;white-space: nowrap;position: relative;z-index: 2;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+						<i class="la la-trash la-lg" style="box-sizing: border-box;"></i>
+					</button>
+				</div>
+			  </div>
+			  <br style="box-sizing: border-box;">
+		</div>
+		{% } %}
+
+
+		{% if (typeof hide_remove === 'undefined') { %}
+		<div class="col-12" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 100%;flex: 0 0 100%;max-width: 100%;">
+		
+			<button class="btn btn-sm btn-outline-primary" style="box-sizing: border-box;border-radius: .2rem;margin: 0;font-family: inherit;font-size: .875rem;line-height: 1.5;overflow: visible;text-transform: none;-webkit-appearance: button;display: inline-block;font-weight: 400;color: #007bff;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: transparent;border: 1px solid transparent;padding: .25rem .5rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #007bff;">
+				<i class="la la-trash la-lg" style="box-sizing: border-box;"></i> Add new
+			</button>
+			
+		</div>
+		{% } %}
+			
+	</div>
+	
+</script>
+
+<script id="vvveb-input-grid" type="text/html" style="box-sizing: border-box;">
+
+	<div class="row" style="box-sizing: border-box;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
+		<div class="mb-1 col-12" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 100%;flex: 0 0 100%;max-width: 100%;margin-bottom: .25rem!important;">
+		
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Flexbox</label>
+			<select class="form-control custom-select" name="col" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+				
+				<option value="" style="box-sizing: border-box;">None</option>
+				{% for ( var i = 1; i <= 12; i++ ) { %}
+				<option value="{%=i%}" {% if ((typeof col="=" !="=" 'undefined') && i) { %} selected } style="box-sizing: border-box;">{%=i%}</option>
+				{% } %}
+				
+			</select>
+			<br style="box-sizing: border-box;">
+		</div>
+
+		<div class="col-6" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Extra small</label>
+			<select class="form-control custom-select" name="col-xs" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+				
+				<option value="" style="box-sizing: border-box;">None</option>
+				{% for ( var i = 1; i <= 12; i++ ) { %}
+				<option value="{%=i%}" {% if ((typeof col_xs="=" !="=" 'undefined') && i) { %} selected } style="box-sizing: border-box;">{%=i%}</option>
+				{% } %}
+				
+			</select>
+			<br style="box-sizing: border-box;">
+		</div>
+		
+		<div class="col-6" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Small</label>
+			<select class="form-control custom-select" name="col-sm" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+				
+				<option value="" style="box-sizing: border-box;">None</option>
+				{% for ( var i = 1; i <= 12; i++ ) { %}
+				<option value="{%=i%}" {% if ((typeof col_sm="=" !="=" 'undefined') && i) { %} selected } style="box-sizing: border-box;">{%=i%}</option>
+				{% } %}
+				
+			</select>
+			<br style="box-sizing: border-box;">
+		</div>
+		
+		<div class="col-6" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Medium</label>
+			<select class="form-control custom-select" name="col-md" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+				
+				<option value="" style="box-sizing: border-box;">None</option>
+				{% for ( var i = 1; i <= 12; i++ ) { %}
+				<option value="{%=i%}" {% if ((typeof col_md="=" !="=" 'undefined') && i) { %} selected } style="box-sizing: border-box;">{%=i%}</option>
+				{% } %}
+				
+			</select>
+			<br style="box-sizing: border-box;">
+		</div>
+		
+		<div class="col-6 mb-1" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;margin-bottom: .25rem!important;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Large</label>
+			<select class="form-control custom-select" name="col-lg" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+				
+				<option value="" style="box-sizing: border-box;">None</option>
+				{% for ( var i = 1; i <= 12; i++ ) { %}
+				<option value="{%=i%}" {% if ((typeof col_lg="=" !="=" 'undefined') && i) { %} selected } style="box-sizing: border-box;">{%=i%}</option>
+				{% } %}
+				
+			</select>
+			<br style="box-sizing: border-box;">
+		</div>
+		
+		{% if (typeof hide_remove === 'undefined') { %}
+		<div class="col-12" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 100%;flex: 0 0 100%;max-width: 100%;">
+		
+			<button class="btn btn-sm btn-outline-light text-danger" style="box-sizing: border-box;border-radius: .2rem;margin: 0;font-family: inherit;font-size: .875rem;line-height: 1.5;overflow: visible;text-transform: none;-webkit-appearance: button;display: inline-block;font-weight: 400;color: #dc3545!important;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: transparent;border: 1px solid transparent;padding: .25rem .5rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #f8f9fa;">
+				<i class="la la-trash la-lg" style="box-sizing: border-box;"></i> Remove
+			</button>
+			
+		</div>
+		{% } %}
+		
+	</div>
+	
+</script>
+
+<script id="vvveb-input-textvalue" type="text/html" style="box-sizing: border-box;">
+	
+	<div class="row" style="box-sizing: border-box;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;margin-right: -15px;margin-left: -15px;">
+		<div class="col-6 mb-1" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;margin-bottom: .25rem!important;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Value</label>
+			<input name="value" type="text" value="{%=value%}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+		</div>
+
+		<div class="col-6 mb-1" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 50%;flex: 0 0 50%;max-width: 50%;margin-bottom: .25rem!important;">
+			<label style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">Text</label>
+			<input name="text" type="text" value="{%=text%}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+		</div>
+
+		{% if (typeof hide_remove === 'undefined') { %}
+		<div class="col-12" style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex: 0 0 100%;flex: 0 0 100%;max-width: 100%;">
+		
+			<button class="btn btn-sm btn-outline-light text-danger" style="box-sizing: border-box;border-radius: .2rem;margin: 0;font-family: inherit;font-size: .875rem;line-height: 1.5;overflow: visible;text-transform: none;-webkit-appearance: button;display: inline-block;font-weight: 400;color: #dc3545!important;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: transparent;border: 1px solid transparent;padding: .25rem .5rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #f8f9fa;">
+				<i class="la la-trash la-lg" style="box-sizing: border-box;"></i> Remove
+			</button>
+			
+		</div>
+		{% } %}
+
+	</div>
+	
+</script>
+
+<script id="vvveb-input-rangeinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="range" min="{%=min%}" max="{%=max%}" step="{%=step%}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</div>
+	
+</script>
+
+<script id="vvveb-input-imageinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="text" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+		<input name="file" type="file" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</div>
+	
+</script>
+
+<script id="vvveb-input-colorinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="color" {% if (typeof value="{%=value%}" !="false)" 'undefined' && { %} } pattern="#[a-f0-9]{6}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</div>
+	
+</script>
+
+<script id="vvveb-input-bootstrap-color-picker-input" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<div id="cp2" class="input-group" title="Using input value" style="box-sizing: border-box;position: relative;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;-ms-flex-align: stretch;align-items: stretch;width: 100%;">
+		  <input name="{%=key%}" type="text" {% if (typeof value="{%=value%}" !="false)" 'undefined' && { %} } class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 1%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;position: relative;-ms-flex: 1 1 auto;flex: 1 1 auto;margin-bottom: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
+		  <span class="input-group-append" style="box-sizing: border-box;display: flex;margin-left: -1px;">
+			<span class="input-group-text colorpicker-input-addon" style="box-sizing: border-box;display: flex;-ms-flex-align: center;align-items: center;padding: .375rem .75rem;margin-bottom: 0;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;text-align: center;white-space: nowrap;background-color: #e9ecef;border: 1px solid #ced4da;border-radius: .25rem;border-top-left-radius: 0;border-bottom-left-radius: 0;"><i style="box-sizing: border-box;"></i></span>
+		  </span>
+		</div>
+	</div>
+
+</script>
+
+<script id="vvveb-input-numberinput" type="text/html" style="box-sizing: border-box;">
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="number" value="{%=value%}" {% if (typeof min !="false)" 'undefined' && { %}min="{%=min%}" } %} max %}max="{%=max%}" step %}step="{%=step%}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+	</div>
+</script>
+
+<script id="vvveb-input-button" type="text/html" style="box-sizing: border-box;">
+	<div style="box-sizing: border-box;">
+		<button class="btn btn-sm btn-primary" style="box-sizing: border-box;border-radius: .2rem;margin: 0;font-family: inherit;font-size: .875rem;line-height: 1.5;overflow: visible;text-transform: none;-webkit-appearance: button;display: inline-block;font-weight: 400;color: #fff;text-align: center;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-color: #007bff;border: 1px solid transparent;padding: .25rem .5rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;border-color: #007bff;">
+			<i class="la  {% if (typeof icon !== 'undefined') { %} {%=icon%} {% } else { %} la-plus {% } %} la-lg" style="box-sizing: border-box;"></i> {%=text%}
+		</button>
+	</div>		
+</script>
+
+<script id="vvveb-input-cssunitinput" type="text/html" style="box-sizing: border-box;">
+	<div class="input-group" id="cssunit-{%=key%}" style="box-sizing: border-box;position: relative;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap;-ms-flex-align: stretch;align-items: stretch;width: 100%;">
+		<input name="number" type="number" {% if (typeof value="{%=value%}" !="false)" 'undefined' && { %} } min %}min="{%=min%}" max %}max="{%=max%}" step %}step="{%=step%}" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 1%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;position: relative;-ms-flex: 1 1 auto;flex: 1 1 auto;margin-bottom: 0;border-top-right-radius: 0;border-bottom-right-radius: 0;">
+		 <div class="input-group-append" style="box-sizing: border-box;display: flex;margin-left: -1px;">
+		<select class="form-control custom-select small-arrow" name="unit" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;text-transform: none;display: inline-block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem 1.75rem .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;vertical-align: middle;background: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;-webkit-appearance: none;-moz-appearance: none;appearance: none;">
+			<option value="em" style="box-sizing: border-box;">em</option>
+			<option value="px" style="box-sizing: border-box;">px</option>
+			<option value="%" style="box-sizing: border-box;">%</option>
+			<option value="rem" style="box-sizing: border-box;">rem</option>
+			<option value="auto" style="box-sizing: border-box;">auto</option>
+		</select>
+		</div>
+	</div>
+	
+</script>
+
+
+<script id="vvveb-filemanager-folder" type="text/html" style="box-sizing: border-box;">
+	<li data-folder="{%=folder%}" class="folder" style="box-sizing: border-box;">
+		<label for="{%=folder%}" style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;"><span style="box-sizing: border-box;">{%=folderTitle%}</span></label> <input type="checkbox" id="{%=folder%}" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;padding: 0;">
+		<ol style="box-sizing: border-box;margin-top: 0;margin-bottom: 1rem;"></ol>
+	</li>
+</script>
+
+<script id="vvveb-filemanager-page" type="text/html" style="box-sizing: border-box;">
+	<li data-url="{%=url%}" data-file="{%=file%}" data-page="{%=name%}" class="file" style="box-sizing: border-box;">
+		<label for="{%=name%}" style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;"><span style="box-sizing: border-box;">{%=title%}</span></label> <input type="checkbox" checked id="{%=name%}" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;padding: 0;">
+		<ol style="box-sizing: border-box;margin-top: 0;margin-bottom: 1rem;"></ol>
+	</li>
+</script>
+
+<script id="vvveb-filemanager-component" type="text/html" style="box-sizing: border-box;">
+	<li data-url="{%=url%}" data-component="{%=name%}" class="component" style="box-sizing: border-box;">
+		<a href="{%=url%}" style="box-sizing: border-box;color: #007bff;text-decoration: underline;background-color: transparent;"><span style="box-sizing: border-box;">{%=title%}</span></a>
+	</li>
+</script>
+
+<script id="vvveb-input-sectioninput" type="text/html" style="box-sizing: border-box;">
+
+		<label class="header" data-header="{%=key%}" for="header_{%=key%}" style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;"><span style="box-sizing: border-box;">&ensp;{%=header%}</span> <div class="header-arrow" style="box-sizing: border-box;"></div></label> 
+		<input class="header_check" type="checkbox" {% if (typeof expanded="=" !="=" 'undefined' && false) { %} } else %}checked="true" id="header_{%=key%}" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;overflow: visible;padding: 0;"> 
+		<div class="section" data-section="{%=key%}" style="box-sizing: border-box;"></div>		
+	
+</script>
+
+
+<script id="vvveb-property" type="text/html" style="box-sizing: border-box;">
+
+	<div class="form-group {% if (typeof col !== 'undefined' && col != false) { %} col-sm-{%=col%} d-inline-block {% } else { %}row{% } %}" data-key="{%=key%}" {% if (typeof group !="null)" 'undefined' && { %}data-group="{%=group%}" } %} style="box-sizing: border-box;position: relative;width: 100%;padding-right: 15px;padding-left: 15px;-ms-flex-preferred-size: 0;flex-basis: 0;-ms-flex-positive: 1;flex-grow: 1;max-width: 100%;margin-bottom: 1rem;display: inline-block!important;">
+		
+		{% if (typeof name !== 'undefined' && name != false) { %}<label class="{% if (typeof inline === 'undefined' ) { %}col-sm-4{% } %} control-label" for="input-model" style="box-sizing: border-box;display: inline-block;margin-bottom: .5rem;">{%=name%}</label>{% } %}
+		
+		<div class="{% if (typeof inline === 'undefined') { %}col-sm-{% if (typeof name !== 'undefined' && name != false) { %}8{% } else { %}12{% } } %} input" style="box-sizing: border-box;"></div>
+		
+	</div>		 
+	
+</script>
+
+<script id="vvveb-input-autocompletelist" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<input name="{%=key%}" type="text" class="form-control" style="box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+		
+		<div class="form-control autocomplete-list" style="min=height: 150px;overflow: auto;box-sizing: border-box;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                  </div>
+                  </div>
+	
+</script>
+
+<script id="vvveb-input-tagsinput" type="text/html" style="box-sizing: border-box;">
+	
+	<div style="box-sizing: border-box;">
+		<div class="form-control tags-input" style="height: auto;box-sizing: border-box;display: block;width: 100%;padding: .375rem .75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+				
+
+				<input name="{%=key%}" type="text" class="form-control" style="border: none;min-width: 60px;box-sizing: border-box;margin: 0;font-family: inherit;font-size: 1rem;line-height: 1.5;overflow: visible;display: block;width: 100%;height: calc(2.25rem + 2px);padding: .375rem .75rem;font-weight: 400;color: #495057;background-color: #fff;background-clip: padding-box;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;">
+                  </div>
+                  </div>
+	
+</script>
+
+<script id="vvveb-section" type="text/html" style="box-sizing: border-box;">
+
+	<div class="section-item" style="box-sizing: border-box;">
+		<div class="handle" style="box-sizing: border-box;"></div>
+		<div style="box-sizing: border-box;">
+			
+			<div class="name" style="box-sizing: border-box;">{%=name%} <div class="type" style="box-sizing: border-box;">{%=type%}</div></div>
+			
+		</div>
+		<div class="buttons" style="box-sizing: border-box;">
+			<a class="delete-btn" href="" title="Remove element" style="box-sizing: border-box;color: #007bff;text-decoration: underline;background-color: transparent;"><i class="la la-trash text-danger" style="box-sizing: border-box;color: #dc3545!important;"></i></a>
+			<a class="up-btn" href="" title="Move element up" style="box-sizing: border-box;color: #007bff;text-decoration: underline;background-color: transparent;"><i class="la la-arrow-up" style="box-sizing: border-box;"></i></a>
+			<a class="down-btn" href="" title="Move element down" style="box-sizing: border-box;color: #007bff;text-decoration: underline;background-color: transparent;"><i class="la la-arrow-down" style="box-sizing: border-box;"></i></a>
+			<a class="properties-btn" href="" title="Properties" style="box-sizing: border-box;color: #007bff;text-decoration: underline;background-color: transparent;"><i class="la la-cog" style="box-sizing: border-box;"></i></a>
+		</div>
+	</div>
+	
+</script> -->

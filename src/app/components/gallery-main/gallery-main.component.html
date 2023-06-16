@@ -1,0 +1,134 @@
+<!-- <div class="tab-design">
+    <div class="row m-0">
+        <div class="col-sm-6 col-md-4 thumb-right imagehover" *ngFor="let item of items; index as i"  animationName="animated slideInUp">
+            <img  [lightbox]="i"  (error) ="onImgError($event)" [gallery]="'lightBox'" src="{{item.data.src}}">
+        </div>
+    </div>
+</div> -->
+<!-- <div class="tab-design">
+    <div class="gallerynew">
+        <div class="subbox" *ngFor="let item of items; index as i" >
+            <img  [lightbox]="i" [gallery]="'lightBox'" [src]="item.data.src">
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid no-paid-mobile">
+
+  <div class="gallerynew" style="padding-bottom: 3px; text-align: center;">
+    <div class="subbox" *ngFor="let item of items; index as i" >
+      <!--<img *ngIf="item.type == 'image' && item.data.src.indexOf(item.data.src) !== -1" [lightbox]="i" [gallery]="'lightBox'" [src]="item.data.src | galleryImagePipe">
+        <img *ngIf="item.type == 'image' && item.data.src.includes('http')" [lightbox]="i" [gallery]="'lightBox'" [src]="item.data.src ">-->
+
+      <img *ngIf="item.type == 'image' " data-target="#onlinePayment2" (click)="activeIndex(i)" data-toggle="modal" [src]="item.data.src| galleryImagePipe ">
+
+      <div  *ngIf="item.type == 'youtube'">
+        <img class="a"  (click)="openModal(mymodal);activeIndex(i)"
+             src="https://img.youtube.com/vi/{{item2[i]}}/hqdefault.jpg"
+             alt="abc" />
+        <div >
+          <h4 *ngIf="item.type == 'youtube'">{{item.data.mediaType}}</h4>
+        </div>
+
+      </div>
+
+      <div  *ngIf="item.type == 'video'" class="video-center">
+        <!-- <img class="a"  (click)="openModal(mymodal)"
+            src="'{{item3[i]}}#t=0.5'"
+            alt="abc" /> -->
+        <video  width="360" (click)="openModal(mymodal);activeIndex(i)">
+          <source [src]="item3[i] | galleryImagePipe" type="video/mp4" />
+        </video>
+        <div >
+          <h4 *ngIf="item.type == 'video'">{{item.data.mediaType}}</h4>
+        </div>
+
+      </div>
+
+
+      <!-- <video *ngIf="item.type == 'video'" width="300" height="200" controls [lightbox]="i" [gallery]="'lightBox'">
+          <source src="{{item.data.thumb}}" type="video/mp4" />
+      </video> -->
+
+
+      <span (click)="openModal(mymodal);activeIndex(i)" >
+                <!-- <div *ngIf="item.type == 'youtube'"><h3>abc</h3></div> -->
+
+                <img  *ngIf="item.type == 'youtube'"  src="assets/images/youtubeicon.png" width="90" >
+        <!-- <img  *ngIf="item.type == 'youtube'"  src="https://s3-us-west-2.amazonaws.com/communityconnectmedia/20210525052434_5dd75c724cedfd0001b08407_youtueb.png" > -->
+        <span class="videoicon" *ngIf="item.type == 'video'">
+          <img  width="80" src="assets/icon/play-button.svg">
+        </span>
+
+        <!-- <div *ngIf="item.type == 'youtube'"   [innerHTML]="item.data.thumb"></div> -->
+            </span>
+      <ng-template #mymodal>
+        <div class="modal-header">
+          <!-- <button (click)="modalRef.hide()" aria-label="Close" class="close pull-right" type="button">
+              <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button (click)="modalRef.hide()" aria-label="Close" class="close-container" data-dismiss="modal"
+                  id="closeModel">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div>
+          <div *ngIf="item.type == 'youtube'">
+            <iframe [src]= "item.data.src | youtube" width="100%" height="200%"></iframe>
+          </div>
+          <video *ngIf="item.type == 'video'" width="700" height="500" controls>
+            <source [src]="item.data.thumb | galleryImagePipe" type="video/mp4"/>
+          </video>
+        </div>
+
+      </ng-template>
+
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="onlinePayment2" class="modal fade online-payment slideup2" id="onlinePayment2" role="dialog" tabindex="-1">
+  <div class="modal-dialog  modal-lg gallerymodel" role="document">
+    <div class="modal-content" >
+      <!--<div class="modal-header">
+
+
+      </div>-->
+      <button  aria-label="Close" class="close-container" data-dismiss="modal" id="closePaypalId" type="button"><div  class="leftright"></div><div class="rightleft"></div></button>
+      <div class="modal-body" >
+        <div class="">
+       
+          <h5 class="modal-title model-tt text-center" >
+            {{currentIndex+1}}/{{items.length}}
+           
+          </h5>
+         
+          <img *ngIf="items[currentIndex]['type']=='image'" [src]="items[currentIndex]['data']?.src | galleryImagePipe" alt="">
+          <div  *ngIf="items[currentIndex]['type']== 'youtube'">
+            <img class="a"
+                 src="https://img.youtube.com/vi/{{item2[currentIndex]}}/hqdefault.jpg"
+                 alt="abc" />
+          </div >
+          <div  *ngIf="items[currentIndex]['type'] == 'video'" class="video-center">
+            <!-- <img class="a"  (click)="openModal(mymodal)"
+                src="'{{item3[i]}}#t=0.5'"
+                alt="abc" /> -->
+            <video  width="360" (click)="openModal(mymodal)">
+              <source [src]="item3[currentIndex] | galleryImagePipe" type="video/mp4" />
+            </video>
+            <div >
+              <h4 *ngIf="items[currentIndex]['type']== 'video'">{{items[currentIndex]['data'].mediaType}}</h4>
+            </div>
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <button (click)="prev(currentIndex)" class="prevgallery">
+    <img src="assets/icon/back-btn.png" alt="">
+  </button>
+  <button  (click)="next(currentIndex)" class="nextgallery">
+    <img src="assets/icon/next-btn.png" alt="">
+  </button>
+</div>

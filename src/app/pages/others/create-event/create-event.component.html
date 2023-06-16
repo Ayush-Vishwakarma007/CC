@@ -1,0 +1,1129 @@
+<div class="container inner-page-responsive">
+  <div class="mem-register">
+    <h2 *ngIf="editId != undefined">
+      Edit Event
+    </h2>
+    <h2 *ngIf="editId == undefined">
+      Create New Event
+    </h2>
+    <div class="progrees-responsive">
+      <ul class="progressbar create-event">
+        <li (click)="openActiveTab(list['step'])" *ngFor="let list of step;"
+            [ngClass]="list['active'] == true ? 'active' : ''">
+          <span>Step {{list['stepNo']}}</span>
+          <p>{{list['name']}}</p></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<div>
+
+  <div class="">
+    <div class="container inner-page-responsive marbottm-create">
+      <div class="row">
+        <!-- ================== Basic Information ===================== -->
+        <div *ngIf="activeTabName=='BASIC_INFO'" class="col-md-12">
+          <!-- nomargin -->
+          <div class="profile-head">Basic Information</div>
+          <form (ngSubmit)="submitBasicInformation()" [formGroup]="basicInformationForm" id="basicInformationForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="profiletop gaftop">
+                  <div class="row">
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input formControlName="name" type="text" placeholder="">
+                        <label>Event Title <i>*</i></label>
+                        <div *ngIf="basicInformationForm.controls.name.dirty || basicInformationForm.controls.name.touched || basicInformationForm.controls.name.valid">
+                          <span *ngIf="basicInformationForm.controls.name.errors && basicInformationForm.controls.name.errors.required" class="valid-msg">
+                            Event title is required
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input formControlName="address" type="text">
+                        <label>Venue <i>*</i></label>
+                        <div *ngIf="basicInformationForm.controls.address.dirty || basicInformationForm.controls.address.touched || basicInformationForm.controls.address.valid">
+                          <span
+                            *ngIf="basicInformationForm.controls.address.errors && basicInformationForm.controls.address.errors.required"
+                            class="valid-msg">Venue is required</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="styled-input discription-area">
+                        <textarea formControlName="description" rows="2"></textarea>
+                        <label>Description<i>*</i></label>
+                      </div>
+                      <div *ngIf="basicInformationForm.controls.description.dirty || basicInformationForm.controls.description.touched || basicInformationForm.controls.description.valid">
+                        <span
+                          *ngIf="basicInformationForm.controls.description.errors && basicInformationForm.controls.description.errors.required"
+                          class="valid-msg">Description is required</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="styled-input margin-city">
+                            <input formControlName="city" type="text">
+                            <label>City<i>*</i></label>
+                            <div
+                              *ngIf="basicInformationForm.controls.city.dirty || basicInformationForm.controls.city.touched || basicInformationForm.controls.city.valid">
+                              <span
+                                *ngIf="basicInformationForm.controls.city.errors && basicInformationForm.controls.city.errors.required"
+                                class="valid-msg">City is required</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="border-country">
+                            <span>Country<i>*</i></span>
+                            <input formControlName="country" type="text" class="country-wid">
+                          </div>
+                          <div
+                            *ngIf="basicInformationForm.controls.country.dirty || basicInformationForm.controls.country.touched || basicInformationForm.controls.country.valid">
+                            <span
+                              *ngIf="basicInformationForm.controls.country.errors && basicInformationForm.controls.country.errors.required"
+                              class="valid-msg">Country is required</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="styled-input datematerial martop-date">
+                        <input [matDatepicker]="picker" formControlName="dateTime" matInput type="text">
+                        <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <label>Start Date & Time</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="styled-input datematerial martop-date">
+                        <input [matDatepicker]="picker1" formControlName="endDateTime" matInput type="text">
+                        <mat-datepicker-toggle [for]="picker1" class="dateicon-mat"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <label>End Date & Time</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <!-- <div class="border-country martop-date">
+                        <span>Tags</span>
+                        <input type="text" formControlName="tags">
+                      </div>
+                      <div *ngIf="basicInformationForm.controls.tags.dirty || basicInformationForm.controls.tags.touched || basicInformationForm.controls.tags.valid">
+                        <span *ngIf="basicInformationForm.controls.tags.errors && basicInformationForm.controls.tags.errors.required" class="valid-msg">Tags is required</span>
+                      </div> -->
+                      <div class="enter-button-inp">
+                        <span class="teg-inp">Tag</span>
+                        <mat-form-field class="tags styled-input">
+                          <!-- <mat-label>Tag</mat-label> -->
+                          <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let tag of tags;let i = index" [removable]="removable"
+                                      [selectable]="selectable">
+                              {{tag}}
+                              <mat-icon (click)="remove(i)" matChipRemove>
+                                <i  class="icon-delete-blue newicon" ></i>
+                              </mat-icon>
+                            </mat-chip>
+                          </mat-chip-list>
+                          <input (matChipInputTokenEnd)="addTag($event)" [matChipInputFor]="chipList" value="">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="border-country martop-date">
+                        <span>Event Type<i>*</i></span>
+                        <select class="event_slctlist music" formControlName="type">
+                          <!-- <option value="">Select Event Type</option> -->
+                          <option *ngFor="let et of eventTypeList;let i=index" [value]="et.name">{{et.name}}</option>
+                        </select>
+                      </div>
+                      <div
+                        *ngIf="basicInformationForm.controls.type.dirty || basicInformationForm.controls.type.touched || basicInformationForm.controls.type.valid">
+                        <span
+                          *ngIf="basicInformationForm.controls.type.errors && basicInformationForm.controls.type.errors.required"
+                          class="valid-msg">Event Type is required</span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="styled-input discription-area">
+                        <textarea formControlName="details" rows="2"></textarea>
+                        <label>Details <i>*</i></label>
+                      </div>
+                      <div *ngIf="basicInformationForm.controls.details.dirty || basicInformationForm.controls.details.touched || basicInformationForm.controls.details.valid">
+                        <span
+                          *ngIf="basicInformationForm.controls.details.errors && basicInformationForm.controls.details.errors.required" class="valid-msg"> Details is required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mem-next martopseat">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input class="save-changes fright" type="submit" value="Next">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="row">
+              <div class="col-md-12">
+                <div class="profiletop gaftop">
+                  <div class="row">
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="name">
+                        <label>Event Title *</label>
+                        <div *ngIf="basicInformationForm.controls.name.dirty || basicInformationForm.controls.name.touched || basicInformationForm.controls.name.valid">
+                          <span *ngIf="basicInformationForm.controls.name.errors && basicInformationForm.controls.name.errors.required">Event title is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="address">
+                        <label>Address *</label>
+                        <div *ngIf="basicInformationForm.controls.address.dirty || basicInformationForm.controls.address.touched || basicInformationForm.controls.address.valid">
+                          <span *ngIf="basicInformationForm.controls.address.errors && basicInformationForm.controls.address.errors.required">Description is required</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="city">
+                        <label>City</label>
+                        <div *ngIf="basicInformationForm.controls.city.dirty || basicInformationForm.controls.city.touched || basicInformationForm.controls.city.valid">
+                          <span *ngIf="basicInformationForm.controls.city.errors && basicInformationForm.controls.city.errors.required">City is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+
+                        <input type="text" formControlName="dateTime">
+                        <label>DateTime *</label>
+
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="state">
+                        <label>State *</label>
+                        <div *ngIf="basicInformationForm.controls.state.dirty || basicInformationForm.controls.state.touched || basicInformationForm.controls.state.valid">
+                          <span *ngIf="basicInformationForm.controls.state.errors && basicInformationForm.controls.state.errors.required">State is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="type">
+                        <label>Type *</label>
+                        <div *ngIf="basicInformationForm.controls.type.dirty || basicInformationForm.controls.type.touched || basicInformationForm.controls.type.valid">
+                          <span *ngIf="basicInformationForm.controls.type.errors && basicInformationForm.controls.type.errors.required">Type is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input">
+                        <input type="text" formControlName="zipCode">
+                        <label>ZipCode *</label>
+                        <div *ngIf="basicInformationForm.controls.zipCode.dirty || basicInformationForm.controls.zipCode.touched || basicInformationForm.controls.zipCode.valid">
+                          <span *ngIf="basicInformationForm.controls.zipCode.errors && basicInformationForm.controls.zipCode.errors.required">ZipCode is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input detailHight">
+                        <textarea formControlName="details" rows="2"></textarea>
+                        <label>Details *</label>
+                        <div *ngIf="basicInformationForm.controls.details.dirty || basicInformationForm.controls.details.touched || basicInformationForm.controls.details.valid">
+                          <span *ngIf="basicInformationForm.controls.details.errors && basicInformationForm.controls.details.errors.required">Details is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 martop">
+                      <div class="styled-input detailHightDec">
+                        <textarea formControlName="description" rows="2"></textarea>
+                        <label>Description *</label>
+                        <div *ngIf="basicInformationForm.controls.description.dirty || basicInformationForm.controls.description.touched || basicInformationForm.controls.description.valid">
+                          <span *ngIf="basicInformationForm.controls.description.errors && basicInformationForm.controls.description.errors.required">Description is required</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <input type="submit" value="Save" class="save-changes">
+              </div>
+            </div> -->
+          </form>
+        </div>
+        <!-- ================== End Basic Information ===================== -->
+        <!-- ================== Schedule ===================== -->
+        <div *ngIf="activeTabName=='SCHEDULE'" class="col-md-12">
+          <app-schedule-event (openActiveTab)="backSchedule()" (submitSchedule)="submitScheduleData()"
+                              [eventId]="eventId"></app-schedule-event>
+        </div>
+        <!-- ================== End  Schedule  ===================== -->
+        <!-- ================== Session ===================== -->
+        <div *ngIf="activeTabName=='SESSION'" class="col-md-12 ">
+          <app-session (openActiveTab)="backSession()" (submitSession)="submitSessionData()" [eventId]="eventId"></app-session>
+        </div>
+        <!-- ================== End Session  ===================== -->
+        <!-- ================== configuration ===================== -->
+        <div *ngIf="activeTabName=='CONFIGURATION'" class="col-md-12">
+          <div class="profile-head">Configuration</div>
+          <div class="profiletop gaftop configuration-lft">
+            <form [formGroup]="ConfigurationForm" id="ConfigurationForm">
+              <div class="bor-gray">
+                <div class="row">
+                  <div class="form_group col-lg-20">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Allow Guests for the Event ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="allowGuests">
+                        <mat-radio-button [checked]='true' class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Which Payment Method do we use ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
+                      <section class="example-section">
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 card-pay-resposive" *ngFor="let list of paymentTypeList;let i = index">
+                            <mat-checkbox (change)="onChangePaymentType($event, list)"
+                                      class="example-margin"
+                                      value="{{list['value']}}">{{list['name']}}
+                            </mat-checkbox>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Allow Sponsership ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="allowSponsorship">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this Event cancellable ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="cancellable">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this allow food ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="allowFood">
+                        <mat-radio-button [checked]='true' class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this allow multiple food selection ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="multipleFoodSelection">
+                        <mat-radio-button [checked]='true' class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this paid parking ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="paidParking">
+                        <mat-radio-button [checked]='true' class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this free event ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="freeEvent">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is vendor booth selection allow ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="vendorExpo">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is this donor allow ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="allowDonor">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Is free seating ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="freeSeating">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form_group col-lg-12">
+                    <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                      <div class="config_details">
+                        <p>Lowest price ticket free ?</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12 cnfg_fill configuration-radio">
+                      <mat-radio-group aria-label="Select an option" formControlName="lowestPriceTicketFree">
+                        <mat-radio-button class="first-radio" value="true">YES</mat-radio-button>
+                        <mat-radio-button [checked]='true' value="false">NO</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-12">
+                  <div class="configration_btmfrm">
+                    <div class="cols-m-">
+                      <div class="martop_cnfg">
+                        <div class="styled-input cnfg">
+                          <input formControlName="eventCapacity" placeholder="Enter Capacity" type="text">
+                          <label>Capacity</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-8">
+                  <div *ngFor="let food of foodList;let i = index;" class="row">
+                    <div class="col-sm-8">
+                      <div class=" martop_cnfg">
+                        <div class="styled-input cnfg">
+                          <input [(ngModel)]="food.foodName" [ngModelOptions]="{standalone: true}"
+                                  placeholder="Regulare Dinner Pack"
+                                  type="text">
+                          <label>Food Item</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 food-responsive">
+                      <div class=" martop_cnfg">
+                        <div class="styled-input cnfg">
+                          <input [(ngModel)]="food.price" [ngModelOptions]="{standalone: true}" placeholder="0"
+                                  type="text">
+                          <label>Food Price</label>
+                        </div>
+                      </div>
+                      <button (click)="removeIndex(i)" class="add_food-config" type="button">
+                        <!-- <i class="fa fa-times crs_btn"   aria-hidden="true"></i> -->
+                        <img alt="" src="assets/icon/delete-button.svg">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-4">
+                  <div class="cnfg_btn mar-add">
+                    <button (click)="addFoodItem()" class="add_food" type="button">
+                      <i aria-hidden="true" class="fa fa-plus"></i> Add new food
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mem-next martopseat">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button" value="Back">
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <input (click)="submitConfig()" class="save-changes fright" type="button" value="Next">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- ================== End configuration ===================== -->
+        <!-- ================== Event Price ===================== -->
+        <div *ngIf="activeTabName=='EVENT_PRICE'" class="col-md-12">
+          <div class="profile-head">Event Price</div>
+          <div class="row">
+            <form [formGroup]="PriceForm" id="priceForm">
+              <div class="col-md-12">
+                <div class="profiletop gaftop">
+                  <div class="row martop">
+                    <div *ngIf="ConfigurationForm.value.paidParking== 'true'" class="col-md-6 col-sm-6 col-xs-12 martop">
+                      <div class="styled-input">
+                        <input formControlName="parkingFeesPerVehicle" min="0" type="number">
+                        <label>Parking Fees Per Vehicle <i>*</i></label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 fright">
+                      <div class="border-country">
+                        <span>Age Range</span>
+                        <mat-radio-group aria-label="Select an option" class="marvendor" formControlName="type">
+                          <mat-radio-button checked="true" class="first-radio" value="USER">User Role
+                          </mat-radio-button>
+                          <mat-radio-button value="VENDOR">Vendor Role</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                      <div class="border-country martop-date">
+                        <span>Rule Name <i> *</i></span>
+                        <select #t (change)="changeRoles(t.value)" class="event_slctlist music"
+                                formControlName="ruleName">
+                          <option value="">Select Rule Name</option>
+                          <option *ngFor="let et of roleList;let i=index" [value]="et.value">{{et.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                      <div class="border-country martop-date">
+                        <span>Rule Type <i>*</i></span>
+                        <select #t1 (change)="changeRolesType(t1.value)" class="event_slctlist music"
+                                formControlName="ruleType">
+                          <option value="">Select Rule Type</option>
+                          <option *ngFor="let et of roleTypeList;let i=index" [value]="et.value">{{et.name}}</option>
+                        </select>
+                      </div>
+                      <!-- <div class="styled-input">
+                        <input type="text">
+                        <label>Rule Type *</label>
+                        <div
+                          *ngIf="PriceForm.controls.ruleType.dirty || PriceForm.controls.ruleType.touched || PriceForm.controls.ruleType.valid">
+                          <span *ngIf="PriceForm.controls.ruleType.errors && PriceForm.controls.ruleType.errors.required"
+                            class="valid-msg">Rule Type required</span>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="col-md-4 martop col-sm-12">
+                      <div class="styled-input">
+                        <input formControlName="rule" type="number">
+                        <label>Rule <i>*</i></label>
+                        <div
+                          *ngIf="PriceForm.controls.rule.dirty || PriceForm.controls.rule.touched || PriceForm.controls.rule.valid">
+                          <span *ngIf="PriceForm.controls.rule.errors" class="valid-msg">Rule is Invalid</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="showData.ruleFormat == 'NUMBER'">
+                      <div *ngIf="showData.takeMin" class="col-md-4 col-sm-6 martop">
+                        <div class="styled-input">
+                          <input formControlName="minValue" type="number">
+                          <label>Min <i>*</i></label>
+                          <div
+                            *ngIf="PriceForm.controls.minValue.dirty || PriceForm.controls.minValue.touched || PriceForm.controls.minValue.valid">
+                            <span *ngIf="PriceForm.controls.minValue.errors" class="valid-msg">Invalid</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="showData.takeMax" class="col-md-4 col-sm-12 martop">
+                        <div class="styled-input">
+                          <input formControlName="maxValue" type="number">
+                          <label>Max <i>*</i></label>
+                          <div
+                            *ngIf="PriceForm.controls.maxValue.dirty || PriceForm.controls.maxValue.touched || PriceForm.controls.maxValue.valid">
+                            <span *ngIf="PriceForm.controls.maxValue.errors" class="valid-msg">Invalid</span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="showData.ruleFormat == 'DATE_TIME'">
+                      <div *ngIf="showData.takeMin" class="col-md-4 col-sm-6 ">
+                        <div class="styled-input datematerial martop-date">
+                          <input [matDatepicker]="picker" formControlName="minValue" matInput type="text">
+                          <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <label>Start Date <i>*</i> </label>
+                        </div>
+                      </div>
+                      <div *ngIf="showData.takeMax" class="col-md-4 col-sm-6 ">
+                        <div class="styled-input datematerial martop-date">
+                          <input [matDatepicker]="picker" formControlName="maxValue" matInput type="text">
+                          <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <label>End Date <i>*</i></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="showData.takeName" class="col-md-4 col-sm-12 martop">
+                      <div class="styled-input">
+                        <input formControlName="name" type="text">
+                        <label>Name <i>*</i></label>
+                      </div>
+                    </div>
+                    <div *ngIf="showDiscount" class="col-md-4 col-sm-12 martop">
+                      <div class="styled-input">
+                        <input formControlName="maxDiscount" min="0" type="text">
+                        <label>Maximum Discount <i>*</i></label>
+                        <div
+                          *ngIf="PriceForm.controls.maxDiscount.dirty || PriceForm.controls.maxDiscount.touched || PriceForm.controls.maxDiscount.valid">
+                          <span
+                            *ngIf="PriceForm.controls.maxDiscount.errors && PriceForm.controls.maxDiscount.errors.required"
+                            class="valid-msg">Maximum Discount required</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <input (click)="addEventPrice()" class="save-changes fright" type="button" value="Save">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="userPriceArray.length != 0" class="col-md-6">
+                      User Role
+                      <div class="req-section no-dot-bor no-line-both">
+                        <div *ngFor="let data of userPriceArray;let i = index" class="bor-line-gray">
+                          <div class="row">
+                            <div class="col-md-9">
+                              <span>{{data.showRole}} - {{data.showMin}} - {{data.showMax}}</span>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="delete-btn-dynamic">
+                                <button (click)="removeFromPriceArray(i,'user')">
+                                  <i class="icon-delete newicon"></i>
+                                </button>
+                              </div>
+                              <div class="delete-btn-dynamic">
+                                <button (click)="editPriceArray(data,i,'user')">
+                                  <img src="assets/icon/pencil-edit-button.svg">
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="vendorPriceArray.length != 0" class="col-md-6">
+                      Vendor Role
+                      <div class="req-section no-dot-bor no-line-both">
+                        <div *ngFor="let data of vendorPriceArray;let i = index" class="bor-line-gray">
+                          <div class="row">
+                            <div class="col-md-9">
+                              <span>{{data.showRole}} - {{data.showMin}} - {{data.showMax}}</span>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="delete-btn-dynamic">
+                                <button (click)="removeFromPriceArray(i,'vendor')">
+                                  <i class="icon-delete newicon"></i>
+                                </button>
+                              </div>
+                              <div class="delete-btn-dynamic">
+                                <button (click)="editPriceArray(data,i,'vendor')">
+                                  <img src="assets/icon/pencil-edit-button.svg">
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mem-next martopseat">
+                    <div class="row">
+                      <div class="col-lg-6 col-xs-6">
+                        <input (click)="nextBackActiveTab(activeTabName,'back');" class="save-changes backbtn" type="button"
+                               value="Back">
+                      </div>
+                      <div class="col-xs-6">
+                        <input (click)="submitEventPrice()" class="save-changes fright" type="button" value="Next">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- ================================= End Event Price ================================== -->
+        <!-- ================================= Seating ================================== -->
+        <div *ngIf="activeTabName=='EVENT_SEATING'" class="col-md-12">
+          <div class="profile-head">Event Seating</div>
+          <form [formGroup]="seatingForm" id="seatingForm">
+            <div class="profiletop gaftop">
+              <div class="row borbtm-seating martop">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-5 col-sm-12 martop">
+                      <div class="styled-input">
+                        <input formControlName="seatingCategoryName" type="text">
+                        <label>Seating Category Name <i>*</i></label>
+                        <div
+                          *ngIf="seatingForm.controls.seatingCategoryName.dirty || seatingForm.controls.seatingCategoryName.touched || seatingForm.controls.seatingCategoryName.valid">
+                          <span *ngIf="seatingForm.controls.seatingCategoryName.errors"
+                                class="valid-msg">required</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5 col-sm-12 martop">
+                      <div class="styled-input">
+                        <input formControlName="categoryPrice" type="number">
+                        <label>Category Price <i>*</i></label>
+                        <div
+                          *ngIf="seatingForm.controls.categoryPrice.dirty || seatingForm.controls.categoryPrice.touched || seatingForm.controls.categoryPrice.valid">
+                          <span *ngIf="seatingForm.controls.categoryPrice.errors" class="valid-msg">required</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 add-seat-res">
+                  <div class="row">
+                    <div *ngFor="let option of seatList;let i = index" class="col-md-5 col-sm-8 col-sm-7 col-xs-7 borbtm-seating">
+                      <div class="styled-input">
+                        <input [(ngModel)]="option.name" [ngModelOptions]="{standalone: true}" placeholder="Add"
+                               type="text">
+                        <label>Seat – {{i + 1}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-sm-5 col-xs-5 add-btn-create evnt-pr">
+                      <div>
+                        <button (click)="addNewSeat()" class="add_food" type="button">
+                          <i aria-hidden="true" class="fa fa-plus"></i> Add new Seat
+                        </button>
+                        <button (click)="removeLastSeat()" *ngIf="seatList.length != 1" class="add_food" type="button">
+                          <i aria-hidden="true" class="fa fa-minus"></i> Remove Last Seat
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-md-6">
+                  <div class="styled-input">
+                    <input type="text" formControlName="options[]" placeholder="Not Needed.">
+                    <label>Option – 2</label>
+                  </div>
+                </div> -->
+              </div>
+              <div class="row">
+
+                <div class="col-lg-12">
+                  <input (click)="addSeating()" class="save-changes fright" type="button" value="Save">
+                </div>
+              </div>
+              <div class="mem-next martopseat">
+                <div class="row ">
+                  <div class="col-lg-6 col-xs-6">
+                    <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button"
+                           value="Back">
+                  </div>
+                  <div class="col-lg-6 col-xs-6">
+                    <input (click)="submitSeating()" class="save-changes fright" type="button" value="Next">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="profiletop gaftop">
+              <div class="survey-scroll">
+                <table class="table col-12 tab-seat1 table-break">
+                  <tr>
+                    <th>Category Name</th>
+                    <th>Category Price</th>
+                    <th>Total Seats</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+
+                  </tr>
+                  <tr *ngFor="let list of seatArray;let i = index">
+                    <td>{{list.seatingCategoryName}}</td>
+                    <td>{{list.categoryPrice}}</td>
+                    <td>{{list.total}}</td>
+                    <td>
+                      <button (click)="editSeat(list)" class="edit-config">
+                        <img src="assets/icon/pencil-edit-button.svg">
+                      </button>
+                    </td>
+                    <td>
+                      <button (click)="removeSeat(list.seatingCategoryId)" class="edit-config">
+                        <i class="icon-delete newicon"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+          </div>
+        </div>
+        <!-- ================================= end Seating ================================== -->
+        <!-- ================== Image Upload ===================== -->
+        <div *ngIf="activeTabName=='IMAGE_UPLOAD'" class="col-md-12">
+          <div class="profile-head">Image Upload</div>
+          <div class="profiletop gaftop imageupload">
+            <div class="row row-eq-height upload-responsive">
+              <div class="col-md-5 col-xs-12">
+                <div class="image-main-up">
+                  <div class="imageup">
+                    <span>Upload Image</span>
+                    <app-file-uploader-vertical
+                      #imageUpload (invalidFile)="invalidUploadFile()"
+                      (maxFileError)="maxFileError()"
+                      (maxFileSizeError)="fileSizeError()" (queueCompleted)="queueCompleted()"
+                      (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList"
+                      [uploadUrl]="mediaUploadUrl">
+                    </app-file-uploader-vertical>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7 col-xs-12 borright">
+                <div class="image-upl-slider event-datailslider prview-img">
+                  <span class="top-content">Preview Images</span>
+                  <carousel *ngIf="mediaList.length == 0">
+                    <slide>
+                      <img src="assets/images/background.png">
+                    </slide>
+                    <slide>
+                      <img src="assets/images/background2.png">
+                    </slide>
+                  </carousel>
+                  <carousel *ngIf="mediaList">
+                    <slide *ngFor="let list of mediaList;">
+                      <img class="slide-img-up" src="{{list.responseData?.data?.profilePictureUrl}}">
+                    </slide>
+                  </carousel>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+            <div class="mem-next martopseat">
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button" value="Back">
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <input (click)="submitMedia()" class="save-changes fright" type="button" value="Next">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ================== End Image Upload ===================== -->
+        <!-- ================== Dynamic Fields ===================== -->
+        <div *ngIf="activeTabName=='CUSTOM_INFO'" class="col-md-12">
+          <div class="profile-head">
+            Custom Information
+            <!-- <button type="button" class="addbutton-mem">
+              + Add Fields
+            </button> -->
+          </div>
+          <div class="profiletop gaftop imageupload">
+            <form [formGroup]="dynamicFieldAddForm" id="dynamicFieldAddForm">
+              <div class="row">
+                <!--<div class="col-md-12">
+                 <div class="req-section">
+                   <div class="row">
+                     <div class="col-md-6">
+                       <span>Is this Field required?
+                       </span>
+                     </div>
+                     <div class="col-md-3">
+                       <input type="radio" formControlName="answerLevel" value="TOP_LEVEL" checked="checked"> Top Level
+                     </div>
+                     <div class="col-md-3">
+                       <input type="radio" formControlName="answerLevel" value="MEMBER_LEVEL"> Member Level
+                     </div>
+                   </div>
+
+                 </div>
+               </div> -->
+                <div class="col-md-12">
+                  <div class="styled-input">
+                    <input formControlName="fieldName" type="text">
+                    <label>Field Name</label>
+                    <div
+                      *ngIf="dynamicFieldAddForm.controls.fieldName.dirty || dynamicFieldAddForm.controls.fieldName.touched || dynamicFieldAddForm.controls.fieldName.valid">
+                      <span
+                        *ngIf="dynamicFieldAddForm.controls.fieldName.errors && dynamicFieldAddForm.controls.fieldName.errors.required"
+                        class="valid-msg">Field name is required</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="border-country fild-type">
+                    <span>Field Type</span>
+                    <button (click)="dynamicSelectedBtn(fieldType.value,fieldType.allowOption);"
+                            *ngFor="let fieldType of dynamicField;"
+                            class="{{selectedBtn == fieldType.value ? 'active-btn' : '' }}">
+                      <i [ngClass]="dynamicFieldIconMapping[fieldType.value]" class="icon"></i> {{fieldType.name}}
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="req-section level-font">
+                    <!-- <div class="row">
+                      <div class="col-md-6">
+                        <span>Is this Field required?
+                        </span>
+                      </div>
+                      <div class="col-md-3">
+                        <input type="radio" formControlName="required" value="true" checked="checked" id="crust1"> Yes
+                      </div>
+                      <div class="col-md-3">
+                        <input type="radio" formControlName="required" value="false" id="crust2"> No
+                      </div>
+                    </div> -->
+                    <div class="row">
+                      <div class="col-md-6 col-sm-5">
+                        <span>Answer Level ?
+                        </span>
+                      </div>
+                      <div class="col-md-6 col-sm-7">
+                        <mat-radio-group aria-label="Select an option" formControlName="answerLevel">
+                          <mat-radio-button class="first-radio" value="TOP_LEVEL">Entire Party
+                          </mat-radio-button>
+                          <mat-radio-button value="MEMBER_LEVEL">Each Registrant</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-5">
+                        <span>Is this Field required?
+                        </span>
+                      </div>
+                      <div class="col-md-6 col-sm-7">
+                        <mat-radio-group aria-label="Select an option" formControlName="required">
+                          <mat-radio-button class="first-radio" value="true">Yes</mat-radio-button>
+                          <mat-radio-button value="false"> No</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- *ngIf="optionshow" -->
+              <div *ngIf="optionshow" class="row">
+                <div class="col-sm-12 add-seat-res">
+                  <div class="row">
+                    <div *ngFor="let option of optionList;let i = index" class="col-md-5 col-sm-8 col-sm-7 col-xs-7 margin-01 dynamic-op">
+                      <div class="styled-input">
+                        <input [(ngModel)]="option.name" [ngModelOptions]="{standalone: true}"
+                               placeholder="Add option here"
+                               type="text">
+                        <label>Option – {{i + 1}}</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-sm-5 col-xs-5 add-btn-create evnt-pr maradd">
+                      <div>
+                        <button (click)="addNewOption()" class="add_food" type="button">
+                          <i aria-hidden="true" class="fa fa-plus"></i> Add new option
+                        </button>
+                        <button (click)="removeLastOption()" *ngIf="optionList.length != 1" class="add_food" type="button">
+                          <i aria-hidden="true" class="fa fa-minus"></i> Remove Last Option
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-6">
+                  <div class="styled-input">
+                    <input type="text" formControlName="options[]" placeholder="Not Needed.">
+                    <label>Option – 2</label>
+                  </div>
+                </div> -->
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <input (click)="addDynamicField()" class="save-changes fright" type="button" value="Save">
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="req-section no-dot-bor" *ngFor="let data of dynamicFieldArray;let i = index">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="edit-ues">
+                        Edit Question
+                      </div>
+                    </div>
+                  </div>
+                  <div  class="row add-cont">
+                    <div class="col-md-9 col-sm-9 col-xs-8 ">
+                      <span class="txt-questions">{{data.fieldName}}</span>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-4 no-line-both">
+                      <div class="delete-btn-dynamic">
+                        <button (click)="removeDynamicField(i)">
+                          <i class="icon-delete newicon"></i>
+                        </button>
+                      </div>
+                      <div class="delete-btn-dynamic edit-dynamic">
+                        <button (click)="editDynamicField(data,i)">
+                          <img src="assets/icon/pencil-edit-button.svg">
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class=" martopseat">
+                <div class="col-md-6 col-xs-6">
+                  <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button" value="Back">
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <input (click)="dynamicFormSubmit()" class="save-changes fright" type="button" value="Next">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ==================End  Dynamic Fields ===================== -->
+        <!-- ================== state  ===================== -->
+        <div *ngIf="activeTabName=='COMPLETE_FORM'" class="col-md-12">
+          <div class="profile-head">Complete Form</div>
+          <div class="profiletop gaftop">
+            <form [formGroup]="stateForm">
+              <div class="row marcomplete">
+                <div class="col-lg-12">
+                  <div class="styled-input">
+                    <select formControlName="eventState" type='select'>
+                      <option value="">Select Event State</option>
+                      <option *ngFor="let list of eventStateList;let i = index"
+                              value="{{list['value']}}">{{list['name']}}</option>
+                    </select>
+                    <label>Select Event State</label>
+                    <div *ngIf="stateForm.controls.eventState.dirty || stateForm.controls.eventState.touched || stateForm.controls.eventState.valid">
+                      <span *ngIf="stateForm.controls.eventState.errors" class="valid-msg">required</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mem-next martopseat">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <input (click)="addStateData()" class="save-changes fright" type="button" value="Save">
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="mem-next martopseat">
+              <div class="row">
+                <div class="col-lg-6">
+                  <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button" value="Back">
+                </div>
+                <div class="col-lg-6">
+                  <input (click)="submitStateData()" class="save-changes fright" type="button" value="Finish">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ================== end state  ===================== -->
+      </div>
+    </div>
+  </div>
+
+  <!-- <ngx-alerts></ngx-alerts> -->

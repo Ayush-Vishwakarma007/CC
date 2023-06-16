@@ -1,0 +1,309 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <div class="becomeheight">
+      <h5>
+        Basic Information
+      </h5>
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <form [formGroup]="registerForm" autocomplete="off" class="example-form" id="registerForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field class="example-full-width chapter-name pull-right mar80">
+                      <mat-label>Chapter Name <i>*</i></mat-label>
+                      <mat-select formControlName="chapterId" [value]="chapterId" [(ngModel)]="chapterId" (selectionChange)="getPaymentMethod()" >
+                        <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                        <div *ngIf="registerForm.controls.firstName.errors" class="valid-msg">Chapter is required</div>
+                    </span>
+                  </div>
+                </div>
+                <div class="row martopevent">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>First Name <i>*</i></mat-label>
+                      <input (keypress)="charOnly($event)" formControlName="firstName" matInput type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                         <div *ngIf="registerForm.controls.firstName.errors"
+                              class="valid-msg">First Name is required</div>
+                      </span>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>Last Name <i>*</i></mat-label>
+                      <input (keypress)="charOnly($event)" formControlName="lastName" matInput type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                         <div *ngIf="registerForm.controls.lastName.errors"
+                              class="valid-msg">Last Name is required</div>
+                      </span>
+                  </div>
+                </div>
+                <div class="row martopevent">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>Email <i>*</i></mat-label>
+                      <input formControlName="email" matInput type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.email.errors">
+                         <div *ngIf="registerForm.controls.email.errors"
+                              class="valid-msg">Please enter valid email.</div>
+                      </span>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>Phone Number</mat-label>
+                      <input (keypress)="numberOnly($event)" [maxLength]="16" [minLength]="16" appPhoneMask
+                             formControlName="phone" matInput
+                             type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.phone.errors">
+                         <div *ngIf="registerForm.controls.phone.errors"
+                              class="valid-msg">Phone Number is required</div>
+                      </span>
+                  </div>
+                </div>
+                <div class="row martopevent">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>Address <i>*</i></mat-label>
+                          <textarea #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+                                    [options]='maploc'
+                                    formControlName="addressLine1"
+                                    matInput ngx-google-places-autocomplete></textarea>
+                        </mat-form-field>
+                        <div
+                          *ngIf="submitted && registerForm.controls.addressLine1.errors ">
+                            <span
+                              *ngIf="submitted && registerForm.controls.addressLine1.errors "
+                              class="valid-msg">Address is required</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row martopevent">
+                  <div class="col-md-6 sm-paid">
+                    <mat-form-field class="example-full-width ">
+                      <mat-label>City <i>*</i></mat-label>
+                      <input formControlName="city" matInput>
+                    </mat-form-field>
+                    <div
+                      *ngIf="submitted && registerForm.controls.city.errors">
+                                <span
+                                  *ngIf="submitted && registerForm.controls.city.errors"
+                                  class="valid-msg">City is required</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 sm-paid">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>State <i>*</i></mat-label>
+                      <input formControlName="state" matInput>
+                    </mat-form-field>
+                    <div
+                      *ngIf="submitted && registerForm.controls.state.errors">
+                              <span
+                                *ngIf="submitted && registerForm.controls.state.errors"
+                                class="valid-msg">State is required</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row martopevent">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Country <i>*</i></mat-label>
+                      <input formControlName="country" matInput>
+                    </mat-form-field>
+                    <div
+                      *ngIf="submitted && registerForm.controls.country.errors ">
+                                <span
+                                  *ngIf="submitted && registerForm.controls.country.errors"
+                                  class="valid-msg">Country is required</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6 sm-paid">
+                    <mat-form-field class="example-full-width ">
+                      <mat-label>Zipcode <i>*</i></mat-label>
+                      <input (keypress)="numberOnly($event)" [max]="5" [min]="5" formControlName="zipCode" matInput maxlength="5" type="text">
+                    </mat-form-field>
+                    <div *ngIf="submitted && registerForm.controls.zipCode.errors ">
+                      <span *ngIf="submitted && registerForm.controls.zipCode.errors" class="valid-msg"> Zip Code is required </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+ <!-- <button class="donateevent" data-target="#donationModal" data-toggle="modal" id="donate">
+    <ul>
+      <li><img alt="" src="assets/icon/icon awesome-donate.svg"></li>
+      <li>
+        <h6>Want to donate or Sponsor this membership ?</h6>
+      </li>
+    </ul>
+  </button>-->
+</div>
+
+<div aria-hidden="true" aria-labelledby="donationModal" class="modal fade share-model donation-model" id="donationModal"
+     role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <button aria-label="Close" class="close" data-dismiss="modal" id="closeDonate" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="tab-main">
+          <mat-tab-group (selectedTabChange)="changeTab($event)">
+            <mat-tab label="donor">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li><img alt="" class="tab-gray" src="../../../../../assets/icon/tab4.svg"> <img
+                    alt="" class="tab-blue" src="../../../../../assets/icon/tab4-b.svg"></li>
+                  <li><span>Donation </span></li>
+                </ul>
+              </ng-template>
+              <!-- primary Donation  -->
+              <div class="term-register booktecket mod-scroll">
+                <mat-radio-group aria-label="Select an option">
+                  <div *ngFor="let list of donors;let i = index" class="border-dash">
+                    <div class="row">
+                      <div class="col-md-9 col-sm-9 col-xs-9">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <mat-radio-button (change)="donationChange($event.source.checked,i)"
+                                              [checked]="list['id'] == categoryId"
+                                              [value]="list['id']"> {{list['categoryName']}} </mat-radio-button>
+                          </div>
+                        </div>
+                        <div class="row marprimary">
+                          <div class="col-md-12">
+                            <div class="perice_txt txt-l">
+                              <p>${{list.range.min}} - ${{list.range.max}}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="reg_dates">
+                              <ul class="regs_list">
+                                <p *ngIf="list['discountType'] == 'PERCENT'">{{list['discount']}}%</p>
+                                <p *ngIf="list['discountType'] == 'AMOUNT'">${{list['discount']}}</p>
+                                <p *ngIf="list['discountType'] == 'TICKET'">{{list['discount']}} Ticket Free</p>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="event-pera">
+                              <p [innerHTML]="list['description']"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-3 col-xs-3 amount-r">
+                        <div class="amount-pop">
+                          <ul class="primary-dollar">
+                            <li class="first">
+                              <img alt="" src="../../../../../assets/icon/dollar-sign.svg">
+                            </li>
+                            <li>
+                              <input (keypress)="numberOnly($event)" [(ngModel)]="list['amount']"
+                                     [disabled]="!list['checked']"
+                                     class="second"
+                                     placeholder="Amount" type="text">
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12 saveinfo">
+                  <input class="save-changes fright mod-next" type="button" value="Submit">
+                </div>
+              </div>
+              <!-- primary Donation  -->
+            </mat-tab>
+            <mat-tab label="sponsor">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li><img alt="" class="tab-gray" src="../../../../../assets/icon/tab5.svg"> <img
+                    alt="" class="tab-blue" src="../../../../../assets/icon/tab5-b.svg"></li>
+                  <li><span>Sponsors </span></li>
+                </ul>
+              </ng-template>
+              <div class="term-register booktecket mod-scroll">
+                <mat-radio-group aria-label="Select an option">
+                  <div *ngFor="let list of sponsors;let i = index" class="border-dash">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <mat-radio-button (change)="sponsorChange($event.source.checked,i)"
+                                              [checked]="list['id'] == categoryId"
+                                              [value]="list['id']"> {{list['categoryName']}} </mat-radio-button>
+                          </div>
+                        </div>
+                        <div class="row marprimary">
+                          <div class="col-md-12">
+                            <div class="perice_txt txt-l">
+                              <p>${{list.range.min}} - ${{list.range.max}}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="reg_dates">
+                              <ul class="regs_list">
+                                <p *ngIf="list['discountType'] == 'PERCENT'">{{list['discount']}}%</p>
+                                <p *ngIf="list['discountType'] == 'AMOUNT'">${{list['discount']}}</p>
+                                <p *ngIf="list['discountType'] == 'TICKET'">{{list['discount']}} Ticket Free</p>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="event-pera">
+                              <p [innerHTML]="list['description']"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-3 amount-r">
+                        <div class="amount-pop">
+                          <ul class="primary-dollar">
+                            <li class="first">
+                              <img alt="" src="../../../../../assets/icon/dollar-sign.svg">
+                            </li>
+                            <li>
+                              <input (keypress)="numberOnly($event)" [(ngModel)]="list['amount']"
+                                     [disabled]="!list['checked']" class="second" placeholder="Amount" type="text">
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12 saveinfo">
+                  <input class="save-changes fright mod-next" type="button" value="Submit">
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

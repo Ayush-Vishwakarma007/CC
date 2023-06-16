@@ -1,0 +1,581 @@
+<div class="main-screen mainnewsscreen">
+  <!-- Home Banner Section Start -->
+  <div class="container-fluid slider slider_main">
+    <carousel data-pause="hover" [interval]="this.rotationTime">
+      <slide *ngFor="let e of bannerList;let i=index">
+        <div *ngIf="e.bannerType == 'IMAGE'" class="blur-image" [style.backgroundImage]="'url('+(e.bannerUrl| communityImages)+')'"></div>
+        <img *ngIf="e.bannerType == 'IMAGE'" alt="First slide" [src]="e.bannerUrl | communityImages">
+        <video *ngIf="e.bannerType == 'VIDEO'" class="videobanner" autoplay loop>
+          <source [src]="e.bannerUrl | communityImages"></video>
+        <div class="carousel-caption-home" *ngIf="e.bannerName!='' && e.bannerName!=null">
+          <h3  animationName="animated slideInLeft" [style.color]="e?.nameColor?.foregroundColorCode">{{e.bannerName}}</h3>
+          <p  animationName="animated slideInRight" [style.color]="e?.textColor?.foregroundColorCode">{{e.bannerDisplayText}}</p>
+          <div *ngIf="e.buttonText != null && e.buttonAction != null && e.buttonText != '' && e.buttonAction != ''"  animationName="animated slideInUp" class="col-md-12 text-center">
+            <div class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode">
+              <!-- <div class="eff-5" ></div> -->
+              <a *ngIf="e?.buttonAction.indexOf('http') > -1 || e?.buttonAction.indexOf('https') > -1" target="_blank" href="{{e.buttonAction}}" class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode" [style.color]="e?.buttonTextColor?.foregroundColorCode">{{e.buttonText}}</a>
+              <div routerLink="{{e.buttonAction}}" *ngIf="e?.buttonAction.indexOf('http') == -1 && e?.buttonAction.indexOf('https') == -1" class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode">
+                <a [style.color]="e?.buttonTextColor?.foregroundColorCode">{{e.buttonText}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </slide>
+    </carousel>
+    <h1 class="chapternameheading" *ngIf="chapterName">Welcome to <span>{{chapterName}}</span></h1>
+  </div>
+  <!-- Home Banner Section End -->
+  <!-- Upcomming Event Section Start -->
+  <!-- <section class="upcomming-event-home">
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                      <div class="title-part"  animationName="animated slideInLeft">
+                          <h2 class="section-tlt">UPCOMMING EVENT</h2>
+
+                          <div class="event-join">
+                              <ul>
+                                  <li>
+                                    <div class="calndr-icon">
+                                        <img src="assets/images/calendar.svg" alt="">
+                                    </div>
+                                      <div class="event-name">
+                                        <h5>9th International SPCS Convention</h5>
+                                        <button type="button" class="btn btn-general-event">JOIN NOW</button>
+                                      </div>
+                                  </li>
+                              </ul>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6 col-lg-7 col-xl-7">
+                    <div class="event-time"  animationName="animated slideInUp">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                                <div class="event-cont-box">
+                                    <div class="event-count">
+                                        <h6>{{timer.day}}</h6>
+                                    </div>
+                                    <div class="event-text">
+                                        <h6>DAYS</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                                <div class="event-cont-box">
+                                    <div class="event-count">
+                                        <h6>{{timer.hour}}</h6>
+                                    </div>
+                                    <div class="event-text">
+                                        <h6>HOURS</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                                <div class="event-cont-box">
+                                    <div class="event-count">
+                                        <h6>{{timer.min}}</h6>
+                                    </div>
+                                    <div class="event-text">
+                                        <h6>MINUTES</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                                <div class="event-cont-box">
+                                    <div class="event-count">
+                                        <h6>{{timer.sec}}</h6>
+                                    </div>
+                                    <div class="event-text">
+                                        <h6>SECOND</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                      <div class="all-event-part"  animationName="animated slideInRight">
+                          <a   routerLink="/events" >VIEW ALL EVENTS <img src="assets/images/left-arrow.svg" alt=""></a>
+                      </div>
+                  </div>
+              </div>
+              <div class="bg-left">
+                  <img src="assets/images/left-bg.svg" alt="">
+              </div>
+              <div class="bg-right">
+                  <img src="assets/images/right-bg.svg" alt="">
+              </div>
+          </div>
+      </section> -->
+  <!-- Upcomming Event Section End -->
+  <!-- About US Start-->
+  <section class="about-us-home" *ngIf="showAboutUs ==true">
+    <div class="container-fluid">
+      <div class="row" *ngIf="aboutUsDetails.bannerUrl != null && aboutUsDetails.bannerUrl != ''">
+        <div class="col-md-4 col-sm-4">
+          <div  animationName="animated slideInLeft" [ngClass]="aboutUsDetails.allowColorBackground ? 'about-img' : 'margin'">
+            <div class="mainabout">
+              <div class="blurimageabout" [ngStyle]="{'background-image':'url(' + aboutUsDetails.bannerUrl + ')'}"></div>
+              <div *ngIf=" aboutUsDetails.bannerUrl.indexOf(aboutUsDetails.bannerUrl) !== -1">
+                <img alt="" [src]="aboutUsDetails.bannerUrl | eventImages"></div>
+              <div *ngIf="aboutUsDetails.bannerUrl.includes('http') ">
+                <img alt="" [src]="aboutUsDetails.bannerUrl"></div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-8">
+          <div class="about-text">
+            <h2  animationName="animated slideInLeft" class="section-tlt">{{'aboutTitle' | translate}}</h2>
+            <p [innerHTML]="aboutUsDetails.details | slice:0:1185"></p>
+            <a href="/about-us" class="readmoretxt">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="aboutUsDetails.bannerUrl == null || aboutUsDetails.bannerUrl == ''">
+        <div class="col-md-12">
+          <div class="about-text">
+            <h2  animationName="animated slideInLeft" class="section-tlt">{{'aboutTitle' | translate}}</h2>
+            <p [innerHTML]="aboutUsDetails.details | slice:0:1185"></p>
+            <a href="/about-us" class="readmoretxt">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- About US End-->
+
+  <!-- Event Section Start -->
+  <section class="event-home">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2 class="section-tlt"  animationName="animated slideInUp">Events</h2>
+        </div>
+        <div class="col-md-12">
+          <div class="tab-design">
+            <mat-tab-group (selectedTabChange)="changeTab($event)" mat-align-tabs="center" [selectedIndex]="pastSelected">
+              <mat-tab *ngFor="let list of scheduleTypeList" label="{{list.value}}">
+                <ng-template mat-tab-label>
+                  <ul>
+                    <li>
+                      <span>{{list?.name}} </span>
+                    </li>
+                  </ul>
+                </ng-template>
+                <app-event [eventList]="scheduleWiseEventList"></app-event>
+              </mat-tab>
+              <mat-tab label="Upcoming">
+                <app-event [eventList]="upcommingEventList"></app-event>
+              </mat-tab>
+              <mat-tab label="Past">
+                <app-event [eventList]="pastEventList"></app-event>
+              </mat-tab>
+              <mat-tab label="All">
+                <app-event [eventList]="eventList"></app-event>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+        <div class="col-md-12 text-center">
+          <div class="btn-general" routerLink="/eventlist/all"  animationName="animated slideInUp">
+            <div class="eff-5"></div>
+            <a> View All Events </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Event Section End -->
+
+  <!-- <div class="container">
+
+      long scrolling content..
+
+      <div  animationName="bounceOutLeft">
+        animated content upon appearing in the viewport..
+      </div>
+
+      <div  animationName="animated fadeInDown">
+        animated content upon appearing in the viewport..
+      </div>
+
+    </div> -->
+
+  <!-- News and Announcement Section start -->
+  <section class="news-announcement-home" *ngIf="newsList?.length != 0 && this.communityService.communityDetail?.allowNews">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2 class="section-tlt"  animationName="animated slideInLeft">NEWS & ANNOUNCEMENTS</h2>
+        </div>
+        <div class="col-md-10 offset-md-1">
+          <!-- <p>Aliquam laoreet libero bibendum, gravida diam id, molestie justo. Donec et velit vel arcu iaculis condimentum vel et arcu. Nulla fringilla risus a venenatis faucibus. Curabitur vel nibh ligula. Integer dignissim eros tortor, sit amet suscipit urna imperdiet egestas. Fusce rhoncus non dui eu feugiat. </p> -->
+        </div>
+      </div>
+      <app-news [newsList]="newsList"></app-news>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <div class="btn-general" routerLink="/news">
+            <div class="eff-5"></div>
+            <a> View All News</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- News and Announcement Section End -->
+
+  <!-- OUR IMPACT section -->
+  <div class="blue-section" [style.backgroundImage]="'url('+this.communityService.communityDetail.aboutOurCommunity?.backgroundImageUrl+')'" *ngIf="this.communityService.uiPermission['VIEW_OUR_COMMUNITY'] && this.communityService.communityDetail?.allowAboutCommunity">
+    <div class="container">
+      <h2 class="whiteclr">{{this.communityService.communityDetail.aboutOurCommunity?.title}}</h2>
+      <p [innerHtml]="this.communityService.communityDetail.aboutOurCommunity?.description"></p>
+      <!-- <div class="row">
+  <div class="col-md-5 col-sm-5" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMemberCount">
+    <div class="lifemember">
+      <img alt="" src="assets/icon/family.svg">
+    </div>
+    <div class="transparent">
+      <ul>
+        <li>{{memberDetail['totalMembers']}}</li>
+        <li>{{'aboutOurCommunity.totalMember' | translate}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-7 col-sm-7">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="lifemember">
+          <img alt="" src="assets/icon/event-text.svg">
+        </div>
+        <div class="transparent ">
+          <div class="line"></div>
+          <div class="row fullw">
+            <div class="col-md-6 col-sm-6"
+              *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showEventCount">
+              <ul>
+                <li>{{eventDetail['totalEvents']}}</li>
+                <li>{{'aboutOurCommunity.events' | translate}}</li>
+              </ul>
+            </div>
+            <div class="col-md-6 col-sm-6"
+              *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showAttendeesCount">
+              <ul>
+                <li>{{eventDetail['totalAttendees']}}</li>
+                <li>{{'aboutOurCommunity.attendees' | translate}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+      <div class="row" style="padding-top: 30px;" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMainMemberCount">
+        <div class="col-md-12 col-sm-12" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMainMemberTotal ||
+                 this.communityService.communityDetail.aboutOurCommunity?.showMainMembersCount ||
+                 this.communityService.communityDetail.aboutOurCommunity?.showMainUsersCount">
+          <h2 style="padding-top: 0px;" class="whiteclr">{{'aboutOurCommunity.mainTitle' | translate}}</h2>
+        </div>
+        <div class="col-md-12 col-sm-12">
+          <div class="row totallmemcenter">
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMainMemberTotal">
+              <div class="lifemember">
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{mainMemberCount['total']}}</li>
+                  <li>{{'aboutOurCommunity.mainTotal' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMainMembersCount">
+              <div class="lifemember">
+                <!-- <img alt="" src="assets/icon/event-text.svg"> -->
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{mainMemberCount['members']}}</li>
+                  <li>{{'aboutOurCommunity.mainMembers' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showMainUsersCount">
+              <div class="lifemember">
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{mainMemberCount['users']}}</li>
+                  <li>{{'aboutOurCommunity.mainUsers' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row" style="padding-top: 30px;" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showFamilyMemberCount">
+        <div class="col-md-12 col-sm-12" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showAllMemberTotal ||
+                 this.communityService.communityDetail.aboutOurCommunity?.showAllMembersCount ||
+                 this.communityService.communityDetail.aboutOurCommunity?.showAllUsersCount">
+          <h2 class="whiteclr">{{'aboutOurCommunity.allTitle' | translate}}</h2>
+        </div>
+        <div class="col-md-12 col-sm-12">
+          <div class="row totallmemcenter">
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showAllMemberTotal">
+              <div class="lifemember">
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{allMemberCount['total']}}</li>
+                  <li>{{'aboutOurCommunity.allTotal' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showAllMembersCount">
+              <div class="lifemember">
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{allMemberCount['members']}}</li>
+                  <li>{{'aboutOurCommunity.allMembers' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4" *ngIf="this.communityService.communityDetail.aboutOurCommunity?.showAllUsersCount">
+              <div class="lifemember">
+                <img alt="" src="assets/icon/family.svg">
+              </div>
+              <div class="transparent">
+                <ul>
+                  <li>{{allMemberCount['users']}}</li>
+                  <li>{{'aboutOurCommunity.allUsers' | translate}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- OUR IMPACT section -->
+
+  <!-- Blue Slider Section Start -->
+  <div *ngIf="this.communityService.communityDetail?.showSponsors">
+    <section class="blue-slider-home">
+      <span class="sponsor">{{'home.sponsor.text' | translate}}</span>
+      <h4 class="nosponsor" *ngIf="sponsorList?.length ==0">{{'home.nosponsor.text' | translate}} </h4>
+
+      <!-- <div class="mainsponsor">
+<div class="row">
+  <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig"
+    responsive="breakpoints">
+    <div ngxSlickItem *ngFor="let spl of sponsorList" class="slide" style=" padding: 10px;">
+      <a href="{{spl.websiteUrl}}" target="_blank" *ngIf="spl.websiteUrl"><img src="{{spl.logo}}"
+          style="background: white; border-radius: 20px;"></a>
+      <a href="javascript:void(0);" *ngIf="spl.websiteUrl==''"><img src="{{spl.logo}}"
+          style="background: white; border-radius: 20px;"></a>
+    </div>
+  </ngx-slick-carousel>
+  <div class="col-md-12 sponsor-button text-center">
+    <button>
+      <span class="left"></span>
+      <span class="lefttop"></span>
+      <span class="righttop"></span>
+      <span class="rightbottom"></span>
+      {{'sponsorshipTitle' | translate}}
+    </button>
+  </div>
+</div>
+</div> -->
+
+      <!-- <div class="col-md-12 sponsor">
+                    <mat-card  *ngFor="let spl of sponsorList;let i=index" [ngClass]="i<=0?'active':''">
+                      <mat-card-content>
+                        <a href="{{spl.website}}" target="_blank" *ngIf="spl.website"><img src="{{spl.logo}}" alt=""></a>
+                        <a href="javascript:void(0);" *ngIf="spl.website==''"><img src="{{spl.logo}}" alt=""></a>
+                      </mat-card-content>
+                    </mat-card>
+                </div> -->
+
+      <div class="bg-left">
+        <img src="assets/images/blue-left-bg.svg" alt="">
+      </div>
+      <div class="bg-right">
+        <img src="assets/images/blue-right-bg.svg" alt="">
+      </div>
+    </section>
+
+    <app-sponsor [(sponsorList)]="sponsorList"></app-sponsor>
+
+    <div class="col-md-12 sponsor-button text-center">
+      <button [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id">
+        <span class="left"></span>
+        <span class="lefttop"></span>
+        <span class="righttop"></span>
+        <span class="rightbottom"></span>
+        {{'sponsorshipTitle' | translate}}
+      </button>
+    </div>
+  </div>
+  <!-- Blue Slider Section End -->
+
+  <!-- donate spcs -->
+  <div class="donate-main" *ngIf="this.communityService.uiPermission['WHITELABEL']
+  && (this.communityService.communityDetail?.allowDonation ||
+      this.communityService.communityDetail?.allowMembership)">
+    <div class="row row-eq-height">
+      <div class="col-sm-6 col-md-5 col-lg-4" *ngIf="this.communityService.communityDetail?.allowDonation">
+        <div class="donate donate-svg-icon">
+          <div class="row ">
+            <div class="col-sm-5 col-md-5 col-lg-5">
+                            <span>
+                <!-- <img src="assets/icon/donate-spcs.svg" alt=""> -->
+                <svg id="Group_15956" data-name="Group 15956" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 235.122 265.546">
+                  <g id="Group_15955" data-name="Group 15955" transform="translate(0 47.021)">
+                    <g id="Group_15951" data-name="Group 15951" transform="translate(0 0)">
+                      <g id="Group_15949" data-name="Group 15949">
+                        <path id="Path_14477" data-name="Path 14477"
+                              d="M447.5,136.713c-1.576,8.848-.318,65.665,12.916,89.972,15.734,28.9,33.527,26.95,40.954,47.685a128.882,128.882,0,0,1,7.609,46.045h43.817s3.239-51.26-1.593-79.259c-2.95-17.092-44.562-55.693-50.563-62.739s-17.722-.187-13.286,7.381,24.751,32.42,25.012,37.378-14.809-5.4-24.726-17.922-12.656-41.79-17.591-61.443C465.646,126.29,450.889,117.663,447.5,136.713Z"
+                              transform="translate(-446.963 -125.936)" fill="#fff" />
+                      </g>
+                      <g id="Group_15950" data-name="Group 15950" transform="translate(50.374 183.148)">
+                        <rect id="Rectangle_3960" data-name="Rectangle 3960" width="55.225" height="25.472"
+                              transform="translate(4.952 4.952)" fill="#fff" />
+                        <path id="Path_14478" data-name="Path 14478"
+                              d="M588.38,438.677H523.25V403.3h65.13Zm-55.225-9.9h45.32V413.2h-45.32Z"
+                              transform="translate(-523.25 -403.3)" fill="red" />
+                      </g>
+                    </g>
+                    <g id="Group_15954" data-name="Group 15954" transform="translate(119.619 0)">
+                      <g id="Group_15952" data-name="Group 15952" transform="translate(8.611)">
+                        <path id="Path_14479" data-name="Path 14479"
+                              d="M747.516,136.713c1.576,8.848.318,65.665-12.916,89.972-15.734,28.9-33.527,26.95-40.954,47.685a128.884,128.884,0,0,0-7.609,46.045H642.219s-3.24-51.26,1.593-79.259c2.95-17.092,44.561-55.693,50.563-62.739s17.722-.187,13.286,7.381-24.75,32.42-25.011,37.378,14.809-5.4,24.726-17.922,12.656-41.79,17.591-61.443C729.366,126.29,744.123,117.663,747.516,136.713Z"
+                              transform="translate(-641.157 -125.936)" fill="#fff" />
+                      </g>
+                      <g id="Group_15953" data-name="Group 15953" transform="translate(0 183.148)">
+                        <rect id="Rectangle_3961" data-name="Rectangle 3961" width="55.225" height="25.472"
+                              transform="translate(4.953 4.952)" fill="#fff" />
+                        <path id="Path_14480" data-name="Path 14480"
+                              d="M693.246,438.677h-65.13V403.3h65.13Zm-55.225-9.9h45.32V413.2h-45.32Z"
+                              transform="translate(-628.116 -403.3)" fill="#22347c" />
+                      </g>
+                    </g>
+                  </g>
+                  <path id="Path_14481" data-name="Path 14481"
+                        d="M593.61,185.476h-1.049a9.9,9.9,0,0,1-6.638-2.554c-20.389-18.411-35.393-36.065-44.6-52.473-7.678-13.686-9.688-23.6-10.015-29.535-.082-1.165-.124-2.332-.124-3.471a45.753,45.753,0,0,1,10.465-29.6c7.153-8.461,16.8-13.121,27.178-13.121a35.054,35.054,0,0,1,24.3,10.051,35.055,35.055,0,0,1,24.3-10.051c10.373,0,20.025,4.66,27.177,13.121a45.754,45.754,0,0,1,10.465,29.6,47.893,47.893,0,0,1-2.361,14.947c-7.805,26.178-32.83,52.8-52.47,70.532A9.9,9.9,0,0,1,593.61,185.476ZM568.831,74.536c-4.445,0-8.725,2.166-12.05,6.1A25.945,25.945,0,0,0,551,97.443c0,.693.026,1.41.079,2.132.005.068.01.136.013.2.131,2.514,1.126,9.59,7.515,20.98,7.235,12.9,18.816,26.936,34.474,41.8,14.7-14.012,34.777-35.934,40.689-55.935.031-.1.063-.209.1-.312a28.092,28.092,0,0,0,1.405-8.866,25.945,25.945,0,0,0-5.784-16.807c-3.325-3.934-7.6-6.1-12.049-6.1-6.212,0-12.086,4.318-15.327,11.269a9.905,9.905,0,0,1-17.954,0C580.916,78.853,575.043,74.536,568.831,74.536Z"
+                        transform="translate(-475.573 -54.726)" fill="$secondary-color" />
+                </svg>
+              </span>
+            </div>
+            <div class="col-sm-7 col-md-7 col-lg-7">
+              <button class="donate-sec-btn" [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id">
+                <span class="left"></span>
+                <span class="lefttop"></span>
+                <span class="righttop"></span>
+                <span class="rightbottom"></span>
+                <i class="icon-share-spcs newicon"></i> {{'donationTitle' | translate}}
+              </button>
+              <div class="view-donor" [routerLink]="'/donorlist'">
+                <button>
+                  <span class="left"></span>
+                  <span class="lefttop"></span>
+                  <span class="righttop"></span>
+                  <span class="rightbottom"></span>
+                  View Donors
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-5 col-lg-4" *ngIf="(this.communityService.communityDetail?.allowMembership && userDetail?.showJoinMembership) || !authDetail">
+        <div class="donate joinspcs">
+          <div class="row ">
+            <div class="col-sm-5 col-md-5 col-lg-5">
+                            <span>
+                <!-- <img src="assets/icon/family-icn.svg" alt=""> -->
+                <svg id="family_2_" data-name="family (2)" xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 248.927 265.673">
+                  <path id="Path_3938" data-name="Path 3938"
+                        d="M78.431,82.816c21.394,0,38.8-18.577,38.8-41.408S99.823,0,78.431,0s-38.8,18.575-38.8,41.408S57.037,82.816,78.431,82.816Zm0,0"
+                        transform="translate(-20.364 0)" fill="#fff" />
+                  <path id="Path_3939" data-name="Path 3939"
+                        d="M372.042,171.221c10.69,0,19.383-9.277,19.383-20.679V136.621a186.208,186.208,0,0,1-40.093-6.008v18.5C351.33,161.327,360.588,171.221,372.042,171.221Zm0,0"
+                        transform="translate(-180.52 -62.839)" fill="#fff" />
+                  <path id="Path_3940" data-name="Path 3940"
+                        d="M207.009,372.4c-25.553,0-46.341,22.188-46.341,49.46v15.193a7.549,7.549,0,0,0,7.292,7.784h78.112a7.55,7.55,0,0,0,7.293-7.784V421.866c0-27.276-20.792-49.468-46.357-49.468Zm0,0"
+                        transform="translate(-82.554 -179.164)" fill="#e5334f" />
+                  <path id="Path_3941" data-name="Path 3941"
+                        d="M63.529,333.913c0-25.432,13.752-47.5,33.735-58.179-13.412-9.458-22.277-25.687-22.277-44.088a54.722,54.722,0,0,1,11.657-34.006A54.911,54.911,0,0,0,58.067,189.6C26.049,189.6,0,217.4,0,251.571v97.536a7.549,7.549,0,0,0,7.293,7.783H64.782a24.665,24.665,0,0,1-1.253-7.783Zm0,0"
+                        transform="translate(0 -91.217)" fill="#e5334f" />
+                  <path id="Path_3942" data-name="Path 3942"
+                        d="M219.126,273.344c19.241,0,34.892-16.706,34.892-37.239s-15.651-37.239-34.892-37.239-34.891,16.706-34.891,37.239S199.885,273.344,219.126,273.344Zm0,0"
+                        transform="translate(-94.663 -95.676)" fill="#fff" />
+                  <path id="Path_3943" data-name="Path 3943"
+                        d="M351.137,238.871a54.55,54.55,0,0,0-18.5,3.225,56.061,56.061,0,0,1,1.58,13.256c0,18.4-8.867,34.634-22.281,44.089,19.986,10.686,33.739,32.751,33.739,58.185v15.186a24.67,24.67,0,0,1-1.254,7.783h57.489a7.549,7.549,0,0,0,7.293-7.783V300.844C409.2,266.672,383.156,238.871,351.137,238.871Zm0,0"
+                        transform="translate(-160.278 -114.923)" fill="#e5334f" />
+                  <path id="Path_3944" data-name="Path 3944"
+                        d="M331.2,0c-32.02,0-58.071,27.8-58.071,61.977v26.4a48.6,48.6,0,0,1,27.738,15.942,39.442,39.442,0,0,1-4.3-18.042V57.8a7.982,7.982,0,0,1,2.807-6.133,6.935,6.935,0,0,1,6.255-1.415l8.515,2.272a172.256,172.256,0,0,0,44.4,5.831,7.554,7.554,0,0,1,7.293,7.783V87.7a37.44,37.44,0,0,1-9.729,25.369,71.507,71.507,0,0,1,18.714,10.876h7.157a7.553,7.553,0,0,0,7.292-7.783V61.977C389.264,27.8,363.215,0,331.2,0Zm0,0"
+                        transform="translate(-140.337 0)" fill="#fff" />
+                </svg>
+              </span>
+            </div>
+            <div routerLink="/membership-plan" class="col-sm-7 col-md-7 col-lg-7">
+              <button class="donate-sec-btn" [routerLink]="'/membership-plan'">
+                <span class="left"></span>
+                <span class="lefttop"></span>
+                <span class="righttop"></span>
+                <span class="rightbottom"></span>
+                <i class="icon-share-spcs newicon"></i> {{'membershipTitle' |translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- donate spcs -->
+  <div class="clear"></div>
+  <!-- Gallery Home Section Start -->
+  <section class="gallery-home" *ngIf="imageData.length != 0 && this.communityService.communityDetail?.showGallery">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2 class="section-tlt"  animationName="animated slideInUp">Gallery</h2>
+        </div>
+        <div class="col-md-12">
+          <app-gallery-main [imageData]="imageData"></app-gallery-main>
+        </div>
+        <div class="col-md-12 text-center">
+          <div class="btn-general" routerLink="/gallery">
+            <div class="eff-5"></div>
+            <a> View All Gallery</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Gallery Home Section End -->
+</div>
+<!--<button class="donatenowhome"> Donate Now</button>-->

@@ -1,0 +1,153 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+.maincheckbox{ height: calc(100vh - 272px); overflow-y: scroll; overflow-x: auto; padding-right: 20px; margin-bottom: 10px; }
+.becomeheight{ margin: 0px 0 10px 0!important;
+  .save-changes{ padding: 12px 0px!important; min-width: 135px!important; font-size: 16px!important; font-weight: 100!important; }
+}
+.maincheckbox{
+    display: block;
+    .heading-top{ display: block; width: 100%; float: left; margin-top: 20px;
+      .thumbimg{ width: 35px; height: 35px; border-radius: 50px; overflow: hidden; float: left; margin-top:-10px;
+            img{ width: 35px; height: 35px;}
+        }
+      .charector{ width: 40px; height: 40px;  overflow: hidden; margin-top: 0px; background: #e9eff5; float: left; border-radius: 100px; color: #2866A0; font-size: 15px; font-weight: 600; text-transform: uppercase; position: relative;
+        i{ position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-style: normal; }
+        img{ width: 100%; height: 100%; }
+      }
+        .thumbcharector{ width: 35px; background: $blue-light; font-weight: 600; text-transform: uppercase;  color: $blue-dark; height: 35px; border-radius: 50px; overflow: hidden; float: left; margin-top:-10px; position: relative;
+            i{ transform: translate(-50%, -50%); position: absolute; left: 50%; top: 50%; font-style: normal;}
+        }
+        .textname{ font-size: 14px; font-weight: 600; float: left; padding-left: 10px; margin-top: 9px;}
+        mat-checkbox{ float: left; margin-right: 15px; margin-top: 10px;}
+      .acc-icon{float: right;}
+      .down-img{width: 14px; margin-top: 7px; cursor: pointer;
+        img{ transition: all 0.5s ease 0s; }
+        }
+      .pointer-cursor{ cursor: pointer}
+    }
+    .mainvipsesating{ width: 100%; float: left; border-bottom: 1px dashed $gray-e7; padding-bottom: 15px; padding-top: 15px;
+        .radion-heading{ display: block; padding-left: 10px;
+            mat-radio-button{ width: calc(100% - 80px); font-size: 12px; font-weight: 400;
+                .mat-radio-label-content{ opacity: 0.7!important; font-size: 12px;}
+            }
+            .amount{ color: $blue-dark; font-weight: 600; display: inline-block; }
+        }
+        p{ opacity: 0.8; font-size: 12px; padding:5px 0 0 37px; margin: 0px;}
+        span{ font-size: 12px; color: $blue-dark; padding:5px 0 0 37px; }
+    }
+
+}
+.donateetop{ margin: 0px; background: #fff ; position: relative;  border: 0px; width: 100%; border: 1px solid #ccc; box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2); padding: 15px 20px;  min-height: 67px;
+    ::before{ position: absolute; transition: all 0.5s ease 0s; right: 22px; top: 25px; width: 20px; height: 20px;  background: url(../../../../../assets/icon/top-arrow.svg) no-repeat right center; content: ""; }
+    h6{ font-size: 20px; margin: 0px; padding: 0px; text-align: left; }
+    &:hover{
+        ::before{ top: 10px; transition: all 0.5s ease 0s; }
+     }
+}
+
+.adultmain{ width: 100%; border-bottom: 1px dashed #ccc; clear: both; float: left; padding-bottom: 20px; padding-top: 20px;
+    .addbutt{ width: 50%; text-align: right;  float: left;
+        button.add{ border: 1px solid #ccc; color: var(--primary-color); font-size: 15px; font-weight: 600; background: transparent; padding: 8px 15px; border-radius: 5px; }
+    }
+    .adult{  font-size: 15px; font-weight: 600; color: var(--primary-color); width: 50%; float: left;
+        span{ color: var(--primary-color); display: block;}
+    }
+}
+.seatingarrange{ left: -459px!important;  transition: all 0.5s ease 0s!important; height: calc(100vh - 0px); margin-top: 0px;
+  .modal-dialog { right:auto!important; }
+  .modal-header button { margin-top: 8px;
+    img { width: 19px; }
+  }
+  .modal-dialog {  width: 560px !important; transform: none!important; transition: all 0.5s ease 0s!important;
+  }
+  .modal-content { border: 0px;border-radius: 0px;
+  }
+  .modal-title{ color: $blue-dark ; font-weight: 600; padding-left: 10px;}
+  .seatingmain{display: block; padding-left: 20px;
+    .seating{ display: block; padding: 20px; text-align: right; border: 20px solid $blue-light; width: 100%; float: left;
+    }
+    .sectionseating{ border-bottom: 1px dashed $gray-e7; padding: 0 0 20px 30px; width: 100%; float: left; margin-top: 20px;
+      .viewprice{ color: $blue-dark; position: relative; cursor: pointer; display: inline-block;
+        .tooltips{ width: 300px; padding-top: 10px; padding-bottom: 10px; z-index: 66666;  background: #fff; display: none; position: absolute; top: 28px; left: 0px; box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+          ::before{ width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid #fff; position: absolute; left: 28px; top: -10px; content: "";}
+          .adulttool{ padding: 10px 5px 0 5px; margin-left: 10px; display: block; width: 280px; border-bottom: 1px dashed #ccc;
+            li{ display: inline-block; color: #666; padding-bottom: 10px;}
+            li:first-child{ width: 220px; font-weight: 600; }
+            li:last-child{ color: $blue-dark; width: 50px; text-align: right; }
+          }
+          .adulttool:last-child{ border-bottom: 0px!important;}
+
+        }
+
+        &:hover{
+          .tooltips{  display: block;}
+        }
+      }
+      h4{ margin:0px; padding: 0px; font-size: 20px;}
+      p{ margin: 0px;}
+    }
+  }
+}
+.seatingarrange.in{ left: 0px!important; transition: all 0.5s ease 0s!important; background-color: rgba(32, 104, 196, .2)!important; }
+.leftdonorpart {
+  width:570px;
+}
+.arrow-toggle{
+  .down-img{
+    img{ transform: rotate(180deg); transition: all 0.5s ease 0s;}
+  }
+}
+.newparticipantdesign{
+  h5{ margin: 0px 0 0px 0; text-transform: capitalize;}
+  .mat-expansion-panel-header{ background: transparent; padding: 0 5px 0 0px; height: 60px !important; border-bottom:0px;}
+  .mat-expansion-panel-body {  padding:0px!important;}
+}
+.tabceaograpsh{ width: 100%; margin-top: 10px;
+  tr{ border-bottom: 1px solid #ccc;}
+  tr:last-child{ border-bottom: 0px;}
+}
+.moredrop{ display: block!important;  width: 45px;  float: right;  margin-top: 10px; margin-bottom: 10px; position: relative;
+  .dropdown-toggle{ width: 45px; height: 45px; border: 1px solid #ccc; border-radius: 50px; position: relative;
+    img{ width: 20px; transform: translate(-50%, -50%); top: 50%; left: 50%; position: absolute; opacity: 0.7;}
+  }
+  .dropdown-toggle::after{ opacity: 0;}
+  .dropdown-menu{ padding: 20px; margin-left: -144px; min-width: 180px; margin-top: 12px;  border: 0px; box-shadow: 0 -3px 15px rgba(0,0,0,.175);
+    &::before{ position: absolute; top: -10px; right: 10px; content: "";  width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid white;}
+    a{ display: block; font-weight: 100; color: #666; margin-bottom: 5px;  transition: all 0.5s ease 0s;}
+    button{ border: none;  background-color: #FFFFFF; display: block; color: #666; margin-bottom: 5px; font-weight: 100; transition: all 0.5s ease 0s;}
+    a:hover{ color: $secondary-color; transition: all 0.5s ease 0s; padding-left: 10px;}
+    button:hover{ color: $secondary-color; padding-left:20px; transition: all 0.5s ease 0s;}
+    [class*='fa-']:before{ font-size: 17px; margin-right: 5px; }
+  }
+}
+.main-thumbs-model-main{ border: 1px solid #e8e5e5; height: 38px; margin-bottom: 20px;
+  .img-upload{ width: 25px; height: 25px; margin-left: 10px; margin-top: 9px;}
+  .iconclose{ float: right; margin: 6px 7px 5px 0;  background: transparent; border: 0px;
+    [class*='icon-']:before{ color: var(--secondary-color);}
+  }
+}
+.small-upload{ padding: 0px;}

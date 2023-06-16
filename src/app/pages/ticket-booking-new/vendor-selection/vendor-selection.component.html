@@ -1,0 +1,90 @@
+<div class="scrolltab">
+  <h3>
+    <span> Booth Selection </span>
+   
+  </h3>
+
+  <ul class="vendorbooth">
+    <li>Select Booth</li>
+    <div class="btn-edit icnnew" >
+       <i  class="icon-info newicon" *ngIf="changeamt.length!=0"></i>
+      
+      <div class="toolnew" *ngFor="let list of changeamt"> {{list.description}}</div>
+    </div>
+
+    <li class="mainvendor marlefto"> <mat-form-field class="example-full-width">
+      <mat-label> Select Booth </mat-label>
+      <mat-select [(value)]="selectBooth"  (selectionChange)="selected_Booth($event)">
+        <mat-option *ngFor="let list of vendorDetail" [value]="list.id">
+        
+        {{list.name}}
+        </mat-option>
+       
+      </mat-select>
+    </mat-form-field>
+    </li>
+    <li *ngFor="let list of changeamt">
+      ${{list.price}} per booth
+    </li>
+  </ul>
+  <mat-form-field class="example-full-width numcount">
+    <mat-label>Number of count <i> </i></mat-label>
+    <input
+      matInput
+      [(ngModel)]="countMem"
+      (keyup)="mychange(countMem)"
+      [ngModelOptions]="{ standalone: true }"
+      placeholder=""
+      type="text"
+    />
+  </mat-form-field>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="discountven" *ngFor="let list of changeamt">
+          <li> Discount
+            <span> {{list.discount}} </span>
+          </li>
+          <li> Max Amount
+            <span> $ {{list.price}} </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<!--  <div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--      <div class="col-lg-12" >-->
+<!--        <button class="addbtnvendor">Add</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <h3 style="margin-top: 20px">Booth Representative</h3>-->
+<!--  <form class=""  >-->
+<!--    <div class="container-fluid">-->
+<!--      <div class="row">-->
+<!--        <div class="col-sm-6 col-md-3" >-->
+<!--          <mat-form-field class="example-full-width" >-->
+<!--        <mat-label>First name Last name </mat-label>-->
+<!--        <input matInput placeholder="" />-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-sm-6 col-md-5">-->
+<!--      <mat-form-field class="example-full-width" >-->
+<!--        <mat-label>Email </mat-label>-->
+<!--        <input matInput placeholder="" />-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="col-sm-12 col-md-4 removeBtn">-->
+<!--      <mat-form-field class="example-full-width phone-num" >-->
+<!--        <mat-label>Phone number </mat-label>-->
+<!--        <input matInput placeholder="" />-->
+<!--      </mat-form-field>-->
+<!--      <button >-->
+<!--        <i class="icon-delete-blue newicon"></i>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--    </div>-->
+<!--  </form>-->
+</div>

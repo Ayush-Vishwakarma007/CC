@@ -1,0 +1,8 @@
+<svg id="ic-actions-user" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+  <rect id="Rectangle_57" data-name="Rectangle 57" width="15" height="15" fill="none"/>
+  <g id="Layer" transform="translate(1.25 0.624)">
+    <g id="Vrstva_105" data-name="Vrstva 105" transform="translate(0 0)">
+      <path id="Path_117" data-name="Path 117" d="M10.563,7.7a3.75,3.75,0,1,0-4.625,0A6.25,6.25,0,0,0,2,13.5v.625a.625.625,0,0,0,1.25,0V13.5a5,5,0,0,1,10,0v.625a.625.625,0,1,0,1.25,0V13.5a6.25,6.25,0,0,0-3.937-5.8ZM5.75,4.749a2.5,2.5,0,1,1,2.5,2.5A2.5,2.5,0,0,1,5.75,4.749Z" transform="translate(-2 -0.997)" fill="#6d6d6d" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

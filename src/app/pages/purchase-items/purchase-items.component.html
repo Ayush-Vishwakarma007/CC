@@ -1,0 +1,7 @@
+<p>
+  purchase-items works!
+</p>
+<app-buy-items-guest-login *ngIf="showGuest" [save]="submitSubject" (completenext)="nextBackActiveTab(this.activeTabName,'next')"></app-buy-items-guest-login>
+<app-buy-items *ngIf="activeTabName==1"></app-buy-items>
+<button (click)="next()">Next</button>
+

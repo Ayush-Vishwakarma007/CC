@@ -1,0 +1,176 @@
+<div class="create-event-right-side common-page" [ngClass]="null==this.authDetail ? 'without-login-donation-dashboard' : ''">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+      <li class="breadcrumb-item"><a
+        [routerLink]="'/eventlist/all'">{{'event.donation.dashboard.fundRaising.text' | translate}} </a></li>
+      <li [routerLink]="'/event-details/'+eventId" aria-current="page"
+          class="breadcrumb-item active">{{eventDetail?.name}}</li>
+    </ol>
+  </nav>
+  <!-- top section -->
+  <div class="whitebox">
+    <ul class="dashboard-donation">
+      <li class="arrowleft">
+        <button [routerLink]="'/event-details/'+eventId">
+          <!-- <img src="assets/icon/arrow-left.svg" alt=""> -->
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li class="imagethumb">
+        <img src="{{eventDetail?.profilePicture}}">
+      </li>
+      <li class="interior-txt">
+        <h1 [routerLink]="'/event-details/'+eventId">{{eventDetail?.name}}
+          <span *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == false ">{{eventDetail.type}} </span>
+          <span
+            *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == true ">{{'event.donation.dashboard.fundRaising.text' | translate}} </span>
+        </h1>
+        <ul [hidden]="true" class="category-donation">
+          <li>
+            <span>
+              <i aria-hidden="true" class="fa fa-map-marker"></i>
+             San Francisco | CA
+            </span>
+          </li>
+          <li>
+            <span>
+              <i aria-hidden="true" class="fa fa-clock-o"></i>
+              26 Apr, 2020 | 09:00PM - 12:00PM
+            </span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <!-- Total Donors Collection section -->
+  <div class="whitebox">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="total-donors-collection">
+          {{'event.donation.dashboard.totalCollection.title' | translate}}
+          <span>{{'event.donation.dashboard.totalCollection.text' | translate}}</span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <button [routerLink]="'/donor-checkout-new/event/'+eventId" class="donatenow"><img alt=""
+                                                                                 src="assets/icon/icon-donate.svg"> {{'event.donation.dashboard.donateNow.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Total Donors Collection section -->
+  <div class="whitebox">
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="amount">
+          ${{totalDonorcollection}} <span>raised of ${{eventDetail?.eventConfigurations?.donationGoal}} goal</span>
+        </div>
+        <div class="progress-tooltip">
+          <span class="rightprogress">${{eventDetail?.eventConfigurations?.donationGoal}}</span>
+          <span [ngStyle]="{'left':width + '% '}" class="progress-tooltip-info">
+        <img alt="" src="assets/icon/miscellaneous.svg">
+      </span>
+          <progress class="progress" max="100" value="{{width}}">{{width}}%</progress>
+        </div>
+        <div class="dailydonation">
+          <!--      Daily Donations-->
+        </div>
+        <!-- chart box  -->
+        <div class="chartmain">
+          <div *ngIf="status == true" id="chart">
+            <apx-chart
+              [chart]="chartOptions.chart"
+              [dataLabels]="chartOptions.dataLabels"
+              [fill]="chartOptions.fill"
+              [grid]="chartOptions.grid"
+              [markers]="chartOptions.markers"
+              [series]="chartOptions.series"
+              [stroke]="chartOptions.stroke"
+              [title]="chartOptions.title"
+              [tooltip]="chartOptions.tooltip"
+              [xaxis]="chartOptions.xaxis"
+              [yaxis]="chartOptions.yaxis"
+            ></apx-chart>
+          </div>
+
+        </div>
+        <!-- chart box  -->
+      </div>
+      <div class="col-sm-12 col-md-5">
+        <app-donation-list [allDonors]="allDonors" [topDonorList]="topDonorList" [donorList]="donorList" [eventId]="eventId"></app-donation-list>
+       <!-- <div class="donated-people">
+          <h5>{{donorList.totalElements}} {{'event.donation.dashboard.peopledonated.text' | translate}}</h5>
+          <mat-tab-group>
+            &lt;!&ndash; =========================== Dashboard ================================ &ndash;&gt;
+            <mat-tab label="dashboard">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li><span>{{'event.donation.dashboard.allContributors.text' | translate}}</span></li>
+                </ul>
+              </ng-template>
+              <div (scrolled)="onScroll()"
+                   [infiniteScrollDistance]="3"
+                   [infiniteScrollThrottle]="50"
+                   [scrollWindow]="false"
+                   class="contributor"
+                   infiniteScroll>
+                <div *ngFor="let list of allDonors" class="col-sm-12">
+                  <ul class="donationmem">
+                    <li>
+                      <span class="thumb1 thumb2"></span>
+                    </li>
+                    <li>
+                      <i
+                        style=" overflow: hidden; width: 100%; display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;">
+                        {{list.firstName}} {{list.lastName}}</i>
+                      <span>${{list.finalAmount}} <u> {{list.dateTime | date:'MMM d, y'}}</u></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <button [routerLink]="'/donor-checkout/'+eventId" class="dailybutton">
+                <img alt=""
+                     src="assets/icon/awesome-donate-w.svg"> {{'event.donation.dashboard.allContributors.donateNow.Btn.text' | translate}}
+              </button>
+            </mat-tab>
+            <mat-tab label="dashboard">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li class="throphy">
+                    <svg height="17" id="sports-and-competition" viewBox="0 0 17 17" width="17"
+                         xmlns="http://www.w3.org/2000/svg">
+                      <g data-name="Group 14004" id="Group_14004">
+                        <path d="M16.15.85H13.6V0H3.4V.85H.85A.8.8,0,0,0,0,1.7V3.74A3.856,3.856,0,0,0,3.4,7.565V7.65a5.112,5.112,0,0,0,3.995,5.015L6.8,14.45H4.845a.816.816,0,0,0-.765.6L3.4,17H13.6l-.68-1.955a.816.816,0,0,0-.765-.595H10.2l-.6-1.785A5.112,5.112,0,0,0,13.6,7.65V7.565A3.856,3.856,0,0,0,17,3.74V1.7A.8.8,0,0,0,16.15.85ZM3.4,5.865A2.27,2.27,0,0,1,1.7,3.74V2.55H3.4ZM10.2,8.5,8.5,7.565,6.8,8.5l.425-1.7L5.95,5.1H7.735L8.5,3.4l.765,1.7H11.05L9.775,6.8Zm5.1-4.76a2.193,2.193,0,0,1-1.7,2.125V2.55h1.7Z" data-name="Path 14707"
+                              fill="#a2a2a2"
+                              id="Path_14707"/>
+                      </g>
+                    </svg>
+                    <span> {{'event.donation.dashboard.topContributors.text' | translate}}</span></li>
+                </ul>
+              </ng-template>
+              <div class="contributor">
+                <div *ngFor="let list of topDonorList?.content;let i = index;" class="col-sm-12">
+                  <ul class="donationmem">
+                    <li>
+                  <span *ngIf="list?.rank<=3" class="thumb1">
+                    <u>{{list?.rank}} </u>
+                  </span>
+                      <span *ngIf="list?.rank>3" class="thumb1 thumb2"></span>
+                    </li>
+                    <li>
+                      <i
+                        style=" overflow: hidden; width: 100%; display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;">
+                        {{list.firstName}} {{list.lastName}}</i>
+                      <span>${{list.finalAmount}} <u> {{list.dateTime | date:'MMM d, y'}}</u></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>-->
+      </div>
+    </div>
+  </div>
+</div>

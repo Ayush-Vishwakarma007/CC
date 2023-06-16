@@ -1,0 +1,142 @@
+<!-- Content Here -->
+<div class="">
+  <div class="profile-head">Schedule</div>
+  <div class="profiletop paddsession gaftop">
+
+    <!-- Header -->
+    <div class="page-wrapper custom-form-field">
+      <div class="padding-page">
+        <form id="scheduleForm" [formGroup]="scheduleForm" (ngSubmit)="submit()">
+          <div class="create-session-model custom-form-field">
+            <div class="row mart-session">
+              <div class="col-sm-6">
+                <div class="styled-input">
+                  <input type="text" formControlName="name"/>
+                  <label>Schedule Name<i>*</i></label>
+                  <span></span>
+                </div>
+                <div *ngIf="submitted && f.name.errors" class="session_rqrd">
+                  <span class="valid-msg ng-star-inserted"
+                        *ngIf="f.name.errors.required">Schedule Name is required</span>
+                </div>
+              </div>
+              <div class="col-sm-6 ">
+                <div class="styled-input">
+                  <input formControlName="address" ngx-google-places-autocomplete [options]='maploc' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/>
+                  <label>Location<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.address.errors">
+                  <span class="error-msg" *ngIf="f.address.errors.required">Location is required</span>
+                </span>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-sm-6 ">
+                <div class="styled-input">
+                  <input type="text" formControlName="contactNumber"  [textMask]="{mask: phoneMask}"  ng-pattern="numberOnly" (keypress)="numberOnly($event)"/>
+                  <label>Contact Number<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.contactNumber.errors">
+                        <span class="error-msg"
+                              *ngIf="f.contactNumber.errors.required">Contact Number is required</span>
+                      </span>
+              </div>
+              <div class="col-sm-6">
+                <div class="styled-input datematerial">
+                  <input type="text" formControlName="scheduleDate" matInput [matDatepicker]="picker">
+                  <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <label>Date<i>*</i></label>
+                </div>
+                <span *ngIf="submitted && f.scheduleDate.errors">
+                        <span class="error-msg" *ngIf="f.scheduleDate.errors.required">Date is required</span>
+                      </span>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-sm-6 imageupload">
+                <div class="imageup ">
+                  <span>Upload Image</span>
+                  <app-file-uploader-vertical #imageUpload [uploadUrl]="mediaUploadUrl" [maxFileCount]="1"
+                    [(uploadedFiles)]="mediaList"
+                    (invalidFile)="invalidUploadFile()" (uploadStarted)="uploadStarted()"
+                    (queueCompleted)="queueCompleted()" (maxFileSizeError)="fileSizeError()"
+                    (maxFileError)="maxFileError()">
+                  </app-file-uploader-vertical>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="prview-img shedule-img">
+                  <span class="top-content">Preview Image</span>
+                  <img src="assets/images/event_img-1.jpg" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" >
+                <input class="save-changes fright" (click)="submit()" type="button" value="Save">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="mem-next martopseat">
+          <div class="row">
+            <div class="col-md-6  col-xs-6">
+              <input class="save-changes backbtn"  (click)="openTab()" type="button" value="Back">
+            </div>
+            <div class=" col-xs-6">
+              <input type="button" value="Next" (click)="next()" class="save-changes fright">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="profiletop paddleft">
+  <div class="pad-btm event-schedule">
+    <div class="col-sm">
+      <div class="user-white-box page-top">
+        <div class="custom-scrollbar">
+          <div class="data-table-main survey-scroll">
+            <table class="table table-bordered table-break">
+              <thead>
+              <tr>
+                <th class="schedule-name">Name</th>
+                <th >Location</th>
+                <th class="schedule-contact">Contact Number</th>
+                <th class="schedule-date">Date</th>
+                <th class="session-edit">Edit</th>
+                <th class="session-delete">Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr *ngFor="let schedule of scheduleArray;let i=index">
+                <td>{{schedule['name']}}</td>
+                <td>{{schedule['address']}}</td>
+                <td>{{schedule['contactNumber']}}</td>
+                <td>{{schedule['scheduleDate']}}</td>
+                <td>
+                  <button class="edit-config" (click)="edit(schedule)">
+                    <img src="assets/icon/pencil-edit-button.svg">
+                  </button>
+                </td>
+                <td>
+                  <button class="edit-config" (click)="delete(schedule['id'])">
+                    <i class="icon-delete newicon"></i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content Here -->
+<!-- <ngx-alerts></ngx-alerts> -->

@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row height100">
+      <div class="col-md-6">
+          <div class="login-logo">
+            <img src="assets/images/cclogo.png" alt="">
+          </div>
+      </div>
+      <div class="col-md-6 full-wid">
+        <!-- right area -->
+        <div class="rightpart">
+          <div class="main-box">
+            <h3>
+              Welcome
+            </h3>
+            <form id="verifyOTPForm" [formGroup]="verifyOTPForm">
+              <div class="group no-mar" style="margin-top:45px">
+                <input type="text" class="otp" formControlName="otp" maxlength="6">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>VERIFICATION CODE</label>
+                <img src="assets/icon/checked.svg" alt="">
+              </div>
+              <div class="login-button" (click)="verifyOTP()">
+                <button>Verify</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- right area -->
+      </div>
+    </div>
+  </div>
+

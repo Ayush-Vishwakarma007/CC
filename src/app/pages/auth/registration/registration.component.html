@@ -1,0 +1,229 @@
+<div class="bg-reg" >
+<div class="container">
+<div class="white-bg">
+  <div class="row">
+    <!-- {{countryData | josn}} -->
+    <div class="col-sm-12" style="background-color: white">
+      <h1>Registration Form</h1>
+      <div class="">
+        <div class="alert alert-danger" *ngIf="errorMsg">
+          <div>
+            {{errorMsg}}
+          </div>
+        </div>
+        <form id="regForm" [formGroup]="regForm" (ngSubmit)="submit()">
+          <div class="row">
+            <div class="col-25">
+              <label for="fname">First Name
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="firstName" placeholder="Your First name.." (keypress)="charOnly($event)">
+            </div>
+            <div *ngIf="submitted && regFormCon.firstName.errors">
+              <div *ngIf="regFormCon.firstName.errors.required" class="valid-msg">First Name is required</div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Last Name
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="lastName" placeholder="Your last name.." (keypress)="charOnly($event)">
+            </div>
+            <div *ngIf=" submitted &&regFormCon.lastName.errors">
+              <div *ngIf="regFormCon.lastName.errors.required" class="valid-msg">Last Name is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">User Name
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="userName" placeholder="Your User name..">
+            </div>
+            <div *ngIf="submitted &&regFormCon.userName.errors">
+              <div *ngIf="regFormCon.userName.errors.required" class="valid-msg" class="valid-msg">User Name is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="lname">Country Code
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <select data-live-search="true" formControlName="countryPhoneCode">
+                <option value="">Please select Country Code</option>
+                <option *ngFor="let country of countryData" [ngValue]="country.phoneCode">({{country.phoneCode}}) {{country.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="submitted &&regFormCon.countryPhoneCode.errors">
+              <div *ngIf="regFormCon.countryPhoneCode.errors.required" class="valid-msg" class="valid-msg">Country Code is required</div>
+            </div>
+          </div>
+ 
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="bithyear">Birth Year
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <select formControlName="birthYear">
+                <option value="">Select Birthyear </option>
+                <option *ngFor="let year of yearArr" [ngValue]="year">{{year}}</option>
+              </select>
+            </div>
+            <div *ngIf="submitted && regFormCon.birthYear.errors">
+              <div *ngIf="regFormCon.birthYear.errors.required" class="valid-msg">Birth Year is required</div>
+            </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="countryCode">Country Code
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <select formControlName="countryPhoneCode">
+                <option value="">Please select Country Code</option>
+                <option *ngFor="let country of countryData" [ngValue]="country.phoneCode">({{country.phoneCode}}) {{country.name}}</option>
+              </select>
+            </div>
+            <div *ngIf="submitted && regFormCon.countryPhoneCode.errors">
+              <div *ngIf="regFormCon.countryPhoneCode.errors.required" class="valid-msg">Country Code is required</div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-25">
+              <label for="email">Email
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="email" placeholder="Your Email..">
+            </div>
+            <div *ngIf="submitted && regFormCon.email.errors">
+              <div *ngIf="regFormCon.email.errors.required" class="valid-msg">Email is required</div>
+              <div *ngIf="regFormCon.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="Password">Password <span class="valid-msg">*</span></label>
+            </div>
+            <div class="col-75">
+              <input type="password" formControlName="password" placeholder="Your Password..">
+            </div>
+            <div *ngIf="submitted && regFormCon.password.errors">
+              <div *ngIf="regFormCon.password.errors.required" class="valid-msg">Password is required</div>
+              <div *ngIf="regFormCon.password.errors.minlength" class="valid-msg">Please Enter at least 6 character</div>
+          </div>
+          </div> -->
+          <div class="row">
+            <div class="col-25">
+              <label for="phone">Phone Number
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="phone" placeholder="Your Phone Number.." (keypress)="numberOnly($event)">
+            </div>
+            <div *ngIf="submitted && regFormCon.phone.errors">
+              <div *ngIf="regFormCon.phone.errors.required" class="valid-msg">Contact No. is required</div>
+              <div *ngIf="regFormCon.phone.errors.minlength" class="valid-msg">Please Enter 10 Digit Phone Number</div>
+              <div *ngIf="regFormCon.phone.errors.maxlength" class="valid-msg">Please Enter 10 Digit Phone Number</div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="phone">Address 1
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="addressLine1" placeholder="Your Address 1..">
+            </div>
+            <div *ngIf="submitted && regFormCon.addressLine1.errors">
+              <div *ngIf="regFormCon.addressLine1.errors.required" class="valid-msg">Address 1 is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="phone">Address 2</label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="addressLine2" placeholder="Your Address 2..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="phone">Address 3</label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="addressLine3" placeholder="Your Address 3..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="phone">Country
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="country" placeholder="Your Country.." (keypress)="charOnly($event)">
+            </div>
+            <div *ngIf="submitted && regFormCon.country.errors">
+              <div *ngIf="regFormCon.country.errors.required" class="valid-msg">Country is required</div>
+            </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-25">
+              <label for="phone">State
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="state" placeholder="Your state.." (keypress)="charOnly($event)">
+            </div>
+            <div *ngIf="submitted && regFormCon.state.errors">
+              <div *ngIf="regFormCon.state.errors.required" class="valid-msg">State is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="phone">City
+                <span class="valid-msg">*</span>
+              </label>
+            </div>
+            <div class="col-75">
+              <input type="text" formControlName="city" placeholder="Your city.." (keypress)="charOnly($event)">
+            </div>
+            <div *ngIf="submitted && regFormCon.city.errors">
+              <div *ngIf="regFormCon.city.errors.required" class="valid-msg">City is required</div>
+            </div>
+          </div> -->
+          <br>
+          <div class="row">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="col-sm-3">
+
+    </div>
+  </div>
+  </div>
+</div>
+</div>

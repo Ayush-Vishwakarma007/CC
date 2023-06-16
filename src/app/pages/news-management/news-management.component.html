@@ -1,0 +1,284 @@
+<div class="create-event-right-side common-page news-manage" id="page_form">
+  <div class="dashboard-heading">News Management</div>
+  <div class="white-area-create-event committi-main no-paid news-management-top">
+    <div class="top-chart mem-coll">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="totallmember">
+            <span>Total News: {{totalNews}}</span>
+          </div>
+        </div>
+        <div class="col-md-8 text-right" >
+          <div class="top-export-button-main" >
+            <mat-form-field class="select-chap select-btm-no-paid" *ngIf="chapterDetail.length!=1">
+              <mat-label>Select Chapter</mat-label>
+              <mat-select (selectionChange)="getNewsDetails($event.value)" [value]="chapterDetail[0]?.id">
+                <mat-option *ngFor="let list of chapterDetail;let i = index" value="{{list.id}}">{{list.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+          </div>
+          <div class="page-filter-new">
+            <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid">
+              <mat-label>Page Filter</mat-label>
+              <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+                <mat-option *ngFor="let list of this.communityService.pagelist"
+                            [value]="list">{{list}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button class="maraddphoto search-button" (click)="openModalWithClassAdd(templateadd)"> + Add News </button>
+        </div>
+      </div>
+    </div>
+    <div class="member-collection-table">
+      <table>
+        <thead>
+          <tr>
+            <th width="100"> </th>
+            <th> Title </th>
+            <th class="category"> Short Description </th>
+            <th width="230" class="category"> Dates (Start Date - End Date) </th>
+            <th width="80">Action</th>
+          </tr>
+        </thead>
+        <tbody class="tabl-body">
+        <tr *ngFor="let list of newsList?.content" class="borbott">
+          <td *ngIf="list['imageUrl'] == null || list['imageUrl'] == ''" class="thumb"> <img
+            alt="" src="https://s3-us-west-2.amazonaws.com/communityconnectmedia/20210219150901_other_no-news.jpg"></td>
+          <td *ngIf="list['imageUrl'] != null && list['imageUrl'] != ''" class="thumb"> <img
+            alt="" [src]="list['imageUrl'] | galleryImagePipe"></td>
+          <td>{{list.title}}</td>
+          <td>{{list.sortDescription}}</td>
+            <td>{{list.date | date:this.communityService.publicInfo?.webDateFormat}} - {{list.displayTill | date:this.communityService.publicInfo?.webDateFormat}}</td>
+            <td>
+              <button class="btn-edit" (click)="editNews(list['id']);openModalWithClass(templateadd)">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+              <button class="btn-edit" (click)="deleteNews(list['id'])"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+              <!-- <div class="dropdown dropup moredrop editgallery">
+                <a aria-expanded="false"   aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
+                  data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                  <img alt="" src="assets/icon/interface.svg">
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a (click)="editNews(list['id']);openModalWithClass(templateadd)" class="dropdown-item"><i aria-hidden="true" class="fa fa-angle-right"></i> Edit</a>
+                  <a class="dropdown-item" (click)="deleteNews(list['id'])"><i aria-hidden="true" class="fa fa-angle-right"></i> Delete</a>
+                </div>
+              </div> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pegination-main totalPosition">
+      <ul>
+        <li>
+          <button (click)="pagination('current','user',0)" [disabled]="newsList['first'] == true" class="next">
+            First
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination('prev','user')" [disabled]="newsList['first'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-left-arrow icon"></i>
+          </button>
+        </li>
+        <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+            [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+          <button class="numeric">{{i + 1}}</button>
+        </li>
+
+        <li>
+          <button (click)="pagination('next','user')" [disabled]="newsList['last'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-right-arrow icon"></i>
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination('current','user',(newsList['totalPages']-1))"
+                  [disabled]="newsList['last'] == true" class="next">Last
+          </button>
+        </li>
+      </ul>
+      <div class="totalShow"><span>Total :</span> {{newsList['totalElements']}}</div>
+    </div>
+  </div>
+</div>
+<ng-template #templateadd id="openEditModel">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"> {{btnName}} </h4>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="resetForm()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button (click)="resetForm(); modalRef.hide()"  aria-label="Close" class="close-container evendash" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="edit-news-manage">
+        <form [formGroup]="newsForm" class="example-form" id="newsForm">
+            <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Title </mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="title">
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && newsForm.controls.title.errors ">
+                    <span *ngIf="isSubmit && newsForm.controls.title.errors" class="valid-msg">Title is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Short Description </mat-label>
+                    <textarea rows="1" matInput autocomplete="off" formControlName="sortDescription"></textarea>
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && newsForm.controls.sortDescription.errors ">
+                    <span *ngIf="isSubmit && newsForm.controls.sortDescription.errors" class="valid-msg">Sort Description is required</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="imageup create-img-upload">
+                      <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                                  (maxFileError)="maxFileError()"
+                                                  (maxFileSizeError)="fileSizeError()"
+                                                  (queueCompleted)="imageQueueCompleted()"
+                                                  (uploadStarted)="uploadStarted()"
+                                                  (uploadedFilesChange)="uploadedFilesChange()"
+                                                  [(uploadedFiles)]="imageList"
+                                                  [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                                  [validTypes]="validTypesImage">
+                      </app-file-uploader-vertical>
+                    </div>
+                  <div *ngIf="uploadedImageList?.length != 0" class="main-thumbs-model">
+                    <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+                      <div [style.backgroundImage]="'url('+(image.link | galleryImagePipe )+')'" class="blurimageabout"
+                           style="background: no-repeat;"></div>
+                      <img alt="" [src]="image.link | galleryImagePipe ">
+                      <button (click)="removeImage(i,image)"><img alt="" src="assets/icon/cancel.svg"></button>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-md-6">
+                  <mat-form-field class="select-chap example-full-width "  *ngIf="chapterDetail.length!=1">
+                    <mat-label>Select Chapter </mat-label>
+                    <mat-select formControlName="chapterId">
+                      <mat-option *ngFor="let list of chapterDetail;let i = index" value="{{list.id}}">
+                        {{list.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" *ngIf="chapterDetail.length ==1">
+                    <mat-label>Select Chapter</mat-label>
+                    <mat-select [value]="myselectchapter"  >
+                      <mat-option *ngFor="let list of chapterDetail" value="{{list.id}}"  >{{list.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+                  <div *ngIf="isSubmit && newsForm.controls.chapterId.errors && chapterDetail.length!=1 ">
+                    <span *ngIf="isSubmit && newsForm.controls.chapterId.errors" class="valid-msg">Chapter is required</span>
+                  </div>
+                </div>
+                <div class="col-md-12" >
+                  <div class="editer-space">
+                    <ngx-editor formControlName="fullDescription"
+                    [placeholder]="'Enter Full Description here...'" class="editor-icon"></ngx-editor>
+                    <div *ngIf="isSubmit && newsForm.controls.fullDescription.errors" class="fulldescription">
+                      <span *ngIf="isSubmit && newsForm.controls.fullDescription.errors" class="valid-msg">Full Description is required</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 starnone">
+                  <mat-form-field class="example-full-width dateinfo">
+                    <mat-label>Start Date <i>*</i></mat-label>
+                    <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+                           formControlName="date" matInput autocomplete="false" required>
+                    <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                  </mat-form-field>
+                  <div *ngIf="this.isSubmit && newsForm.controls.date.errors ">
+                <span *ngIf="this.isSubmit && newsForm.controls.date.errors "
+                class="valid-msg">Start Date is invalid</span>
+                  </div>
+                </div>
+              <div class="col-md-6 starnone">
+                <mat-form-field class="example-full-width dateinfo">
+                  <mat-label>End Date <i>*</i></mat-label>
+                  <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2"
+                         formControlName="displayTill" matInput autocomplete="false" required>
+                  <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span>
+                  <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                </mat-form-field>
+                <div *ngIf="this.isSubmit && newsForm.controls.displayTill.errors ">
+                <span *ngIf="this.isSubmit && newsForm.controls.displayTill.errors "
+                      class="valid-msg">End Date is invalid</span>
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <button class="save-changes" type="button" (click)="saveNews()">Save</button>
+          </div>
+          </form>
+      </div>
+  </div>
+</ng-template>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit News</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="edit-news-manage">
+          <form>
+            <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Short Discription</mat-label>
+                    <textarea rows="1" matInput autocomplete="off"></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Full Discription</mat-label>
+                    <textarea rows="1" matInput autocomplete="off" placeholder="Editer"></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="select-chap example-full-width ">
+                    <mat-label>Select Chapter</mat-label>
+                    <mat-select>
+                      <mat-option value="1" selected>National</mat-option>
+                      <mat-option value="1">California </mat-option>
+                      <mat-option value="1">Florida </mat-option>
+                      <mat-option value="1">Washington DC </mat-option>
+                      <mat-option value="1">North Carolina </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>img</mat-label>
+                    <input matInput type="text" autocomplete="off" placeholder="Image (Drop)">
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Date</mat-label>
+                    <input matInput type="text" autocomplete="off" placeholder="Dates (Start Date - End Date) (Date Range)">
+                  </mat-form-field>
+                </div>
+            </div>
+          </form>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <button class="save-changes" type="button">Save</button>
+  </div>
+</ng-template>

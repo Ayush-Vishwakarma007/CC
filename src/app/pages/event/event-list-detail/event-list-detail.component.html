@@ -1,0 +1,630 @@
+<!--  <div class="container evnt-top inner-page-responsive">
+    <div class="profiletop event-detail-pad">
+      <div class="row">
+        <div class="col-md-7">
+         <div class="row">
+          <div class="col-md-12 evnt-date-res">
+            <div class="heading-event-detail" >
+              <span>{{eventData.name}}</span>
+              <p> <i class="fa fa-map-marker" aria-hidden="true"></i> {{eventData.city}} | {{eventData.state}}</p>
+            </div>
+            <div class="datail-list-date">
+             <button class="btn-share">
+               <img src="assets/icon/share-event.svg">
+             </button>
+             <button class="btn-bookmark">
+               <i class="fa fa-bookmark" aria-hidden="true"></i>
+             </button>
+             <div class="evnt-date">
+              {{ eventData.dateTime | date : "MMM dd, yyyy"}}
+             </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="col-md-12">
+            <p class="detail-p">
+              {{eventData.description}}
+            </p>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-md-6 col-sm-8 priceevent">
+            <span>Event Fees</span>
+            <div>$ {{minPrice}} - $ {{maxPrice}}</div>
+            <p>(price varies based on different criteria)</p>
+          </div>
+          <div class="col-md-6 col-sm-4">
+            <span class="save-changes fright book-tick" data-toggle="modal" data-target="#exampleModal"> Register Now </span>
+            &lt;!&ndash; <a   class="save-changes fright book-tick" (click)="booktickit()"> Book Tickets </a> &ndash;&gt;
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-md-12">
+            <div class="aditional-info">
+              <span>Additional Information</span>
+              <p>
+                {{additionalInfo.details}}
+              </p>
+            </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-md-12">
+            <div class="tabevent">
+              <tabset>
+                <tab heading="Main" id="Main">
+                  &lt;!&ndash; {{additionalInfo | json}} &ndash;&gt;
+
+                    <ng-container *ngFor="let p of additionalInfo.pricing.userRules">
+                        <div class="main-tb" *ngIf="p.ruleName=='AGE'">
+                        <div class="row count-res">
+                            <div class="col-md-7 col-sm-7">
+                              <span>Age {{p.min}} to {{p.max}}</span>
+                              <p>Price:${{p.rule}} per member</p>
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="plus-minus-counter">
+                                  <button type="button" class="btn btn-default" (click)="p.q= p.q == 0 ? 0 : p.q - 1;">-</button>
+                                  <input class="counter" [(ngModel)]="p.q" type="text" name="" placeholder="1" readonly/>
+                                  <button type="button" class="btn btn-default fright" (click)="p.q= p.q + 1">+</button>
+                                  <div class="clear"></div>
+                                </div>
+                              <span class="adult-dollar">${{p.rule * p.q}}</span>
+                            </div>
+                          </div>
+                        </div>
+                    </ng-container>
+
+
+                  &lt;!&ndash; <div class="main-tb">
+                    <div class="row">
+                      <div class="col-md-7">
+                        <span>Kids Fees</span>
+                        <p>Price:$50 per member (Age:18 & Below)</p>
+                      </div>
+                      <div class="col-md-5">
+                          <div class="plus-minus-counter">
+                              <button class="btn btn-default">-</button>
+                              <input class="counter" ng-model="item.Quantity" type="text" name="" placeholder="0"/>
+                              <button class="btn btn-default fright" >+</button>
+                          </div>
+                        <span class="adult-dollar">$00.00</span>
+                      </div>
+                    </div>
+                  </div> &ndash;&gt;
+                </tab>
+                &lt;!&ndash; <tab heading="Other Offers">Basic content 1</tab> &ndash;&gt;
+              </tabset>
+            </div>
+          </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+              <div class="aditional-info">
+                <span>Map</span>
+                <div class="map-top">
+                  <img src="assets/images/map.png" alt="">
+                </div>
+              </div>
+            </div>
+           </div>
+        </div>
+        <div class="col-md-5">
+          <div class="image-upl-slider event-datailslider event-detail-slider ">
+            <carousel>
+              <slide *ngFor="let img of additionalInfo.imagePictures;let i=index">
+                <img src="{{img}}" >
+              </slide>
+            </carousel>
+          </div>
+          <div class="arena-info">
+            <span>
+                Arena Information
+            </span>
+            <div class="arena-img-area">
+                &lt;!&ndash; <img src="assets/images/map.png" alt=""> &ndash;&gt;
+            </div>
+            <a   class="area-url">
+                https://images.unsplash.com/pho-to-1564073117629-9186ed351632?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+<app-paypal (tokenOutput)="getPaymentToken()" *ngIf="eventData.eventConfigurations"
+                 [(output)]="PaymentToken" [token]="paymentUrl" [price]="eventData.eventConfigurations.registrationFees"
+                 [save]="submitSubject"></app-paypal>
+<app-donate-events (completed)="completepayment()" (skipDonation)="skipDonation()" [(sponsorDetail)]="totalAmount"
+                   [eventId]="eventId"
+                   [save]="donateSubject" [type]="typeForDonation"></app-donate-events>
+<!-- ================================= New Code ================================= -->
+
+<div class="create-event-right-side eventlistdetailnomargin">
+  <div class="white-area-create-event bonner-top event-detailpagebanner">
+    <div class="event-list-bgbanner">
+      <div class="event-list-banner">
+        <ng-container *ngIf="imageDataLoad">
+        <div *ngIf="imageData.length != 0">
+          <img *ngIf="eventData.bannerPicture ==''" alt="" src="{{eventData.profilePicture}}"   style="-webkit-filter: blur(17px);  filter: blur(17px); width: 100%;">
+          <img *ngIf="eventData.bannerPicture!=''" alt="" src="{{eventData.bannerPicture}}">
+        </div>
+        <div *ngIf="imageData.length == 0">
+          <img *ngIf="eventData.bannerPicture==null" alt="" src="../../../../assets/images/slider1.jpg">
+        </div>
+        </ng-container>
+        <!--        <img *ngIf="eventData.bannerPicture!=null" alt="" src="{{eventData.bannerPicture}}">-->
+        <!-- <button><img src="assets/icon/share.svg"></button> -->
+      </div>
+      <div class="new-yr-event event-list-main">
+        <div class=" event-listbtm">
+          <div class="row row-eql-height">
+            <div class="col-md-8">
+              <div  animationName="animated slideInUp" class="newyr_title event-title-top">
+                <h5>{{eventData['type']}}</h5>
+                <h3>{{eventData['name']}}</h3>
+                <p>{{eventData['communityName']}}</p>
+              </div>
+              <!--              <div class="event_lcsntxt event-track">-->
+              <!--                <i class="fa fa-map-marker" aria-hidden="true"></i>-->
+              <!--                <span>{{eventData['addressLine1']}}</span>-->
+              <!--              </div>-->
+            </div>
+            <div *ngIf="eventData.noMeetingUrl == false"   animationName="animated slideInUp" class="col-md-4 datetime event-datetitme">
+              <p> Start: {{eventData['startDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}})</p>
+              <p> Ends: {{eventData['endDateTime'] | date:'MMM d, y, h:mm a' }}  ({{timezone}})</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="eventData.eventConfigurations"  animationName="animated slideInUp" class="row row-eql-height no-pay-ecual">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <div class="event-list-price">
+              <td>
+                  <span
+                    *ngIf="eventData.eventConfigurations.registrationFees != 0">$ {{eventData.eventConfigurations.registrationFees}}
+                  </span>
+                <span *ngIf="eventData?.noMeetingUrl == false && eventData.eventConfigurations.registrationFees == 0">Free</span>
+                <button routerLink="/event-dashboard/{{eventData.id}}" *ngIf="eventData?.eventConfigurations?.allowDonorDisplayPublic == true && eventData.selfCreated == false" class="viewcontributtion"> <img src="../../../../assets/icon/member-green.svg" alt=""> view Contributors</button>
+              </td>
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9">
+            <button (click)="shareEvent(eventData.id)" class="sharebutton-blue" data-target="#share_modal" data-toggle="modal" title="Share">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </button>
+            <div *ngIf="authDetail && eventData.eventConfigurations.fundRaisingEvent == false && eventData.selfCreated == false">
+              <span
+                *ngIf="eventData.eventConfigurations.registrationFees != 0 && eventData.registrationCapacityFull != true">
+              <!-- <div *ngIf=" eventData.registrationTimeOver == false  && eventData.alreadyRegistered == false">
+                <input (click)="clickType('Register')" class="save-changes fright event-book"
+                       data-target="#exampleModal"
+                       data-toggle="modal" type="button" value="Register Now22">
+              </div> -->
+              <div *ngIf="eventData.registrationTimeOver == false  && eventData.alreadyRegistered == false">
+                  <input (click)="clickType('Register');submitSubject.next(null);"
+                         class="save-changes fright event-book" type="button" value="Register Now">
+                </div>
+            </span>
+              <span
+                *ngIf=" eventData.registrationTimeOver == false  && eventData.eventConfigurations.registrationFees == 0 && eventData.registrationCapacityFull != true">
+                  <div *ngIf="eventData.alreadyRegistered == false">
+                       <input  (click)="clickType('Register');setBooking()" class="save-changes fright event-book" type="button"
+                              value="Register Now">
+            </div>
+            </span>
+              <div
+                *ngIf=" eventData.registrationTimeOver == false  && eventData.alreadyRegistered == true && eventData.successfulPayment == false">
+                <input  class="save-changes fright event-book" (click)="clickType('pay');submitSubject.next(null);" type="button"
+                       value="Pay Now">
+              </div>
+            </div>
+            <div class="row" *ngIf="eventData.registrationTimeOver == false  && authDetail && eventData.eventConfigurations.fundRaisingEvent == true && eventData.selfCreated != true">
+              <button  *ngIf="eventData.eventConfigurations.allowSponsorship == true" (click)="setDonationType('sponsor');clickType('donation');" class="save-changes fright event-book noborder">Sponsor Now</button>
+              <button  *ngIf="eventData.eventConfigurations.allowDonor == true" (click)="setDonationType('donor');clickType('donation');" class="save-changes fright event-book noborder">Donate Now</button>
+            </div>
+            <div
+              *ngIf="!authDetail && eventData.eventConfigurations.fundRaisingEvent == false && eventData.selfCreated == false && eventData.alreadyRegistered == false && eventData.registrationTimeOver == false  && eventData.registrationCapacityFull == false">
+              <button  (click)="guestFormReset()" class="save-changes fright event-book noborder" data-target="#exampleModalnotification"
+                      data-toggle="modal">Register Now
+              </button>
+            </div>
+            <div
+              *ngIf="!authDetail && eventData.registrationTimeOver == false && eventData.eventConfigurations.fundRaisingEvent == true">
+              <button class="save-changes fright event-book noborder" data-target="#exampleModalDonateNotification"
+                      data-toggle="modal">Donate Now
+              </button>
+            </div>
+            <div *ngIf="(authDetail && eventData.selfCreated == true)">
+              <button class="save-changes fright event-book noborder" routerLink="/event-dashboard/{{eventData.id}}">
+                Dashboard
+              </button>
+            </div>
+            <div *ngIf="eventData.alreadyRegistered == true && eventData.selfCreated != true">
+              <span class="fright event-book1">Already Registered  <p *ngIf="eventData.successfulPayment == false">( Unpaid )</p> </span>
+            </div>
+            <div
+              *ngIf="eventData.registrationCapacityFull == true  && eventData.selfCreated != true && eventData.registrationTimeOver == false  && eventData.alreadyRegistered == false">
+              <span class="fright event-book1">Sold Out </span>
+            </div>
+            <div *ngIf="eventData.registrationTimeOver == true && eventData.eventConfigurations.fundRaisingEvent == false && eventData.selfCreated != true">
+              <span class="fright event-book1">Registration Closed</span>
+            </div>
+            <div *ngIf="eventData.registrationTimeOver == true && eventData.eventConfigurations.fundRaisingEvent == true && eventData.selfCreated != true">
+              <span class="fright event-book1">Donation Closed</span>
+            </div>
+            <!--            <button class="save-changes fright event-book noborder"  (click)="submitSubject.next(null);" type="button">-->
+            <!--              Pay By Card-->
+            <!--            </button>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="description_main">
+      <div class="row row-eql-height">
+        <div class="col-md-12">
+          <div class="description_inner-block" style="overflow: auto;">
+
+            <div  animationName="animated slideInUp" class="description_txt">
+              <p [innerHTML]="eventData['description']"></p>
+            </div>
+            <div  animationName="animated slideInUp" class="description_txt event-paidtop">
+              <h5>Photos & Videos </h5>
+              <div class="row">
+                <div class="col-md-12 imagesphoto">
+                  <app-gallery-main *ngIf="imageData.length != 0" [imageData]="imageData"></app-gallery-main>
+                </div>
+              </div>
+            </div>
+            <!--            <div class="event-list-expanlist event-paidtop">-->
+            <!--              <mat-accordion>-->
+            <!--                <mat-expansion-panel>-->
+            <!--                  <mat-expansion-panel-header>-->
+            <!--                    <mat-panel-title>-->
+            <!--                      <h5> Want to donate this event? </h5>-->
+            <!--                    </mat-panel-title>-->
+            <!--                  </mat-expansion-panel-header>-->
+
+            <!--                  <div class="event-subblock">-->
+            <!--                    <div class="row">-->
+            <!--                      <div class="col-md-12">-->
+            <!--                        <div class="event_btmdotts" *ngFor="let d of donation_list">-->
+            <!--                          <div class="row row-eq-height no-eql-height">-->
+            <!--                            <div class="col-lg-8 col-md-8 col-sm-12">-->
+            <!--                              <div class="sub_title_event event-subdrk">-->
+            <!--                                <h4>{{d.categoryName}}</h4>-->
+            <!--                              </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-lg-4 col-md-4 col-sm-12">-->
+            <!--                              <ul class="perice_txt ent-price">-->
+            <!--                                <li><p>${{d.range['min']}}-${{d.range['max']}}</p></li>-->
+            <!--                                <li><input class="event-dntbtn" type="button" value="Book Now" (click)="donateNow(d)"></li>-->
+            <!--                              </ul>-->
+            <!--                            </div>-->
+            <!--                          </div>-->
+            <!--                          <div class="reg_dates">-->
+            <!--                            <ul class="regs_list">-->
+            <!--                              <li><span>Discount</span>-->
+            <!--                                <p *ngIf="d.discountType == 'PERCENT'">{{d.discount}}%</p>-->
+            <!--                                <p *ngIf="d.discountType == 'AMOUNT'">${{d.discount}}</p>-->
+            <!--                                <p *ngIf="d.discountType == 'TICKET'">{{d.discount}} Ticket Free</p></li>-->
+            <!--                            </ul>-->
+            <!--                          </div>-->
+            <!--                          <div class="event-pera">-->
+            <!--                            <p [innerHTML]="d['description']"></p>-->
+            <!--                          </div>-->
+            <!--                        </div>-->
+            <!--                      </div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                </mat-expansion-panel>-->
+            <!--              </mat-accordion>-->
+            <!--            </div>-->
+
+            <!--            <div class="event-list-expanlist">-->
+            <!--              <mat-accordion>-->
+            <!--                <mat-expansion-panel>-->
+            <!--                  <mat-expansion-panel-header>-->
+            <!--                    <mat-panel-title>-->
+            <!--                      <h5> Want to be a vendor?  </h5>-->
+            <!--                    </mat-panel-title>-->
+            <!--                  </mat-expansion-panel-header>-->
+
+            <!--                  <div class="event-subblock">-->
+            <!--                    <div class="row">-->
+            <!--                      <div class="col-md-12">-->
+            <!--                        <div class="event_btmdotts" *ngFor="let v of vendor_list">-->
+            <!--                          <div class="row row-eq-height no-eql-height">-->
+            <!--                            <div class="col-lg-8 col-md-8 col-sm-12">-->
+            <!--                              <div class="sub_title_event event-subdrk">-->
+            <!--                                <h4>{{v.name}}</h4>-->
+            <!--                              </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-lg-4 col-md-4 col-sm-12">-->
+            <!--                              <ul class="perice_txt ent-price">-->
+            <!--                                <li><p>${{v.price}}</p></li>-->
+            <!--                                <li><input class=" event-dntbtn" type="button" value="Book Now" (click)="vendorNow(v)"></li>-->
+            <!--                              </ul>-->
+            <!--                            </div>-->
+            <!--                          </div>-->
+            <!--                          <div class="reg_dates">-->
+            <!--                            <ul class="regs_list">-->
+            <!--                              <li><span>Reg Start Date</span> <p>{{v.startDateTime | date : "MMM dd,yyyy" }} {{v.startDateTime | date : "shortTime" }}</p></li>-->
+            <!--                              <li><span>Reg End Date</span>   <p>{{v.endDateTime | date : "MMM dd,yyyy" }} {{v.endDateTime | date : "shortTime" }} </p></li>-->
+            <!--                              <li><span>Member Allowance</span>   <p>{{v.memberAllowed}}</p></li>-->
+            <!--                              <li><span>Discount</span>-->
+            <!--                                <p *ngIf="v.discountType == 'PERCENT'">{{v.discount}}%</p>-->
+            <!--                                <p *ngIf="v.discountType == 'AMOUNT'">${{v.discount}}</p>-->
+            <!--                                <p *ngIf="v.discountType == 'TICKET'">{{v.discount}} Ticket Free</p></li>-->
+            <!--                            </ul>-->
+            <!--                          </div>-->
+            <!--                          <div class="event-pera">-->
+            <!--                            <p [innerHTML]="v['description']"></p>-->
+            <!--                          </div>-->
+            <!--                        </div>-->
+            <!--                      </div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                </mat-expansion-panel>-->
+            <!--              </mat-accordion>-->
+            <!--            </div>-->
+
+            <!--            <div class="event-list-expanlist">-->
+            <!--              <mat-accordion>-->
+            <!--                <mat-expansion-panel>-->
+            <!--                  <mat-expansion-panel-header>-->
+            <!--                    <mat-panel-title>-->
+            <!--                      <h5> Want to be a Sponsor?  </h5>-->
+            <!--                    </mat-panel-title>-->
+            <!--                  </mat-expansion-panel-header>-->
+
+            <!--                  <div class="event-subblock">-->
+            <!--                    <div class="row">-->
+            <!--                      <div class="col-md-12">-->
+            <!--                        <div class="event_btmdotts" *ngFor="let s of sponsor_list">-->
+            <!--                          <div class="row row-eq-height no-eql-height">-->
+            <!--                            <div class="col-lg-8 col-md-8 col-sm-12">-->
+            <!--                              <div class="sub_title_event event-subdrk">-->
+            <!--                                <h4>{{s.categoryName}}</h4>-->
+            <!--                              </div>-->
+            <!--                            </div>-->
+            <!--                            <div class="col-lg-4 col-md-4 col-sm-12">-->
+            <!--                              <ul class="perice_txt ent-price">-->
+            <!--                                <li><p>${{s.range['min']}}-${{s.range['max']}}</p></li>-->
+            <!--                                <li><input class="event-dntbtn" type="button" value="Book Now" (click)="sponsorNow(s)"></li>-->
+            <!--                              </ul>-->
+            <!--                            </div>-->
+            <!--                          </div>-->
+            <!--                          <div class="reg_dates">-->
+            <!--                            <ul class="regs_list">-->
+            <!--                              <li><span>Discount</span>-->
+            <!--                                <p *ngIf="s.discountType == 'PERCENT'">{{s.discount}}%</p>-->
+            <!--                                <p *ngIf="s.discountType == 'AMOUNT'">${{s.discount}}</p>-->
+            <!--                                <p *ngIf="s.discountType == 'TICKET'">{{s.discount}} Ticket Free</p></li>-->
+            <!--                            </ul>-->
+            <!--                          </div>-->
+            <!--                          <div class="event-pera">-->
+            <!--                            <p [innerHTML]="s['description']"></p>-->
+            <!--                          </div>-->
+            <!--                        </div>-->
+            <!--                      </div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                </mat-expansion-panel>-->
+            <!--              </mat-accordion>-->
+            <!--            </div>-->
+
+            <!--            <div class="event-group-map">-->
+            <!--              <div class="row">-->
+            <!--                <div class="col-md-12">-->
+            <!--                  <img src="assets/images/event-group-map.png" class="event-location">-->
+            <!--                </div>-->
+            <!--                <div class="col-md-12">-->
+            <!--                  <div class="event-terms-conditions">-->
+            <!--                    <a   >Terms &amp; Conditions</a>-->
+            <!--                  </div>-->
+            <!--                </div>-->
+            <!--              </div>-->
+            <!--            </div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade online-payment" id="exampleModal"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title model-tt" id="exampleModalLabel">
+          Payment
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" id="closePaypalId" type="button">
+          <img alt="" src="../../../../assets/icon/ionic-md-close.svg">
+        </button>
+      </div>
+      <!-- content  -->
+      <div class="row">
+        <!-- PayPal Logo -->
+        <table align="center" border="0" cellpadding="10" cellspacing="0" class="tabmod">
+          <tr>
+            <td align="center"></td>
+          </tr>
+          <tr>
+            <td align="center"><a
+              title="How PayPal Works"><img
+              alt="PayPal Acceptance Mark"
+              border="0"
+              src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/IN/logo-center/logo-center-solution-graphics.png"></a>
+            </td>
+          </tr>
+        </table><!-- PayPal Logo -->
+      </div>
+      <!-- Content -->
+      <div class="modal-footer footerpay ">
+        <span class="payment-redi"> You will be redirected to Payment page</span>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button (click)="addPayment()" class="save-changes book-tick confirm-pay" type="button">Pay</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model" id="share_modal"
+     role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Share</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="../../../../assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <div class="modal-body create-session-model custom-form-field">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="share-icon">
+
+              <button [autoSetMeta]="false" [url]="shareBaseLink" [description]="shareTitle"  class="facebook" shareButton="facebook">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button [autoSetMeta]="false" [url]="shareBaseLink" [description]="shareTitle"  class="twitter" shareButton="twitter">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button [autoSetMeta]="false" [url]="shareBaseLink" [description]="shareTitle"  class="linkedin" shareButton="linkedin">
+                <i class="fab fa-linkedin"></i>
+              </button>
+              <button [autoSetMeta]="false"  [url]="shareBaseLink" [description]="shareTitle" class="whatsapp" shareButton="whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="addGuestMemberForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> Registration As Guest </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="guestClose" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="area-paidregistration">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> First Name</mat-label>
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors.required"
+                          class="valid-msg">First Name is required</span>
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors.pattern" class="valid-msg">Only allowed character</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 lastpaid">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Last Name</mat-label>
+                  <input formControlName="lastName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors.required"
+                          class="valid-msg">Last Name is required</span>
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors.pattern" class="valid-msg">Only allowed character</span>
+                </div>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Email</mat-label>
+                  <input formControlName="email" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors"
+                          class="valid-msg">Email is invalid</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <!-- <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button> -->
+          <button (click)="addGuest()" class="save-changes" type="button">Register</button>
+          <div class="orline"><span>Or</span></div>
+          <button (click)="loginRedirect()" class="save-changes confirm-pay" type="button">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalDonateNotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="addGuestMemberForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="examplesLabel"> Donation As Guest </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="guestClosed" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="area-paidregistration">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> First Name</mat-label>
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors"
+                          class="valid-msg">First Name is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 lastpaid">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Last Name</mat-label>
+                  <input formControlName="lastName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors"
+                          class="valid-msg">Last Name is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Email</mat-label>
+                  <input formControlName="email" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors"
+                          class="valid-msg">Email is invalid</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <!-- <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button> -->
+          <button (click)="addGuest()" class="save-changes" type="button">Submit</button>
+          <div class="orline"><span>Or</span></div>
+          <button (click)="loginRedirect()" class="save-changes confirm-pay" type="button">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

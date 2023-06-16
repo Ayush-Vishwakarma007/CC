@@ -1,0 +1,494 @@
+<div class="main-screen mainnewsscreen">
+  
+  <section class="inner-banner">
+    <div class="blue-bg-banner"><span></span></div>
+    <div class="slid-left-blue-dots">
+      <img alt="" src="assets/images/inner-left-dots.png">
+    </div>
+    <div class="container">
+      <div class="red-inner">
+        <div class="row">
+          <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft">
+            <!-- <a *ngIf="isShow"   (click)="back()">
+              <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 23px;" width="100px"/>
+            </a> -->
+            <h2 class="inner-page-tlt"> Scholarship</h2>
+          </div>
+          <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Scholarship</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="scholaeship-data">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="page-head">
+                      <h1>Scholarship</h1>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="card-data-main">
+                      <mat-card>
+                          <div class="row">
+                              <div class="col-md-8">
+                                  <div class="left-data">
+                                      <h4>"Inspire Our Future" Scholarship</h4> 
+                                      <h6>One-time scholarship award based on SAT / ACT score Number of winners/awards and amount are listed below:</h6>
+                                      <div class="descreption">
+                                        <p>A. SAT 1st , 2nd , 3rd : $2500,$1500,$1000 for SAT and best SPCS essay.</p>
+                                        <p>B. ACT 1st , 2nd , 3rd : $2500,$1500,$1000 for ACT and best SPCS essay.</p>
+                                      </div>
+                                      <a href="#"> Read More</a>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="right-data">
+                                      <h5>12 Dec 202 - 20 Dec 2020</h5>
+                                      <button (click)="openModalWithClass(template)">Apply Now</button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tems-cnds">
+                              <a href="#">Terms & Conditions</a>
+                          </div>
+                      </mat-card>
+
+                      <mat-card>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="left-data">
+                                    <h4>"Inspire Our Future" Scholarship</h4> 
+                                    <h6>One-time scholarship award based on SAT / ACT score Number of winners/awards and amount are listed below:</h6>
+                                    <div class="descreption">
+                                      <p>A. SAT 1st , 2nd , 3rd : $2500,$1500,$1000 for SAT and best SPCS essay.</p>
+                                      <p>B. ACT 1st , 2nd , 3rd : $2500,$1500,$1000 for ACT and best SPCS essay.</p>
+                                    </div>
+                                    <a href="#"> Read More</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="right-data">
+                                    <h5>12 Dec 202 - 20 Dec 2020</h5>
+                                    <button (click)="openModalWithClass(template)">Apply Now</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tems-cnds">
+                            <a href="#">Terms & Conditions</a>
+                        </div>
+                      </mat-card>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+  </div>
+
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">"Inspire Our Future" Scholarship
+          <span>DUE DATE : 20 Dec 2020</span>
+      </h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+        <div class="stapper-modal">
+          <mat-horizontal-stepper [linear]="isLinear"  #stepper>
+            <mat-step label="Step 1">
+              
+              <form>
+                <ng-template matStepLabel>APPLICANT Info</ng-template>
+
+                <div class="form-data">
+                  <div class="search-div">
+                      <div class="row">
+                          <div class="col-md-12">
+                            <form class="example-form">
+                              <mat-form-field class="example-full-width" floatLabel="never">
+                                <input matInput placeholder="Enter Your Parent's Life Member Number" value="">
+                                <img matPrefix src="assets/icon/search-form.svg">
+                              </mat-form-field>
+                              <button class="search-btn">Search</button>
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Student Full Name*</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Date of Birth:(mm/dd/yyyy)* </mat-label>
+                            <input matInput>
+                            <img matSuffix src="assets/icon/calander-modal.svg">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Grade*</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Address</mat-label>
+                            <textarea matInput rows="1"></textarea>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Select State*</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                              <mat-option value="option2">Option2</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>City*</mat-label>
+                            <mat-select>
+                              <mat-option value="option">Option</mat-option>
+                              <mat-option value="option2">Option2</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>ZIP*</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Cell Phone*</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Home Phone</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                          <mat-form-field appearance="legacy">
+                            <mat-label>Email*</mat-label>
+                            <input matInput>
+                          </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-back">
+                  <div class="row">
+                      <div class="col-md-12 text-right">
+                          <button mat-button  (click)="modalRef.hide()" class="back">Cancel</button>
+                          <button mat-button matStepperNext class="next">Next</button>
+                      </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step label="Step 2">
+              <form>
+                <ng-template matStepLabel>COLLEGE Info</ng-template>
+
+                <div class="form-data">
+                  <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>College Name*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Address*</mat-label>
+                          <textarea matInput rows="1"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Mother Full Name*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Address*</mat-label>
+                          <textarea matInput rows="1"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Select State*</mat-label>
+                          <mat-select>
+                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="option2">Option2</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>City*</mat-label>
+                          <mat-select>
+                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="option2">Option2</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>ZIP*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="next-back">
+                  <div class="row">
+                    <div class="col-md-6 text-left">
+                      <button mat-button matStepperPrevious class="back">Back</button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <button mat-button  (click)="modalRef.hide()" class="back">Cancel</button>
+                      <button mat-button matStepperNext class="next">Next</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step label="Step 3">
+              <form>
+                <ng-template matStepLabel>Family Info</ng-template>
+                <div class="form-data">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <h2>PARENT'S INFORMATION</h2>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Life Member No*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Father Full Name* </mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Mother Full Name*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Address*</mat-label>
+                          <textarea matInput rows="1"></textarea>
+                        </mat-form-field>
+                      </div>
+                      
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Select State*</mat-label>
+                          <mat-select>
+                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="option2">Option2</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>City*</mat-label>
+                          <mat-select>
+                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="option2">Option2</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>ZIP*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Cell Phone*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Home Phone</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Email*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-12">
+                        <h2>APPLICANT'S BROTHER AND SISTER INFORMATION
+                            <img src="assets/icon/plus-icn-form.svg">
+                        </h2>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Full Name*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Select Gender* </mat-label>
+                          <mat-select>
+                            <mat-option value="option">Male</mat-option>
+                            <mat-option value="option2">Female</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-4">
+                        <mat-form-field appearance="legacy">
+                          <mat-label>Grade*</mat-label>
+                          <input matInput>
+                        </mat-form-field>
+                      </div>
+                  </div>
+                </div>
+                <div class="next-back">
+                  <div class="row">
+                    <div class="col-md-6 text-left">
+                      <button mat-button matStepperPrevious class="back">Back</button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <button mat-button  (click)="modalRef.hide()" class="back">Cancel</button>
+                      <button mat-button matStepperNext class="next">Next</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step label="Step 4">
+              <form>
+                  <ng-template matStepLabel>Documents</ng-template>
+                  <div class="form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>DOCUMENT TO ENCLOSE</h2>
+                            <div class="document-data">
+                                <p>If you applying for SAT / ACT base scholarship, please enclose your SAT / ACT score & high school grade transcripts with any other activity/achievements you have during high school.</p>
+                                <p>If you applying for Income base financial Aid, please enclose all following documents</p>
+                                <ul>
+                                    <li><span>1.</span> W2 FORM for your Father & Mother.</li>
+                                    <li><span>2.</span> Tax return for last year (Individual, Joint, and Business).</li>
+                                    <li><span>3.</span> High School Grade Transcript.</li>
+                                    <li><span>4.</span> College admission letter.</li>
+                                    <li><span>5.</span> Birth certificate for you and all your brother and sister.</li>
+                                </ul>
+                                <h3><span>ONLY ALLOW</span> JPG,PNG,JPEG,PDF,DOC,DOCX,XLS,XLSX,BMP,CSV</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="file-upload-data">
+                              <label for="file-input">w2 forms of parent's* </label>
+                              <input type="file" name="file-input" id="file-input">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="file-upload-data">
+                            <label for="file-input">Tax return for last year* </label>
+                            <input type="file" name="file-input" id="file-input">
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="file-upload-data">
+                            <label for="file-input">High School Grade Transcripts * </label>
+                            <input type="file" name="file-input" id="file-input">
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="file-upload-data">
+                            <label for="file-input">College admission letter *</label>
+                            <input type="file" name="file-input" id="file-input">
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                          <div class="file-upload-data">
+                            <label for="file-input">Essay on SPCS (Please answer)* </label>
+                            <input type="file" name="file-input" id="file-input">
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                          <div class="file-upload-data">
+                            <label for="file-input">Other Relevant Document * </label>
+                            <input type="file" name="file-input" id="file-input">
+                          </div>
+                        </div>                      
+                    </div>
+                  </div>
+                  <div class="next-back">
+                    <div class="row">
+                      <div class="col-md-6 text-left">
+                        <button mat-button matStepperPrevious class="back">Back</button>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <button mat-button (click)="modalRef.hide()" class="back">Cancel</button>
+                        <button mat-button  class="next">Next</button>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-4 text-left">
+                <button class="back">back</button>
+            </div>
+            <div class="col-md-8">
+                <button (click)="modalRef.hide()" class="back">Cancel</button>
+                <button class="next">Next</button>
+            </div>
+        </div>
+    </div> -->
+  </ng-template>

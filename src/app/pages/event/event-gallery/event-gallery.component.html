@@ -1,0 +1,999 @@
+<script src="../../../../../../cc-scripts/spcs_data.js"></script>
+<app-event-modal
+  (eventDetailChange)="changeEvent()"
+  [(eventDetail)]="eventDetail"
+  [save]="eventSubject"
+></app-event-modal>
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">{{'gallery.title' | translate}}</div>
+  <div class="white-area-create-event dashboard-white">
+    <div class="dashboard-chart table-structure-front">
+      <div class="top-chart mem-coll">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="totallmember">
+              <!-- <button (click)="openEventModal()" class="btn-location" type="button"> Select Event</button>-->
+              <span>{{"gallery.totalCount" | translate}}: {{totalAlbum}}</span>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="top-export-button-main">
+              <mat-form-field
+                class="select-chap"
+                *ngIf="chapterDetail.length!=1"
+              >
+                <mat-label
+                  >{{'gallery.chapter.select.text' | translate}}</mat-label
+                >
+                <mat-select
+                  (selectionChange)="getGalleryDetail($event.value)"
+                  [value]="chapterDetail[0]?.id"
+                >
+                  <mat-option
+                    *ngFor="let list of chapterDetail;let i = index"
+                    value="{{list.id}}"
+                    >{{list.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <button (click)="resetForm();openModalWithClass(template)" class="maraddphoto">+
+                {{'gallery.add.text' | translate}}
+              </button>-->
+              <button
+                (click)="resetForm();openModalWithClass2(template2)"
+                class="maraddphoto"
+              >
+                + {{'gallery.add.text' | translate}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="member-collection-table">
+        <table>
+          <thead>
+            <tr>
+              <th width="20"></th>
+              <th>{{'Name' | translate}}</th>
+              <th class="category">{{'gallery.table.category' | translate}}</th>
+              <th class="category">
+                {{'gallery.table.eventName' | translate}}
+              </th>
+              <th width="250">
+                {{'gallery.table.galleryLocation' | translate}}
+              </th>
+              <th class="uploaded">{{'gallery.table.count' | translate}}</th>
+              <th width="80">{{'gallery.table.action' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody class="tabl-body">
+          <tr *ngFor="let list of galleryList?.content" class="borbott">
+            <td></td>
+            <!-- <td class="thumb"> <button data-toggle="modal" data-target="#imagepopup"><img src="assets/images/background3.png" alt=""></button><span class="name">Event Photos Event Photos Event PhotosEvent Photos</span> </td> -->
+            <td *ngIf="(list['profileUrl'] == null || list['profileUrl'] == '') &&(list.mediaList.length!=0)" class="thumb"><a
+              [routerLink]="'/gallery-media-detail/'+list.id" class="imagesgallerythumb"> <img
+              alt="" [src]="list['mediaList'][0]?.link | galleryImagePipe"><span class="name">{{list.name}}</span></a></td>
+            <td *ngIf="list['profileUrl'] != null && list['profileUrl'] != ''" class="thumb"><a
+              [routerLink]="'/gallery-media-detail/'+list.id" class="imagesgallerythumb">
+              <img alt="" [src]="list['profileUrl'] | galleryImagePipe"><span
+              class="name">{{list.name}}</span></a></td>
+            <td *ngIf="(list['profileUrl'] == null || list['profileUrl'] == '') &&(list.mediaList.length==0)" class="thumb"><a
+              [routerLink]="'/gallery-media-detail/'+list.id" class="imagesgallerythumb">
+              <img alt="" src="https://s3-us-west-2.amazonaws.com/communityconnectmedia/20210224044049_5df0a59a4914d61958f27e88_video-placeholder.jpg"><span
+              class="name">{{list.name}}</span></a></td>
+            <td>
+              <p *ngIf="list['categoryName'] != null && list['categoryName'] != ''">{{list.categoryName}}</p>
+              <p *ngIf="list['categoryName'] == null || list['categoryName'] == ''">-</p>
+            </td>
+            <td>
+              <p *ngIf="list['eventName'] != null && list['eventName'] != ''">{{list.eventName}}</p>
+              <p *ngIf="list['eventName'] == null || list['eventName'] == ''">-</p>
+            </td>
+            <td>{{list?.galleryLocation}}</td>
+            <td>{{list.totalMedias}}</td>
+            <td>
+
+
+                <button class="btn-edit" (click)="editGallery(list.id)"> <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+                <button class="btn-edit" (click)="deleteGallery(list.id)"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+
+                <!-- <div class="dropdown dropup moredrop editgallery">
+                <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
+                   data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                  <img alt="" src="assets/icon/interface.svg">
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a (click)="editGallery(list.id)" class="dropdown-item"><i aria-hidden="true"
+                                                                             class="fa fa-angle-right"></i> Edit</a>
+                  <a (click)="deleteGallery(list.id)" class="dropdown-item"><i aria-hidden="true"
+                                                                               class="fa fa-angle-right"></i> Delete</a>
+                </div>
+              </div> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal upload by -->
+<div
+  aria-hidden="true"
+  aria-labelledby="exampleModalLabel"
+  class="modal fade share-model"
+  id="imagepopup"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog imageupload-model" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload By</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        <!-- top content -->
+        <ul class="thumb-model">
+          <li>
+            <img alt="" class="thumb" src="assets/images/background3.png" />
+          </li>
+          <li>
+            <div class="member-event">
+              Patricia Hill
+              <span>Member</span>
+            </div>
+            <ul class="chaper-album">
+              <li>
+                Chapter
+                <p>National</p>
+              </li>
+              <li>
+                Category
+                <p>Event</p>
+              </li>
+              <li>
+                Album
+                <p>Anual Function</p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- top content -->
+        <div class="main-thumbs-model">
+          <div class="thumb">
+            <img alt="" src="assets/images/background3.png" />
+            <button><img alt="" src="assets/icon/cancel.svg" /></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="save-changes backbtn" data-dismiss="modal" type="button">
+          Cancel
+        </button>
+        <button class="save-changes" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal upload by -->
+<!-- Add Photo -->
+<i (click)="openModalWithClass2(template2)" id="openEditModel"></i>
+<div
+  aria-hidden="true"
+  aria-labelledby="exampleModalLabel"
+  class="modal right fade performance-mod"
+  id="exampleModalphoto"
+  role="dialog"
+  tabindex="-1"
+></div>
+<!-- Add Photo -->
+<ng-template #template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      asdsa{{'gallery.create.text' | translate}}
+    </h5>
+    <!-- <button (click)="modalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeButton" type="button">
+      <img alt="" src="assets/icon/delete-button.svg">
+    </button> -->
+    <button
+      (click)="modalRef.hide()"
+      aria-label="Close"
+      class="close-container"
+      data-dismiss="modal"
+      id="closeModal"
+      type="button"
+    >
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- tab -->
+    <section class="my-account">
+      <div class="tab-design">
+        <mat-tab-group>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <!-- <img alt="" class="activeimage" src="assets/icon/art-b.svg">  -->
+              <!-- <img alt="" class="deactiveimage" src="assets/icon/art-g.svg">  -->
+              <svg
+                height="11.232"
+                viewBox="0 0 13 11.232"
+                width="13"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="art" transform="translate(0 -26.403)">
+                  <g
+                    data-name="Group 3594"
+                    id="Group_3594"
+                    transform="translate(0 26.403)"
+                  >
+                    <g
+                      data-name="Group 3593"
+                      id="Group_3593"
+                      transform="translate(0 0)"
+                    >
+                      <path
+                        d="M6.993,241.017a1.708,1.708,0,0,1-1.072-.4l-1.98-1.744a.872.872,0,0,0-1.126-.054L0,240.89v1.344a.654.654,0,0,0,.616.689H10.644a.765.765,0,0,0,.8-.69v-3.523l-3.578,2.07A1.653,1.653,0,0,1,6.993,241.017Z"
+                        data-name="Path 9148"
+                        fill="#757575"
+                        id="Path_9148"
+                        transform="translate(0 -231.692)"
+                      />
+                      <circle
+                        cx="0.799"
+                        cy="0.799"
+                        data-name="Ellipse 260"
+                        fill="#757575"
+                        id="Ellipse_260"
+                        r="0.799"
+                        transform="translate(5.795 4.436)"
+                      />
+                      <path
+                        d="M67.333,27.761a.643.643,0,0,0-.469-.261l-9.47-1.095a.692.692,0,0,0-.782.591l-.156,1.355h8.306a1.494,1.494,0,0,1,1.46,1.442v6.134c0-.035.156-.07.226-.139a.591.591,0,0,0,.226-.469l.817-7.055A.678.678,0,0,0,67.333,27.761Z"
+                        data-name="Path 9149"
+                        fill="#757575"
+                        id="Path_9149"
+                        transform="translate(-54.492 -26.403)"
+                      />
+                      <path
+                        d="M10.673,105.9H.7a.7.7,0,0,0-.672.727v4.82l2.4-1.624a1.69,1.69,0,0,1,2.016.085l2,1.624a.981.981,0,0,0,1.072.085l3.959-2.148v-2.841A.81.81,0,0,0,10.673,105.9Zm-3.8,3.907a1.424,1.424,0,1,1,0-2.841,1.424,1.424,0,1,1,0,2.841Z"
+                        data-name="Path 9150"
+                        fill="#757575"
+                        id="Path_9150"
+                        transform="translate(-0.029 -103.135)"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+              {{'gallery.uploadPhotos&Videos.tab.text' | translate}}
+            </ng-template>
+            <form
+              [formGroup]="galleryForm"
+              class="example-form"
+              id="galleryForm"
+            >
+              <div class="martop-date marleft0">
+                <div class="clear"></div>
+                <div class="martop-date marleft0"></div>
+                <div class="col-md-12">
+                  <div class="col-md-1"></div>
+                  <button
+                    (click)="galleryLocation='HOME';"
+                    [ngClass]="galleryLocation == 'HOME' ? 'active':''"
+                    class="col-md-3 btn-location"
+                    type="button"
+                  >
+                    {{'gallery.add.location.home.text' | translate}}
+                  </button>
+                  <button
+                    (click)="galleryLocation='GENERAL';"
+                    [ngClass]="galleryLocation == 'GENERAL' ? 'active':''"
+                    class="col-md-3 btn-location"
+                    type="button"
+                  >
+                    {{'gallery.add.location.general.text' | translate}}
+                  </button>
+                  <button
+                    (click)="galleryLocation='EVENT';"
+                    [ngClass]="galleryLocation == 'EVENT' ? 'active':''"
+                    class="col-md-3 btn-location"
+                    type="button"
+                  >
+                    {{'gallery.add.location.event.text' | translate}}
+                  </button>
+                </div>
+                <div class="col-md-12">
+                  <mat-form-field class="example-full-width">
+                    <mat-label
+                      >{{'gallery.add.galleryName.lbl.text' | translate}}
+                      <i>*</i></mat-label
+                    >
+                    <input
+                      formControlName="name"
+                      matInput
+                      placeholder="Enter Name"
+                    />
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && galleryForm.controls.name.errors ">
+                    <span
+                      *ngIf="isSubmit && galleryForm.controls.name.errors"
+                      class="valid-msg"
+                      >Gallery Name is required</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-label
+                      >{{'gallery.add.chapter.lbl.text' | translate}}
+                      <i>*</i></mat-label
+                    >
+                    <mat-select formControlName="chapterId">
+                      <mat-option
+                        *ngFor="let list of chapterDetail;let i = index"
+                        value="{{list.id}}"
+                      >
+                        {{list.name}}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                  <div
+                    *ngIf="isSubmit && galleryForm.controls.chapterId.errors "
+                  >
+                    <span
+                      *ngIf="isSubmit && galleryForm.controls.chapterId.errors"
+                      class="valid-msg"
+                      >Chapter is required</span
+                    >
+                  </div>
+                </div>
+                <div
+                  *ngIf="galleryLocation =='EVENT' && eventDetail.length ==0"
+                  class="col-md-6"
+                >
+                  <button
+                    (click)="openEventModal()"
+                    class="btn-location"
+                    type="button"
+                  >
+                    {{'gallery.add.location.event.selectEvent.Btn.text' |
+                    translate}}
+                  </button>
+                </div>
+                <div
+                  *ngIf="galleryLocation =='EVENT' && eventDetail.length !=0"
+                  class="col-md-6"
+                >
+                  <ul class="thumb-model">
+                    <li>
+                      <img
+                        alt=""
+                        class="thumb"
+                        src="{{eventDetail?.profilePicture}}"
+                      />
+                    </li>
+                    <li>
+                      <div class="member-event">
+                        {{eventDetail?.name}}
+                        <span> </span>
+                      </div>
+                    </li>
+                    <li>
+                      <button
+                        (click)="eventDetail=[];"
+                        style="margin-left: 34px; border: none;"
+                        type="button"
+                      >
+                        <img
+                          alt=""
+                          src="assets/icon/delete-button.svg"
+                          style="width: 27px;"
+                        />
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="galleryLocation !='EVENT'" class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-label
+                      >{{'gallery.add.category.lbl.text' | translate}}
+                      <i>*</i></mat-label
+                    >
+                    <!--<mat-select formControlName="categoryName">
+                      <mat-option *ngFor="let category of galleryCategory;" value="{{category.name}}">
+                        {{category.name}}
+                      </mat-option>
+                    </mat-select>-->
+                    <input
+                      [formControl]="myControl"
+                      [matAutocomplete]="auto"
+                      aria-label="Number"
+                      matInput
+                      placeholder="{{'event.create.basicinfo.communityPh.text' | translate}}"
+                      type="text"
+                    />
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option [value]=""
+                        >{{'gallery.table.category.label' | translate}}
+                      </mat-option>
+                      <mat-option
+                        *ngFor="let option of filteredOptions | async"
+                        [value]="option"
+                      >
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <div
+                    *ngIf="isSubmit && galleryForm.controls.categoryName.errors "
+                  >
+                    <span
+                      *ngIf="isSubmit && galleryForm.controls.categoryName.errors"
+                      class="valid-msg"
+                      >Category is required</span
+                    >
+                  </div>
+                </div>
+                <!--     <div class="col-md-6">
+                       <mat-form-field class="example-full-width dateinfo">
+                         <mat-label>Date</mat-label>
+                         <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                         <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+                         </mat-datetimepicker>
+                         <input formControlName="dateTime" [matDatetimepicker]="datetimePicker" autocomplete="off"
+                                matInput>
+                       </mat-form-field>
+                       <div *ngIf="isSubmit && galleryForm.controls.dateTime.errors ">
+                         <span *ngIf="isSubmit && galleryForm.controls.dateTime.errors" class="valid-msg">Date is
+                           required</span>
+                       </div>
+                     </div>-->
+                <div class="">
+                  <div class="col-md-12 nopaidgallery">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label
+                          >{{'gallery.add.gallerySource.lbl.text' | translate}}
+                          <i>*</i></mat-label
+                        >
+                        <mat-select
+                          (selectionChange)="galleryTypeChange($event.value)"
+                          formControlName="galleryType"
+                        >
+                          <mat-option
+                            *ngFor="let type of galleryType"
+                            value="{{type.value}}"
+                          >
+                            {{type.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div
+                        *ngIf="isSubmit && galleryForm.controls.galleryType.errors "
+                      >
+                        <span
+                          *ngIf="isSubmit && galleryForm.controls.galleryType.errors"
+                          class="valid-msg"
+                          >Gallery Source is required</span
+                        >
+                      </div>
+                    </div>
+                    <div *ngIf="isLinkShow" class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label
+                          >{{'gallery.add.externalLink.lbl.text' | translate}}<i
+                            >*</i
+                          ></mat-label
+                        >
+                        <input
+                          [(ngModel)]="externalLink"
+                          [ngModelOptions]="{standalone: true}"
+                          autocomplete="off"
+                          matInput
+                          placeholder="Enter Name"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 uploadimg">
+                  <h3>
+                    {{'gallery.add.uploadImages.lbl.text' | translate}}
+                  </h3>
+                  <div *ngIf="!isLinkShow" class="image-main-up">
+                    <div class="create-img-upload">
+                      <app-file-uploader-vertical
+                        #imageUpload
+                        (invalidFile)="invalidUploadFile()"
+                        (maxFileError)="maxFileError()"
+                        (maxFileSizeError)="fileSizeError()"
+                        (queueCompleted)="imageQueueCompleted()"
+                        (uploadStarted)="uploadStarted()"
+                        (uploadedFilesChange)="uploadedFilesChange()"
+                        [(uploadedFiles)]="imageList"
+                        [maxFileCount]="100"
+                        [uploadUrl]="mediaUploadUrl"
+                        [validTypes]="validTypesImage"
+                      >
+                      </app-file-uploader-vertical>
+                    </div>
+                  </div>
+                  <div *ngIf="isLinkShow" class="image-main-up">
+                    <div class="create-img-upload">
+                      <app-file-uploader-vertical
+                        #imageUpload
+                        (invalidFile)="invalidUploadFile()"
+                        (maxFileError)="maxFileError()"
+                        (maxFileSizeError)="fileSizeError()"
+                        (queueCompleted)="imageQueueCompleted()"
+                        (uploadStarted)="uploadStarted()"
+                        (uploadedFilesChange)="uploadedFilesChange()"
+                        [(uploadedFiles)]="imageList"
+                        [maxFileCount]="1"
+                        [uploadUrl]="mediaUploadUrl"
+                        [validTypes]="validTypesImage"
+                      >
+                      </app-file-uploader-vertical>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div *ngIf="uploadedImageList?.length != 0" class="main-thumbs-model">
+                      <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+                        <div  [style.backgroundImage]="'url' + (image.link | galleryImagePipe)" class="blurimageabout"
+                             style="background: no-repeat;"></div>
+                        <img alt="" [src]="image.link  ">
+                        <button (click)="removeImage(i,image)"><img alt="" src="assets/icon/cancel.svg"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!isLinkShow" class="col-md-6 uploadimg">
+                  <h3>
+                    {{'gallery.add.uploadvideos.lbl.text' | translate}}
+                  </h3>
+                  <div class="image-main-up">
+                    <div class="imageup create-img-upload">
+                      <app-file-uploader-vertical
+                        #imageUpload
+                        (invalidFile)="invalidVideoUploadFile()"
+                        (maxFileError)="maxFileError()"
+                        (maxFileSizeError)="fileSizeError()"
+                        (queueCompleted)="videoQueueCompleted()"
+                        (uploadStarted)="uploadStarted()"
+                        (uploadedFilesChange)="uploadedFilesChange()"
+                        [(uploadedFiles)]="videoList"
+                        [maxFileSize]="maxFileSize"
+                        [uploadUrl]="mediaUploadUrl"
+                        [validTypes]="validTypesVideo"
+                      >
+                      </app-file-uploader-vertical>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div
+                      *ngIf="uploadedVideoList?.length != 0"
+                      class="main-thumbs-model"
+                    >
+                      <div
+                        *ngFor="let list of uploadedVideoList;let i = index"
+                        class="thumb video-up"
+                      >
+                        <video controls height="150" width="300">
+                          <source src="{{list.link}}" />
+                        </video>
+                        <button (click)="removeVideo(i,list)">
+                          <img alt="" src="assets/icon/cancel.svg" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-tab>
+          <mat-tab *ngIf="isChannelUrlShow">
+            <ng-template mat-tab-label>
+              <!-- <img alt="" class="activeimage" src="assets/icon/link-b.svg">
+              <img alt="" class="deactiveimage" src="assets/icon/link-g.svg">  -->
+              <svg
+                height="13"
+                viewBox="0 0 12.998 13"
+                width="12.998"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="link" transform="translate(-0.039 0)">
+                  <g
+                    data-name="Group 3596"
+                    id="Group_3596"
+                    transform="translate(0.039 4.229)"
+                  >
+                    <g
+                      data-name="Group 3595"
+                      id="Group_3595"
+                      transform="translate(0)"
+                    >
+                      <path
+                        d="M7.925,165.5a2.933,2.933,0,0,0-.506-.407,3.016,3.016,0,0,0-3.759.407L.92,168.239a3.016,3.016,0,0,0,4.263,4.267l2.262-2.262a.215.215,0,0,0-.153-.368H7.205a3.625,3.625,0,0,1-1.379-.267.215.215,0,0,0-.235.047l-1.626,1.628a1.293,1.293,0,0,1-1.829-1.829l2.751-2.748a1.292,1.292,0,0,1,1.827,0,.883.883,0,0,0,1.211,0,.853.853,0,0,0,0-1.211Z"
+                        data-name="Path 9151"
+                        fill="#757575"
+                        id="Path_9151"
+                        transform="translate(-0.039 -164.614)"
+                      />
+                    </g>
+                  </g>
+                  <g
+                    data-name="Group 3598"
+                    id="Group_3598"
+                    transform="translate(4.895 0)"
+                  >
+                    <g
+                      data-name="Group 3597"
+                      id="Group_3597"
+                      transform="translate(0 0)"
+                    >
+                      <path
+                        d="M196.76.884a3.016,3.016,0,0,0-4.265,0l-2.26,2.257a.216.216,0,0,0,.157.368h.08a3.619,3.619,0,0,1,1.376.269.215.215,0,0,0,.235-.047l1.622-1.62a1.293,1.293,0,1,1,1.829,1.829l-2.02,2.018-.017.019-.706.7a1.292,1.292,0,0,1-1.827,0,.883.883,0,0,0-1.211,0,.859.859,0,0,0,0,1.215,2.99,2.99,0,0,0,.862.6c.045.022.09.039.136.058s.093.034.138.052.093.032.138.045l.127.034c.086.022.172.039.261.054a3,3,0,0,0,.321.03h.164l.129-.015c.047,0,.1-.013.153-.013h.073l.149-.022.069-.013.125-.026h.024a3.015,3.015,0,0,0,1.4-.793l2.742-2.742A3.016,3.016,0,0,0,196.76.884Z"
+                        data-name="Path 9152"
+                        fill="#757575"
+                        id="Path_9152"
+                        transform="translate(-189.502 0)"
+                      />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+              {{'gallery.add.youtubeUrl.text' | translate}}
+            </ng-template>
+            <div class="martop-date marleft0"></div>
+            <div class="clear"></div>
+            <div
+              *ngFor="let url of youTubeUrls;let i = index"
+              class="martop-date marleft0"
+            >
+              <div class="col-md-11 col-sm-10">
+                <mat-form-field class="example-full-width">
+                  <mat-label
+                    >{{'gallery.add.youtubeUrl.lbl.text' |
+                    translate}}</mat-label
+                  >
+                  <input
+                    [(ngModel)]="url.link"
+                    [ngModelOptions]="{standalone: true}"
+                    matInput
+                    placeholder="{{'gallery.add.youtubeUrl.ph.text' | translate}}"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="removeBtn col-md-1 col-sm-2">
+                <button
+                  (click)="removeLastUrl(i,url)"
+                  style="background: none; border: 0px;"
+                >
+                  <i class="icon-delete-blue newicon"></i>
+                </button>
+              </div>
+            </div>
+            <div class="clear"></div>
+            <div class="martop-date marleft0">
+              <div class="col-md-11">
+                <button (click)="addUrl()" class="addanother" type="button">
+                  {{'gallery.add.youtubeUrl.add.Btn.text' | translate}}
+                </button>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </section>
+    <!-- tab -->
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="save-changes backbtn" data-dismiss="modal">Cancel</button> -->
+    <button (click)="saveGallery()" class="save-changes" type="button">
+      {{'gallery.add.save.Btn.text' | translate}}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #template2>
+  <div class="modal-header">
+    <h5 class="modal-title">{{'gallery.create.text' | translate}}</h5>
+    <button
+      (click)="modalRef.hide()"
+      aria-label="Close"
+      class="close-container"
+      data-dismiss="modal"
+      id="closeModal"
+      type="button"
+    >
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="main-area-button">
+      <button
+        (click)="galleryLocation='HOME';"
+        [ngClass]="galleryLocation == 'HOME' ? 'active':''"
+      >
+        {{'gallery.add.location.home.text' | translate}}
+      </button>
+      <button
+        (click)="galleryLocation='GENERAL';"
+        [ngClass]="galleryLocation == 'GENERAL' ? 'active':''"
+      >
+        {{'gallery.add.location.general.text' | translate}}
+      </button>
+      <button
+        (click)="galleryLocation='EVENT';"
+        [ngClass]="galleryLocation == 'EVENT' ? 'active':''"
+      >
+        {{'gallery.add.location.event.text' | translate}}
+      </button>
+    </div>
+    <form [formGroup]="galleryForm" id="galleryForm">
+      <div class="main-new-pop">
+        <h4 class="detailbtm">Details</h4>
+        <div class="sub-main-pop">
+          <div class="col-sm-6 paddleft0">
+            <mat-form-field class="example-full-width">
+              <mat-label>
+                {{'gallery.add.galleryName.lbl.text' | translate}}
+              </mat-label>
+              <input formControlName="name" matInput placeholder="Enter Name" />
+            </mat-form-field>
+            <div *ngIf="isSubmit && galleryForm.controls.name.errors ">
+              <span
+                *ngIf="isSubmit && galleryForm.controls.name.errors"
+                class="valid-msg"
+                >Gallery Name is required</span
+              >
+            </div>
+          </div>
+          <div class="col-sm-6 paddleft0">
+            <mat-form-field class="example-full-width">
+              <mat-label>{{'gallery.add.gallerySource.lbl.text' | translate}}
+                </mat-label>
+              <mat-select
+                (selectionChange)="galleryTypeChange($event.value)"
+                formControlName="galleryType"
+              >
+                <mat-option
+                  *ngFor="let type of galleryType"
+                  value="{{type.value}}"
+                >
+                  {{type.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isSubmit && galleryForm.controls.galleryType.errors ">
+              <span
+                *ngIf="isSubmit && galleryForm.controls.galleryType.errors"
+                class="valid-msg"
+              >
+                Gallery Source is required
+              </span>
+            </div>
+          </div>
+          <div *ngIf="galleryLocation !='EVENT'" class="col-sm-6 paddleft0">
+            <mat-form-field class="example-full-width">
+              <mat-label>Category<i>*</i></mat-label>
+              <input [formControl]="myControl" [matAutocomplete]="auto" aria-label="Number" matInput placeholder="{{'event.create.basicinfo.communityPh.text' | translate}}" type="text"/>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option [value]="">{{'gallery.table.category.label' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">{{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div *ngIf="isSubmit && galleryForm.controls.categoryName.errors ">
+              <span
+                *ngIf="isSubmit && galleryForm.controls.categoryName.errors"
+                class="valid-msg"
+              >
+                Category is required
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div *ngIf="galleryLocation =='EVENT' && eventDetail.length ==0">
+                <button
+                  (click)="openEventModal()"
+                  class="btn-location pull-right"
+                  type="button"
+                >
+                  {{'gallery.add.location.event.selectEvent.Btn.text' |
+                  translate}}
+                </button>
+              </div>
+              <div
+                *ngIf="galleryLocation =='EVENT' && eventDetail.length !=0"
+                class="eventchrismas removeBtn"
+              >
+                <span>
+                  <img alt="" [src]="eventDetail?.profilePicture | galleryImagePipe"
+                /></span>
+
+                {{eventDetail?.name}}
+                <button (click)="clearEvent()">
+                  <i class="icon-delete-blue newicon" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isLinkShow" class="col-md-12 paddleft0">
+            <mat-form-field class="example-full-width">
+              <mat-label
+                >{{'gallery.add.externalLink.lbl.text' | translate}}<i
+                  >*</i
+                ></mat-label
+              >
+              <input
+                [(ngModel)]="externalLink"
+                [ngModelOptions]="{standalone: true}"
+                autocomplete="off"
+                matInput
+                placeholder="Enter Name"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="clear"></div>
+
+        <h4 *ngIf="!isLinkShow">
+          {{'gallery.add.uploadImages.lbl.text' | translate}}
+          <i
+            style="
+              color: red;
+              font-style: normal;
+              font-size: 18px;
+              line-height: 11px;
+            "
+            >*</i
+          >
+        </h4>
+        <div class="sub-main-pop">
+          <div class="image-main-up thumb100">
+            <div *ngIf="!isLinkShow" class="imageup create-img-upload">
+              <app-file-uploader-vertical
+                #imageUpload
+                (invalidFile)="invalidUploadFile()"
+                (maxFileError)="maxFileError()"
+                (maxFileSizeError)="fileSizeError()"
+                (queueCompleted)="imageQueueCompleted()"
+                (uploadStarted)="uploadStarted()"
+                (uploadedFilesChange)="uploadedFilesChange()"
+                [(uploadedFiles)]="imageList"
+                [maxFileCount]="maxFileSize"
+                [uploadUrl]="mediaUploadUrl"
+                [validTypes]="validTypesImage"
+              >
+              </app-file-uploader-vertical>
+            </div>
+            <!-- <div *ngIf="isLinkShow" class="imageup create-img-upload">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidVideoUploadFile()"
+                                          (maxFileError)="max1FileError()"
+                                          (maxFileSizeError)="fileSizeError()"
+                                          (queueCompleted)="imageQueueCompleted()"
+                                          (uploadStarted)="uploadStarted()"
+                                          (uploadedFilesChange)="uploadedFilesChange()"
+                                          [(uploadedFiles)]="imageList"
+                                          [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                                          [validTypes]="validTypesImage">
+              </app-file-uploader-vertical>
+            </div> -->
+          </div>
+          <div *ngIf="!isLinkShow">
+          <div *ngFor="let image of uploadedImageList;let i = index" class="main-thumbs-model">
+            <div class="thumb">
+              <div [style.background-image]="'url(' + (image.link| galleryImagePipe) + ')'"  class="blurimageabout"
+                   style="background: no-repeat;"></div>
+              <img alt="" [src]="image.link | galleryImagePipe">
+              <button (click)="removeImage(i,image)"><img alt="" src="assets/icon/cancel.svg"></button>
+            </div>
+          </div>
+
+        </div>
+
+      <h4 *ngIf="!isLinkShow">
+        Upload Video
+        <i
+          style="
+            color: red;
+            font-style: normal;
+            font-size: 18px;
+            line-height: 11px;
+          "
+          >*</i
+        >
+      </h4>
+      <div class="sub-main-pop">
+        <div class="image-main-up thumb100">
+          <div *ngIf="!isLinkShow" class="imageup create-img-upload">
+            <app-file-uploader-vertical
+              #imageUpload
+              (invalidFile)="invalidVideoUploadFile()"
+              (maxFileError)="max1FileError()"
+              (maxFileSizeError)="fileSizeError()"
+              (queueCompleted)="videoQueueCompleted()"
+              (uploadStarted)="uploadStarted()"
+              (uploadedFilesChange)="uploadedFilesChange()"
+              [(uploadedFiles)]="videoList"
+             
+              [maxFileCount]="maxFileSize"
+              [uploadUrl]="mediaUploadUrl"
+              [validTypes]="validTypesVideo"
+            >
+            </app-file-uploader-vertical>
+          </div>
+        </div>
+        <div *ngIf="!isLinkShow">
+          <div *ngIf="uploadedVideoList?.length != 0" class="main-thumbs-model">
+            <div
+              *ngFor="let list of uploadedVideoList;let i = index"
+              class="thumb video-up"
+            >
+              <video controls height="150" width="300">
+                <source [src]="list.link | galleryImagePipe" />
+              </video>
+              <button (click)="removeVideo(i,list)">
+                <img alt="" src="assets/icon/cancel.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+      <h4>
+        YouTube URL
+        <button type="button" (click)="addUrl()" c class="addmore-url">
+          {{'gallery.add.youtubeUrl.add.Btn.text' | translate}}
+        </button>
+      </h4>
+      <div class="sub-main-pop">
+        <div
+          *ngFor="let url of youTubeUrls;let i = index"
+          class="martop-date marleft0 row"
+        >
+          <div class="col-md-11 col-sm-10">
+            <mat-form-field class="example-full-width">
+              <mat-label
+                >{{'gallery.add.youtubeUrl.lbl.text' | translate}}</mat-label
+              >
+              <input
+                [(ngModel)]="url.link"
+                [ngModelOptions]="{standalone: true}"
+                matInput
+                placeholder="{{'gallery.add.youtubeUrl.ph.text' | translate}}"
+              />
+            </mat-form-field>
+          </div>
+          <div class="removeBtn col-md-1 col-sm-2">
+            <button
+              (click)="removeLastUrl(i,url)"
+              style="background: none; border: 0px;"
+            >
+              <i class="icon-delete-blue newicon"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="save-changes backbtn" data-dismiss="modal">Cancel</button> -->
+        <button (click)="saveGallery()" class="save-changes" type="button">
+          {{'gallery.add.save.Btn.text' | translate}}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

@@ -1,0 +1,153 @@
+<div class=" m-0" [ngClass]="eventList?.length <= 3 ?  'event-center' : ''">
+  <div *ngFor="let e of eventList ; let i = index" class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+    <div class="eventimermain">
+      <div *ngIf="e.eventTiming=='Upcoming' && (e.timer?.length!=0 ||e.timer !=undefined)" >
+        <span   *ngFor=" let t of e.timer " class="timerevent">
+          {{t.days}}<i class="timer-text-color">{{t.title_days}}</i>
+          <span class="colon-color" *ngIf="t.days>=1"> : </span>{{t.hours}}<i class="timer-text-color">{{t.title_hours}}</i><span class="colon-color" *ngIf="t.hours>=1"> : </span>{{t.minutes}}<i class="timer-text-color">{{t.title_min}}</i><span class="colon-color"> : </span>{{t.sec}}<i class="timer-text-color">{{t.title_sec}}</i></span>
+      </div>
+    </div>
+    <mat-card  animationName="animated fadeInUp" >
+      <!-- <button  (click)="timer(e.startDateTime,i)">time</button> -->
+      <div class="events-img shareiconmodel" (click)="redirectTicket(e.id,e.eventTiming,e.eventConfigurations)">   
+        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture | eventImages)+')'"  >  </div>
+        <div>
+        <img alt="" img mat-card-image [src]="e.profilePicture | eventImages"> </div>
+
+
+      </div>
+      <mat-card-content>
+        <div class="routerclick" (click)="redirectTicket(e.id,e.eventTiming,e.eventConfigurations)">  
+          <div class="row">
+            <div class="col-sm-9 col-xs-9">
+              <span class="date" *ngIf="e['recurringEvent'] == false">{{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat}}</span>
+              <!-- <span class="date" *ngIf="e['cronScheduleRequest'] != null"> {{e.startDateTime | date : "shortTime" }} to {{e.endDateTime | date : "shortTime" }} ({{e['cronScheduleRequest']['scheduleType']}})</span> -->
+              <span class="date" *ngIf="e['cronScheduleRequest'] != null && e['cronScheduleRequest']['scheduleType'] != null">
+                {{e.startDateTime | date : "shortTime" }} to {{e.endDateTime | date : "shortTime" }} ({{e['cronScheduleRequest']['scheduleType']}})
+              </span>
+            </div>
+            <div class="col-sm-3 col-xs-3">
+              <span class="tegs-img" style="float:right;background: none;border: 1px solid;">{{e.eventTiming}}</span>
+            </div>
+          </div>
+          <div class="main-area-card">
+            <h5 style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 0; -webkit-box-orient: vertical;">{{e.name}}</h5>
+            <!-- <ul>
+              <li>{{e.addressLine1}} {{e.addressLine2}}</li>
+              <li><img src="assets/images/time.svg" alt="">{{e.startDateTime | date : "shortTime" }} to
+                {{e.endDateTime | date : "shortTime" }}</li>
+            </ul> -->
+            <div [innerHTML]="e['sortDescription']" class="text-two-ln" style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 39px;"></div>
+            <span *ngIf="e['venueType'] != 'ONLINE'"  class="date" style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical">
+            {{e['addressLine1']}} </span>
+          </div>
+          <h3>{{ e.dateTime | date : this.communityService.publicInfo?.webDateFormat}}</h3>
+          <div class="maintegs">
+            <div class="innerscroll">
+              <ul>
+                <li *ngFor="let tag of  e.tags|slice:0:2;" class="tegs-img"> {{tag}}</li>
+              </ul>
+
+              <!-- <div *ngFor="let tag of  e.tags" class="tegs-img">{{tag}}</div> -->
+            </div>
+          </div>
+        </div>
+        <!-- <button (click)="shareEvent(e.id)" class="share-btn" data-target="#share_modal" data-toggle="modal"
+                title="Share">
+          <img src="assets/icon/share-blue.svg">
+        </button> -->
+
+      </mat-card-content>
+      <mat-card-footer class="eventfont">
+        <div class="row mar0" >
+          <div class="col-md-10 col-sm-10 col-xs-10" >
+            <span class="eventfloat">{{e.registrationAmount}} </span>
+            <button matTooltipPosition="above" style="text-align: left; background: transparent; border: 0px; margin-left: 5px; width: calc(100% - 147px);" *ngIf="e['venueType'] != 'ONLINE'" mat-raised-button matTooltip="{{e.venueTypeName}}" aria-label="Button that displays a tooltip when focused or hovered over">
+              <span class="date" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; float: left; width: calc(100% - 0px); margin-top: 0px!important;  position: relative;">{{e.venueTypeName}} </span>
+            </button>
+            <button matTooltipPosition="above" style="text-align: left; background: transparent; border: 0px; margin-left: 5px; width: calc(100% - 147px);" *ngIf="e['venueType'] == 'ONLINE'" mat-raised-button matTooltip="{{e.venueTypeName}} {{'component.event.online.event.text' | translate}}" aria-label="Button that displays a tooltip when focused or hovered over">
+              <span class="date" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; float: left; width: calc(100% - 0px); margin-top: 0px!important;  position: relative;">{{e.venueTypeName}} {{'component.event.online.event.text' | translate}} </span>
+            </button>
+            <!-- <span *ngIf="e['venueType'] != 'ONLINE'" class="date" style="  width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; float: left; width: calc(100% - 147px); margin-top: 0px!important; margin-left: 10px; position: relative;">{{e.venueTypeName}} <u class="tooltipevent"> {{e.venueTypeName}}</u> </span> -->
+            <!-- <span *ngIf="e['venueType'] == 'ONLINE'" class="date" style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; float: left; width: calc(100% - 147px); margin-top: 0px!important; margin-left: 10px;">{{e.venueTypeName}} {{'component.event.online.event.text' | translate}}</span> -->
+          </div>
+          <div class="col-md-2 col-sm-2 col-xs-2 text-right">
+            <div class="dropup show sharedropdown">
+              <a class="btn btn-secondary dropdown-toggle" (click)="shareEvent(e.id,e.name)" href="javascript:void(0);" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <button [autoSetMeta]="false" [url]="shrebaseLink" [description]="shareTitle" class="facebook" shareButton="facebook">
+                  <i class="fab fa-facebook-f"></i> Facebook
+                </button>
+                <button [autoSetMeta]="false" [url]="shrebaseLink"  [description]="shareTitle" class="twitter" shareButton="twitter">
+                  <i class="fab fa-twitter"></i> Twitter
+                </button>
+               <!-- <button [autoSetMeta]="false" [url]="shrebaseLink" [description]="shareTitle" class="linkedin" shareButton="linkedin">
+                  <i class="fab fa-linkedin"></i> LinkedIn
+                </button>-->
+                <button [autoSetMeta]="false" [url]="shrebaseLink" [description]="shareTitle" class="whatsapp" shareButton="whatsapp">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row mar0" >
+          <div class="col-md-12 col-sm-12 col-xs-12" >
+            <span *ngIf="e['venueType'] != 'ONLINE'" class="date">{{e.venueTypeName}}</span>
+            <span *ngIf="e['venueType'] == 'ONLINE'" class="date">Online Event</span>
+          </div>
+        </div> -->
+        <!--        <button class="btn btn-cart" type="button">REGISTER NOW</button>-->
+      </mat-card-footer>
+    </mat-card>
+  </div>
+  <div *ngIf="eventList?.length == 0">
+    <span style="text-align: center">No event found!</span>
+  </div>
+</div>
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model shareevent" id="share_modal"
+     role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Share</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <div class="modal-body create-session-model custom-form-field">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="share-icon">
+              <button [autoSetMeta]="false" [url]="shrebaseLink" class="facebook" shareButton="facebook">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button [autoSetMeta]="false" [url]="shrebaseLink" class="twitter" shareButton="twitter">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <button [autoSetMeta]="false" [url]="shrebaseLink" class="linkedin" shareButton="linkedin">
+                <i class="fab fa-linkedin"></i>
+              </button>
+              <button [autoSetMeta]="false" [url]="shrebaseLink" class="whatsapp" shareButton="whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </button>
+              <!-- <button shareButton="telegram" [url]="link" [autoSetMeta]="false">
+                <i class="mdi mdi-facebook fs-16"></i>
+              </button>
+              <button shareButton="pinterest" [url]="link" [autoSetMeta]="false">
+                <i class="mdi mdi-facebook fs-16"></i>
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="checkin-close" data-dismiss="modal" (click)="resetForm()">close</button>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,397 @@
+<section class="membership-plan-main ticketbooking-new" *ngIf="!soldOut">
+  <div *ngIf="currentStep ==1" class="row row-eq-height m-0">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+      <div class="left-part-plan">
+        <div class="header-tlt">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <h1 *ngIf="this.roleType=='USER'"><img (click)="goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;"> Purchase Ticket</h1>
+              <h1 *ngIf="this.roleType=='VENDOR'"><img (click)="goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;"> Become vendor</h1>
+            </div>
+            <div class="col-sm-6">
+              <div class="right-content">
+                <h2>{{eventDetail?.name}}</h2>
+                <!--                <span>10:00 AM - 05:00PM</span>-->
+                <p *ngIf="eventDetail?.noMeetingUrl == false">{{eventDetail['startDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}}) - {{eventDetail['endDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}}) </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mainlogin-regis" >
+              <h4 class="head-guest" style="text-align: center; color:red"> Sold out! Thank you.</h4> 
+              <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="membership-plan-main ticketbooking-new" *ngIf="soldOut">
+  <div *ngIf="currentStep ==1" class="row row-eq-height m-0">
+    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 p-0">
+      <div class="left-part-plan">
+        <div class="header-tlt">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <h1 *ngIf="this.roleType=='USER'"><img (click)="goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;"> Purchase Ticket</h1>
+              <h1 *ngIf="this.roleType=='VENDOR'"><img (click)="goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;"> Become vendor</h1>
+            </div>
+            <div class="col-sm-6">
+              <div class="right-content">
+                <h2>{{eventDetail?.name}}</h2>
+                <!--                <span>10:00 AM - 05:00PM</span>-->
+                <p *ngIf="eventDetail?.noMeetingUrl == false">{{eventDetail['startDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}}) - {{eventDetail['endDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}}) </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- login -->
+        <app-guest-login *ngIf="guestShow == true" (completed)="addGuest()" [(register)]="register" [save]="submitSubject" (completenext)="this.nextBackActiveTab(this.activeTabName, 'current')" ></app-guest-login>
+        <!-- login -->
+
+        <div class="page-staps-details" *ngIf="userStatus ==true && guestShow == false">
+          <ul>
+            <li class="selected green-clr"><span class="fa fa-check-circle"></span>Options Selection</li>
+            <li class="selected"><span class="fa fa-check-circle"></span>Information</li>
+            <li><span class="fa fa-check-circle"></span>Payment</li>
+          </ul>
+        </div>
+        <div class="" >
+          <div class="">
+            <div class="tabmain-ticket" *ngIf="userStatus ==true && guestShow == false">
+              <mat-tab-group>
+                <mat-tab  *ngFor="let list of step;let i=index;" label="{{list?.value}}">
+                  <ng-template  mat-tab-label >
+                    <div *ngIf="eventcategory.length != 0" [ngClass]="activeTabName == list.step ?  'ticket-booking-active' : 'ticket-booking'" >
+                      {{list.name}}
+                    </div>
+                  </ng-template>
+                </mat-tab>
+
+              </mat-tab-group>
+              <h2 *ngIf="eventcategory.length == 0" class="text-primary">{{errortext}}</h2>
+              <div *ngIf="activeTabName=='TICKET' ">
+                <!--<app-ticket-selection *ngIf="activeTabName=='TICKET' "  [(register)]="register"  [eventId]="eventId" (reqDataval)=" reqDatavalue($event)"></app-ticket-selection>-->
+                <app-ticket-selection *ngIf="activeTabName=='TICKET' && eventDetail?.eventConfigurations?.allowUserDetails==false " [authDetail]="authDetail" [(register)]="register" [response]="response" [registrationType]="registrationType" [eventId]="eventId" [guestShow]="guestShow" (completed)="calculteAmount()" (userDetailreqchange)="userDetailsRequiredCheck($event)" [save]="submitSubject" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next');guestShow == true"></app-ticket-selection>
+              </div>
+              <div *ngIf="activeTabName=='TICKET' ">
+                <!--<app-ticket-selection *ngIf="activeTabName=='TICKET' "  [(register)]="register"  [eventId]="eventId" (reqDataval)=" reqDatavalue($event)"></app-ticket-selection>-->
+                <app-selection-ticket *ngIf="activeTabName=='TICKET' && eventDetail?.eventConfigurations?.allowUserDetails==true " [eventId]="eventId"  [authDetail]="authDetail" [registrationType]="registrationType"  [(register)]="register" (completed)="calculteAmount()"  [response]="response" (userDetailreqchange)="userDetailsRequiredCheck($event)" [save]="submitSubject" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next');guestShow == true"></app-selection-ticket>
+              </div>
+              <div *ngIf="activeTabName=='SPONSOR'" >
+                <app-sponsor-donor-selection *ngIf="activeTabName=='SPONSOR'" (skipvalue)="skip()" [(register)]="register" [eventId]="eventId" [response]="response" (completed)="calculteAmount()"   [save]="submitSubject"   [activeTabName]="activeTabName"  (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-sponsor-donor-selection>
+              </div>
+              <div *ngIf="activeTabName == 'PARKING'">
+                <ng-template mat-tab-label>
+                  Parking
+                </ng-template>
+                <app-parking-selection [eventId]="eventId"  [(register)]="register" [response]="response" (completed)="calculteAmount()" (skipvalue)="skip()"  (completed)="calculteAmount()"  [save]="submitSubject" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-parking-selection>
+                <!-- <app-parking-selection [eventId]="eventId" (parkingDetail)="parkingdetails($event)" (summaryParkingAmount)=" summaryParkAmounts($event)" [reqData]="reqData"></app-parking-selection>-->
+              </div>
+              <div *ngIf="activeTabName == 'ACCOMMODATION'">
+                <ng-template mat-tab-label>
+                  Accommodation
+                </ng-template>
+                <app-accomodation-selection *ngIf="activeTabName == 'ACCOMMODATION'" [eventId]="eventId" [save]="submitSubject" [(register)]="register" (skipvalue)="skip()" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-accomodation-selection>
+              </div>
+              <div *ngIf="activeTabName == 'FOOD'">
+                <ng-template mat-tab-label>
+                  Food
+                </ng-template>
+                <app-food-selection [eventId]="eventId"  [(register)]="register" (completed)="calculteAmount()"  [save]="submitSubject" (skipvalue)="skip()" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-food-selection>
+                <!--<app-food-selection *ngIf="activeTabName == 'FOOD'"  [eventId]="eventId"  (summaryFoodChangevalue)="summaryFoodAmounts($event)" [reqData]="reqData"></app-food-selection>-->
+              </div>
+              <div *ngIf="activeTabName == 'DONATION'">
+                <ng-template mat-tab-label>
+                  Donate
+                </ng-template>
+                <app-sponsor-donor-selection *ngIf="activeTabName == 'DONATION'"  [(register)]="register" (completed)="calculteAmount()"  (donarchanges)="summaryDonation($event)" [save]="submitSubject"  (skipvalue)="skip()" [activeTabName]="activeTabName" [eventId]="eventId" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')" ></app-sponsor-donor-selection>
+              </div>
+              <div *ngIf="activeTabName == 'PARTICIPATION'">
+                <ng-template mat-tab-label>
+                  Participate
+                </ng-template>
+                <!-- <app-participate-selection  *ngIf="activeTabName == 'PARTICIPATION'"  [eventId]="eventId"   (completed)="calculteAmount()"  (skipvalue)="skip()"></app-participate-selection> -->
+                <app-participate-selection  *ngIf="activeTabName == 'PARTICIPATION'"  [eventId]="eventId"  [(register)]="register" (completed)="calculteAmount()"  [save]="submitSubject" (skipvalue)="skip()" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')" ></app-participate-selection>
+              </div>
+              <div *ngIf="activeTabName == 'ADDITIONAL_INFORMATION'">
+                <ng-template mat-tab-label>
+                  Additional Information
+                </ng-template>
+                <app-additional-information *ngIf="activeTabName == 'ADDITIONAL_INFORMATION'"  [eventId]="eventId" [(register)]="register" (completed)="calculteAmount()"  [save]="submitSubject" (skipvalue)="skip()" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-additional-information>
+              </div>
+
+              <div *ngIf="activeTabName == 'BOOTH'">
+                <ng-template mat-tab-label>
+               Vendor Selecion
+              </ng-template>
+              <app-vendor-selection *ngIf="activeTabName == 'BOOTH'" [response]="response" [authDetail]="authDetail" [eventId]="eventId"  [(register)]="register" (completed)="calculteAmount()" (skipvalue)="skip()"  [save]="submitSubject" (completenext)="this.nextBackActiveTab(this.activeTabName, 'next')"></app-vendor-selection>
+          </div>
+              <!--  <mat-tab-group>
+                  <mat-tab *ngFor="let list of step;let i=index;" label="{{list?.value}}">
+
+                    <div *ngIf= "list['step'] == 'TICKET' ">
+                      <ng-template mat-tab-label>
+                        Ticket
+                      </ng-template>
+                      <app-ticket-selection [eventId]="eventId" ></app-ticket-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'PARKING'">
+                      <ng-template mat-tab-label>
+                        Parking
+                      </ng-template>
+                      <app-parking-selection></app-parking-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'ACCOMMODATION'">
+                      <ng-template mat-tab-label>
+                        Accommodation
+                      </ng-template>
+                      <app-accomodation-selection></app-accomodation-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'FOOD'">
+                      <ng-template mat-tab-label>
+                        Food
+                      </ng-template>
+                      <app-food-selection></app-food-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'SPONSOR' ">
+                      <ng-template mat-tab-label >
+                        Sponsor
+                      </ng-template>
+
+                      <app-sponsor-donor-selection></app-sponsor-donor-selection>
+
+                    </div>
+                    <div *ngIf="list['step'] == 'DONATION'">
+                      <ng-template mat-tab-label>
+                        Donate
+                      </ng-template>
+                      <app-sponsor-donor-selection></app-sponsor-donor-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'PARTICIPATION'">
+                      <ng-template mat-tab-label>
+                        Participate
+                      </ng-template>
+                      <app-participate-selection></app-participate-selection>
+                    </div>
+                    <div *ngIf="list['step'] == 'BOOTH'">
+                      <ng-template mat-tab-label>
+                        Volunteer
+                      </ng-template>
+                      <app-volunteer-selection></app-volunteer-selection>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>-->
+            </div>
+            <div class="right-part-plan summaryinmobile" *ngIf="userStatus ==true && guestShow == false  ">
+              <h2>Summary</h2>
+              <div class="table-part">
+                <table>
+                  <!-- <tr>
+                    <td></td>
+                    <td class="blue-clr-text" nowrap></td>
+                  </tr> -->
+                  <!--<tr *ngFor="let park of summaryStore?.userParkingFees;let i = index">
+                    <td>{{park.name}}</td>
+                    <td class="blue-clr-text" nowrap>${{park.totalPrice}}</td>
+                  </tr>-->
+
+                  <tr *ngIf="this.reqData.performance">
+                    <td>Participate</td>
+                    <td class="blue-clr-text">${{this.summaryStore.totalPerformanceAmount}}</td>
+                  </tr>
+                  <tr *ngFor="let list of register['summery'] ">
+                    <td >{{list.name}}</td>
+                    <td class="blue-clr-text" nowrap>${{list.amount}}</td>
+                  </tr>
+                  <tfoot>
+                  <tr>
+                    <td class="blue-clr-text">Grand Total</td>
+                    <td class="blue-clr-text" nowrap> {{this.register['finalAmount'] | currency:'USD'}}</td>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="left-footer" *ngIf="eventcategory.length != 0">
+              <div class="row m-0">
+                <div class="col-xs-4 col-md-6 p-0">
+                  <div class="next-back back">
+                    <button *ngIf="this.activeTabName!='TICKET'&& this.activeTabName!='BOOTH'" (click)="nextBackActiveTab(activeTabName,'back');"> <i class="fa fa-arrow-left"></i> Back</button>
+                  </div>
+                </div>
+                <div class="col-xs-8 col-md-6 p-0 text-right">
+                  <div class="next-back next">
+                    <button *ngIf="activeTabName!='TICKET' && guestShow == false" (click)="skipstep()" style="margin-right: 10px;" >Skip <i class="fa fa-arrow-right"></i></button>
+                    <!-- <button (click)="skipstep()" style="margin-right: 10px;" >Skip <i class="fa fa-arrow-right"></i></button> -->
+                    <button (click)="save()" >Next <i class="fa fa-arrow-right"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-3  col-lg-3 p-0">
+      <!-- Arena View -->
+      <div class="right-part-plan" *ngIf="userStatus ==true && guestShow == false  ">
+        <h2 *ngIf="activeTabName=='TICKET'">Arena View</h2>
+        <div class="arenaview"  *ngIf="activeTabName=='TICKET'">
+          <div class="area-view-image">
+            <img alt="" *ngIf="eventDetail?.profilePicture != '' " [src]="eventDetail?.profilePicture | eventImages">
+            <!-- <img alt=""  *ngIf="eventDetail?.arenaPicture == '' "src="assets/icon/imageplaceholder1.png"> -->
+            <i  *ngIf="eventDetail?.profilePicture == '' " class="far fa-image placeholderimage"></i>
+          </div>
+
+        </div>
+        <h2 class="summary-not-mobile">Summary</h2>
+        <div class="table-part summary-not-mobile">
+          <table>
+            <tr>
+              <td></td>
+              <td class="blue-clr-text" nowrap></td>
+            </tr>
+            <!--<tr *ngFor="let park of summaryStore?.userParkingFees;let i = index">
+              <td>{{park.name}}</td>
+              <td class="blue-clr-text" nowrap>${{park.totalPrice}}</td>
+            </tr>-->
+
+            <tr *ngIf="this.reqData.performance">
+              <td>Participate</td>
+              <td class="blue-clr-text">${{this.summaryStore.totalPerformanceAmount}}</td>
+            </tr>
+            <tr *ngFor="let list of register['summery'] ">
+              <td >{{list.name}}</td>
+              <td class="blue-clr-text" nowrap>${{list.amount}}</td>
+            </tr>
+            <tfoot>
+            <tr>
+              <td class="blue-clr-text">Grand Total</td>
+              <td class="blue-clr-text" nowrap> {{this.register['finalAmount'] | currency:'USD'}}</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!-- Arena View -->
+      <!-- Login View -->
+      <!-- <div class="login-right-view" *ngIf="guestShow == true">
+        <div class="inner-bx">
+          <h4>Already Have An
+            Account?</h4>
+          <p> If you already have an account, click on Login
+          </p>
+          <button (click)="openModalWithClass(template)"> Login </button>
+        </div>
+      </div> -->
+      <div class="login-right-view" *ngIf="guestShow == true">
+        <div class="inner-bx">
+          <h4>Welcome to <br> {{'community.name' |translate}} </h4>
+<!--            <p> If you already have an account, click on Login-->
+<!--            </p>-->
+<!--            <button (click)="openModalWithClass(template)"> Login </button>-->
+        </div>
+      </div>
+      <!-- Login View -->
+    </div>
+  </div>
+  <app-ticket-booking-payement *ngIf="currentStep ==2"  [title]="title"  [paymentType]="paymentType" [(currentStep)]="currentStep"  [(checkoutArray)]="register" (checkoutArrayChange)="calculteAmount()" (completed)="finalPayment()"></app-ticket-booking-payement>
+</section>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title">Login</h4>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button (click)="modalRef.hide()" aria-label="Close" id="closeModel" class="close-container">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <form  [formGroup]="loginForm" id="loginForm">
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <mat-form-field class="example-full-width">
+            <mat-label>Email or Phone Number</mat-label>
+            <input type="text" formControlName="email" matInput placeholder="" >
+          </mat-form-field>
+        </div>
+        <div class="col-sm-12">
+          <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" matInput placeholder="" >
+          </mat-form-field>
+        </div>
+        <!--        <div class="col-sm-12">-->
+        <!--          <button>Forgot Password?</button>-->
+        <!--        </div>-->
+      </div>
+    </div>
+    <div class="footer">
+      <button class="cancel" (click)="modalRef.hide()" aria-label="Close" id="closeModel" > CANCEL <img src="assets/icon/cancel.png" alt=""> </button>
+      <button (click)="login()"> Login <img src="assets/icon/check-ed.svg" alt=""> </button>
+    </div>
+  </form>
+</ng-template>
+<i id="openSuccessModel" (click)="openModalWithClass1(template1)"></i>
+<i id="openDoneModel" (click)="openModalWithClass(template2)"></i>
+<ng-template #template1>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your Payment is successfully done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <span>{{eventDetail['startDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}}) - {{eventDetail['endDateTime'] | date:'MMM d, y, h:mm a' }}   ({{timezone}})</span>
+        <h4>{{eventDetail?.name}}</h4>
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #template2>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your payment is already done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+

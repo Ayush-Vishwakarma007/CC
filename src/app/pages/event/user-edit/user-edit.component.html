@@ -1,0 +1,45 @@
+<div class="create-event-right-side common-page">
+    <div class="title-news">
+        <div class="">
+            <div class="col-md-12"> <span>{{'event.userEdit.title' | translate}}</span> </div>
+        </div>
+        <div class="">
+            <div class="col-md-5">
+                <div class="selectall">
+                    <input (change)="selectAll()" [(ngModel)]="selectedAll" type="checkbox"> <label for="fname">{{'event.userEdit.selectAll.text' | translate}}</label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <ul>
+                    <li>{{'event.userEdit.uploadedBy.text' | translate}} :</li>
+                    <li>{{this.firstName | titlecase}} {{this.lastName | titlecase}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-sm-12">
+            <div class="main-thumbs-model">
+                <div class="thumb youtube-video" *ngFor="let list of userMediaDetail">
+                    <div *ngIf="list['mediaType'] == 'IMAGE'" class="blurimageabout" style="background: no-repeat;"
+                        [style.backgroundImage]="'url('+list.link+')'"></div>
+                  <label>
+                  <img *ngIf="list['mediaType'] == 'IMAGE'" src="{{list.link}}" alt="">
+                    <div *ngIf="list['mediaType'] == 'YOUTUBE'" [innerHtml]="list.youtube_iframe"></div>
+                    <video *ngIf="list['mediaType'] == 'VIDEO'" width="300" height="150" controls>
+                        <source src="{{list.link}}"></video>
+                  </label>
+                    <input (change)="getCheckedItems(list)" [(ngModel)]="list['checked']" class="checkb"
+                        type="checkbox">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="reject-but">
+                <button class="approve" (click)="moveToTraceAndRestore('APPROVED')"> {{'event.userEdit.approve.Btn.text' | translate}} </button>
+                <button class="reject" (click)="moveToTraceAndRestore('REJECTED')"> {{'event.userEdit.movetoTrash.Btn.text' | translate}} </button>
+                <button class="cancel" routerLink="/gallery-media-detail/{{this.galleryId}}"> {{'event.userEdit.back.Btn.text' | translate}} </button>
+            </div>
+        </div>
+    </div>
+</div>

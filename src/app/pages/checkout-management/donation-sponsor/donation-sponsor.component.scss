@@ -1,0 +1,108 @@
+:root{
+  --primary-color : #ca0009;
+  --secondary-color :#283279;
+  --secondary-color2: #344A5F;
+  --black-light-color: #202126;
+  --black-dark-color: #202020;
+  --greay: #717171;
+  --greay-text: #6D6D6D;
+  --red-light-bg: #FCF5F5;
+  --greay-card-head: #EFEFEF;
+  --blue-dark: #283279;
+  --gray-dark: #666;
+  --gray-light: #e5e5e5;
+  --red-light-main: #edc9c9;
+  --blue-light: #eaebf7;
+  --blue-dark2: #afc6db;
+  --gray-dark2: #e5e5e5;
+  --gray75: #757575;
+  --gray-e7: #e7e7e7;
+  --font20: 20px;
+  --font13: 13px;
+  --heandingpage: 30px;
+  --green-dark: #22B573;
+  --green-light: #c6e1dc;
+  --red-dark: #CE495C;
+  --red-light: #f0c8ce;
+  --tomatored: #F25C66;
+
+}
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$black: #000000;
+$afafaf: #AFAFAF;
+$tr-hvr: #f9f9f9;
+$green: #11939A;
+$active-btn: #3AA76D;
+$active: #1EBA62;
+$icon-gray: #AFAFAF;
+$red: #c62c47;
+$white: #ffffff;
+$white-light: #adadad;
+$bg-light: #F5F6FA;
+$orenge: #ED6E33;
+$gray-light: #9A9A9A;
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+
+$font20: var(--font20);
+$font13: var(--font13);
+$heandingpage: var(--heandingpage);
+h5{ font-size: 18px; margin: 0px; color: #404040; font-family: "Montserrat", sans-serif; font-weight: 600; margin: 30px 0 15px 0;  }
+
+// Sponsor Details css
+ul.photo{ margin-top: 0px; display: block;
+  li:first-child{ width: 152px; float: left; text-align: center;
+    button.photoupload{ border: 0px; outline: none; width: 152px; height: 152px; background: #eeeeee; border-radius: 10px; display: inline-block; }
+    a{ color: #6584D8; font-family: "Montserrat", sans-serif; font-size: 13px; font-weight: 600; }
+  }
+  li:last-child{ width: calc(100% - 152px); float: left; text-align: center; padding: 0px 15px;
+    .inputcheck{ border: 1px solid #666; color: #C4C4C4; font-weight: 500; height: 56px; padding: 0px 10px; border-radius: 8px; font-size: 15px; font-family: "Montserrat", sans-serif; margin-top: 19px; }
+    input.inputcheck::-webkit-input-placeholder { color: #C4C4C4!important;}
+    input.inputcheck:-moz-placeholder {  color: #C4C4C4!important; }
+    input.inputcheck:-ms-input-placeholder {  color:#C4C4C4!important;}
+  }
+}
+
+// Sponsor Details css End
+// Select Plans css
+.mat-radio-button{ display: block;}
+.diamond-txt{
+  li{ font-size: 13px; font-weight: 600; margin-bottom: 5px;
+    span{ color: var(--primary-color); font-size: 15px; font-weight: 600; }
+    i{  font-size: 13px; font-weight: 100; font-style: normal; }
+  }
+  li:last-child{ margin-bottom: 0px; }
+}
+.enteramount{ letter-spacing: 1px; background: #f5f5f5; color: #C4C4C4; height: 56px; padding: 0px 20px; width: 100%; border-radius: 10px; font-size: 13px; font-weight: 600; margin-top: 10px;  }
+input.enteramount::-webkit-input-placeholder { color: #C4C4C4!important; letter-spacing: 1px;}
+input.enteramount:-moz-placeholder {  color: #C4C4C4!important; letter-spacing: 1px; }
+input.enteramount:-ms-input-placeholder {  color:#C4C4C4!important;letter-spacing: 1px;}
+.marbottomdiamond{
+  .row{ margin-bottom: 20px; }
+}
+.borcard{ border: 1px solid #666; display: block; border-radius: 10px; margin: 0px 29px 0 14px; padding: 15px 0px;}
+// Select Plans css End

@@ -1,0 +1,17 @@
+<div class="submain">
+  <span> <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}"></span>
+  <div class="box">
+    <h3> Subscribe</h3>
+    <form >
+      <textarea  placeholder="Enter Message Here" class="textarea" [(ngModel)]="reason"  [ngModelOptions]="{standalone: true}"></textarea>
+
+      <div class="savebtn">
+        <button  (click)="submit()"> Save </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+

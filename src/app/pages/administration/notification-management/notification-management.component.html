@@ -1,0 +1,220 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event new-dashboard notifications-no-paid">
+    <div class="title-news">
+      Notification Management
+    </div>
+    <div class="tab-main">
+      <mat-tab-group>
+        <!-- <mat-tab label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Dashboard</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-newsletter-dashboard  *ngIf="chapterId != ''"  [save]="dashboardSubject"></app-newsletter-dashboard>
+        </mat-tab> -->
+        <mat-tab label="notification-list">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>Notifications</span>
+              </li>
+            </ul>
+          </ng-template>
+          <!-- <app-notification-list></app-notification-list> -->
+          <app-notification-list [(notificationDetail)]="reqDataPerId" (detailIdChange)="getNotificationId()"
+            [reqData]="reqData" [(scheduleDate)]="scheduleDate"></app-notification-list>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="addbtnright">
+        <button class="addanother" [routerLink]="'/management/create-notification'">+ Notification</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notification View Modal -->
+<i id="openModel" data-toggle="modal" data-target="#viewDetailModal"></i>
+<div class="modal right fade performance-mod notification-rightdemo" id="viewDetailModal" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content padd-area">
+      <div class="modal-header  ">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <i>{{this.notificationSubject}}</i>
+          <p><i class="fa fa-clock-o" aria-hidden="true"></i> Sent on : {{scheduleDate | date : "MMM dd, yyyy hh:mm a"}}</p>
+        </h5>
+        <button type="button" class="close" (click)="modelHide()"  data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container leftarrow">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- tabs -->
+        <div class="tabsection grid-card-box modleperformance">
+          <mat-tab-group (selectedTabChange)="changeTabForDetail($event.index)">
+            <!-- =========================== Dashboard ================================ -->
+            <mat-tab label="Viewed by({{this.notificationDetail['totalElements']}})">
+              <ng-template>
+                Viewed by({{this.notificationDetail['totalElements']}})
+              </ng-template>
+              <div class="searchfilter notificationfilter searchnotification">
+                <div class="padd-area sponsorsearch">
+                  <div class="main-search-top">
+                  <div class="searchmember searchsponsor">
+                    <mat-form-field class="example-full-width map-url searchform">
+                      <mat-label> Search Here..</mat-label>
+                      <input (change)="getSerchaViewUser($event.target.value)" autocomplete="off" [(ngModel)]="search" matInput type="text">
+                    </mat-form-field>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="notificationtable">
+                <table class="tab-sent charector-mem">
+                  <tr class="paddbor" *ngFor="let member of notificationDetail?.content">
+                    <td>
+                      <span>
+
+                          <div *ngIf="member['profileShow'] == true" class="charector-mem imagethumb"> <img alt="" src="{{member['profileUrl']}}"> </div>
+                          <div *ngIf="member['profileShow'] == false" class="charector-mem">
+                            <i>{{member['profileUrl']}}</i>
+                          </div>
+                        {{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}} <br>
+                      </span>
+                    </td>
+                    <td><span>{{member['email']}}</span></td>
+                    <td><span>{{member['phone']}}</span></td>
+                    <td>
+                      <span class="icon-village newicon" *ngIf="member['country'] && member['city']">{{member['city']}}
+                        <b *ngIf="member['country']">| {{member['country']}}</b>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="pegination-main totalPosition">
+                <ul>
+                  <li>
+                    <button (click)="pagination('current','user',0)" [disabled]="notificationDetail['first'] == true"
+                      class="next">First
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('prev','user')" [disabled]="notificationDetail['first'] == true"
+                      class="arrow">
+                      <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li (click)="pagination('current','user',i)" *ngFor="let i of totalPagesPerId"
+                    [ngClass]="reqDataPerId.page.pageNumber == i ?  'blue-peg' : ''">
+                    <button class="numeric">{{i + 1}}</button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('next','user')" [disabled]="notificationDetail['last'] == true"
+                      class="arrow">
+                      <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('current','user',(notificationDetail['totalPages']-1))"
+                      [disabled]="notificationDetail['last'] == true" class="next">Last
+                    </button>
+                  </li>
+                </ul>
+                <div class="totalShow"><span>Total :</span> {{notificationDetail['totalElements']}}</div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Sent to({{this.notificationSentDetail['totalElements']}})">
+              <ng-template>
+                Sent to({{this.notificationSentDetail['totalElements']}})
+              </ng-template>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="searchfilter notificationfilter searchnotification">
+                    <div class="padd-area sponsorsearch">
+                      <div class="main-search-top">
+                        <div class="searchmember searchsponsor">
+                          <mat-form-field class="example-full-width map-url searchform">
+                            <mat-label> Search Here..</mat-label>
+                            <input (change)="getSerchaSendUser($event.target.value)" autocomplete="off" [(ngModel)]="search" matInput type="text">
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <table class="tab-sent charector-mem">
+                <tr class="paddbor" *ngFor="let member of notificationSentDetail?.content">
+                  <td>
+                    <span>
+                      <div *ngIf="member['profileShow'] == true" class="charector-mem imagethumb">
+                        <img alt="" src="{{member['profileUrl']}}">
+                      </div>
+                      <div *ngIf="member['profileShow'] == false" class="charector-mem">
+                        <i>{{member['profileUrl']}}</i>
+                      </div>
+                      {{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}} <br>
+                    </span>
+                  </td>
+                  <td><span>{{member['email']}}</span></td>
+                  <td><span>{{member['phone']}}</span></td>
+                  <td>
+                    <span *ngIf="member['country'] && member['city']">{{member['city']}}
+                      <b *ngIf="member['country']">| {{member['country']}}</b>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+              <div class="pegination-main">
+                <ul>
+                  <li>
+                    <button (click)="pagination('current','user',0)"
+                      [disabled]="notificationSentDetail['first'] == true" class="next">First
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('prev','user')" [disabled]="notificationSentDetail['first'] == true"
+                      class="arrow">
+                      <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li (click)="pagination('current','user',i)" *ngFor="let i of totalPageForSent"
+                    [ngClass]="reqDataPerId.page.pageNumber == i ?  'blue-peg' : ''">
+                    <button class="numeric">{{i + 1}}</button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('next','user')" [disabled]="notificationSentDetail['last'] == true"
+                      class="arrow">
+                      <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('current','user',(notificationSentDetail['totalPages']-1))"
+                      [disabled]="notificationSentDetail['last'] == true" class="next">Last
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </mat-tab>
+            <mat-tab label="Preview">
+              <ng-template>
+                Preview
+              </ng-template>
+              <i [innerHTML]="notificationMessage" class="previewtest"></i>
+            </mat-tab>
+          </mat-tab-group>
+          <!-- tabs -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->

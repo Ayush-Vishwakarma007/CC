@@ -1,0 +1,88 @@
+:root{
+    --primary-color : #ca0009;
+    --secondary-color :#283279;
+    --secondary-color2: #344A5F;
+    --black-light-color: #202126;
+    --black-dark-color: #202020;
+    --greay: #717171;
+    --greay-text: #6D6D6D;
+    --red-light-bg: #FCF5F5;
+    --greay-card-head: #EFEFEF;
+    --blue-dark: #283279;
+    --gray-dark: #666;
+    --gray-light: #e5e5e5;
+    --red-light-main: #edc9c9;
+    --blue-light: #eaebf7;
+    --blue-dark2: #afc6db;
+    --gray-dark2: #e5e5e5;
+    --gray75: #757575;
+    --gray-e7: #e7e7e7;
+    --font20: 20px;
+    --font13: 13px;
+    --heandingpage: 30px;
+    --green-dark: #22B573;
+    --green-light: #c6e1dc;
+    --red-dark: #CE495C;
+    --red-light: #f0c8ce;
+    --tomatored: #F25C66;
+
+  }
+  $primary-color: var(--primary-color);
+  $secondary-color: var(--secondary-color);
+  $secondary-color2:var(--secondary-color2);
+  $black-light-color: var(--black-light-color);
+  $black-dark-color:  var(--black-dark-color);
+  $greay: var(--greay);
+  $black: #000000;
+  $afafaf: #AFAFAF;
+  $tr-hvr: #f9f9f9;
+  $green: #11939A;
+  $active-btn: #3AA76D;
+  $active: #1EBA62;
+  $icon-gray: #AFAFAF;
+  $red: #c62c47;
+  $white: #ffffff;
+  $white-light: #adadad;
+  $bg-light: #F5F6FA;
+  $orenge: #ED6E33;
+  $gray-light: #9A9A9A;
+  $greay-text: var(--greay-text);
+  $red-light-bg: var(--red-light-bg);
+  $red-light-main: var(--gred-light-main);
+  $greay-card-head:var(--greay-card-head);
+  $blue-dark: var(--secondary-color);
+  $gray-dark: var(--gray-dark);
+  $gray-light:var(--gray-light);
+  $green-dark:var(--green-dark);
+  $red-light-bg:var(--gred-light-bg);
+  $red-light-main: var(--red-light-main);
+  $blue-light: var(--blue-light);
+  $blue-dark2: var(--blue-dark2);
+  $gray-dark2: var(--gray-dark2);
+  $gray75: var(--gray75);
+  $gray-e7:var(--gray-e7);
+  $green-dark:var(--green-dark);
+  $green-light:var(--green-light);
+  $red-dark:var(--red-dark);
+  $red-light: var(--red-light);
+  $tomatored: var(--tomatored);
+
+
+  $font20: var(--font20);
+  $font13: var(--font13);
+  $heandingpage: var(--heandingpage);
+
+//   top heading css
+.main-heading-top{ display: block; margin-top: 30px; position: relative; padding-bottom: 7px;
+    ::before{ width: 100px; height: 2px; background: #797979; position: absolute; left: 64px; bottom: 0px; content: "";}
+    p{ display: block; font-size: 25px; margin: 0px; color: var(--primary-color); font-family: "Montserrat", sans-serif; font-weight:600; letter-spacing: 2.1px;
+        button{ background: transparent; border: 0px; outline: none; margin:0px 11px 0px 20px; width: 24px;
+            img{ }
+        }
+    }
+    span{ display: block; font-size: 11px; margin: 0px; color: #404040; font-family: "Montserrat", sans-serif; padding-left: 64px; }
+}
+//   Top Heading Css End
+.contentarea-checkout{ display: block; padding:0px 0 0 49px; }
+
+

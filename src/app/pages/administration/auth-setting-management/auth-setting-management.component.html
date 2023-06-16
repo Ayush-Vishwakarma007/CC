@@ -1,0 +1,274 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'admin.authSetting.title' | translate}}
+          <span>{{'admin.authSetting.text' | translate}} </span>
+        </div>
+      </div>
+    </h1>
+    <form [formGroup]="authForm" class="example-form" id="authForm">
+      <!-- General Setting -->
+      <ng-container>
+        <div class="main-section-membership">
+          <h5 class="edit-section">
+            {{'admin.authSetting.generalSetting.title' | translate}}
+          </h5>
+          <div class="bluenumber">
+            <div class="bluebox">
+              <span>1</span>
+            </div>
+            <div class="right-member marzero">
+              <div class="row martop-date">
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>{{'admin.authSetting.generalSetting.contact.lbl.text' | translate}}</mat-label>
+                  <ui-switch formControlName="textVerification" [defaultBgColor]="'#a2a2a2'"
+                    [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>{{'admin.authSetting.generalSetting.email.lbl.text' | translate}}</mat-label>
+                  <ui-switch formControlName="emailVerification" [defaultBgColor]="'#a2a2a2'"
+                             [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+                </div>
+              </div>
+              <div class="row martop-date">
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>{{'admin.authSetting.generalSetting.guest.lbl.text' | translate}}</mat-label>
+                  <ui-switch formControlName="allowGuest" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'"
+                    class="pull-right"></ui-switch>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'admin.authSetting.generalSetting.otp.length.lbl.text' | translate}}</mat-label>
+                    <input formControlName="tokenLength" matInput (keypress)="numberOnly($event)" type="text"
+                           autocomplete="off">
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && authForm.controls.tokenLength.errors ">
+                    <span *ngIf="isSubmit && authForm.controls.tokenLength.errors " class="valid-msg">OTP Length is
+                      Required</span>
+                  </div>
+                </div>
+
+              </div>
+
+              </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- General Setting -->
+      <!-- Memebership Setting -->
+      <ng-container>
+        <div class="main-section-membership">
+          <h5 class="edit-section">
+            Membership Settings
+          </h5>
+          <div class="bluenumber">
+            <div class="bluebox">
+              <span>2</span>
+            </div>
+            <div class="right-member marzero">
+              <div class="row martop-date">
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>{{'admin.authSetting.generalSetting.membership.lbl.text' | translate}}</mat-label>
+                  <ui-switch formControlName="memberAdminApprovalRequired" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <mat-label>Global membership number</mat-label>
+                  <ui-switch formControlName ="globalNumberGeneration" (change)="onIsFollowUpChanged($event)" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+                </div>
+              </div>
+              <div class="row martop-date">
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>Sequential Number</mat-label>
+                    <input formControlName="sequentialGenerationNumber" matInput (keypress)="numberOnly($event)" type="text" autocomplete="off">
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && authForm.controls.sequentialGenerationNumber.errors">
+                    <span *ngIf="isSubmit && authForm.controls.sequentialGenerationNumber.errors" class="valid-msg">Sequential Number is Required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width ">
+                    <mat-label>{{'admin.authSetting.generalSetting.member.length.lbl.text' | translate}}</mat-label>
+                    <input formControlName="memberNumberLength" matInput (keypress)="numberOnly($event)" type="text" autocomplete="off">
+                  </mat-form-field>
+                  <div *ngIf="isSubmit && authForm.controls.memberNumberLength.errors">
+                    <span *ngIf="isSubmit && authForm.controls.memberNumberLength.errors" class="valid-msg"> Member Number Length is Required </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row martop-date" *ngIf="divHideShow==true">
+                <div class="row row-eq-height noequalmember">
+                  <div class="col-md-7 col-sm-6">
+                    <div class="paddleft60">
+                      <div *ngFor="let option of fieldList;let i = index" class="row">
+                        <div class="col-md-12">
+                          <div class="prefixheading">
+                            Field Type
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Select Field</mat-label>
+                            <mat-select (selectionChange)="getPreviewAll()" [(ngModel)]="option.generationType"
+                                        [ngModelOptions]="{standalone: true}">
+                              <mat-label>Select Field</mat-label>
+                              <mat-option *ngFor="let type of generationTypeList;let i = index"
+                                          value="{{type.value}}">{{type.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <mat-form-field *ngIf="option.generationType == 'NUMBER'" class="example-full-width">
+                            <mat-label>Field Type</mat-label>
+                            <mat-select (selectionChange)="getPreviewAll()" [(ngModel)]="option.value"
+                                        [ngModelOptions]="{standalone: true}">
+                              <mat-label>Select Type</mat-label>
+                              <mat-option *ngFor="let type of generationMethodList;let i = index"
+                                          value="{{type.value}}">{{type.name}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field *ngIf="option.generationType == 'SEPARATOR'" class="example-full-width">
+                            <mat-label>Select Separator</mat-label>
+                            <mat-select (selectionChange)="getPreviewAll()" [(ngModel)]="option.value"
+                                        [ngModelOptions]="{standalone: true}">
+                              <mat-option *ngFor="let type of separators;let i = index" value="{{type}}">{{type}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <mat-form-field *ngIf="option.generationType == 'PREFIX'" class="example-full-width">
+                            <mat-label>Add String</mat-label>
+                            <input (change)="getPreviewAll()" [(ngModel)]="option.value" [ngModelOptions]="{standalone: true}"
+                                   matInput type="text">
+                          </mat-form-field>
+                        </div>
+                        <div class="removeBtn col-md-6 col-sm-6">
+                          <mat-form-field
+                            *ngIf="option.generationType == 'NUMBER' && (option.value == 'RANDOM' || option.value == 'SEQUENTIAL') "
+                            class="example-full-width">
+                            <mat-label>Add Length</mat-label>
+                            <input (change)="getPreviewAll()" (keypress)="numberOnly($event)" [(ngModel)]="option.length"
+                                   [ngModelOptions]="{standalone: true}" matInput type="text">
+                          </mat-form-field>
+                        </div>
+                        <div class="removeBtn col-md-1 col-sm-1">
+                          <button (click)="removeField(i);getPreviewAll()" *ngIf="i !=0">
+                            <i class="icon-delete-blue newicon"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 martop-date marginbottnaddbutton">
+                          <button (click)="addDynamicField()" class="save-changes add-ew-field" title="Add New Field">Add New Field
+                          </button>
+                          <!--          <mat-form-field class="example-full-width">-->
+                          <!--            <mat-label>Add New Field </mat-label>-->
+                          <!--            <mat-select>-->
+                          <!--              <mat-option value="">Add New Field </mat-option>-->
+                          <!--            </mat-select>-->
+                          <!--          </mat-form-field>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="borderright">
+                      <div class="previewstring">
+                        Preview
+                      </div>
+                      <div class="lmpreview">
+                        {{samplePreview}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Memebership Setting -->
+      <!-- Additional Setting -->
+      <ng-container>
+        <div class="main-section-membership">
+          <h5 class="edit-section">
+            {{'admin.authSetting.additionalSetting.title' | translate}}
+          </h5>
+          <div class="bluenumber">
+            <div class="bluebox">
+              <span>3</span>
+            </div>
+            <div class="right-member">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <div *ngFor="let list of rejectionReasonList;let i = index" class="row martop-date">
+                    <div class="col-xs-10 col-md-10 col-sm-10">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>{{'admin.authSetting.additionalSetting.rejection.lbl.text' | translate}}</mat-label>
+                        <input [(ngModel)]="list.reason" [ngModelOptions]="{standalone: true}" matInput type="text" (click)="clickEvent($event)">
+                      </mat-form-field>
+                    </div>
+                    <div class="removeBtn col-xs-2 col-md-2 col-sm-2">
+                      <button (click)="removeLastReason(i)" *ngIf="i !=0">
+                        <i class="icon-delete-blue newicon"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row martop-date">
+                    <div class="col-md-11 col-sm-10">
+                      <button (click)="addReason()" class="addsection">
+                       <strong> + </strong> {{'admin.authSetting.additionalSetting.rejection.add.btn.text' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div *ngFor="let list of bccList;let i = index" class="row martop-date">
+                    <div class="col-xs-10 col-md-10 col-sm-10">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>{{'admin.authSetting.additionalSetting.bcc.lbl.text' | translate}}</mat-label>
+                        <input (change)="emailValidation($event.target.value)" [(ngModel)]="list.bcc"
+                          [ngModelOptions]="{standalone: true}" matInput type="text" (click)="clickEvent($event)">
+                      </mat-form-field>
+                    </div>
+                    <div class="removeBtn col-xs-2 col-md-2 col-sm-2">
+                      <button (click)="removeLastBCC(i)" *ngIf="i !=0">
+                        <i class="icon-delete-blue newicon"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row martop-date">
+                    <div class="col-md-11 col-sm-10">
+                      <button (click)="addBCC()" class="addsection">
+                        <strong> + </strong> {{'admin.authSetting.additionalSetting.bcc.add.btn.text' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Additional Setting -->
+
+    </form>
+
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+          <button (click)="submit()" class="save-changes">
+            {{'admin.authSetting.save.btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

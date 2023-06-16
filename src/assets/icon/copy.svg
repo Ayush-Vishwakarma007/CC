@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10.507" height="10.507" viewBox="0 0 10.507 10.507">
+  <g id="Copy" transform="translate(0.1 0.1)">
+    <g id="Group_6762" data-name="Group 6762" transform="translate(0 1.841)">
+      <g id="Group_6761" data-name="Group 6761">
+        <path id="Path_6347" data-name="Path 6347" d="M7.362,85.333H1.1a1.1,1.1,0,0,0-1.1,1.1V92.7a1.1,1.1,0,0,0,1.1,1.1H7.362a1.1,1.1,0,0,0,1.1-1.1V86.437A1.1,1.1,0,0,0,7.362,85.333ZM7.73,92.7a.368.368,0,0,1-.368.368H1.1A.368.368,0,0,1,.736,92.7V86.437a.368.368,0,0,1,.368-.368H7.362a.368.368,0,0,1,.368.368Z" transform="translate(0 -85.333)" fill="#fff" stroke="#fff" stroke-width="0.2"/>
+      </g>
+    </g>
+    <g id="Group_6764" data-name="Group 6764" transform="translate(1.472)">
+      <g id="Group_6763" data-name="Group 6763">
+        <path id="Path_6348" data-name="Path 6348" d="M76,0H69.371a1.1,1.1,0,0,0-1.1,1.1A.368.368,0,1,0,69,1.1a.368.368,0,0,1,.368-.368H76a.368.368,0,0,1,.368.368V7.73A.368.368,0,0,1,76,8.1a.368.368,0,0,0,0,.736,1.1,1.1,0,0,0,1.1-1.1V1.1A1.1,1.1,0,0,0,76,0Z" transform="translate(-68.267)" fill="#fff" stroke="#fff" stroke-width="0.2"/>
+      </g>
+    </g>
+  </g>
+</svg>

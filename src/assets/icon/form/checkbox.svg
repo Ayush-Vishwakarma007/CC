@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.604" height="16.839" viewBox="0 0 16.604 16.839">
+  <g id="Group_6555" data-name="Group 6555" transform="translate(0.1)">
+    <g id="_x31_030_x2C__Box_x2C__check_box_x2C__unchecked" transform="translate(0 1.53)">
+      <path id="Path_6231" data-name="Path 6231" d="M98.525,86H88.684A2.687,2.687,0,0,0,86,88.684v9.841a2.687,2.687,0,0,0,2.684,2.684h9.841a2.687,2.687,0,0,0,2.684-2.684V88.684A2.687,2.687,0,0,0,98.525,86Zm1.789,12.525a1.791,1.791,0,0,1-1.789,1.789H88.684a1.791,1.791,0,0,1-1.789-1.789V88.684a1.791,1.791,0,0,1,1.789-1.789h9.841a1.791,1.791,0,0,1,1.789,1.789Z" transform="translate(-86 -86)" stroke="#000" stroke-width="0.2"/>
+    </g>
+    <rect id="Rectangle_1911" data-name="Rectangle 1911" width="8" height="8" transform="translate(8.504)" fill="#fff"/>
+    <path id="Shape" d="M69.459,21.693a.706.706,0,0,1,0,1l-7.995,7.995a.693.693,0,0,1-1.016-.018l-3.069-3.291a.707.707,0,0,1,.035-1,.7.7,0,0,1,1,.035l2.57,2.755,7.477-7.477a.707.707,0,0,1,1,0Z" transform="translate(-53.85 -19.697)"/>
+  </g>
+</svg>

@@ -1,0 +1,253 @@
+<div class="padd-area foodpage">
+  <!-- top Search Section -->
+
+  <div class="main-search-top">
+    <div class="grid-button">
+      <button (click)="changeList('card')"  [ngClass]="listType == 'card' ? 'active' : ''">
+        <i class="icon-squares-b newicon"></i>
+      </button>
+      <button (click)="changeList('table')"  [ngClass]="listType == 'table' ? 'active' : ''">
+        <i class="icon-menu-w newicon"></i>
+      </button>
+    </div>
+    <div class="grid-by-user">
+      <button  (click)="changeFood('food')" [ngClass]="foodType == 'food' ? 'active' : ''">
+        <svg id="Group_53693" data-name="Group 53693" xmlns="http://www.w3.org/2000/svg" width="21.721" height="21.721" viewBox="0 0 21.721 21.721">
+          <g id="Group_53694" data-name="Group 53694">
+            <g id="Group_53693-2" data-name="Group 53693">
+              <path id="Path_44162" data-name="Path 44162" d="M38.986,29.813A9.153,9.153,0,0,0,35.043,47.23l.287-5.54s-.539-.177-.657-.235c-1.144-.5-1.975-1.987-1.975-3.913,0-2.1,1.629-3.911,3.2-3.926h.006c1.576.015,3.205,1.825,3.205,3.926,0,1.925-.832,3.408-1.973,3.913l-.663.241.32,6.159a8.979,8.979,0,0,0,5.1-.206l.284-5.489A2.943,2.943,0,0,1,40.4,40.923c-.5-.742.381-7.307.381-7.307h.57v6.16h.566v-6.16h.619v6.161H43.1V33.618h.642v6.161h.565V33.618h.437s.876,6.565.381,7.307a2.951,2.951,0,0,1-1.766,1.234l-.025.009.247,4.722a9.154,9.154,0,0,0-4.593-17.076Z" transform="translate(-28.124 -28.112)" fill="#e27707"/>
+              <path id="Path_44163" data-name="Path 44163" d="M91.517,142.194a2.634,2.634,0,0,1,.079-.263.12.12,0,0,0-.067-.134.109.109,0,0,0-.144.031s-.063.1-.153.247a2.654,2.654,0,0,0-.258.582,4.816,4.816,0,0,0-.177.845,4.03,4.03,0,0,0-.013.49,2.319,2.319,0,0,0,.094.519,3.362,3.362,0,0,0,.819,1.5,2.818,2.818,0,0,0,.438.355l.041.029.073.046a.84.84,0,0,0,.176.073.106.106,0,0,0,.12-.05.107.107,0,0,0-.035-.127,1.146,1.146,0,0,1-.13-.143,2.588,2.588,0,0,1-.168-.23c-.045-.065-.1-.139-.147-.21a7.412,7.412,0,0,1-.578-1.423,1.893,1.893,0,0,1-.081-.392,4,4,0,0,1-.023-.419,5.53,5.53,0,0,1,.034-.777A3.034,3.034,0,0,1,91.517,142.194Z" transform="translate(-85.602 -133.694)" fill="#e27707"/>
+              <path id="Path_44164" data-name="Path 44164" d="M10.861,0a10.861,10.861,0,1,0,10.86,10.86A10.874,10.874,0,0,0,10.861,0Zm0,20.911A10.051,10.051,0,1,1,20.912,10.86,10.063,10.063,0,0,1,10.861,20.911Z" fill="#e27707"/>
+            </g>
+          </g>
+        </svg>
+        
+        By Food
+      </button>
+      <button (click)="changeFood('user')"  [ngClass]="foodType == 'user' ? 'active' : ''">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19.418" height="16.472" viewBox="0 0 19.418 16.472">
+          <g id="Group_53695" data-name="Group 53695" transform="translate(0 -38.84)">
+            <g id="Group_53696" data-name="Group 53696" transform="translate(15.113 47.733)">
+              <g id="Group_53695-2" data-name="Group 53695" transform="translate(0 0)">
+                <path id="Path_44165" data-name="Path 44165" d="M400,273.32h-1.5a3.908,3.908,0,0,1,.237,1.343v5.675a1.674,1.674,0,0,1-.1.561h2.483a1.684,1.684,0,0,0,1.682-1.682v-3.094A2.806,2.806,0,0,0,400,273.32Z" transform="translate(-398.494 -273.32)" fill="#e27707"/>
+              </g>
+            </g>
+            <g id="Group_53698" data-name="Group 53698" transform="translate(0 47.733)">
+              <g id="Group_53697" data-name="Group 53697" transform="translate(0 0)">
+                <path id="Path_44166" data-name="Path 44166" d="M4.068,274.664a3.906,3.906,0,0,1,.237-1.343H2.8a2.806,2.806,0,0,0-2.8,2.8v3.094A1.684,1.684,0,0,0,1.682,280.9H4.164a1.674,1.674,0,0,1-.1-.561Z" transform="translate(0 -273.321)" fill="#e27707"/>
+              </g>
+            </g>
+            <g id="Group_53700" data-name="Group 53700" transform="translate(5.189 46.272)">
+              <g id="Group_53699" data-name="Group 53699" transform="translate(0 0)">
+                <path id="Path_44167" data-name="Path 44167" d="M143.065,234.815h-3.433a2.806,2.806,0,0,0-2.8,2.8v5.675a.561.561,0,0,0,.561.561h7.918a.561.561,0,0,0,.561-.561v-5.675A2.806,2.806,0,0,0,143.065,234.815Z" transform="translate(-136.829 -234.815)" fill="#e27707"/>
+              </g>
+            </g>
+            <g id="Group_53702" data-name="Group 53702" transform="translate(6.338 38.84)">
+              <g id="Group_53701" data-name="Group 53701" transform="translate(0 0)">
+                <path id="Path_44168" data-name="Path 44168" d="M170.485,38.84a3.37,3.37,0,1,0,3.371,3.371A3.375,3.375,0,0,0,170.485,38.84Z" transform="translate(-167.114 -38.84)" fill="#e27707"/>
+              </g>
+            </g>
+            <g id="Group_53704" data-name="Group 53704" transform="translate(1.268 41.982)">
+              <g id="Group_53703" data-name="Group 53703" transform="translate(0 0)">
+                <path id="Path_44169" data-name="Path 44169" d="M35.964,121.689a2.52,2.52,0,1,0,2.521,2.521A2.524,2.524,0,0,0,35.964,121.689Z" transform="translate(-33.443 -121.689)" fill="#e27707"/>
+              </g>
+            </g>
+            <g id="Group_53706" data-name="Group 53706" transform="translate(13.107 41.982)">
+              <g id="Group_53705" data-name="Group 53705" transform="translate(0 0)">
+                <path id="Path_44170" data-name="Path 44170" d="M348.128,121.689a2.521,2.521,0,1,0,2.521,2.521A2.524,2.524,0,0,0,348.128,121.689Z" transform="translate(-345.607 -121.689)" fill="#e27707"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+        
+        By Users
+      </button>
+    </div>
+    <div class="searchright" *ngIf="(listType == 'table'&& foodType=='user')||(listType == 'card'&& foodType=='user')">
+      <div class="searchmember">
+        <mat-form-field class="example-full-width map-url searchform">
+          <mat-label> Search here...</mat-label>
+          <input  [(ngModel)]="search" autocomplete="off" matInput type="text">
+        </mat-form-field>
+        <button type="button" class="search-button" (click)="listofFoodByUser()"> Search </button>
+      </div>
+      <div class="top-export-button-main exportfood">
+        <button>
+          <img alt="" src="assets/icon/upload.svg"> Export
+        </button>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <!-- top Search Section -->
+  
+
+  <!-- *ngIf="listType == 'card'" -->
+  <div >
+  <div  class="row foodcard" *ngIf="listType == 'card' &&  this.foodType=='food'">
+    <div class="col-lg-4" *ngFor="let food of foodList">
+      <div class="grid-card-box">
+        <div class="topbutton-thumb">
+          <div class="charector-mem foodimage">
+            <img alt="" src="assets/icon/food-icon.svg">
+          </div>
+        </div>
+        <h4>{{food.foodName}}</h4>
+        <p class="member-number pricefood"> Price:
+          <span >${{food.price}}</span>
+        </p>
+        <p class="member-number pricefood"> Qty:
+          <span >{{food.totalCount}}</span>
+        </p>
+        <ul class="total">
+          <li> Total  </li>
+          <li> ${{food.totalPrice}} </li>
+        </ul>
+      </div>
+    </div>
+  
+  
+  
+   
+ 
+   
+  
+  
+  </div>
+  <div  class="foodcard" *ngIf="listType == 'card' &&  this.foodType=='user' ">
+    <div id="accordion" >
+      
+      <div class="card" *ngFor="let list of foodListUser?.content let i=index">
+        
+        <div class="card-header" id="headingOne" >
+          <h5 class="mb-0">
+            
+            <button class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#collapseOne'+i" aria-expanded="false" aria-controls="collapseOne">
+              <ul class="accordiantxt">
+                <li>
+                  <span *ngIf="list?.mainUserInfo?.profilePictureUrl==null ||list?.mainUserInfo?.profilePictureUrl==''"> 
+                     {{list?.mainUserInfo?.firstName[0]}}{{list?.mainUserInfo?.lastName[0]}}  
+                  </span>   
+                  <img *ngIf="list?.mainUserInfo?.profilePictureUrl!=null && list?.mainUserInfo?.profilePictureUrl!=''" src="{{list?.mainUserInfo?.profilePictureUrl}}"> 
+                  {{list?.mainUserInfo?.firstName}} {{list?.mainUserInfo?.lastName}}
+                </li>
+                <li>
+                  ${{list?.foodTotalPrice}}
+                </li>
+              </ul>
+            </button>
+          </h5>
+        </div>
+        
+        <div id="collapseOne{{i}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion" >
+          <div class="card-body"  *ngFor="let list1 of list?.selectedFoods">
+            <ul class="foodcategories">
+              <li> 
+                <p>{{list1?.eventFood?.foodName}}</p>
+                <span>
+                  Price: <strong class="borrightfood"> ${{list1?.count}}</strong> Qty: <strong> ${{list1?.eventFood?.price}}</strong>
+                </span>
+              </li>
+              <li> ${{list1?.foodTotal}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+</div>
+
+  <div  class="new-member-tab" *ngIf="listType == 'table'&& foodType == 'food'">
+      <table>
+        <tr>
+          <th> Food Name</th>
+          <th>Quantity </th>
+          <th>Price</th>
+          <th width="80">Total</th>
+        </tr>
+        <tr  *ngFor="let food of foodList">
+          <td>{{food.foodName}}</td>
+          <td>{{food.totalCount}}</td>
+          <td>${{food.price}}</td>
+          <td>${{food.totalPrice}}</td>
+        </tr>
+      </table>
+  </div>
+
+  <div  class="new-member-tab" *ngIf="foodType == 'user' && listType=='table'">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Food Name</th>
+        <th width="100">Quantity </th>
+        <th width="100">Price</th>
+        <th width="80">Total</th>
+      </tr>
+      <tr *ngFor="let list of foodListUser?.content let i=index">
+        <td> 
+          <ul class="profiletxtfood">
+            <li>
+              <span *ngIf="list?.mainUserInfo?.profilePictureUrl==null ||list?.mainUserInfo?.profilePictureUrl==''"> 
+                {{list?.mainUserInfo?.firstName[0]}}{{list?.mainUserInfo?.lastName[0]}}  </span>   
+                <span *ngIf="list?.mainUserInfo?.profilePictureUrl!=null && list?.mainUserInfo?.profilePictureUrl!=''">  <img src="{{list?.mainUserInfo?.profilePictureUrl}}"> </span>
+
+            </li>
+            <li>
+              {{list?.mainUserInfo?.firstName}} {{list?.mainUserInfo?.lastName}}
+              <i>${{list?.foodTotalPrice}}</i>
+            </li>
+          </ul>
+          </td>
+          <td colspan="4">
+            <table *ngFor="let list1 of list?.selectedFoods" class="noborderfood">
+              <tr>
+                  <td>{{list1?.eventFood?.foodName}}</td>
+                  <td width="100"> {{list1?.count}}</td>
+                  <td width="100">${{list1?.eventFood?.price}}</td>
+                  <td width="80">${{list1?.foodTotal}}</td>
+              </tr>
+            </table>
+
+          </td>
+      </tr>
+    </table>
+</div>
+<div class="pegination-main" *ngIf="listType=='table' && foodType=='user'" >
+  <ul class="pegination-userlog">
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="foodListUser['first'] == true"
+              class="next">
+        First
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="foodListUser['first'] == true"
+              class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+        [ngClass]="reqDataUser.page.pageNumber == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="foodListUser['last'] == true"
+              class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current','user',(foodListUser['totalPages']-1))"
+              [disabled]="foodListUser['last'] == true" class="next">Last
+      </button>
+    </li>
+
+  </ul>
+  <div class="totalShow userlogtotal"><span>Total :</span> {{foodListUser['totalElements']}}</div>
+</div>
+
+</div>
+
+

@@ -1,0 +1,517 @@
+<div class=" common-page eventdetailpage">
+  <div class="event-inner-paid">
+    <!-- <div *ngIf="eventDetail?.bannerPicture" [style.backgroundImage]="'url('+eventDetail?.bannerPicture+')'"
+         class="blurimages"></div>
+    <div *ngIf="!eventDetail?.bannerPicture" [style.backgroundImage]="'url('+eventDetail?.profilePicture+')'"
+         class="blurimages"></div> -->
+    <div class="sub-main">
+      <div class="breadkrum">
+        <!--        Home / Tradeshow / Car Tradeshow-->
+      </div>
+      <!-- main content -->
+      <div class="profiletop event-detail-pad">
+        <div class="row">
+          <div class="image-upl-slider event-datailslider event-detail-slider slider-img">
+            <carousel>
+              <slide *ngFor="let  image of imageArray; index as i">
+
+                <div [style.backgroundImage]="'url('+image['thumb'] + ')' " class="eventblur" style="background: url()">
+                </div>
+
+               <!-- <img *ngIf="image['thumb'].indexOf(image['thumb']) !== -1"  class="gallery-img" [lightbox]="i" [gallery]="'lightBox'" [src]="image['thumb'] | eventImages">
+                      <div   *ngIf=" image['thumb'].includes('http')" >
+                        <img  class="gallery-img" [lightbox]="i" [gallery]="'lightBox'" [src]="image['thumb'] "></div>-->
+              <img class="gallery-img" data-target="#onlinePayment2" data-toggle="modal" src="{{image.thumb}}">
+              </slide>
+            </carousel>
+            <!-- <div (click)="goLive()" *ngIf=" eventDetail['liveStreaming'] == true || (showLive  && eventDetail['showDetail']== true  && endLive == false)" class="live-stream-now">
+              <span>Live Stream Now </span>
+              <i class="blink">Live</i>
+            </div>
+            <div (click)="goLive()" *ngIf="!showLive && eventDetail['liveStreaming'] == false && eventDetail['showDetail']== true " class="live-stream-box">
+              <p>Live Streaming Start Soon</p>
+                <ngx-countdown (onComplete)="completed()" interval="{{liveTimer}}" class="colorcount"></ngx-countdown>
+            </div> -->
+            <div (click)="goLive()"
+              *ngIf=" eventDetail['liveStreaming'] == true || (eventDetail['showLiveStreamingButton'] == true && showLive  && eventDetail['showDetail']== true  && endLive == false)"
+              class="live-stream-now">
+              <span>Live Stream Now </span>
+              <i class="blink">Live</i>
+            </div>
+            <div (click)="goLive()"
+              *ngIf="eventDetail['showCountDown'] && !showLive && eventDetail['liveStreaming'] == false && eventDetail['showDetail']== true "
+              class="live-stream-box">
+              <p>Live Streaming Start Soon</p>
+              <ngx-countdown (onComplete)="completed()" interval="{{liveTimer}}" class="colorcount"></ngx-countdown>
+            </div>
+            <!-- documents -->
+            <div *ngIf="documentArray.length != 0" class="row">
+              <div class="col-md-12">
+                <div class="aditional-info">
+                  <span>{{'event.detail.additionalInfo.document.title' | translate}}</span>
+                  <ul *ngFor="let list of documentArray; let i=index;" class="documentslist">
+                    <li>
+                      <a href="{{list.src}}" target="_blank"> Document {{i+1}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- documents -->
+          </div>
+          <div class="maineventwidth">
+            <div class="head-event">
+              <p>{{eventDetail['type']}}
+                <b *ngIf="eventDetail['venueType'] != 'ONLINE'"> | {{eventDetail?.venueTypeName}}</b>
+              </p>
+            </div>
+            <div class="col-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="heading-event-detail">
+                    <span>{{eventDetail['name']}}</span>
+                    <p *ngIf="eventDetail['venueType'] != 'ONLINE'">
+                      <a href="{{eventDetail['addressUrl']}}" target="_blank"><i aria-hidden="true"
+                          class="fa fa-map-marker"></i>
+                        {{eventDetail?.addressLine1}} | {{eventDetail?.city}} | {{eventDetail?.country}} </a>
+                    </p>
+                    <div class="row martop-date">
+                      <div class="col-md-10 col-sm-8">
+                        <div class="watchicon  fa fa-clock-o">
+                          <i>{{eventDetail?.dates}}</i> <br>
+                          <i> {{eventDetail?.times}} ( {{eventDetail['timezones']}} ) </i>
+                        </div>
+                        <div class="col-sm-12">
+                          <div *ngIf="eventDetail?.recurringEvent" class="eventdetailweekly">
+                            <b *ngIf="eventDetail?.cronScheduleRequest?.scheduleType == 'DAILY'">{{eventDetail.cronScheduleRequest?.scheduleType}}
+                              - {{'event.detail.repeaton.text' | translate}}
+                              {{eventDetail.cronScheduleRequest?.repeatCount}} {{'event.detail.repeaton.day.text' |
+                              translate}}</b>
+                            <b *ngIf="eventDetail?.cronScheduleRequest?.scheduleType == 'WEEKLY'">
+                              {{eventDetail.cronScheduleRequest?.scheduleType}}
+                              - {{'event.detail.repeaton.text' | translate}} </b> <b
+                              *ngFor="let day of eventDetail.cronScheduleRequest?.weekDays">{{day}} </b>
+                            <b
+                              *ngIf="eventDetail?.cronScheduleRequest?.scheduleType == 'MONTHLY'">{{eventDetail.cronScheduleRequest?.scheduleType}}</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-4">
+                        <ul class="price">
+                          <li>
+                            <span>{{'event.detail.eventFees.text' | translate}}</span>
+                            <b> {{eventDetail?.registrationAmount}}</b>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="datail-list-date">
+                    <button (click)="shareEvent(eventDetail?.id)" class="btn-share" data-target="#share_modal"
+                      data-toggle="modal" title="Share">
+                      <i aria-hidden="true" class="fa fa-share-alt"></i>
+                    </button>
+                    <button (click)="interestedEvent(eventDetail?.id)" *ngIf="authDetail" class="btn-bookmark">
+                      <i *ngIf="bookmarked == false" aria-hidden="true" class="fa fa-bookmark-o"></i>
+                      <i *ngIf="bookmarked== true" aria-hidden="true" class="fa fa-bookmark"></i>
+                    </button>
+                    <button *ngIf="!authDetail" [routerLink]="'/login'" class="btn-bookmark">
+                      <i aria-hidden="true" class="fa fa-bookmark-o"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <b *ngIf="eventDetail?.admin" class="detail-p" style="    padding-top: 10px;margin-bottom: 10px;">
+                    {{'event.detail.createdBy.text' | translate}}
+                    : {{eventDetail?.firstName | titlecase}} {{eventDetail?.lastName | titlecase}}</b>
+                  <p [innerHTML]="eventDetail['description']" class="detail-p">
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- <div  class="row gallerydetail">
+          <div class="col-md-12">
+            <div class="aditional-info">
+              <span>{{'event.detail.additionalInfo.otherImage.title' | translate}}</span>
+            </div>
+          </div>
+          <app-gallery-main  *ngIf="imageData.length != 0" [imageData]="imageData"></app-gallery-main>
+        </div> -->
+
+        </div>
+        <!-- main content -->
+        <div class="row" *ngIf="session_list!=0">
+          <div class="col-md-12 col-sm-12 col-xs-12 ">
+            <div class="aditional-info">
+              <span>{{'event.detail.additionalInfo.title' | translate}} </span>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <!-- session accordian -->
+        <div class="row peopledonate">
+          <div class="col-sm-12 col-md-8">
+            <div class="accordian-text session-acc">
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let list of session_list">
+                  <mat-expansion-panel-header>
+                    <ul class="usermain">
+                      <li>{{list.startDateTime | date : "MMM dd,yyyy hh:m a" }}
+                        - {{list.endDateTime | date : "MMM dd,yyyy hh:m a" }}
+                      </li>
+                      <li> {{list?.name}}</li>
+                    </ul>
+                  </mat-expansion-panel-header>
+                  <p>{{list?.description | stripHtml}}</p>
+                  <ul class="location-txt">
+                    <li class="fa fa-map-marker">
+                      <span>{{'event.detail.additionalInfo.session.eventLocation.text' | translate}}</span>
+                    </li>
+                    <li>
+                      <p>{{list?.address}}</p>
+                    </li>
+                  </ul>
+
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+            <div class="row" *ngIf="eventDetail?.polls?.length !=0 ">
+              <div class="aditional-info"><span>Event Polls</span></div>
+              <div class="col-xs-12 col-sm-12 col-md-6" *ngFor="let list of eventDetail?.polls">
+                <div class="accordian-text session-acc">
+                  <mat-accordion [hideToggle]="true">
+                    <mat-expansion-panel disabled="true">
+                      <mat-expansion-panel-header>
+                        <ul class="usermain" style="width: 100%">
+                          <li style="color:black"> {{list?.title}}
+                            <button (click)="goToPoll(list)" class="save-changes pull-right"
+                              style="margin-top: 0px">Go</button>
+                          </li>
+                        </ul>
+                      </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            </div>
+            <!-- gallery -->
+            <div class="row gallerydetail">
+              <app-gallery-image *ngIf="imageData.length != 0" [imageData]="imageData"></app-gallery-image>
+            </div>
+            <!-- gallery -->
+
+            <div class="accordian-text">
+              <mat-accordion>
+                <!--  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      Disclaimer
+                    </mat-expansion-panel-header>
+                    Disclaimer text will come
+                  </mat-expansion-panel>-->
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header *ngIf="eventDetail?.termsAndCondition">
+                    {{'event.detail.additionalInfo.terms&condition.title' | translate}}
+                  </mat-expansion-panel-header>
+                  <p [innerHTML]="eventDetail?.termsAndCondition"></p>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+          <div *ngIf="eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true"
+            class="col-sm-12 col-md-4 donation-main-no-wid">
+
+            <div class="amount">
+              {{totalDonorcollection | currency:'USD'}} <span>raised of {{eventDetail?.eventConfigurations?.donationGoal
+                | currency:'USD'}} goal</span>
+            </div>
+            <div class="progress-tooltip">
+              <span class="rightprogress">{{eventDetail?.eventConfigurations?.donationGoal | currency:'USD'}}</span>
+              <span [ngStyle]="{'left':width + '% '}" class="progress-tooltip-info">
+                <img alt="" src="assets/icon/miscellaneous.svg">
+              </span>
+              <progress class="progress" max="100" value="{{width}}">{{width}}%</progress>
+            </div>
+
+
+            <app-donation-list [allDonors]="allDonors" [donorList]="donorList" [eventId]="eventId"
+              [topDonorList]="topDonorList" [isShowDonateButton]="isShowDonateButton"></app-donation-list>
+          </div>
+        </div>
+        <div *ngIf="eventSponsorList?.length != 0" class="row">
+          <div class="col-md-12">
+            <div class="aditional-info">
+              <span>{{'event.detail.sponsor.title' | translate}}</span>
+              <p></p>
+            </div>
+          </div>
+          <app-sponsor [(sponsorList)]="eventSponsorList"></app-sponsor>
+        </div>
+      </div>
+      <!-- session accordian -->
+    </div>
+  </div>
+
+  <!-- bottom sticky -->
+  <div class="bottomsticky">
+    <div class="mainbottm">
+      <span class="donatenowsticky">
+        <button (click)="goBack()" class=" backbtn"
+          style="  background:#e5e5e5;color:#161616;">{{'event.create.backBtn.text' | translate}}
+        </button>
+      </span>
+      <span class="donatenowsticky">
+        <span *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == false ">
+          <button
+            *ngIf="eventDetail?.eventConfigurations?.allowDonor == true && eventDetail?.donationTimeOver == false "
+            [routerLink]="'/donor-checkout-new/event/'+eventId">
+            <i class="icon-donors newicon"></i>
+            {{'event.detail.donate.Btn.text' | translate}}
+          </button>
+          <button
+            *ngIf="eventDetail?.eventConfigurations?.allowSponsorship == true && eventDetail?.sponsorshipTimeOver == false"
+            [routerLink]="'/sponsor-checkout-new/event/'+eventId">
+            <i class="icon-sponsors newicon"></i>
+            {{'event.detail.becomeASponsor.Btn.text' | translate}}
+          </button>
+          <button *ngIf="eventDetail?.alreadyRegistered == false && eventDetail?.eventConfigurations?.redirectVendor == false && eventDetail?.eventConfigurations?.vendorExpo == true
+                      && eventDetail?.registrationTimeOver == false  && eventDetail?.registrationCapacityFull == false"
+            [routerLink]="'/ticket-booking-new/'+eventId+'/VENDOR/'">
+            <i class="icon-donors newicon"></i>
+            {{'event.detail.becomeAVendor.Btn.text' | translate}}
+          </button>
+          <button *ngIf="eventDetail?.eventConfigurations?.redirectVendor == true " (click)=" navigateVendor()"
+            target="_blank" class="register"> <i class="icon-donors newicon"></i>
+            {{'event.detail.becomeAVendor.Btn.text' | translate}}
+          </button>
+        </span>
+        <button
+          *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == true && eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true"
+          [routerLink]="'/donation-dashboard/'+eventId"> <i class="icon-sponsors newicon"></i>
+          {{'event.detail.viewContributors.Btn.text' | translate}}
+        </button>
+        <button
+          *ngIf="authDetail && eventDetail?.eventConfigurations?.allowParticipation == true && eventDetail?.performanceTimeOver == false"
+          [routerLink]="'/participate-checkout/'+eventId">
+          <i class="icon-donors newicon"></i>
+          {{'event.detail.participateinEvent.Btn.text' | translate}}
+        </button>
+        <button
+          *ngIf="!authDetail && eventDetail?.eventConfigurations?.allowParticipation == true && eventDetail?.performanceTimeOver == false">
+          <i class="icon-donors newicon"></i>
+          <a [routerLink]="'/participate-checkout/'+eventId" class="underline-text"
+            style="color:white;">{{'event.detail.participateinEvent.Btn.text' | translate}}</a>
+        </button>
+        <div style="display: inline-block;"
+          *ngIf="eventDetail?.registrationTimeOver == false && eventDetail?.registrationCapacityFull == false">
+          <button
+            *ngIf="eventDetail?.admin ==false && eventDetail?.eventConfigurations?.fundRaisingEvent == false && (eventDetail?.eventConfigurations?.allowVisitorDisplayPublic == true || eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true)"
+            [routerLink]="'/event-dashboard/'+eventId">
+            {{'event.detail.viewOtherDetails.Btn.text' | translate}}
+          </button>
+        </div>
+      </span>
+      <span *ngIf="eventDetail?.admin == true" class="donatenowsticky">
+        <button [routerLink]="'/event-dashboard/'+eventDetail?.id">{{'event.myhostedevent.dashboard.tab.text' |
+          translate}}</button>
+      </span>
+      <div *ngIf="eventDetail?.registrationTimeOver == true || eventDetail?.registrationCapacityFull == true"
+        class="donatenowsticky">
+        <button
+          *ngIf="eventDetail?.admin == false && eventDetail?.eventConfigurations?.fundRaisingEvent == false && (eventDetail?.eventConfigurations?.allowVisitorDisplayPublic == true || eventDetail?.eventConfigurations?.allowDonorDisplayPublic == true)"
+          [routerLink]="'/event-dashboard/'+eventId">
+          {{'event.detail.viewOtherDetails.Btn.text' | translate}}
+        </button>
+        <button class="register register-close">{{'event.detail.registrationClosed.Btn.text' | translate}}</button>
+      </div>
+      <ul>
+        <li>
+          <b *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == false && eventDetail?.registrationTimeOver == false  &&
+                eventDetail?.registrationCapacityFull == false &&
+                eventDetail?.onGoingEvent  == true">
+            <span>{{'event.detail.eventFees.text' | translate}}</span>
+            <b>{{eventDetail?.registrationAmount}}</b>
+          </b>
+        </li>
+        <li class="right-li">
+          <b *ngIf="eventDetail?.registrationTimeOver == false && eventDetail?.registrationCapacityFull == false">
+            <!-- Offline + paid + user -->
+            <button
+              *ngIf="eventDetail?.alreadyRegistered == false &&eventDetail?.alreadyPurchased == false &&
+                  eventDetail?.venueType == 'OFFLINE'  &&
+                  eventDetail?.eventConfigurations?.fundRaisingEvent == false && eventDetail?.eventConfigurations?.redirectRegistration == false"
+              [routerLink]="'/ticket-booking-new/'+eventId+'/USER'" class="register">{{'event.detail.register.Btn.text'
+              | translate}}
+            </button>
+            <button *ngIf="eventDetail?.eventConfigurations?.redirectRegistration == true " (click)=" navigate()"
+              target="_blank" class="register">{{'event.detail.register.Btn.text' | translate}}
+            </button>
+            <!-- Offline + paid + user-->
+            <!--fund Raising + user  -->
+            <button *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == true "
+              [routerLink]="'/donor-checkout-new/event/'+eventId" class="register">{{'event.detail.donateNow.Btn.text' |
+              translate}}
+            </button>
+            <!--fund Raising + user -->
+            <!-- unPaid registered-->
+            <button (click)="registerType = 'payment';" *ngIf="eventDetail?.alreadyRegistered == true &&
+                          eventDetail?.successfulPayment == false  " class="register" data-target="#onlinePayment"
+              data-toggle="modal">
+              {{'event.detail.payNow.Btn.text' | translate}}
+            </button>
+            <!-- unPaid registered-->
+            <!--login + online Event -->
+            <!-- <button (click)="registerType = 'register';"
+                    *ngIf="authDetail && eventDetail?.alreadyRegistered == false &&
+                  (eventDetail?.venueType == 'ONLINE') &&
+                  eventDetail?.eventConfigurations?.registrationFees != 'FREE' &&
+                  eventDetail?.eventConfigurations?.fundRaisingEvent == false &&
+                  eventDetail?.eventConfigurations?.vendorExpo == false "
+                    [routerLink]="'/online-event-checkout/'+eventId" class="register">
+              {{'event.detail.register.Btn.text' | translate}}
+            </button>-->
+            <button (click)="registerType = 'register';" *ngIf="authDetail && eventDetail?.alreadyRegistered == false &&
+                  (eventDetail?.venueType == 'ONLINE') && eventDetail?.alreadyPurchased == false &&
+                  eventDetail?.eventConfigurations?.registrationFees != 'FREE' &&
+                  eventDetail?.eventConfigurations?.fundRaisingEvent == false &&
+                  eventDetail?.eventConfigurations?.vendorExpo == false "
+              [routerLink]="'/ticket-booking-new/'+eventId+'/USER'" class="register">
+              {{'event.detail.register.Btn.text' | translate}}
+            </button>
+            <button (click)="registerType = 'register';registrationOrPayment()" *ngIf="authDetail && eventDetail?.alreadyRegistered == false &&
+                  (eventDetail?.venueType == 'ONLINE' || eventDetail?.venueType == 'BOTH') &&
+                  eventDetail?.eventConfigurations?.registrationFees == 'FREE' &&eventDetail?.eventConfigurations?.vendorExpo == false &&
+                  eventDetail?.eventConfigurations?.fundRaisingEvent == false " class="register">
+              {{'event.detail.register.Btn.text' | translate}}
+            </button>
+            <!--login + online Event -->
+            <!-- without login + online Event -->
+            <button *ngIf="!authDetail &&eventDetail?.alreadyRegistered == false  &&
+                  (eventDetail?.venueType == 'ONLINE' || eventDetail?.venueType == 'BOTH') &&
+                  eventDetail?.eventConfigurations?.fundRaisingEvent == false "
+              [routerLink]="'/ticket-booking-new/'+eventId+'/USER'" class="register">
+              {{'event.detail.register.Btn.text' | translate}}
+            </button>
+            <!-- without login + online Event -->
+            <!-- Paid registered-->
+            <button (click)="confirmationEventRegister()"
+              *ngIf="eventDetail?.alreadyPurchased == true  && eventDetail?.successfulPayment == true && eventDetail?.eventConfigurations?.redirectRegistration == false"
+              class="register register-done">{{'event.detail.registrationDone.Btn.text' | translate}}</button>
+            <!-- Paid registered-->
+          </b>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<div aria-hidden="true" aria-labelledby="share_modal" class="modal fade share-model" id="share_modal" role="dialog"
+  tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header shareline">
+        <h5 class="modal-title" id="exampleModalLabel">{{'event.detail.share.popup.title' | translate}}</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="../../../../assets/icon/delete-button.svg">
+        </button> -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container leftarrow">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body create-session-model custom-form-field">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="share-icon">
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="facebook"
+                shareButton="facebook">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="twitter"
+                shareButton="twitter">
+                <i class="fab fa-twitter"></i>
+              </button>
+              <!-- <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="linkedin" shareButton="linkedin">
+                <i class="fab fa-linkedin"></i>
+              </button>-->
+              <button [autoSetMeta]="false" [description]="shareTitle" [url]="shareBaseLink" class="whatsapp"
+                shareButton="whatsapp">
+                <i class="fab fa-whatsapp"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="onlinePayment" class="modal fade online-payment" id="onlinePayment"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title model-tt">
+          {{'event.detail.payNow.popup.title' | translate}}
+        </h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" id="closePaypalId" type="button">
+          <img alt="" src="assets/icon/ionic-md-close.svg">
+        </button>
+      </div>
+      <!-- content  -->
+      <div class="row">
+        <!-- PayPal Logo -->
+        <table align="center" border="0" cellpadding="10" cellspacing="0" class="tabmod">
+          <tr>
+            <td align="center"></td>
+          </tr>
+          <tr>
+            <td align="center">
+              <a title="How PayPal Works">
+                <img alt="PayPal Acceptance Mark" border="0"
+                  src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/IN/logo-center/logo-center-solution-graphics.png">
+              </a>
+            </td>
+          </tr>
+        </table><!-- PayPal Logo -->
+      </div>
+      <!-- Content -->
+      <div class="modal-footer footerpay ">
+        <span class="payment-redi"> {{'event.detail.payNow.popup.footer.text' | translate}}</span>
+        <button (click)="registrationOrPayment()" class="save-changes book-tick confirm-pay"
+          type="button">{{'event.detail.payNow.popup.confirm.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="onlinePayment2" class="modal fade online-payment slideup2" id="onlinePayment2" role="dialog" tabindex="-1">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content" >
+      <!-- <div class="modal-header"> </div> -->
+      <button  aria-label="Close" class="close-container" data-dismiss="modal" id="closePaypalId" type="button"><div  class="leftright"></div><div class="rightleft"></div></button>
+      <div class="modal-body" >
+              <div class="">
+          <carousel data-interval="false">
+
+            <slide *ngFor="let  image of imageArray; index as i">
+              <h5 class="modal-title model-tt text-center" >
+               <span style="padding-bottom: 5px; display: block; font-size: 17px; "> {{i+1}}/{{imageArray.length}}</span>
+                 </h5>
+              <img src="{{image.thumb}}" alt="">
+            </slide>
+
+          </carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<button class="donatenowhome" [routerLink]="'/donor-checkout-new/event/'+eventId">{{'event.detail.donateNow.Btn.text' | translate}}</button>-->

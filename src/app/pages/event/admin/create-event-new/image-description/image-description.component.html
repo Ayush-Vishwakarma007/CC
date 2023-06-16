@@ -1,0 +1,300 @@
+<div class="sections-main">
+  <form [formGroup]="imageDescriptionForm" id="imageDescriptionForm">
+    <h1>
+      <div class="img-create">
+        <img alt="community" src="assets/icon/picture.svg" />
+      </div>
+
+      {{'event.create.imageAndDescription.mainEventImage.title' | translate}}
+      <button class="infobtn" data-target="#exampleModalEventprofile" data-toggle="modal" title="info">
+        <i class="icon-info newicon"></i>
+      </button>
+      <span>{{'event.create.imageAndDescription.mainEventImage.text' |
+        translate}}</span>
+    </h1>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="border-line-bottom imagesidebyside">
+          <div class="image-main-up">
+            <div class="imageup create-img-upload">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                (queueCompleted)="profileQueueCompleted()" (uploadStarted)="uploadStarted()"
+                [(uploadedFiles)]="profilePicList" [maxFileCount]="5" [uploadUrl]="mediaUploadUrl"
+                [validTypes]="validTypesImage">
+              </app-file-uploader-vertical>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>
+          <div class="img-create">
+            <img alt="community" src="assets/icon/picture.svg" />
+          </div>
+
+          {{'event.create.imageAndDescription.eventProfilePicture.title' |
+          translate}}
+          <button class="infobtn" data-target="#exampleModalSliderImages" data-toggle="modal" title="info">
+            <i class="icon-info newicon"></i>
+          </button>
+          <span>{{'event.create.imageAndDescription.eventProfilePicture.desc.text'
+            | translate}}</span>
+        </h1>
+        <div class="border-line-bottom">
+          <div class="image-main-up">
+            <div class="imageup create-img-upload">
+              <app-file-uploader-event #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                (maxFileSizeError)="fileSizeError()" (queueCompleted)="queueCompleted()"
+                (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList" [maxFileCount]="10"
+                [uploadUrl]="mediaUploadUrl" [validTypes]="validTypesImage">
+              </app-file-uploader-event>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--      <div class="col-lg-6">-->
+      <!--        <h1>-->
+      <!--          <div class="img-create">-->
+      <!--            <img alt="community" src="assets/icon/picture.svg"></div>-->
+      <!--          {{'event.create.imageAndDescription.eventBannerImage.title' | translate}}-->
+      <!--        </h1>-->
+      <!--        <div class="border-line-bottom">-->
+      <!--          <div class="image-main-up">-->
+      <!--            <div class="imageup create-img-upload">-->
+      <!--              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile1()"-->
+      <!--                                          (maxFileError)="maxFileError1()"-->
+      <!--                                          (maxFileSizeError)="fileSizeError()"-->
+      <!--                                          (queueCompleted)="bannerQueueCompleted()" (uploadStarted)="uploadStarted()"-->
+      <!--                                          [(uploadedFiles)]="bannerPicList" [maxFileCount]="1"-->
+      <!--                                          [uploadUrl]="mediaUploadUrl" [validTypes]="validTypesImage">-->
+      <!--              </app-file-uploader-vertical>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div style="padding: 2%;">-->
+      <!--          <mat-checkbox (change)="onChangeBanner($event)"-->
+      <!--                        [checked]="imageDescription['bannerPicture'] == ''"-->
+      <!--                        value="true">{{'event.create.imageAndDescription.bannerAsBlurProfilePicture.title' | translate}}-->
+      <!--          </mat-checkbox>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h1>
+          <div class="img-create">
+            <img alt="community" src="assets/icon/picture.svg" />
+          </div>
+
+          {{'event.create.imageAndDescription.eventDocuments.title' |
+          translate}}
+        </h1>
+        <div class="border-line-bottom">
+          <div class="image-main-up">
+            <div class="imageup create-img-upload">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                (queueCompleted)="profileQueueCompleted()" (uploadStarted)="uploadStarted()"
+                [(uploadedFiles)]="documentList" [maxFileCount]="5" [uploadUrl]="mediaUploadUrl">
+              </app-file-uploader-vertical>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h1>
+      <div class="img-create">
+        <img alt="community" src="assets/icon/writing.svg" />
+      </div>
+      {{'event.create.imageAndDescription.shortDescription.title' | translate}}
+      <span>{{'event.create.imageAndDescription.shortDescription.text' | translate}}</span>
+    </h1>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <mat-form-field class="example-full-width address-evnt">
+          <mat-label>{{'event.create.imageAndDescription.shortDescriptionlbl.text' |
+            translate}} </mat-label>
+          <textarea [rows]="2" formControlName="sortDescription" matInput type="text"
+            style="min-height:50px;"></textarea>
+        </mat-form-field>
+        <div *ngIf="this.submitBtn == false && imageDescriptionForm.controls.sortDescription.errors ">
+          <span *ngIf="this.submitBtn == false && imageDescriptionForm.controls.sortDescription.errors"
+            class="valid-msg">Short Description is required</span>
+        </div>
+      </div>
+    </div>
+
+    <h1>
+      <div class="img-create">
+        <img alt="community" src="assets/icon/writing.svg" />
+      </div>
+      {{'event.create.imageAndDescription.description.title' | translate}}
+      <span> {{'event.create.imageAndDescription.description.text' | translate}} </span>
+    </h1>
+    <div class="border-line-bottom">
+      <div class="editor-main">
+        <span class="sub-head">{{'event.create.imageAndDescription.descriptionlbl.text' |
+          translate}}
+        </span>
+          <ngx-editor [editor]="editor" [placeholder]="'Enter Description here...'" class="editor-icon"
+            formControlName="description"></ngx-editor>
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+        </ngx-editor-menu>
+      </div>
+      <div *ngIf="this.submitBtn == false && imageDescriptionForm.controls.description.errors " class="descrip-paid">
+        <span *ngIf="this.submitBtn == false && imageDescriptionForm.controls.description.errors"
+          class="valid-msg">Description is required</span>
+      </div>
+    </div>
+    <h1>
+      <div class="img-create">
+        <img alt="community" src="assets/icon/terms.svg" />
+      </div>
+
+      {{'event.create.imageAndDescription.terms&condition.title' | translate}}
+      <u class="cermsconditions">
+        Use Standard
+        <a (click)="openModalTermCondition(template)">Events Terms & Conditions</a>
+      </u>
+      <span>{{'event.create.imageAndDescription.terms&condition.text' | translate}}
+      </span>
+    </h1>
+
+    <div class="border-line-bottom">
+      <div class="editor-main">
+        <span class="sub-head">{{'event.create.imageAndDescription.terms&conditionlbl.text' |
+          translate}}
+        </span>
+        <ngx-editor [editor]="editors" [placeholder]="'Enter Terms & Condition here...'" class="editor-icon"
+          formControlName="termsAndCondition"></ngx-editor>
+        <ngx-editor-menu [editor]="editors" [toolbar]="toolbar">
+        </ngx-editor-menu>
+      </div>
+      <div *ngIf="this.submitBtn == false && imageDescriptionForm.controls.termsAndCondition.errors "
+        class="descrip-paid">
+        <span *ngIf="this.submitBtn == false && imageDescriptionForm.controls.termsAndCondition.errors"
+          class="valid-msg">
+          Terms & Condition is Required</span>
+      </div>
+    </div>
+
+    <h1>
+      <div class="img-create">
+        <img alt="community" src="assets/icon/tag-writing.svg" />
+      </div>
+
+      {{'event.create.imageAndDescription.tags.title' | translate}}
+      <span></span>
+    </h1>
+    <div class="border-line-bottom">
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width tegsicon">
+            <mat-label>{{'event.create.imageAndDescription.tagslbl.text' | translate}}
+            </mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let tag of tags;let i = index" [removable]="removable" [selectable]="selectable">
+                {{tag}}
+
+                <mat-icon (click)="remove(i)" matChipRemove>
+                  <!-- <i  class="icon-delete-blue newicon"></i> -->
+                </mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+            <input (matChipInputTokenEnd)="addTag($event)" [matChipInputFor]="chipList" style="width: 100%;" value="" />
+          </mat-form-field>
+          <div></div>
+
+          <!-- <mat-form-field>
+            <mat-chip-list #chipList>
+              <mat-chip>Chip 1</mat-chip>
+              <mat-chip>Chip 2</mat-chip>
+            </mat-chip-list>
+            <input [matChipInputFor]="chipList">
+          </mat-form-field> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row martop-date">
+      <div class="col-md-6">
+        <h1>
+          <div class="img-create">
+            <img alt="community" src="assets/icon/tag-writing.svg" />
+          </div>
+
+          {{'event.create.imageAndDescription.poll.title' | translate}}
+          <span>{{'event.create.imageAndDescription.poll.text' | translate}}</span>
+        </h1>
+      </div>
+      <div class="col-md-6">
+        <button (click)="addPoll()" class="addsection addReminder" type="button">
+          {{'event.create.imageAndDescription.addPollBtn.text' | translate}}
+        </button>
+      </div>
+    </div>
+
+    <div *ngFor="let list of pollList;let i = index;" class="row martop-date">
+      <div class="col-md-3 col-lg-3">
+        <mat-form-field class="example-full-width">
+          <mat-label>{{'event.create.imageAndDescription.pollTitle.text' |
+            translate}}</mat-label>
+          <input [(ngModel)]="list.title" [ngModelOptions]="{standalone: true}" matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-lg-4 martoprole">
+        <mat-form-field class="example-full-width">
+          <mat-label>{{'event.create.imageAndDescription.pollLink.text' |
+            translate}}</mat-label>
+          <input [(ngModel)]="list.link" [ngModelOptions]="{standalone: true}" matInput />
+        </mat-form-field>
+      </div>
+      <div class="removeBtn col-md-1 col-sm-1">
+        <button (click)="removePoll(i)">
+          <i class="icon-delete-blue newicon"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal fade" id="exampleModalTerms1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
+
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition" [innerHTML]="communityService.communityDetail?.eventTermsAndConditions"></div>
+        <p><a (click)="hideModal()">Please Click here to Contact US.</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
+
+        <button (click)="closeNewsMol()" aria-label="Close" id="hideModal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition" [innerHTML]="communityService.communityDetail?.eventTermsAndConditions"></div>
+        <p><a (click)="closeNewsMol()">Please Click here to Contact US.</a></p>
+      </div>
+    </div>
+  </div>
+</ng-template>

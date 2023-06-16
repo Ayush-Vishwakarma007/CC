@@ -1,0 +1,184 @@
+<div class="scholarshiplistmain">
+  <div class="main-scholar">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <h2> <a  href="#"><img  alt="" src="assets/icon/arrow-news.svg"></a>
+            Scholarship </h2>
+        </div>
+        <div class="col-md-6">
+          <div class="padd-area">
+            <div class="main-search-top">
+              <div class="searchmember">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Search....</mat-label>
+                  <input   autocomplete="off" matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+            <button class="applicant-btn"> + Applicant </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="iner-scholarship">
+   <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 founddation">
+        <h3> Foundation for Excellence Scholarship</h3>
+        <p> <i style=" overflow: hidden; width: 95%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; height: 42px;"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text  been the industry's standard dummy text … </i> <button class="more">more</button> </p>
+      </div>
+      <div class="col-md-6">
+        <div class="date-scholarship">
+         <span> Date : </span>
+          20 Jan 2021 - 20 Mar 2021
+        </div>
+      </div>
+    </div>
+   </div>
+   <div class="new-dashboard">
+    <div class="tab-main">
+      <mat-tab-group>
+        <!-- =========================== Dashboard ================================ -->
+        <mat-tab label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>Accepted </span></li>
+            </ul>
+          </ng-template>
+          <!-- table -->
+           <!-- table -->
+    <div class="admingallery">
+      <table>
+        <tr>
+          <th> Applicant Name </th>
+          <th> Phone No</th>
+          <th> Email</th>
+          <th>Status</th>
+          <th> Date of Apply </th>
+          <th width="70"> Action</th>
+        </tr>
+        <tr>
+          <td>
+            Mark Allen
+          </td>
+          <td>+19995550097</td>
+          <td> markallen@gmail.com</td>
+          <td> <span class="rejected">Rejected</span></td>
+          <td> 20 Jan 2020</td>
+          <td>
+            <div class="buttonright">
+              <div>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> View </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> Edit </a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> close</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Mark Allen
+          </td>
+          <td>+19995550097</td>
+          <td> markallen@gmail.com</td>
+          <td> <span class="accepted">Accepted</span></td>
+          <td> 20 Jan 2020</td>
+          <td>
+            <div class="buttonright">
+              <div>
+                <div class="dropdown dropup moredrop editgallery">
+                  <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                     data-toggle="dropdown"
+                     href="#" id="dropdownMenuLink" role="button">
+                    <img alt="" src="assets/icon/interface.svg">
+                  </a>
+                  <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> <span style="width: 122px; display: inline-block; color: #22B573;">  Accept </span> <img src="assets/icon/check.svg" alt=""> </a>
+                    <a class="dropdown-item"  (click)="openModalWithClass1(template)"><i class="fa fa-angle-right"  aria-hidden="true"></i> <span style="width: 122px; display: inline-block; color: #E5334F;"> Reject </span> <img src="assets/icon/reject.svg" alt=""></a>
+                    <a class="dropdown-item"  ><i class="fa fa-angle-right"  aria-hidden="true"></i> <span style="width: 122px; display: inline-block; "> ViewDetails </span>  <img src="assets/icon/eye-black.svg" alt=""> </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+       </table>
+    </div>
+    <!-- table -->
+        </mat-tab>
+        <mat-tab label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>Rejecteed </span></li>
+            </ul>
+          </ng-template>
+          Rejecteed
+        </mat-tab>
+        <mat-tab label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>Pending </span></li>
+            </ul>
+          </ng-template>
+          Pending
+        </mat-tab>
+      </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content padd-area">
+      <div class="modal-header  ">
+        Reject Application
+        <!-- (click)="modalRef.hide()" -->
+        <button  id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <mat-label>Scholarship  Name </mat-label>
+              <input matInput type="text">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width textarea-scholarship">
+              <mat-label>Details</mat-label>
+              <textarea matInput placeholder="Enter Details"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button class="done-btn"> Done </button>
+          </div>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

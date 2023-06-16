@@ -1,0 +1,18 @@
+<div  class="donorcheckout-header">
+  <ul>
+    <li class="button"> <button [routerLink]="'/event-details/'+eventId"><img src="assets/icon/arow-g.svg" alt=""></button> </li>
+    <li>
+      <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; "> {{eventDetail['name']}}</h4>
+       <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px; " [innerHTML]="eventDetail['description']"></p>
+    </li>
+  </ul>
+</div>
+
+<app-participant-register [eventId]="eventId" (completeParticipant)="addParticipant()" 
+                          [eventDetail] ="eventDetail"
+                          [(participantDetail)]="participantDetail"
+                          [(choreographerDetail)]="choreographerDetail"
+                          [(businessInfo)]="businessInfo"
+                           (completed)="paymentStep()" [(mediaList)]="mediaList"></app-participant-register>
+
+<app-payment-detail  [eventId]="eventId" (completePayment)="paymentCheckout()" [save]="submitSubject" [(paymentDetail)] = "paymentDetail"></app-payment-detail>

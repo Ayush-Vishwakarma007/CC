@@ -1,0 +1,23 @@
+<div>
+    <div class="reg-left">
+        <div class="reg-inner">
+            <h1>Create Auditorium</h1>
+        </div>
+    </div>
+    <div class="create-event-right-side create-new-evnt">
+        <div class="white-area-create-event">
+
+            <app-basic-auditorium-detail [save]="submitSubject" [back]="backSubject" [auditoriumId]="auditoriumId"
+                (dataEvent)="handleData($event)"></app-basic-auditorium-detail>
+
+            <div class="row button-save-create">
+                <div class="col-md-1 saveinfo" *ngIf="showBackBtn">
+                    <input type="button" value="Back" (click)="back(true)" class="save-changes">
+                </div>
+                <div class="col-md- saveinfo">
+                    <input type="button" value="Next" (click)="save(true)" class="save-changes">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

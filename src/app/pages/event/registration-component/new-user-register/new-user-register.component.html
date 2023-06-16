@@ -1,0 +1,137 @@
+<div class="leftdonorpart">
+  <!--  <div class="main-become-member mainnewsscreen">
+     <div class="padd-member">
+     - <div class="becomemember-section">
+          <p class="header-tag">To update Your details and download Receipts</p>
+          <p class="martop-date">Membership Benefits</p>
+          <ul>
+            <li *ngFor="let member of membershipDetail.benefits;let i=index">
+              {{member}}
+            </li>
+          </ul>
+          <div class="row">
+            <div class="col-md-12 txtcenter">
+              <button class="save-changes" data-target="#registerModal" data-toggle="modal" type="button">
+                Register
+              </button>
+              <button class="or-btn"> OR</button>
+              <button (click)="loginRedirect()" class="btn-success save-changes" type="button">
+                Login
+              </button>
+            </div>
+          </div>
+        </div>
+     </div>
+   </div>-->
+  <div class="innerpaid">
+    <div class="becomeheight">
+      <h5>
+        {{'event.registrationComponent.newUserRegister.title' | translate}}
+      </h5>
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <form [formGroup]="registerForm"  autocomplete="off" class="example-form" id="registerForm" autocomplete="off">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>{{'event.registrationComponent.newUserRegister.fname.lbl.text' | translate}} <i>*</i></mat-label>
+                      <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();"  [maxLength]="15" size="15" formControlName="firstName" matInput type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                         <div *ngIf="registerForm.controls.firstName.errors.required"
+                              class="valid-msg">First Name is required</div>
+                              <div *ngIf="registerForm.controls.firstName.errors.cannotContainSpace" class="valid-msg">Please enter valid First Name</div>
+                      </span>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>{{'event.registrationComponent.newUserRegister.lname.lbl.text' | translate}} <i>*</i></mat-label>
+                      <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();"  [maxLength]="15" size="15" formControlName="lastName" matInput type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                         <div *ngIf="registerForm.controls.lastName.errors.required" class="valid-msg">Last Name is required</div>
+                        <div *ngIf="registerForm.controls.lastName.errors.cannotContainSpace" class="valid-msg">Please enter valid Last Name</div>
+                      </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>{{'event.registrationComponent.newUserRegister.email.lbl.text' | translate}} </mat-label>
+                      <input formControlName="email" (keydown.space)="$event.preventDefault();"  matInput type="text">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>{{'event.registrationComponent.newUserRegister.phone.lbl.text' | translate}} </mat-label>
+                      <input (keypress)="numberOnly($event)" [max]="16" appPhoneMask formControlName="phone" matInput
+                             type="text">
+                    </mat-form-field>
+                    <span *ngIf="submitted && registerForm.controls.phone.errors">
+                         <div *ngIf="registerForm.controls.phone.errors"
+                              class="valid-msg">Phone Number is required</div>
+                      </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6 sm-paid">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{'event.registrationComponent.newUserRegister.birthYear.lbl.text' | translate}}</mat-label>
+                          <input (keypress)="numberOnly($event)" [maxLength]="4" [minLength]="4" formControlName="birthYear"
+                                 matInput type="text">
+                        </mat-form-field>
+                        <!-- <span *ngIf="submitted && registerForm.controls.birthYear.errors">
+                         <div *ngIf="registerForm.controls.birthYear.errors"
+                              class="valid-msg">Birth Year is required</div>
+                      </span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <input (click)="submitRegister()" class="save-changes full-width" type="button" value="{{'event.registrationComponent.newUserRegister.submit.Btn.text' | translate}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 txtcenter">
+          <div class="login-social noline">
+            <span>{{'event.registrationComponent.newUserRegister.alreadyHaveAccounbt.lbl.text' | translate}} <a (click)="loginRedirect()" class="underline-text">{{'event.registrationComponent.newUserRegister.login.lbl.text' | translate}}</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="row"  *ngIf="communityService?.communityDetail?.allowFacebookLogin == true || communityService?.communityDetail?.allowGoogleLogin == true">
+        <div class="col-md-12 txtcenter">
+          <div class="login-social">
+            <span>{{'event.registrationComponent.newUserRegister.socialMedia.lbl.title' | translate}}</span>
+          </div>
+          <button (click)="facebooklogin()" *ngIf="communityService?.communityDetail?.allowFacebookLogin == true" class="facebooklogin" type="button">
+            <ul>
+              <li><img alt="" src="assets/icon/facebook.svg"></li>
+              <li>{{'event.registrationComponent.newUserRegister.socialMedia.fb.lbl.text' | translate}}</li>
+            </ul>
+          </button>
+
+          <button (click)="googlelogin()" *ngIf="communityService?.communityDetail?.allowGoogleLogin == true" class="facebooklogin" type="button">
+            <ul>
+              <li><img alt="" src="assets/icon/googlelogo.svg"></li>
+              <li>{{'event.registrationComponent.newUserRegister.socialMedia.google.lbl.text' | translate}}</li>
+            </ul>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

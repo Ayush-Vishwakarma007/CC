@@ -1,0 +1,1019 @@
+<div class="sections-main">
+  <div *ngIf="templateName == 'AUTH' && !showUser">
+    <form [formGroup]="userFilterForm" class="example-form" id="userFilterForm">
+      <h1>
+        <div class="img-create">
+          <img alt="basic-info" src="assets/icon/basic-info.svg">
+        </div>
+        Notification Filter   
+      </h1>
+      <div class="martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Chapter </mat-label>
+              <mat-select formControlName="chapterIds" multiple="true">
+                <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+                  {{chapter['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isSubmit && userFilterForm.controls.chapterIds.errors ">
+              <span *ngIf="isSubmit && userFilterForm.controls.chapterIds.errors"
+                    class="valid-msg">Chapter is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="martopevent">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="weakly-recurring">
+              <li>Select Role</li>
+              <li>
+                <mat-checkbox (change)="setRole(role)" *ngFor="let role of roleList" [(ngModel)]="role['check']"
+                              [checked]="role['check'] == true" [ngModelOptions]="{standalone: true}"
+                              class="selectrole"
+                              value="{{role['specificRole']}}">
+                  {{role['roleDescription']}}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>Signup After</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker" autocomplete="false"
+                     formControlName="startDate" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>Signup Before</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker1" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker1 openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker1" autocomplete="false"
+                     formControlName="endDate" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Minimum Age</mat-label>
+              <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="minAge" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Maximum Age</mat-label>
+              <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="maxAge" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-checkbox formControlName="approved">Only Approved Users</mat-checkbox>
+          </div>
+          <div class="col-md-6">
+            <mat-checkbox formControlName="checkInvalidEmail">Ignore Invalid Email</mat-checkbox>
+          </div>
+          <div class="col-md-6">   
+            <mat-form-field class="example-full-width sendto">
+            <mat-label>Send To</mat-label>            
+            <mat-select formControlName="mainUser" name="mainUser" >
+              <mat-option value="null"  >
+                All person
+              </mat-option>
+              <mat-option [value]="true">
+              Only main persons
+              </mat-option>
+              <mat-option [value]="false">
+                Only family persons
+                </mat-option>
+               
+            </mat-select>
+          </mat-form-field></div>
+          <div class="col-md-6">
+            <mat-checkbox formControlName="subscribeNewsLetter" class="onlysubs">Only Subscribed Users</mat-checkbox>
+          </div>
+          
+        </div>
+      </div>
+
+      <div *ngIf="isMemberChecked">
+        <div class="martopevent">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Membership Type</mat-label>
+                <mat-select formControlName="membershipTypeIds" multiple="true">
+                  <mat-option *ngFor="let list of membershipType;let i = index" value="{{list['id']}}">
+                    {{list['name']}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+           
+            <div class="col-md-6">
+              <mat-checkbox formControlName="successfulPayment">Payment Received</mat-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div class="martopevent">
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Minimum Amount Paid</mat-label>
+                <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="minimumAmount" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+                <mat-label>Maximum Amount Paid</mat-label>
+                <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="maximumAmount" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+  <div *ngIf="templateName == 'EVENT' && !showUser">
+    <form [formGroup]="eventFilterForm" class="example-form" id="eventFilterForm">
+      <h1>
+        <div class="img-create">
+          <img alt="basic-info" src="assets/icon/basic-info.svg">
+        </div>
+        Notification Filter
+      </h1>
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Chapter <i>*</i></mat-label>
+              <mat-select (selectionChange)="getSponosrDonorDetail($event.value)" formControlName="chapterIds"
+                          multiple="true">
+                <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+                  {{chapter['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isSubmit && eventFilterForm.controls.chapterIds.errors ">
+              <span *ngIf="isSubmit && eventFilterForm.controls.chapterIds.errors"
+                    class="valid-msg">Chapter is required</span>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <mat-checkbox formControlName="successfulPayment">Payment Received</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>Start Date</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker" autocomplete="false"
+                     formControlName="startDate" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>End Date</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker1" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker1 openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker1" autocomplete="false"
+                     formControlName="endDate" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Minimum Amount</mat-label>
+              <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="minimumAmount" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Maximum Amount</mat-label>
+              <input (keypress)="numberOnly($event)" autocomplete="off" formControlName="maximumAmount" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <div class="row">
+              <div class="col-md-4 col-lg-6 col-sm-6">
+                <mat-checkbox (change)="drpDownChange('chapterSponsor',$event)" formControlName="allowChapterSponsors">
+                  Allow Chapter Sponsor
+                </mat-checkbox>
+              </div>
+              <div class="col-md-8 col-lg-6 col-sm-6">
+                <mat-form-field class="example-full-width sponsorship-categories">
+                  <mat-label>Sponsorship Categories</mat-label>
+                  <mat-select (selectionChange)="onSelectionChange('chapterSponsor',$event.value)" [disabled]="!allowChapterSponsor"
+                              formControlName="chapterSponsorshipCategoryIds"
+                              multiple="true">
+                    <mat-checkbox (change)="selectAllItem('chapterSponsor', $event)"
+                                  [checked]="selectAllChapterSponsor">
+                      Select All
+                    </mat-checkbox>
+                    <mat-option *ngFor="let list of chapterSponsorList" value="{{list['id']}}">
+                      {{list['categoryName']}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-6">
+            <div class="row">
+              <div class="col-md-4 col-lg-6 col-sm-6">
+                <mat-checkbox (change)="drpDownChange('chapterDonor',$event)" formControlName="allowChapterDonors">Allow
+                  Chapter Donor
+                </mat-checkbox>
+              </div>
+              <div class="col-md-8 col-lg-6 col-sm-6">
+                <mat-form-field class="example-full-width sponsorship-categories">
+                  <mat-label>Donation Categories</mat-label>
+                  <mat-select (selectionChange)="onSelectionChange('chapterDonor',$event.value)" [disabled]="!allowChapterDonor"
+                              formControlName="chapterDonationCategoryIds"
+                              multiple="true">
+                    <mat-checkbox (change)="selectAllItem('chapterDonor', $event)" [checked]="selectAllChapterDonor">
+                      Select All
+                    </mat-checkbox>
+                    <mat-option *ngFor="let list of chapterDonorList" value="{{list['id']}}">
+                      {{list['categoryName']}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Event</mat-label>
+              <mat-select (selectionChange)="getEventSelection($event.value)" formControlName="eventIds"
+                          multiple="true">
+                <mat-option *ngFor="let chapter of eventList" value="{{chapter['id']}}">
+                  {{chapter['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isEventSelected">
+        <div class="row martopevent">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox (change)="drpDownChange('sponsor',$event)" formControlName="allowSponsors">Allow
+                    Sponsors
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width sponsorship-categories">
+                    <mat-label>Event Sponsor</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange('sponsor',$event.value)" [disabled]="!allowSponsors" formControlName="sponsorshipCategoryIds"
+                                multiple="true">
+                      <mat-checkbox (change)="selectAllItem('sponsor', $event)" [checked]="selectAllSponsor">
+                        Select All
+                      </mat-checkbox>
+                      <mat-option *ngFor="let list of eventSponsorList" value="{{list['id']}}">
+                        {{list['categoryName']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox (change)="drpDownChange('donor',$event)" formControlName="allowDonors">Allow Donors
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width sponsorship-categories">
+                    <mat-label>Event Donation</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange('donor',$event.value)" [disabled]="!allowDonors" formControlName="donationCategoryIds"
+                                multiple="true">
+                      <mat-checkbox (change)="selectAllItem('donor', $event)" [checked]="selectAllDonor">
+                        Select All
+                      </mat-checkbox>
+                      <mat-option *ngFor="let list of eventDonationList" value="{{list['id']}}">
+                        {{list['categoryName']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row martopevent">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox (change)="drpDownChange('vendor',$event)" formControlName="allowVendors">Allow Vendors
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width sponsorship-categories">
+                    <mat-label>Expo Category</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange('vendor',$event.value)" [disabled]="!allowVendors" formControlName="expoCategoryIds"
+                                multiple="true">
+                      <mat-checkbox (change)="selectAllItem('vendor', $event)" [checked]="selectAllVendor">
+                        Select All
+                      </mat-checkbox>
+                      <mat-option *ngFor="let list of eventVendorList" value="{{list['id']}}">
+                        {{list['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox (change)="drpDownChange('participant',$event)" formControlName="allowParticipants">Allow
+                    Participants
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width sponsorship-categories">
+                    <mat-label>Participants</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange('participant',$event.value)" [disabled]="!allowParticipants" formControlName="ruleCategoryIds"
+                                multiple="true">
+                      <mat-checkbox (change)="selectAllItem('participant', $event)" [checked]="selectAllParticipant">
+                        Select All
+                      </mat-checkbox>
+                      <mat-option *ngFor="let list of eventParticipantList" value="{{list['id']}}">
+                        {{list['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row martopevent">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox (change)="drpDownChange('performance',$event)" formControlName="allowPerformances">Allow
+                    Performance
+                  </mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-form-field class="example-full-width sponsorship-categories">
+                    <mat-label>Status</mat-label>
+                    <mat-select (selectionChange)="onSelectionChange('performance',$event.value)" [disabled]="!allowPerformances" formControlName="status"
+                                multiple="true">
+                      <mat-checkbox (change)="selectAllItem('performance', $event)" [checked]="selectAllPerformance">
+                        Select All
+                      </mat-checkbox>
+                      <mat-option *ngFor="let list of statusList" value="{{list['value']}}">
+                        {{list['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox formControlName="allowVolunteers">Allow Volunteers</mat-checkbox>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <mat-checkbox formControlName="allowAdmins">Allow Admins</mat-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+  <div *ngIf="templateName == 'COMMUNITY' && !showUser">
+    <form [formGroup]="communityFilterForm" class="example-form" id="communityFilterForm">
+      <h1>
+        <div class="img-create">
+          <img alt="basic-info" src="assets/icon/basic-info.svg">
+        </div>
+        Notification Filter
+      </h1>
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Chapter <i>*</i></mat-label>
+              <mat-select (selectionChange)="getChapterDetail($event.value)" formControlName="chapterIds"
+                          multiple="true">
+                <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+                  {{chapter['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="isSubmit && communityFilterForm.controls.chapterIds.errors ">
+              <span *ngIf="isSubmit && communityFilterForm.controls.chapterIds.errors" class="valid-msg">Chapter is
+                required</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <mat-checkbox formControlName="activeMember">Only Active Members</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Committee</mat-label>
+              <mat-select formControlName="committeeIds" multiple="true">
+                <mat-option *ngFor="let committee of committeeList;let i = index" value="{{committee['id']}}">
+                  {{committee['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Designation</mat-label>
+              <mat-select formControlName="designations" multiple="true">
+                <mat-option *ngFor="let d of designationList;let i = index" value="{{d['name']}}">
+                  {{d['name']}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="row martopevent">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>Committee Selection Date After</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker" autocomplete="false"
+                     formControlName="startDate" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width dateinfo">
+              <mat-label>Committee Selection Date Before</mat-label>
+              <mat-datetimepicker-toggle [for]="datetimePicker1" matSuffix></mat-datetimepicker-toggle>
+              <mat-datetimepicker #datetimePicker1 openOnFocus="true" timeInterval="5" type="datetime">
+              </mat-datetimepicker>
+              <input [matDatetimepicker]="datetimePicker1" autocomplete="false"
+                     formControlName="endDate" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div *ngIf="showUser == true">
+    <h1>
+      <div class="img-create">
+        <img alt="basic-info" src="assets/icon/basic-info.svg">
+      </div>
+     User Selection
+    </h1>
+    <div class="row martopevent">
+      <div class="row borbtm" style="margin: 21px;">
+        <div class="col-sm-6">
+          <div class="topheadnew">
+            <div class="row">
+              <div class="col-sm-6 selectall">
+                <input (change)="selectedUser()" [(ngModel)]="selectedAll" type="checkbox"> Select all
+              </div>
+              <div class="col-sm-6 selected">
+               <!-- <b *ngIf="selectedAll == true">
+                  {{ this.memberList['totalElements'] - checkUncheckUser['userIdsNotIn'].length }} selected </b>
+                <b *ngIf="selectedAll == false"> {{ checkUncheckUser['userIds'].length }} selected </b>-->
+             
+                  <b *ngIf="(selectedAll == true && search=='') " (click)=" openModalWithClassSelect(selectmember)"> {{ this.memberList['totalElements'] }} selected </b>
+                  <b *ngIf="selectedAll == false  " (click)=" openModalWithClassSelect(selectmember)"> {{ checkUncheckUser['userIds'].length }} selected </b>
+                  <b *ngIf=" selectedAll == true && isShown==true && search!='' " (click)=" openModalWithClassSelect(selectmember)"> {{checkUncheckUser['userIds'].length}} selected </b>
+                  <b *ngIf=" selectedAll == true && isShown==false && search!='' " (click)=" openModalWithClassSelect(selectmember)"> {{this.checkUncheckUser["userIdsNotIn"]['0']}} selected </b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width map-url search-not">
+            <mat-label> Search Here..</mat-label>
+            <input (change)="userData($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput
+                   type="text">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="scrl">
+        <div *ngFor="let member of memberList?.content;let i=index" class="row martoppr" style="margin: 21px;">
+          <div class="col-sm-4">
+            <div class="profiletext">
+              <ul class="mainpr">
+                <li><input (change)="getCheckUncheckUser(member)" [(ngModel)]="member['checked']" type="checkbox"></li>
+                <li>
+                  <div *ngIf="member['profileShow'] == false" class="txtprofile">{{member['profileUrl']}}</div>
+                  <div *ngIf="member['profileShow'] == true" class="txtprofile">
+                    <img alt="" src="{{member['profileUrl']}}">
+                  </div>
+                  <h4>{{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}}
+                    <p>{{member['memberNumber']}}</p>
+                  </h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            {{member['email']}}
+          </div>
+          <div class="col-sm-2">
+            {{member['phone']}}
+          </div>
+          <div class="col-sm-2 state-txt">
+            <i *ngIf="member['country'] && member['city']">{{member['city']}}
+              <i *ngIf="member['country']">| {{member['country']}}</i>
+            </i>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pegination-main">
+            <ul *ngIf="userPagination">
+              <li>
+                <button (click)="pagination('current','user',0,'user')" [disabled]="memberList['first'] == true"
+                        class="next">
+                  First
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('prev','user',null,'user')" [disabled]="memberList['first'] == true"
+                        class="arrow">
+                  <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                </button>
+              </li>
+              <li (click)="pagination('current','user',i,'user')" *ngFor="let i of totalPages"
+                  [ngClass]="userReqData.page.page == i ?  'blue-peg' : ''">
+                <button class="numeric">{{i + 1}}</button>
+              </li>
+              <li>
+                <button (click)="pagination('next','user',null,'user')" [disabled]="memberList['last'] == true"
+                        class="arrow">
+                  <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('current','user',(memberList['totalPages']-1),'user')"
+                        [disabled]="memberList['last'] == true" class="next">Last
+                </button>
+              </li>
+            </ul>
+            <ul *ngIf="commonPaginatin">
+              <li>
+                <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true"
+                        class="next">
+                  First
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true" class="arrow">
+                  <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                </button>
+              </li>
+              <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+                  [ngClass]="memberReqData1.page.pageNumber == i ?  'blue-peg' : ''">
+                <button class="numeric">{{i + 1}}</button>
+              </li>
+              <li>
+                <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true" class="arrow">
+                  <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+                        [disabled]="memberList['last'] == true" class="next">Last
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <button (click)="userData()" class="save-changes fright" data-target="#newslettermodel"
+    data-toggle="modal">Publish</button> -->
+  <button (click)="userData();" *ngIf="!showUser" class="save-changes fright">Publish</button>
+  <button (click)="submit()" *ngIf="!showUser" class="save-changes fright" style="margin-right: 20px;">Save As Draft</button>
+  <button (click)="sendNow()" *ngIf="showUser" class="save-changes fright">Send Now</button>
+</div>
+
+<!--Publish record Modal -->
+<ng-template #template>
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleLabel">{{'notification.publish.popup.title' | translate}}</h5>
+        <button (click)="modalRef.hide()" aria-label="Close" class="close-container" data-dismiss="modal" id="closeModel">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row borbtm">
+          <div class="col-sm-6">
+            <div class="topheadnew">
+              <div class="row">
+                <div class="col-sm-6 selectall">
+                  <input (change)="selectedUser()" [(ngModel)]="selectedAll" type="checkbox"> Select all
+                </div>
+                <div class="col-sm-6 selected">
+                  <b *ngIf="selectedAll == true">
+                    {{ this.memberList['totalElements'] - checkUncheckUser['userIdsNotIn'].length }} selected </b>
+                  <b *ngIf="selectedAll == false"> {{ checkUncheckUser['userIds'].length }} selected </b>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width map-url search-not">
+              <mat-label> Search Here..</mat-label>
+              <input (change)="userData($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput
+                     type="text">
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngFor="let member of memberList?.content;let i=index" class="row martoppr">
+          <div class="col-sm-4">
+            <div class="profiletext">
+              <ul class="mainpr">
+                <li><input (change)="getCheckUncheckUser(member)" [(ngModel)]="member['checked']" type="checkbox"></li>
+                <li>
+                  <div *ngIf="member['profileShow'] == false" class="txtprofile">{{member['profileUrl']}}</div>
+                  <div *ngIf="member['profileShow'] == true" class="txtprofile">
+                    <img alt="" src="{{member['profileUrl']}}">
+                  </div>
+                  <h4>{{member['firstName'] | titlecase}} {{member['lastName'] | titlecase}}
+                    <p>{{member['memberNumber']}}</p>
+                  </h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            {{member['email']}}
+          </div>
+          <div class="col-sm-2">
+            {{member['phone']}}
+          </div>
+          <div class="col-sm-2 state-txt">
+            <i *ngIf="member['country'] && member['city']">{{member['city']}}
+              <i *ngIf="member['country']">| {{member['country']}}</i>
+            </i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="pegination-main">
+              <ul *ngIf="userPagination">
+                <li>
+                  <button (click)="pagination('current','user',0,'user')" [disabled]="memberList['first'] == true"
+                          class="next">
+                    First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user',null,'user')" [disabled]="memberList['first'] == true"
+                          class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i,'user')" *ngFor="let i of totalPages"
+                    [ngClass]="userReqData.page.page == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user',null,'user')" [disabled]="memberList['last'] == true"
+                          class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(memberList['totalPages']-1),'user')"
+                          [disabled]="memberList['last'] == true" class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <ul *ngIf="commonPaginatin">
+                <li>
+                  <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true"
+                          class="next">
+                    First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+                    [ngClass]="memberReqData.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+                          [disabled]="memberList['last'] == true" class="next">Last
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4 text-right">
+            <button (click)="sendNow()" class="save-changes marleft">Send Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #selectmember id="openEditModel">
+  <div class="modal-header">
+    <h2 class="previe-edtr">Selected Member List </h2>
+    <button (click)="closeModel()" aria-label="Close" class="close-container topmemberlist" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="selectmemberList == 0"> <h3>No member selected</h3></div>
+    <div *ngFor="let member of selectmemberList?.content" class="row martoppr" style="margin: 21px;">
+      <div  *ngIf="member.email !=''&& member.email!=null" class="col-md-4">
+        <div class="profiletext">
+          <ul class="mainpr member-list-pop">
+            <li></li>
+            <li>
+              <div *ngIf="member['profileShow'] == false" class="txtprofile">
+                {{member['profileUrl']}}
+              </div>
+              <div *ngIf="member['profileShow'] == true" class="txtprofile">
+                <img alt="" src="{{member['profileUrl']}}">
+              </div>
+              <h4> {{member['firstName'] | titlecase}}
+                <p> <strong>{{member['lastName'] | titlecase}} </strong> </p>
+                <p> {{member['memberNumber']}} </p>
+              </h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        {{member['email']}}
+      </div>
+      <div class="col-sm-2">
+        {{member['phone']}}
+      </div>
+      <div class="col-md-2 state-txt">
+        <i *ngIf="member['country'] && member['city']">{{member['city']}}
+          <i *ngIf="member['country']">| {{member['country']}}</i>
+        </i>
+      </div>
+    </div>
+    <div class="pegination-main" *ngIf="selectmemberList != 0">
+      <ul>
+        <li>
+          <button (click)="pagination1('current','user',0)" [disabled]="selectmemberList['first'] == true"
+                  class="next">
+            First
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination1('prev','user')" [disabled]="selectmemberList['first'] == true"
+                  class="arrow">
+            <i aria-hidden="true" class="icon-left-arrow icon"></i>
+          </button>
+        </li>
+        <li (click)="pagination1('current','user',i)" *ngFor="let i of totalPages1"
+            [ngClass]="memberReqData.page.page == i ?  'blue-peg' : ''">
+          <button class="numeric">{{i + 1}}</button>
+        </li>
+        <li>
+          <button (click)="pagination1('next','user')" [disabled]="selectmemberList['last'] == true"
+                  class="arrow">
+            <i aria-hidden="true" class="icon-right-arrow icon"></i>
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination1('current','user',(selectmemberList['totalPages']-1))"
+                  [disabled]="selectmemberList['last'] == true" class="next">Last
+          </button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</ng-template>
+
+<!--Publish record Modal -->
+
+<!-- <button (click)="openModalWithClass(template)">button</button> -->
+
+<!--Publish record Modal -->
+<!-- <div *ngIf="showModal" aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="newslettermodel" role="dialog" tabindex="1">
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button (click)="resetPagination();" aria-label="Close" id="closeModel" class="close-container"
+          data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <div class="row borbtm">
+          <div class="col-sm-6">
+            <div class="topheadnew">
+              <div class="row">
+                <div class="col-sm-6 selectall">
+                  <input (change)="selectedUser()" [(ngModel)]="selectedAll" type="checkbox"> Select all
+                </div>
+                <div class="col-sm-6 selected">
+                  <b *ngIf="selectedAll == true">
+                    {{ this.memberList['totalElements'] - checkUncheckUser['userIdsNotIn'].length }} selected </b>
+                  <b *ngIf="selectedAll == false"> {{ checkUncheckUser['userIds'].length }} selected </b>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h5>
+              <mat-form-field class="example-full-width map-url">
+                <mat-label> Search Here..</mat-label>
+                <input (change)="userData($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput
+                  type="text">
+              </mat-form-field>
+            </h5>
+          </div>
+        </div>
+        <div class="row martoppr" *ngFor="let member of memberList?.content;let i=index">
+          <div class="col-sm-4">
+            <div class="profiletext">
+              <ul class="mainpr">
+                <li><input (change)="getCheckUncheckUser(member)" type="checkbox" [(ngModel)]="member['checked']"></li>
+                <li>
+                  <div *ngIf="member['profileShow'] == false" class="txtprofile">{{member['profileUrl']}}</div>
+                  <div *ngIf="member['profileShow'] == true" class="txtprofile">
+                    <img alt="" src="{{member['profileUrl']}}">
+                  </div>
+                  <h4>{{member['firstName']}} {{member['lastName']}}
+                    <p>{{member['memberNumber']}}</p>
+                  </h4>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            {{member['email']}}
+          </div>
+          <div class="col-sm-2">
+            {{member['phone']}}
+          </div>
+          <div class="col-sm-2 state-txt">
+            <i *ngIf="member['country'] && member['city']">{{member['city']}}
+              <i *ngIf="member['country']">| {{member['country']}}</i>
+            </i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="pegination-main">
+              <ul *ngIf="userPagination">
+                <li>
+                  <button (click)="pagination('current','user',0,'user')" [disabled]="memberList['first'] == true"
+                    class="next">
+                    First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user',null,'user')" [disabled]="memberList['first'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i,'user')" *ngFor="let i of totalPages"
+                  [ngClass]="userReqData.page.page == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user',null,'user')" [disabled]="memberList['last'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(memberList['totalPages']-1),'user')"
+                    [disabled]="memberList['last'] == true" class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <ul *ngIf="commonPaginatin">
+                <li>
+                  <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true"
+                    class="next">
+                    First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+                  [ngClass]="memberReqData.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+                    [disabled]="memberList['last'] == true" class="next">Last
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-4 text-right">
+            <button class="save-changes marleft" (click)="sendNow()">Send Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!--Publish record Modal -->

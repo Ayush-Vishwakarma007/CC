@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.333" height="22.756" viewBox="0 0 17.333 22.756">
+  <g id="music-file" transform="translate(-61)">
+    <path id="Path_14932" data-name="Path 14932" d="M351,8.787v4.054h4.054Z" transform="translate(-277.111 -8.396)" fill="#fff"/>
+    <circle id="Ellipse_1452" data-name="Ellipse 1452" cx="0.5" cy="0.5" r="0.5" transform="translate(72 15.646)" fill="#fff"/>
+    <ellipse id="Ellipse_1453" data-name="Ellipse 1453" cy="0.5" ry="0.5" transform="translate(66 16.646)" fill="#fff"/>
+    <path id="Path_14933" data-name="Path 14933" d="M221,221.906l4.889-1.048v-1.3L221,220.6Z" transform="translate(-152.889 -209.797)" fill="#fff"/>
+    <path id="Path_14934" data-name="Path 14934" d="M73.222,5.778a.667.667,0,0,1-.667-.667V0H63.444A2.447,2.447,0,0,0,61,2.444V20.311a2.447,2.447,0,0,0,2.444,2.444H75.889a2.447,2.447,0,0,0,2.444-2.444V5.778Zm1.111,10.267A2,2,0,1,1,73,14.159V12.425l-4.889,1.048v3.461a2,2,0,1,1-1.333-1.885V10.267a.667.667,0,0,1,.527-.652l6.222-1.333a.667.667,0,0,1,.806.652Z" fill="#fff"/>
+  </g>
+</svg>

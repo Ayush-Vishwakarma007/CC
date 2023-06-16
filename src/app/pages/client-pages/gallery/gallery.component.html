@@ -1,0 +1,151 @@
+<div class="main-screen mainnewsscreen main-about">
+  <!-- <section class="subheader">
+    <div class="container">
+      <div class="row">
+        <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft gallarybanner">
+          <a *ngIf="isShow"   (click)="back()">
+            <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 15px;" width="100px"/>
+          </a>
+          <h2>
+            Gallery <span *ngIf="galleryName"> - {{galleryName}}</span></h2>
+        </div>
+        <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li aria-current="page" class="breadcrumb-item active">Gallery</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <section class="inner-banner">
+    <div class="blue-bg-banner"><span></span></div>
+    <div class="slid-left-blue-dots">
+      <img alt="" src="assets/images/inner-left-dots.png">
+    </div>
+    <div class="container">
+      <div class="red-inner">
+        <div class="row">
+          <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft">
+            <a *ngIf="isShow"   (click)="back()">
+              <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 23px;" width="100px"/>
+            </a>
+            <h2 class="inner-page-tlt">
+              Gallery <span *ngIf="galleryName"> - {{galleryName}}</span></h2>
+          </div>
+          <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Gallery</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="!isShow" class="container">
+    <div id="photography-index-page" style="padding-bottom: 80px; padding-top: 80px;">
+      <div class="row multi-columns-row">
+        <div *ngFor="let list of sideList?.content"
+             class="col-xs-12 col-sm-6 col-md-4 col-lg-4 padding-top-30 padding-bottom-30 margin-top-30">
+          <a (click)="getMedias(list.id,list.name)" *ngIf="list.mediaList != ''"  >
+                <span class="album block">
+                    <span *ngFor="let media of list.mediaList" [ngClass]="selectedEvent" class="thumb">
+                        <span class="polaroid shadow-5" *ngIf="media.link.indexOf(media.link) !== -1">
+                         
+                            <img  [src]="media.link | galleryImagePipe">
+                        </span>
+                        <span class="polaroid shadow-5" *ngIf="media.link.includes('http')">
+                         
+                          <img  [src]="media.link">
+                      </span>
+                    </span>
+                </span>
+            <div *ngIf="list.mediaList != ''" class="titlenamegallery">{{list.name}}</div>
+          </a>
+          <a  (click)="getMedias(list.id,list.name)" *ngIf="list.mediaList == ''"  target="_blank">
+                <span class="album block">
+                    <span [ngClass]="selectedEvent" class="thumb">
+                        <span class="polaroid shadow-5">
+                            <img src="https://s3-us-west-2.amazonaws.com/communityconnectmedia/20210224044049_5df0a59a4914d61958f27e88_video-placeholder.jpg">
+                        </span>
+                    </span>
+                </span>
+            <div class="titlenamegallery">{{list.name}}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="sideList?.content?.length==0">
+    <div style="text-align: center;"><b>No record found !</b></div>
+  </div>
+  <app-gallery-all *ngIf="isShow" [imageData]="imageData" [galleryName]="galleryName" [galleryId]="galleryId"></app-gallery-all>
+  <div *ngIf="!isShow && sideList?.content?.length!=0"  class="pegination-main totalPosition">
+    <ul  >
+      <li>
+        <button (click)="pagination('current','user',0)" [disabled]="sideList['first'] == true" class="next">First </button>
+      </li>
+      <li>
+        <button (click)="pagination('prev','user')" [disabled]="sideList['first'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+          [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+        <button class="numeric">{{i + 1}}</button>
+      </li>
+      <li>
+        <button (click)="pagination('next','user')" [disabled]="sideList['last'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-right-arrow icon"></i>
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination('current','user',(sideList['totalPages']-1))"
+                [disabled]="sideList['last'] == true"
+                class="next">Last
+        </button>
+      </li>
+    </ul>
+    <div class="totalShow"><span>Total :</span> {{sideList['totalPages']}}</div>
+
+  </div>
+  <div *ngIf="isShowDiv"  class="pegination-main totalPosition">
+    <ul>
+      <li>
+        <button (click)="pagination1('current','user',0)" [disabled]="listOfMedia['first'] == true"
+                class="next">First
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination1('prev','user')" [disabled]="listOfMedia['first'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-left-arrow icon"></i>
+        </button>
+      </li>
+      <li (click)="pagination1('current','user',i)" *ngFor="let i of totalPages1"
+          [ngClass]="reqData1.page.pageNumber == i ?  'blue-peg' : ''">
+        <button class="numeric">{{i + 1}}</button>
+      </li>
+      <li>
+        <button (click)="pagination1('next','user')" [disabled]="listOfMedia['last'] == true" class="arrow">
+          <i aria-hidden="true" class="icon-right-arrow icon"></i>
+        </button>
+      </li>
+      <li>
+        <button (click)="pagination1('current','user',(listOfMedia['totalPages']-1))"
+                [disabled]="listOfMedia['last'] == true"
+                class="next">Last
+        </button>
+      </li>
+    </ul>
+    <div class="totalShow"><span>Total:</span> {{listOfMedia['totalElements']}}</div>
+  </div>
+
+
+
+</div>

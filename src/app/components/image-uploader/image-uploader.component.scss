@@ -1,0 +1,106 @@
+
+
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+
+
+$font20: var(--font20);
+$font13: var(--font13);
+$heandingpage: var(--heandingpage);
+$tomatored: #F25C66;
+  ul{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    li:first-child{margin-left: 0;}
+    li:last-child{margin-right: 0;}
+    li {
+      -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      text-align: center;
+      position: relative;border: dashed 1px #cecece;padding: 10px;
+    }
+    .p10{padding: 10px;}
+
+  }
+  // new
+  .preview-files{border: dashed 1px #cecece;
+    td{padding: 2px;border: 0;min-width:25px;
+    img{width: 25px;}
+  }
+    .doc-nm{text-align:left;display: block;display: -webkit-box;width:calc(100% - 55px) ;height: 30px;line-height: 25px;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;word-break: break-all;color: var(--text-clr);font-weight: 600;font-size: 13px;padding-left: 0;word-wrap: break-word;white-space: normal;text-align: left;
+    }
+  }
+.imageupload-user{  display: block; position: relative;  margin-top: 30px;
+  &::before{ border-top: 5px solid $gray-light; position: absolute; left: -30px; top: 0px; right: -30px; content: "";}
+  .box-upload{ border-radius: 5px; margin-top: 25px; cursor: pointer; border: dashed 1px #ccc; width: 300px; float: left; height: 245px;  background: url(../../../assets/images/upload-user.png) no-repeat center center;}
+  .uploaded-img{  margin-top: 25px;  width: 300px; float: left; margin-right: 20px;
+    .image-thumb{ display: block; height: 245px; border: solid 1px #ccc; border-radius: 5px; overflow: hidden;
+      img{ width: 100%; height: 100%;}
+    }
+    h2{ margin: 10px 0 0 0; font-size: 16px; font-weight: 600; color: #404040; }
+    p{ font-size: 12px; color: #A2A2A2; margin: 0px; }
+    span{ font-size: 11px; font-style: italic; color: #777777;
+      img{ width: 12px; margin-top: -6px; margin-right: 2px;}
+    }
+  }
+}
+.right-blue-close {
+
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  border: 0px;
+  border-radius: 50px;
+
+  [class*='icon-']:before{ font-size: 10px; position: absolute; left: 3px; top: 4px; }
+
+  img {
+
+    width: 7px;
+    height: 7px;
+    border-radius: 0px;
+    position: absolute;
+    top: 3px;
+    border: 0px;
+    left: 0px;
+    min-height: auto;
+  }
+}
+
+.remove{
+  border: 0px;
+  cursor: pointer;
+
+}

@@ -1,0 +1,78 @@
+<ng-template mat-tab-label>
+  <ul>
+    <li>
+      <!-- <img alt="" class="tab-gray" src="assets/icon/tab1.svg">
+      <img alt="" class="tab-blue" src="assets/icon/tab1-b.svg"> -->
+      <i class="icon-statistics newicon"></i>
+    </li>
+    <li>
+      <span>{{'memberDirectory.statistics.tab.text' | translate}}</span>
+    </li>
+  </ul>
+</ng-template>
+<div class="dashboard-chart">
+  <div class="top-chart">
+    <div class="row row-eq-height no-equal-height-sm">
+      <div class="col-md-6 col-sm-12 border-right-chart">
+        <div class="pad-left">
+          <div class="row">
+            <div class="col-md-12">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/value.svg">
+                </li>
+                <li>
+                  {{'memberDirectory.statistics.memberByChpater.title' | translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart" id="revenueChart" *ngIf="revenueChartOptions?.revenueChart">
+                <apx-chart
+                  [chart]="revenueChartOptions.revenueChart"
+                  [dataLabels]="revenueChartOptions.dataLabels"
+                  [fill]="revenueChartOptions.fill"
+                  [grid]="revenueChartOptions.grid"
+                  [markers]="revenueChartOptions.markers"
+                  [series]="revenueChartOptions.series"
+                  [stroke]="revenueChartOptions.stroke"
+                  [plotOptions]="revenueChartOptions.plotOptions"
+                  [legend]="revenueChartOptions.legend"
+                  [title]="revenueChartOptions.title"
+                  [tooltip]="revenueChartOptions.tooltip"
+                  [xaxis]="revenueChartOptions.xaxis"
+                  [yaxis]="revenueChartOptions.yaxis"
+                ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="pad-right">
+          <div class="row">
+            <div class="col-md-8 col-sm-8">
+              <ul class="registration-admn">
+                <li class="icon-registran">
+                  <img alt="" src="assets/icon/earning-money.svg">
+                </li>
+                <li>
+                  {{'memberDirectory.statistics.map.title' | translate}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="chart">
+                <div #mapChart id="mapChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

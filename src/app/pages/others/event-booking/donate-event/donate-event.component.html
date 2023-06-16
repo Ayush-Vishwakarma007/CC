@@ -1,0 +1,145 @@
+<i  data-toggle="modal" id="donateEvent" data-target="#exampleModal">
+</i>
+
+
+<div class="modal fade share-model donation-model" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="tab-main">
+          <mat-tab-group (selectedTabChange)="changeTab($event)">
+            <mat-tab label="donor">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li> <img src="assets/icon/tab4.svg" alt="" class="tab-gray"> <img src="assets/icon/tab4-b.svg" alt="" class="tab-blue"> </li>
+                  <li> <span>Donation </span></li>
+                </ul>
+              </ng-template>
+              <!-- primary Donation  -->
+              <div class="term-register booktecket mod-scroll">
+                <mat-radio-group aria-label="Select an option">
+                  <div class="border-dash" *ngFor="let list of donors;let i = index" >
+                    <div class="row">
+                      <div class="col-md-9 col-sm-9 col-xs-9">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <mat-radio-button (change)="donationChange($event.source.checked,i)"
+                                              [checked]="list['id'] == sponsorId"  [value]="list['id']"> {{list['categoryName']}} </mat-radio-button>                          </div>
+                        </div>
+                        <div class="row marprimary">
+                          <div class="col-md-12">
+                            <div class="perice_txt txt-l">
+                              <p>${{list.range.min}} - ${{list.range.max}}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="reg_dates">
+                              <ul class="regs_list">
+                                <p *ngIf="list['discountType'] == 'PERCENT'">{{list['discount']}}%</p>
+                                <p *ngIf="list['discountType'] == 'AMOUNT'">${{list['discount']}}</p>
+                                <p *ngIf="list['discountType'] == 'TICKET'">{{list['discount']}} Ticket Free</p>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="event-pera">
+                              <p   [innerHTML]="list['description']"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-3 col-xs-3 amount-r">
+                        <div class="amount-pop">
+                          <ul class="primary-dollar">
+                            <li class="first">
+                              <img src="assets/icon/dollar-sign.svg" alt="">
+                            </li>
+                            <li>
+                              <input [(ngModel)]="list['amount']" [disabled]="!list['checked']" type="text" (keypress)="numberOnly($event)"
+                                     placeholder="Amount" class="second">
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12 saveinfo">
+                  <input class="save-changes fright mod-next" type="button" (click)="eventDonation()"  value="Next" >
+                </div>
+              </div>
+              <!-- primary Donation  -->
+            </mat-tab>
+            <mat-tab label="sponsor">
+              <ng-template mat-tab-label>
+                <ul>
+                  <li> <img src="assets/icon/tab5.svg" alt="" class="tab-gray"> <img src="assets/icon/tab5-b.svg" alt="" class="tab-blue"> </li>
+                  <li> <span>Sponsors </span></li>
+                </ul>
+              </ng-template>
+              <div class="term-register booktecket mod-scroll">
+                <mat-radio-group aria-label="Select an option">
+                  <div class="border-dash" *ngFor="let list of sponsors;let i = index">
+                    <div class="row">
+                      <div class="col-md-9">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <mat-radio-button (change)="sponsorChange($event.source.checked,i)"
+                                              [checked]="list['id'] == sponsorId"  [value]="list['id']"> {{list['categoryName']}} </mat-radio-button>                       </div>
+                        </div>
+                        <div class="row marprimary">
+                          <div class="col-md-12">
+                            <div class="perice_txt txt-l">
+                              <p>${{list.range.min}} - ${{list.range.max}}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="reg_dates">
+                              <ul class="regs_list">
+                                <p *ngIf="list['discountType'] == 'PERCENT'">{{list['discount']}}%</p>
+                                <p *ngIf="list['discountType'] == 'AMOUNT'">${{list['discount']}}</p>
+                                <p *ngIf="list['discountType'] == 'TICKET'">{{list['discount']}} Ticket Free</p>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="event-pera">
+                              <p   [innerHTML]="list['description']"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-3 amount-r">
+                        <div class="amount-pop">
+                          <ul class="primary-dollar">
+                            <li class="first">
+                              <img src="assets/icon/dollar-sign.svg" alt="">
+                            </li>
+                            <li>
+                              <input [(ngModel)]="list['amount']" [disabled]="!list['checked']"
+                                     type="text" (keypress)="numberOnly($event)" placeholder="Amount" class="second">
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12 saveinfo">
+                  <input class="save-changes fright mod-next" type="button" (click)="eventDonation()" value="Next" >
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

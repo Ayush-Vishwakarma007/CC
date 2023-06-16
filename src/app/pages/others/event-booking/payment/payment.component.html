@@ -1,0 +1,176 @@
+<!-- =====================  Payment & Summary  ================== --> 
+<div class="main-book">
+  <div class="white-area-create-event book-payment">
+    <div class="row row-eq-height no-equal-height">
+      <!-- left part -->
+      <div class="col-lg-8 col-md-7 col-sm-6">
+        <div class="white-payment">
+          <h1 class="pay-top">
+            Payment
+            <span>
+              Choose Payment Method from below options
+            </span>
+          </h1>
+        <div class="row card-responsive">
+          <div class="col-lg-4 col-md-12" (click)="changePayment(list)" *ngFor="let list of eventDetail?.eventConfigurations?.allowedPaymentMethods;let i = index">
+            <div class="card-box" [ngClass]="list == paymentType ? 'active' : ''" >
+              <ul>
+                <li *ngIf="list == 'PAYPAL'"><img src="assets/images/paypal.png" alt=""></li>
+                <li *ngIf="list != 'PAYPAL'"><img src="assets/images/credit-card.png" alt=""></li>
+                <li>Pay with {{ eventDetail['paymentMethods'][list]}}</li>
+              </ul>
+            </div>
+          </div>
+          </div>
+
+        <!-- <h1>
+          My Cards <button  class="add_food addnewcard" data-toggle="modal" data-target="#paypalmodel">+ Add New Card</button> 
+        </h1> -->
+        <!-- <div class="row">
+          <div class="col-md-12">
+           
+              <mat-radio-group aria-label="Select an option" class="my-card">
+                  <div class="card-resp">
+                <mat-radio-button value="1" [checked]="true"> 
+                  <div class="visa-img">
+                    <div class="visa-sub"><img src="assets/images/visa.png" alt=""></div>
+                  </div> 
+                  <div class="credit-card-radio">
+                    <ul>
+                      <li>Visa Card</li>
+                      <li>4554 - xxxx - xxxx - 1991</li>
+                      <li>JOHN MCCLANE</li>
+                    </ul> 
+                  </div>
+                  <div class="right-card">
+                    <div class="credit-cvv">                 
+                        <input type="password" placeholder="C" value="C" class="cvv-clr">
+                        <input type="password" placeholder="V" class="cvv-clr">
+                        <input type="password" placeholder="V" class="cvv-clr">                  
+                    </div>
+                    <div class="more">
+                      <button class="dropdown-toggle more-icn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon-more icon"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item"  > Edit</a>
+                        <a class="dropdown-item"  > Delete </a>
+                      </div>
+                    </div>
+                  </div>
+              </mat-radio-button>
+              </div>
+              <div class="card-resp">
+                <mat-radio-button value="2"> 
+                    <div class="visa-img">
+                      <div class="visa-sub"><img src="assets/images/mastercard0.png" alt=""></div>
+                    </div> 
+                    <div class="credit-card-radio">
+                      <ul>
+                        <li>Master Card</li>
+                        <li>4554 - xxxx - xxxx - 1991</li>
+                        <li>JOHN MCCLANE</li>
+                      </ul> 
+                    </div>
+                    <div class="right-card">
+                      <div class="credit-cvv">                
+                        <input type="password" placeholder="C" value="C" class="cvv-clr">
+                        <input type="password" placeholder="V" class="cvv-clr">
+                        <input type="password" placeholder="V" class="cvv-clr">                 
+                      </div>
+                      <div class="more">
+                        <button class="dropdown-toggle more-icn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="icon-more icon"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item"  >Edit</a>
+                          <a class="dropdown-item"  >Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                </mat-radio-button>
+                </div>
+              </mat-radio-group>
+            
+          </div>
+        </div> -->
+      </div>
+      </div>
+      <!-- left part -->
+      <div class="col-lg-4 col-md-5 col-sm-6 promo-bookticket">
+        <div class="promo-code promo">
+          <div class="row">
+            <div class="col-lg-12 txt-card">
+              <img alt="" class="percentace" src="assets/icon/percentage.svg"> <span> Have a promo code ? </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 enter-promo-code">
+              <input placeholder="Enter Promo Code here" type="text">
+            </div>
+          </div>
+        </div>
+        <span class="total-fees fees-top">
+          Total Payable Amount
+        </span>
+        <div class="tottal-fees-area">
+          <div class="main-tb border-gray" *ngFor="let list of paymentArray?.display;let i = index">
+            <div class="row">
+              <div class="col-md-7 col-sm-7 col-xs-7">
+                <span>{{list.name}}</span>
+                <button class="info" *ngIf="list.info == true">
+                  <i class="icon-info newicon"></i>
+                  <!-- Tooltips -->
+                    <div class="info-tool-tips">
+                      <div class="row marprimary">
+                        <div class="col-md-12">
+                          <div class="perice_txt txt-l">
+                            <p> {{paymentArray.category.categoryName}} </p>
+                          </div>
+                          <div class="perice_txt txt-l blue-txt">
+                              <p>${{paymentArray.category.range.min}} - ${{paymentArray.category.range.max}}</p>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="reg_dates">
+                            <ul class="regs_list">
+                              <li><span>Reward </span>
+                                <p *ngIf="paymentArray.category['discountType'] == 'PERCENT'">{{paymentArray.category['discount']}}%</p>
+                                <p *ngIf="paymentArray.category['discountType'] == 'AMOUNT'">${{paymentArray.category['discount']}}</p>
+                                <p *ngIf="paymentArray.category['discountType'] == 'TICKET'">{{paymentArray.category['discount']}} Ticket Free</p>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="event-pera">
+                            <p [innerHTML]="paymentArray.category.description"></p>
+                          </div> 
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Tooltips -->
+                </button>
+<!--                <i class="adult-small">(Remove Donation)</i>-->
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-5">
+                <span class="adult-dollar">$ {{list.value}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-tb bor-blue">
+            <div class="row">
+              <div class="col-md-7 col-sm-7 col-xs-7">
+                <span>Grand Total</span>
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-5">
+                <span class="adult-dollar green-value">$ {{paymentArray.finalAmount}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>       
+  </div>
+ </div>
+ <!-- =====================  Payment & Summary  ================== --> 

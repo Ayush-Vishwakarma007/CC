@@ -1,0 +1,530 @@
+<div class="footer-bg" [ngClass]="show == true ? 'footer-event-detail' : ''">
+  <div *ngIf="footer =='client'" class="top-footer">
+    <div class="row nomar">
+      <div class="col-md-3 col-sm-4 col-xs-12">
+           <div class="footerlog">
+              <a   routerLink="">
+                <!-- <ul class="">
+                  <li *ngIf="communityService.logo?.logo">  <img alt="logo" src="{{communityService.logo?.logo?.url}}"></li>
+                    <li *ngIf="communityService.logo?.logo2">  <img alt="logo" src="{{communityService.logo?.logo2?.url}}"></li>
+                </ul> -->
+                <ul *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''">
+                  <li ><img alt="logo" *ngIf="communityService.logo?.logo" [src]="communityService.logo?.logo?.url |communityImages"></li>
+                  <li ><img alt="logo" *ngIf="communityService.logo?.logo2" [src]="communityService.logo?.logo2?.url|communityImages"></li>
+                </ul>
+                <span class="singlelogo" *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')">
+                  <img alt="logo" *ngIf="communityService.logo?.logo" [src]="communityService.logo?.logo?.url |communityImages">
+                </span>
+              </a>
+          <!-- <div class="col-md-12 col-sm-6">
+            <div class="footermenu">
+              <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="(this.communityService.communityDetail?.androidAppLink != null && this.communityService.communityDetail?.androidAppLink != '')
+                || (this.communityService.communityDetail?.iosAppLink != null && this.communityService.communityDetail?.iosAppLink != '')">
+          <h5 class="downloadapp"> DOWNLOAD APP </h5>
+          <ul class="app-icon">
+            <li *ngIf="this.communityService.communityDetail?.androidAppLink != null && this.communityService.communityDetail?.androidAppLink != ''">
+              <a target="_blank" href="{{this.communityService.communityDetail?.androidAppLink}}">
+                <img src="assets/images/google-play.svg" alt=""></a></li>
+            <li *ngIf="this.communityService.communityDetail?.iosAppLink != null && this.communityService.communityDetail?.iosAppLink != ''">
+              <a target="_blank" href="{{this.communityService.communityDetail?.iosAppLink}}">
+                <img src="assets/images/app-store.svg" alt=""></a></li>
+          </ul>
+        </div>
+      </div>
+          </div> -->
+        </div>
+
+
+
+      </div>
+       <!-- <div class="col-md-5 col-sm-12 col-xs-12 footermenu"  *ngIf="this.communityService?.communityDetail.showMapInFooter">
+        <div id="map">
+
+          <iframe *ngIf="this.communityService?.communityDetail?.location?.length !=0"
+                  class="mapfooter"
+                  allowfullscreen
+                  frameborder="0"
+                  scrolling="no"
+                  marginheight="0"
+                  marginwidth="0"
+                  [src]="'https://www.google.com/maps/embed/v1/place?key=AIzaSyAQYXBcDVLEB0IzaDG2HyvMeFjcCFsGp5U&q='+this.communityService?.communityDetail?.location[0]+','+this.communityService?.communityDetail?.location[1] | safe: 'resourceUrl'">
+          </iframe>
+        </div>
+        </div> -->
+      <div class="col-md-7 col-sm-8 footermenu">
+          <!-- <div class="col-md-4 col-sm-4 col-xs-4" *ngIf="communityService.communityDetail?.showMenuOnFooter">
+            <h5> {{communityService.communityDetail?.alias}} </h5>
+            <ul class="subMenu1">
+              <li *ngFor="let menu of communityService.menu">
+                <a *ngIf="menu['menuItems'].length == 0 && !menu.pageId" [routerLinkActiveOptions]="{ exact: true }"
+                  class="nav-link"   routerLink="{{menu.link}}"
+                  routerLinkActive="active">{{menu.name}} <span class="sr-only">(current)</span></a>
+                <a *ngIf="menu['menuItems'].length == 0 && menu.pageId" [routerLinkActiveOptions]="{ exact: true }"
+                  class="nav-link"   [routerLink]="'/dynamic-page'+menu.link"
+                  routerLinkActive="active">{{menu.name}} <span class="sr-only">(current)</span></a>
+                <a *ngIf="menu['menuItems'].length != 0" aria-expanded="false" aria-haspopup="true" class="nav-link"
+                  href="/about-us" id="navbarDropdown" role="button">
+                  {{menu.name}}
+                </a>
+                <ul *ngIf="menu['menuItems'].length != 0" class="submenu-footer">
+                  <li *ngFor="let item of menu.menuItems">
+                    <a *ngIf="item.pageId" [routerLink]="'/dynamic-page'+item.link"
+                       >{{item.name}}</a>
+                    <a *ngIf="!item.pageId" [routerLink]="item.link"  >{{item.name}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div> -->
+          <!-- <div class="col-md-8 col-sm-8 col-xs-8" *ngIf="communityService.chapterList?.length >1 && communityService.communityDetail?.showMenuOnFooter">
+            <h5> Our Communities </h5>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <ul>
+                  <li *ngFor="let c of this.communityService.chapterList | slice:0:6 ">
+                    <a (click)='clickChapter(c)' *ngIf="c.level == 0"
+                      routerLink="/">{{c.name}}</a>
+                    <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && !c.onClickRedirect"
+                      >{{c?.name}}</a>
+                      <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && c.onClickRedirect"
+                      [href]="c.redirectUrl"
+                      [target]="!c.onClickRedirect?'_self':'_blank'">{{c?.name}}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <ul>
+                  <li *ngFor="let c of this.communityService.chapterList | slice:6 ">
+                    <a (click)='clickChapter(c)' *ngIf="c.level == 0"
+                      routerLink="/">{{c.name}}</a>
+                      <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && !c.onClickRedirect"
+                      >{{c?.name}}</a>
+                      <a (click)='!c.onClickRedirect?clickChapter(c):""' *ngIf="c.level != 0 && c.onClickRedirect"
+                      [href]="c.redirectUrl"
+                      [target]="!c.onClickRedirect?'_self':'_blank'">{{c?.name}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> -->
+
+              <div  *ngIf = "this.communityService.communityDetail?.showAddressInfoInFooter">
+                <h5> Address </h5>
+                <p class="footeradd"> <u class="mapicon"> <i aria-hidden="true" class="fa fa-map-marker"></i></u>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine1"></b>
+                  <!-- <br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine1"> -->
+                  <a *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2" href="https://www.google.com/maps/place/{{this.communityService.communityDetail.basicInformation?.addressLine2 | removeSpecial}}, {{this.communityService.communityDetail.basicInformation?.city}}, {{this.communityService.communityDetail.basicInformation?.zipcode}}, {{this.communityService.communityDetail.basicInformation?.state}}" target="_blank">
+                     <b *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2" [innerHTML] = "this.communityService.communityDetail.basicInformation?.addressLine2"></b>
+                    <!-- <br *ngIf="this.communityService.communityDetail.basicInformation?.addressLine2"> -->
+                  </a>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.city" [innerHTML] = "this.communityService.communityDetail.basicInformation?.city"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.city && this.communityService.communityDetail.basicInformation?.zipcode"> - </b>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.zipcode" [innerHTML] = "this.communityService.communityDetail.basicInformation?.zipcode"></b>,
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.state" [innerHTML] = "this.communityService.communityDetail.basicInformation?.state"></b><b *ngIf="this.communityService.communityDetail.basicInformation?.state && this.communityService.communityDetail.basicInformation?.country">, </b>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.country" [innerHTML] = "this.communityService.communityDetail.basicInformation?.country"></b>
+                </p>
+                <div class="emailfooter"  *ngIf = "this.communityService.communityDetail?.showContactInfoInFooter">
+                    <span *ngIf="this.communityService.communityDetail.basicInformation?.phone"> <u> <i class="fa fa-phone"></i> </u> <a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone">{{this.communityService.communityDetail.basicInformation?.phone}}</a></span>
+                    <span *ngIf="this.communityService.communityDetail.basicInformation?.email"><u><i class="fa fa-envelope"></i></u> <a [href]="'mailto:'+this.communityService.communityDetail.basicInformation?.email">{{this.communityService.communityDetail.basicInformation?.email}}</a></span>
+                </div>
+              </div>
+              <!-- <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 addressfooter" *ngIf = "this.communityService.communityDetail?.showContactInfoInFooter">
+                <h5> {{'contactUs.title' | translate}}</h5>
+                <p>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.phone">Contact : <a [href] = "'tel: '+this.communityService.communityDetail.basicInformation?.phone">{{this.communityService.communityDetail.basicInformation?.phone}}</a><br></b>
+                  <b *ngIf="this.communityService.communityDetail.basicInformation?.email">Email : <a [href]="'mailto:'+this.communityService.communityDetail.basicInformation?.email">{{this.communityService.communityDetail.basicInformation?.email}}</a><br></b>
+                </p>
+              </div> -->
+
+      </div>
+      <!-- social media icon -->
+      <div class="col-md-2 col-sm-12 footermenu">
+        <h5> Find Us </h5>
+        <div class="social-footer" *ngIf = "this.communityService.communityDetail.basicInformation?.socialMediaList?.length != 0">
+          <button *ngFor = "let item of this.communityService.communityDetail.basicInformation?.socialMediaList" class="social-icon-top">
+              <a href="{{item.link}}" target="_blank">
+                <img src = "{{item.icon}}" style="height: 22px; width: 22px;">
+              </a>
+          </button>
+
+        </div>
+       </div>
+      <!-- social media icon -->
+      <!-- <div class="col-md-3 col-sm-12 col-xs-12 footermenu">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="(this.communityService.communityDetail?.androidAppLink != null && this.communityService.communityDetail?.androidAppLink != '')
+                  || (this.communityService.communityDetail?.iosAppLink != null && this.communityService.communityDetail?.iosAppLink != '')">
+            <h5> DOWNLOAD APP </h5>
+            <ul class="app-icon">
+              <li *ngIf="this.communityService.communityDetail?.androidAppLink != null && this.communityService.communityDetail?.androidAppLink != ''">
+                <a target="_blank" href="{{this.communityService.communityDetail?.androidAppLink}}">
+                  <img src="assets/images/google-play.svg" alt=""></a></li>
+              <li *ngIf="this.communityService.communityDetail?.iosAppLink != null && this.communityService.communityDetail?.iosAppLink != ''">
+                <a target="_blank" href="{{this.communityService.communityDetail?.iosAppLink}}">
+                  <img src="assets/images/app-store.svg" alt=""></a></li>
+            </ul>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="communityService.communityDetail?.showSubscribeNews">
+            <h5 class="signup"> SIGN UP FOR NEWSLETTER  </h5>
+            <div class="email-footer">
+              <form [formGroup]="newsLetterform" class="example-form" id="newsLetterform">
+                    <div class="row noborer-footer">
+                      <div class="col-sm-6 col-md-12 col-lg-6">
+                        <div class="styled-input">
+                          <input formControlName="firstName" type="text" (keypress)="charOnly($event)" />
+                          <label>First Name</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-12 col-lg-6">
+                        <div class="styled-input">
+                          <input formControlName="lastName" type="text" (keypress)="charOnly($event)" />
+                          <label>Last Name</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row noborer-footer">
+                      <div class="col-sm-6 col-md-12 col-lg-6">
+                        <div class="styled-input">
+                          <input formControlName="email" type="email">
+                          <label>Email ID <i class="valid-msg">*</i></label>
+                          <span *ngIf="isSubmit && newsLetterform.controls.email.errors" class="mob-res-email">
+                            <div *ngIf="newsLetterform.controls.email.errors.required" class="valid-msg">Email is required.</div>
+                            <div *ngIf="newsLetterform.controls.email.errors.pattern" class="valid-msg">Please enter valid email.</div>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-12 col-lg-6">
+                        <div class="styled-input">
+                          <input formControlName="phone" type="text" id="phone-number" appPhoneMask [maxLength]="10" [minLength]="10"  (keypress)="numberOnly($event)">
+                          <label>Phone Number</label>
+                        </div>
+                      </div>
+                    </div>
+                    <input style="margin-top: 10px;" type="submit" class="password" (click)="newsletterChanges()" value="SUBSCRIBE">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div class="terms">
+    <div class="row nomar">
+
+      <div class="col-sm-6 poweredby">
+        <!-- <button (click)="openModalAddFamilyMember(template)">button</button> -->
+<!--        powered bY target="_blank" href="http://thecommunity-c <aonnect.com/"><img-->
+<!--            src="assets/images/community-logo.svg" alt=""></a>-->
+        Powered BY <a target="_blank" href="http://thecommunity-connect.com/">
+          <img alt="logo" *ngIf="communityService.logo?.poweredByLogo" style="width: 60px;" src="{{communityService.logo?.poweredByLogo?.url}}">
+        </a>
+      </div>
+      <div class="col-sm-6">
+        <ul class="term-menu">
+          <li><a routerLink="/contact"> {{'contactUs.title' | translate}}</a></li>
+          <li><a href="" data-toggle="modal" data-target="#exampleModalTerms"> Terms and conditions</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalTerms" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
+        <!-- <button type="button" class="close" id="hideModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition" [innerHTML]="communityService.communityDetail?.generalTermsAndConditions"></div>
+        <p><a (click)="hideModal()" routerLink="/contact-us">Please Click here to Contact US.</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalglobal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">GLOBAL NETWORKS</h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body global_network">
+        <h2>Leukemia & Lymphoma Society</h2>
+        <a href="https://www.lls.org" target="_blank">https://www.lls.org</a><br>
+        <div class="row">
+          <div class="col-sm-3">
+            <img class="main-img" src="assets/images/gb_network4.png" alt="">
+          </div>
+          <div class="col-sm-9"><p>The Leukemia & Lymphoma Society® (LLS) is a global leader in the fight against
+            cancer. The LLS mission: Cure leukemia, lymphoma, Hodgkin's disease and myeloma, and improve the quality of
+            life of patients and their families. LLS funds lifesaving blood cancer research around the world, provides
+            free information and support services, and is the voice for all blood cancer patients seeking access to
+            quality, affordable, coordinated care.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="gdd" tabindex="-1" role="dialog" aria-labelledby="gdd" aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">GLOBAL NETWORKS</h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body global_network">
+        <h2>Good Deeds Day</h2>
+        <a href="https://www.good-deeds-day.org" target="_blank">https://www.good-deeds-day.org</a><br>
+        <div class="row">
+          <div class="col-sm-3">
+            <img class="main-img" src="assets/images/gb_network2.png" alt="">
+          </div>
+          <div class="col-sm-9"><p>Good Deeds Day is an annual tradition of good deeds. All over the world, hundreds of
+            thousands choose to volunteer and help others, putting into practice the simple idea that every single
+            person can do something good, be it large or small, to improve the lives of others and positively change the
+            world.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="manav" tabindex="-1" role="dialog" aria-labelledby="manav" aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">GLOBAL NETWORKS</h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body global_network">
+        <h2>Manav Sadhna </h2>
+        <a href="https://manavsadhna.org" target="_blank">https://manavsadhna.org</a><br>
+        <div class="row">
+          <div class="col-sm-3">
+            <img class="main-img" src="assets/images/gb_network3.png" alt="">
+          </div>
+          <div class="col-sm-9"><p>Our community-based humanitarian projects cut across barriers of class and religion
+            and directly serve and empower those in need.</p></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="lls" tabindex="-1" role="dialog" aria-labelledby="lls" aria-hidden="true">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">GLOBAL NETWORKS</h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body global_network">
+        <h2>Empty Hands Music</h2>
+        <a href="https://www.emptyhandsmusic.org" target="_blank">https://www.emptyhandsmusic.org</a><br>
+        <div class="row">
+          <div class="col-sm-3">
+            <img class="main-img" src="assets/images/gb_network1.png" alt="">
+          </div>
+          <div class="col-sm-9"><p>Empty Hands Music's mission: is to spread seeds of goodness in the world through
+            selfless service, music, and love. All of Empty Hands Music's offerings are gifts to the world. Empty Hands
+            is a 501c3 US-based Non-Profit, 100% Gift offering with an intention to spread seeds of goodness through its
+            music, events & sharings all across the world, as well as through its grassroots, arts-based service work
+            from the Gandhi Ashram, for underprivileged children in the slums of Ahmedabad, Gujarat, India.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- short description model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalinfo" role="dialog" tabindex="1">
+  <div class="modal-dialog infomainpopup shortdiscription" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Short Description displayed here</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <span>Event short description is shown in event list as shown in below image.</span>
+          <img src="assets/images/card.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- short description model -->
+
+<!-- Event Profile Image model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalEventprofile" role="dialog" tabindex="1">
+  <div class="modal-dialog infomainpopup shortdiscription infomainpopup02" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Event Profile Image </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="eventmobile">
+          <li>
+            <img src="assets/images/eventdetail-mobile.png" alt="">
+          </li>
+          <li>
+            <img src="assets/images/eventdetail.png" alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Event Profile Image model -->
+
+<!-- Event Profile Image model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalSliderImages" role="dialog" tabindex="1">
+  <div class="modal-dialog infomainpopup shortdiscription" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"> Slider Images for Event Detail </h5>
+        <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="eventmobile">
+          <li>
+            <img src="assets/images/event-mobile.png" alt="">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Event Profile Image model -->
+
+
+<div class="modal fade change-password" id="exampleModalChangePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button  id="closeModal" type="button" (click)="check()" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <form id="changepassword" [formGroup]="changepassword" (ngSubmit)="changepasswordSubmit()">
+
+      <div class="modal-body passwordchange">
+        <mat-form-field class="example-full-width">
+          <mat-label>Old Password</mat-label>
+          <input [type]="hide ? 'text' : 'password'" [ngClass]="hide ? 'passWordCalss' : ''" matInput formControlName="oldPassword" class="pass" (focus)="onChanegNewOldPassword('Old')">
+          <!-- <span  class="fa fa-fw fa-eye field-icon-eye toggle-password"></span> -->
+           <span (click)="hide = !hide"  *ngIf="hide" class="fa fa-eye-slash field-icon-eye toggle-password"></span>
+          <span (click)="hide = !hide"  *ngIf="!hide" class="fa fa-fw fa-eye field-icon-eye toggle-password"></span>
+
+        </mat-form-field>
+        <div *ngIf="opassword">
+          <div class="valid-msg">Required</div>
+        </div>
+        <mat-form-field class="example-full-width" [color]="passwordComponent.color">
+          <mat-label>New Password</mat-label>
+          <!-- <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility> -->
+          <input #password [type]="hidePass ? 'text' : 'password'" [ngClass]="hidePass ? 'passWordCalss' : ''"  matInput formControlName="cnewPassword" class="pass" (keyup)="cpValidation()" (focus)="onChanegNewOldPassword('New')">
+
+          <span (click)="hidePass = !hidePass"  *ngIf="hidePass" class="fa fa-eye-slash field-icon-eye toggle-password"></span>
+          <span (click)="hidePass = !hidePass"  *ngIf="!hidePass" class="fa fa-fw fa-eye field-icon-eye toggle-password"></span>           <!-- <span  class="fa fa-eye-slash field-icon-eye toggle-password"></span> -->
+        </mat-form-field>
+        <mat-password-strength-info  *ngIf="passwordStrength" [passwordComponent]="passwordComponent"></mat-password-strength-info>
+        <mat-password-strength #passwordComponent (onStrengthChanged)="onStrengthChanged($event)" [password]="password.value"></mat-password-strength>
+        <div *ngIf="password">
+          <!-- <div class="valid-msg">Required</div> -->
+        </div>
+        <div *ngIf="strongpassword">
+          <div class="valid-msg">Password is too weak, Please check Password requirements.</div>
+        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Re-enter New Password</mat-label>
+          <input [type]="hideCmPass ? 'text' : 'password'" [ngClass]="hideCmPass ? 'passWordCalss' : ''"  matInput formControlName="newPassword" class="pass" (keyup)="cpValidation()" (focus)="onChanegNewOldPassword('Old')">
+          <span (click)="hideCmPass = !hideCmPass"  *ngIf="hideCmPass" class="fa fa-eye-slash field-icon-eye toggle-password"></span>
+          <span (click)="hideCmPass = !hideCmPass"  *ngIf="!hideCmPass" class="fa fa-fw fa-eye field-icon-eye toggle-password"></span>           <!-- <span  class="fa fa-eye-slash field-icon-eye toggle-password"></span> -->
+        </mat-form-field>
+        <div *ngIf="cpassword && !password">
+          <div class="valid-msg">Required</div>
+        </div>
+        <div *ngIf="mpassword">
+          <div class="valid-msg">Password not match</div>
+        </div>
+        <!-- <div class="valid-msg" >Note : <br>
+          <ul class="noteprofile">
+            <li style="list-style: outside;">Password length should be at least 8 Characters.</li>
+            <li style="list-style: outside;">Password must contain following:<br>
+              <ul>
+                <li style="list-style: inside;">At least 1 number</li>
+                <li style="list-style: inside;">At least 1 lowercase letter</li>
+                <li style="list-style: inside;">At least 1 uppercase letter</li>
+                <li style="list-style: inside;">At least 1 special character</li>
+              </ul>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-secondary"  (click)="canclePassword()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="button-bottm">
+  <button [routerLink]="'/donor-checkout-new/chapter/'+this.chapter?.id"> Donate</button> <button [routerLink]="'/sponsor-checkout-new/chapter/'+this.chapter?.id"> Sponsor</button>
+  <div >
+    <div class="login-header-new">
+      <a *ngIf="!this.authService.isLogin" routerLink="/login" class="nav-link" type="button"> Login
+      </a>
+    </div>
+    <div class="login-header-new">
+      <a *ngIf="this.authService.isLogin" routerLink="/membership-dashboard" class="nav-link" type="button"> Dashboard
+      </a>
+    </div>
+  </div>
+</div>

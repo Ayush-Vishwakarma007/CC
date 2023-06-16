@@ -1,0 +1,89 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <div class="white-area-create-event committi-main no-paid">
+    <h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'chapterManagement.title' | translate}}
+          <span>{{'chapterManagement.text' | translate}}</span>
+        </div>
+        <div class="col-md-6">
+         <!-- <button class="addanother" data-target="#addsponsorModal" data-toggle="modal" type="button">+ Add Chapter
+          </button>-->
+        </div>
+      </div>
+    </h1>
+
+    <!-- table -->
+    <div class="donation-sponsor">
+      <table>
+        <tr>
+          <th (click)="sort('name')"
+              [ngClass]="reqData['sort']['sortBy'] != 'NAME' ? '' : '' || reqData['sort']['sortBy'] == 'NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+              class="sortable">{{'chapterManagement.table.header.chapterName.lbl.text' | translate}} </th>
+          <!-- <th>{{'chapterManagement.table.header.chapterType.lbl.text' | translate}} </th> -->
+          <th>{{'chapterManagement.table.header.chapterDisplayPriority.lbl.text' | translate}} </th>
+          <th width="70"> {{'chapterManagement.table.header.action.lbl.text' | translate}}</th>
+        </tr>
+        <tr *ngFor="let list of chapterList?.content">
+          <td>
+            {{list['name']}}
+          </td>
+          <!-- <td>
+            {{list['chapterPropertyList']['chapterType']}}
+          </td> -->
+          <td>
+            {{list['displayPriority']}}
+          </td>
+          <td>
+            <button class="btn-edit" (click)="editChapter(list['id'])">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+            <button class="btn-edit" (click)="deleteChapter(list['id'])"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+            <!-- <div class="dropdown dropup moredrop editgallery">
+              <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                 data-toggle="dropdown"
+                 href="#" id="dropdownMenuLink" role="button">
+                <img alt="" src="assets/icon/interface.svg">
+              </a>
+              <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+               <a  class="dropdown-item"  (click)="editChapter(list['id'])"><i aria-hidden="true" class="fa fa-angle-right"></i> Edit</a>
+                <a  class="dropdown-item" (click)="deleteChapter(list['id'])"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+                  {{'chapterManagement.table.header.action.delete.lbl.text' | translate}}</a>
+              </div>
+            </div> -->
+          </td>
+        </tr>
+      </table>
+      <div class="pegination-main totalPosition">
+        <ul>
+          <li>
+            <button (click)="pagination('current','user',0)" [disabled]="chapterList['first'] == true" class="next">
+              First
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('prev','user')" [disabled]="chapterList['first'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-left-arrow icon"></i>
+            </button>
+          </li>
+          <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+              [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+            <button class="numeric">{{i + 1}}</button>
+          </li>
+          <li>
+            <button (click)="pagination('next','user')" [disabled]="chapterList['last'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-right-arrow icon"></i>
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('current','user',(chapterList['totalPages']-1))"
+                    [disabled]="chapterList['last'] == true" class="next">Last
+            </button>
+          </li>
+        </ul>
+        <div class="totalShow"><span>Total :</span> {{chapterList['totalElements']}}</div>
+
+      </div>
+    </div>
+  </div>
+</div>

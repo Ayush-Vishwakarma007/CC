@@ -1,0 +1,206 @@
+<!-- Content Here -->
+<div class="">
+  <div class="profile-head">Session</div>
+  <div class="profiletop paddsession gaftop">
+    <!-- Header -->
+    <div class="page-wrapper custom-form-field">
+      <div class="padding-page">
+        <form (ngSubmit)="submit()" [formGroup]="sessionForm" id="sessionForm">
+          <div class="create-session-model custom-form-field">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="styled-input session-nametop">
+                  <input formControlName="name" type="text"/>
+                  <label>Session Name<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.name.errors">
+                  <span *ngIf="f.name.errors.required" class="error-msg">Session Name is required</span>
+                </span>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="enter-button-inp vanue-inp">
+                  <mat-form-field class="speckers styled-input" style="display: block;">
+                      <span class="teg-inp">Tag</span>
+                    <mat-chip-list #chipList>
+                      <mat-chip *ngFor="let specker of speakers;let i = index" [removable]="removable" [selectable]="selectable">
+                        {{specker}}
+                        <mat-icon (click)="remove(i)" matChipRemove>
+                          <i  class="icon-delete-blue newicon" ></i>
+                        </mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                    <input (matChipInputTokenEnd)="addSpeakers($event)" [matChipInputFor]="chipList" style="width: 100%;" value="">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-lg-6 col-md-6">
+                <div class="styled-input">
+                  <select formControlName="timingType" type='select'>
+                    <option value="Morning">Morning</option>
+                    <option value="After_Noon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+                  </select>
+                  <label>Select Time</label>
+                  <span></span>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 session-top">
+                <div class="styled-input">
+                  <select formControlName="scheduleId" type='select'>
+                    <option value="">Select Schedule</option>
+                    <option *ngFor="let schedule of scheduleArray;let i=index"
+                            value="{{schedule['id']}}">{{schedule['name']}}</option>
+                  </select>
+                  <label>Schedule<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.scheduleId.errors">
+                  <span *ngIf="f.scheduleId.errors.required" class="error-msg">Schedule is required</span>
+                </span>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-lg-6 col-md-6">
+                <div class="styled-input">
+                  <!--
+                    <input type="text" formControlName="address" />
+                  -->
+                  <input #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" [options]='maploc'
+                         formControlName="address"
+                         ngx-google-places-autocomplete/>
+                  <label>Address<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.capacity.errors">
+                  <span *ngIf="f.capacity.errors.required" class="error-msg">Address is required</span>
+                </span>
+              </div>
+              <div class="col-lg-6 col-md-6 session-top">
+                <div class="styled-input">
+                  <input (keypress)="numberOnly($event)" formControlName="contactNumber" [textMask]="{mask: phoneMask}"  ng-pattern="numberOnly" type="text"/>
+                  <label>Contact Number<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.capacity.errors">
+                  <span *ngIf="f.capacity.errors.required" class="error-msg">Contact Number is required</span>
+                </span>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-md-6 col-md-6">
+                <div class="styled-input">
+                  <input formControlName="timeStarts" placeholder="Start Time" type="time">
+                  <label>Start Time<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.timeStarts.errors">
+                 <span *ngIf="f.timeStarts.errors.required" class="error-msg">Start Time is required</span>
+                 </span>
+              </div>
+              <div class="col-md-6 col-md-6 session-top">
+                <div class="styled-input">
+                  <input formControlName="timeEnds" placeholder="End Time" type="time" value="{{endTime}}">
+                  <label>End Time<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.timeEnds.errors">
+                <span *ngIf="f.timeEnds.errors.required" class="error-msg">End Time is required</span>
+              </span>
+              </div>
+            </div>
+            <div class="row mart-session">
+              <div class="col-lg-6 col-md-6">
+                <div class="styled-input">
+                  <input (keypress)="numberOnly($event)" formControlName="capacity" type="number"/>
+                  <label>Capacity<i>*</i></label>
+                  <span></span>
+                </div>
+                <span *ngIf="submitted && f.capacity.errors">
+                  <span *ngIf="f.capacity.errors.required" class="error-msg">Capacity is required</span>
+                </span>
+              </div>
+              <!--              <div class="col-lg-6">-->
+              <!--                <div class="styled-input datematerial">-->
+              <!--                  <input type="text" formControlName="scheduleDate" matInput [matDatepicker]="picker">-->
+              <!--                  <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>-->
+              <!--                  <mat-datepicker #picker></mat-datepicker>-->
+              <!--                  <label>Date</label>-->
+              <!--                </div>-->
+              <!--                <span *ngIf="submitted && f.scheduleDate.errors">-->
+              <!--                  <span class="error-msg" *ngIf="f.scheduleDate.errors.required">Date is required</span>-->
+              <!--                </span>-->
+              <!--              </div>-->
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="submit()" class="save-changes fright" type="button" value="Save">
+            </div>
+          </div>
+        </form>
+        <div class="mem-next martopseat">
+          <div class="row">
+            <div class="col-md-6  col-xs-6">
+              <input class="save-changes backbtn"  (click)="back()" type="button" value="Back">
+            </div>
+            <div class=" col-xs-6">
+              <input (click)="next()" class="save-changes fright" type="button" value="Next">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="paddleft profiletop">
+  <div class="pad-btm event-schedule">
+    <div class="col-sm">
+      <div class="user-white-box page-top">
+        <div class="custom-scrollbar">
+          <div class="data-table-main survey-scroll">
+            <table class="table table-bordered table-break">
+              <thead>
+              <tr>
+                <th class="session-name">Name</th>
+                <th class="session-speeker">Speakers</th>
+                <th>Location</th>
+                <th class="session-capacity">Capacity</th>
+                <th class="session-time">Time</th>
+                <th class="session-edit">Edit</th>
+                <th class="session-delete">Delete</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let session of sessionArray;let i=index">
+                <td>{{session.name}}</td>
+                <td>
+                  <span class="blue-txt-survey">{{session.speaker}}</span>
+                </td>
+                <td>{{session.address}}</td>
+                <td>{{session.capacity}}</td>
+                <td>{{session.timeStart}} to {{session.timeEnd}}</td>
+                <td>
+                  <button (click)="edit(session)" class="edit-config">
+                      <img src="assets/icon/pencil-edit-button.svg">
+                  </button>
+                </td>
+                <td>
+                  <button (click)="delete(session['id'])" class="edit-config">
+                    <i class="icon-delete newicon"></i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content Here -->
+<!-- <ngx-alerts></ngx-alerts> -->

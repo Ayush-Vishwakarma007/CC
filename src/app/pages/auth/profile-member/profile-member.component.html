@@ -1,0 +1,1091 @@
+<div class="create-event-right-side common-page">
+  <div class="profile-heading">
+    Profile
+  </div>
+  <div class="main-profile">
+    <div class="row">
+      <div class="col-sm-12 col-md-7">
+        <div class="whitebg-profile">
+          <div class="profile-section">
+            <ul>
+              <li>
+                <!-- <span class="thumb">
+                  <img src="{{newUserDetails.profilePictureUrl}}" alt="">
+                </span> -->
+                <div class="thumb" class="profilecarector numprofile" *ngIf="!showProfile">
+                  <span>{{logoName}}</span>
+                </div>
+                <span class="thumb" *ngIf="showProfile">
+                  <img [src]="profilesrc | authImages" alt="" />
+                </span>
+              </li>
+              <li class="profile-text">
+                <h3>
+                  {{newUserDetails['firstName'] |titlecase}}
+                  {{newUserDetails['middleName'] | titlecase}}
+                  {{newUserDetails['lastName'] | titlecase}}
+                </h3>
+                <p *ngIf="newUserDetails['email']">
+                  <i class="fas fa-envelope"></i> {{newUserDetails['email']}}
+                </p>
+                <p *ngIf="newUserDetails['phone']">
+                  <i class="fas fa-phone"></i>{{newUserDetails['countryPhoneCode']}} {{ph}}
+                </p>
+                <span class="signature" *ngIf="showAdmin =='ADMIN'">
+                  <img *ngIf="newUserDetails.signatureImage!=null && newUserDetails.signatureImage!=''"
+                    src="{{newUserDetails['signatureImage']}}" /></span>
+              </li>
+              <li>
+                <button class="editbtn-profile">
+                  <i aria-hidden="true" class="newicon icon-edit-member" (click)="updateProfile(Profile)"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- <div class="whitebg-profile">
+              <h4>
+                Basic Information
+                <button class="editbtn-profile" (click)="openModalWithBasicInfo(Basic)">
+                  <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                </button>
+              </h4>
+              <span class="name">Name </span>
+              <p>{{newUserDetails['firstName'] |titlecase}} {{newUserDetails['lastName'] | titlecase}}</p>
+
+              <span class="name">Email </span>
+              <p> {{newUserDetails['email']}} </p>
+            </div> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" *ngFor="let memberDetail of memberDetail;let i=index">
+            <div class="whitebg-profile addressinfo">
+              <h4>
+                {{memberDetail.stepName}}
+                <button class="editbtn-profile">
+                  <i aria-hidden="true" class="newicon icon-edit-member"
+                    (click)="openModalWithBasicInfo(Basic,memberDetail['id'])"></i>
+                </button>
+              </h4>
+              <div *ngFor="let member of memberDetail?.fieldValues;let i=index">
+                <span class="name">{{member.name}} </span>
+                <p *ngIf="member.type=='DATE'">
+                  {{member.value | date:
+                  this.communityService.publicInfo?.webDateFormat}}
+                </p>
+                <p *ngIf="member.type!='DATE'">{{member.value}}</p>
+              </div>
+
+              <!-- <p>{{newUserDetails['addressLine1']}}</p>
+                <p>
+                  Would you like to volunteer with IANT ? <button> YES </button>
+                </p>
+                <p>
+                  Would you like to be considered on the IANT Board? <button> YES </button>
+                </p> -->
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="whitebg-profile">
+              <h4>
+                Personal Information
+                <button class="editbtn-profile">
+                  <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                </button>
+              </h4>
+              <span class="name">Date of Birth </span>
+              <p> January 1985 </p>
+
+              <span class="name">Marital Status </span>
+              <p> Married </p>
+
+              <span class="name">Occupation </span>
+              <p> constituting principal </p>
+
+              <span class="name">Education </span>
+              <p> Master in Computer Application </p>
+
+              <span class="name">University / College  </span>
+              <p> Harvard University </p>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="row">
+          <div class="col-sm-12">
+            <div class="whitebg-profile social">
+              <h4>
+                Social media Links
+                <button class="editbtn-profile">
+                  <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                </button>
+              </h4>
+             <span>
+              <a href="#"> <i class="fab fa-facebook-f"></i> https://www.facebook.com/edwardmartin/  </a>
+             </span>
+             <span>
+              <a href="#"> <i class="fab fa-twitter"></i> https://twitter.com/edwardmartin/  </a>
+             </span>
+             <span>
+              <a href="#"> <i class="fab fa-youtube"></i> https://www.youtube.com/edwardmartin/  </a>
+             </span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="col-sm-12 col-md-5">
+        <div class="whitebg-profile">
+          <h4>
+            Family Members
+            <button class="editbtn-profile" (click)="openModalAddFamilyMember(template)">
+              <i aria-hidden="true" class="newicon icon-edit-member"></i>
+            </button>
+          </h4>
+          <div class="rightprofile-section" *ngFor="let familyMember of familyMemberDetail;let i=index">
+            <ul>
+              <li>
+                <div class="profilecarector numprofile" *ngIf="!familyMember.profilePictureUrl">
+                  <span>
+                    {{getShortName(familyMember.firstName)}}{{getShortName(familyMember.lastName)}}
+                  </span>
+                </div>
+                <div class="profilecarector numprofile" *ngIf="familyMember.profilePictureUrl">
+                  <img alt="" [src]="familyMember.profilePictureUrl | authImages" class="" />
+                </div>
+              </li>
+              <li class="profile-text">
+                <h3>
+                  {{familyMember.firstName|titlecase}}
+                  {{familyMember.middleName| titlecase}}
+                  {{familyMember.lastName| titlecase}}
+                </h3>
+                <p>{{familyMember.relation}}</p>
+              </li>
+            </ul>
+            <span *ngIf="familyMember.email">
+              <i class="fas fa-envelope"></i>{{familyMember.email}}</span>
+            <span *ngIf="familyMember.phone">
+              <i class="fas fa-phone"></i>{{familyMember.phone}}</span>
+          </div>
+          <span *ngIf="familyMemberDetail.length==0"><b>No family member available!</b></span>
+
+          <!-- <div class="rightprofile-section">
+            <ul>
+              <li>
+                <span class="thumb">
+                  <img src="assets/images/profile.png" alt="">
+                </span>
+              </li>
+              <li class="profile-text">
+                <h3> Edward Martin </h3>
+                <p>Parent</p>
+              </li>
+             </ul>
+             <span> <i class="fas fa-envelope"></i> edwardmartin@gmail.com </span>
+             <span> <i class="fas fa-phone"></i> +1 (982) 493-2090 </span>
+          </div>
+          <div class="rightprofile-section">
+            <ul>
+              <li>
+                <span class="thumb">
+                  <img src="assets/images/profile.png" alt="">
+                </span>
+              </li>
+              <li class="profile-text">
+                <h3> Edward Martin </h3>
+                <p>Parent</p>
+              </li>
+             </ul>
+             <span> <i class="fas fa-envelope"></i> edwardmartin@gmail.com </span>
+             <span> <i class="fas fa-phone"></i> +1 (982) 493-2090 </span>
+          </div> -->
+
+          <div *ngIf="communityService.communityDetail?.allowGuest">
+            <h4 class="familymember">
+              Guest Members
+              <button class="editbtn-profile" (click)="openModalAddFamilyMember(AddGuestMember)">
+                <i aria-hidden="true" class="newicon icon-edit-member"></i>
+              </button>
+            </h4>
+            <div class="rightprofile-section" *ngFor="let guestMember of guestDetail;let i=index">
+              <ul>
+                <li>
+                  <div class="profilecarector numprofile" *ngIf="!guestMember.profilePictureUrl">
+                    <span>
+                      {{getShortName(guestMember.firstName)}}{{getShortName(guestMember.lastName)}}
+                    </span>
+                  </div>
+                  <div class="profilecarector numprofile" *ngIf="guestMember.profilePictureUrl">
+                    <img alt="" [src]="guestMember.profilePictureUrl | authImages" class="" />
+                  </div>
+                </li>
+                <li class="profile-text">
+                  <h3>
+                    {{guestMember.firstName| titlecase}} {{guestMember.lastName|
+                    titlecase}}
+                  </h3>
+                  <p>{{guestMember.relation | titlecase }}</p>
+                </li>
+              </ul>
+              <span *ngIf="guestMember.email">
+                <i class="fas fa-envelope"></i>{{guestMember.email}}</span>
+              <span *ngIf="guestMember.phone">
+                <i class="fas fa-phone"></i>{{guestMember.phone}}
+              </span>
+            </div>
+            <span *ngIf="guestDetail.length==0">
+              <b>No guest member available! </b></span>
+          </div>
+
+          <!-- <div class="rightprofile-section">
+            <ul>
+              <li>
+                <span class="thumb">
+                  <img src="assets/images/profile.png" alt="">
+                </span>
+              </li>
+              <li class="profile-text">
+                <h3> Edward Martin </h3>
+                <p>Parent</p>
+              </li>
+             </ul>
+             <span> <i class="fas fa-envelope"></i> edwardmartin@gmail.com </span>
+             <span> <i class="fas fa-phone"></i> +1 (982) 493-2090 </span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <ng-template #template>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header  ">
+        Add Member
+        (click)="modalRef.hide()"
+        <button  id="closeModal" type="button" class="close" data-dismiss="modal" aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="picture-upload">
+              <span class="pic">
+                <img src="assets/images/profile.png" alt="">
+              </span>
+              <button> <img src="assets/icon/upload-profile-picture.svg" alt="">
+                <i>Change Profile Photo</i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>First Name</mat-label>
+              <input matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Phone Number</mat-label>
+              <input matInput placeholder="" value="">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer ">
+      <button type="button" class="btn cancel">Cancel</button>
+      <button type="button" class="btn save" data-dismiss="modal">Save</button>
+    </div>
+  </div>
+</div>
+</ng-template> -->
+
+<ng-template #template>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Add Family Member
+        <!-- (click)="modalRef.hide()" -->
+        <button (click)="clearModel1()" type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form [formGroup]="addFamailyMemberForm">
+            <div class="row firstnametop">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>First Name</mat-label>
+                  <input matInput placeholder="" id="firstName" formControlName="firstName" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addFamailyMemberForm.controls.firstName.errors"
+                  class="form-text text-danger">Please enter first name</small>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Middle Name</mat-label>
+                  <input matInput placeholder="" id="middleName" formControlName="middleName" />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput placeholder="" id="lastName" formControlName="lastName" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addFamailyMemberForm.controls.lastName.errors"
+                  class="form-text text-danger">Please enter last name</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Select Relation</mat-label>
+                  <mat-select formControlName="relation">
+                    <mat-option *ngFor="let relation of relationList" [value]="relation.relation">
+                      {{relation.relation}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <small *ngIf="submitted  && addFamailyMemberForm.controls.relation.errors"
+                  class="form-text text-danger">Please select relation</small>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Email ID</mat-label>
+                  <input matInput placeholder="" id="email" formControlName="email" />
+                </mat-form-field>
+                <!--            <small *ngIf="submitted  && addFamailyMemberForm.controls.email.errors"-->
+                <!--            class="form-text text-danger">Please Enter Email</small>-->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Contact</mat-label>
+                  <input matInput placeholder="" (keypress)="numberOnly($event)" formControlName="phone" appPhoneMask />
+                </mat-form-field>
+                <!--            <small *ngIf="submitted  && addFamailyMemberForm.controls.phone.errors"-->
+                <!--            class="form-text text-danger">Please Enter phone number</small>-->
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Birth Year</mat-label>
+                  <input matInput placeholder="" id="birthYear" formControlName="birthYear"
+                    (keypress)="numberOnly($event)" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addFamailyMemberForm.controls.birthYear.errors"
+                  class="form-text text-danger">Please enter birth year</small>
+              </div>
+              <div class="col-sm-4">
+                <div class="left-part-toltip">
+                  <mat-checkbox style="padding-top: 15px; display: block;" formControlName="allowedLogin">Allowed
+                    Login</mat-checkbox>
+                  <i class="fa fa-info-circle" type="button"
+                    tooltip="With your permission, your child or family member can sign in to this websites using a web browser and mobile app to access your membership benefits."
+                    placement="top"></i>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="addmember">
+                  <button type="button" (click)="onSubmit()" class="btn save">
+                    {{addEditButtonName}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="graybordertop">
+            <div class="borderbottomright" *ngFor="let familyMember of familyMemberDetail;let i=index">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="rightprofile-section">
+                      <ul>
+                        <li>
+                          <div class="thumb" class="profilecarector numprofile" *ngIf="!familyMember.profilePictureUrl">
+                            <span>
+                              {{getShortName(familyMember.firstName)}}{{getShortName(familyMember.lastName)}}
+                            </span>
+                          </div>
+                          <div class="profilecarector numprofile" *ngIf="familyMember.profilePictureUrl">
+                            <img alt="" [src]="familyMember.profilePictureUrl | authImages" class="" />
+                          </div>
+                        </li>
+                        <li class="profile-text">
+                          <h3>
+                            {{familyMember.firstName| titlecase}}
+                            {{familyMember.lastName| titlecase}}
+                          </h3>
+                          <p>{{familyMember.relation}}</p>
+                        </li>
+                      </ul>
+                      <span *ngIf="familyMember.email">
+                        <i class="fas fa-envelope"></i> {{familyMember.email}}
+                      </span>
+                      <span *ngIf="familyMember.phone">
+                        <i class="fas fa-phone"></i> {{familyMember.phone}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="rightedit">
+                      <button (click)="editGM(familyMember)">
+                        <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                        Edit
+                      </button>
+                      <button (click)="deleteGM(familyMember)" class="delete">
+                        <img src="assets/icon/material-delete-sweep.svg" alt="" />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--    <div class="modal-footer ">-->
+      <!--      <button type="button" class="btn cancel">Cancel</button>-->
+      <!--      <button type="button" class="btn save" data-dismiss="modal">Save</button>-->
+      <!--    </div>-->
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #AddGuestMember>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        Add Guest Members
+        <!-- (click)="modalRef.hide()" -->
+        <button (click)="clearModel()" id="closeModal" type="button" class="close" data-dismiss="modal"
+          aria-label="Close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form [formGroup]="addGuestForm">
+            <div class="row firstnametop">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>First Name</mat-label>
+                  <input matInput value="" id="firstName" formControlName="firstName" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addGuestForm.controls.firstName.errors" class="form-text text-danger">Please
+                  enter first name</small>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Middle Name</mat-label>
+                  <input matInput value="" id="middleName" formControlName="middleName" />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput id="lastName" formControlName="lastName" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addGuestForm.controls.lastName.errors" class="form-text text-danger">Please
+                  enter last name</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Email ID</mat-label>
+                  <input matInput id="email" formControlName="email" />
+                </mat-form-field>
+                <!--            <small *ngIf="submitted  && addGuestForm.controls.relation.errors"-->
+                <!--            class="form-text text-danger">Please enter email</small>-->
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Contact</mat-label>
+                  <input matInput formControlName="phone" (keypress)="numberOnly($event)" appPhoneMask />
+                </mat-form-field>
+                <!--            <small *ngIf="submitted  && addGuestForm.controls.phone.errors"-->
+                <!--              class="form-text text-danger">Please Enter contact number</small>-->
+              </div>
+              <div class="col-sm-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Birth Year</mat-label>
+                  <input matInput id="birthYear" formControlName="birthYear" (keypress)="numberOnly($event)" />
+                </mat-form-field>
+                <small *ngIf="submitted  && addGuestForm.controls.birthYear.errors" class="form-text text-danger">Please
+                  enter birth year</small>
+                <small *ngIf="submitted  && addGuestForm.controls.birthYear.length>4"
+                  class="form-text text-danger">Please enter valid birth year</small>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="addmember">
+                  <button type="button" class="btn save" (click)="onGuestSubmit()">
+                    {{addEditButtonName}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="graybordertop">
+            <div class="borderbottomright" *ngFor="let guestMember of guestDetail;let i=index">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <div class="rightprofile-section">
+                      <ul>
+                        <li>
+                          <div class="profilecarector numprofile" *ngIf="!guestMember.profilePictureUrl">
+                            <span>{{getShortName(guestMember.firstName)}}{{getShortName(guestMember.lastName)}}
+                            </span>
+                          </div>
+                          <div class="profilecarector numprofile" *ngIf="guestMember.profilePictureUrl">
+                            <img alt="" [src]="guestMember.profilePictureUrl | authImages" class="" />
+                          </div>
+                        </li>
+                        <li class="profile-text">
+                          <h3>
+                            {{guestMember.firstName| titlecase}}
+                            {{guestMember.lastName| titlecase}}
+                          </h3>
+                          <p>{{guestMember.relation}}</p>
+                        </li>
+                      </ul>
+                      <span *ngIf="guestMember.email">
+                        <i class="fas fa-envelope"></i>{{guestMember.email}}
+                      </span>
+                      <span *ngIf="guestMember.phone">
+                        <i class="fas fa-phone"></i> {{guestMember.phone}}</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="rightedit">
+                      <button (click)="editFM(guestMember)">
+                        <i aria-hidden="true" class="newicon icon-edit-member"></i>
+                        Edit
+                      </button>
+                      <!-- <button class="delete"  click="deleteFM(guestMember)"> <img src="assets/icon/material-delete-sweep.svg"  > Delete </button> -->
+                      <button (click)="deleteFM(guestMember)" class="delete">
+                        <img src="assets/icon/material-delete-sweep.svg" alt="" />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--    <div class="modal-footer ">-->
+      <!--      <button type="button" class="btn cancel" (click)="clear()">Cancel</button>-->
+      <!--      <button type="button" class="btn save" data-dismiss="modal">Save</button>-->
+      <!--    </div>-->
+    </div>
+  </div>
+</ng-template>
+
+<form id="proPicUpdate" [formGroup]="proPicUpdate" style="display: none;">
+  <input (click)="this.profilepic.value = null;" type="file" formControlName="file" accept="image/png, image/jpeg"
+    id="profileupdate" #profilepic (change)="fileChangeEvent($event)" />
+</form>
+
+<ng-template #Profile>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Profile</h5>
+        <!-- (click)="modalRef.hide()" -->
+        <button (click)="modalRef.hide()" type="button" class="close" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form id="profileForm" [formGroup]="profileForm">
+            <div class="profiletop">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="profile-img">
+                    <img alt="" [src]="profilesrc | authImages" class="" *ngIf="showProfile" />
+                    <div class="profilecarector big-charectorname" *ngIf="!showProfile">
+                      <span class="chrtr-big"> {{logoName}} </span>
+                    </div>
+                    <br />
+                    <a (click)="uploadphotoclick();click($event)">Upload Photo</a><br />
+                    <a *ngIf="showProfile" (click)="removeProfile();click($event)">Remove Photo</a>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="styled-input wid01">
+                        <input class="placecolor" type="text" [maxLength]="15" size="15"
+                          (keydown.space)="$event.preventDefault();" formControlName="firstName"
+                          placeholder="Enter First Name" ng-pattern="/^[a-zA-Z\s]*$/" (click)="click($event)" />
+                        <label>First Name</label>
+                        <div *ngIf="this.submittedPform == false && f.firstName.errors">
+                          <div *ngIf="this.submittedPform == false && f.firstName.errors.required" class="valid-msg">
+                            First Name is required
+                          </div>
+                          <div *ngIf="this.submittedPform == false && f.firstName.errors.pattern" class="valid-msg">
+                            Only allowed character
+                          </div>
+                        </div>
+                      </div>
+                      <div class="styled-input wid02">
+                        <input class="placecolor" type="text" [maxLength]="15" size="15" formControlName="middleName"
+                          placeholder="Enter Middle Name" (clcik)="onFocusEvent($event)" />
+                        <label>Middle Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 martop">
+                      <div class="styled-input wid01 lastnamemar">
+                        <input class="placecolor" type="text" [maxLength]="15" size="15" formControlName="lastName"
+                          placeholder="Enter Last Name" (keydown.space)="$event.preventDefault();"
+                          (click)="onFocusEvent($event)" />
+                        <label>Last Name</label>
+                        <div *ngIf="this.submittedPform == false && f.lastName.errors">
+                          <div *ngIf="this.submittedPform == false && f.lastName.errors.required" class="valid-msg">
+                            Last Name is required
+                          </div>
+                          <div *ngIf="this.submittedPform == false && f.lastName.errors.pattern" class="valid-msg">
+                            Only allowed character
+                          </div>
+                        </div>
+                      </div>
+                      <div class="border-country emailprofile wid02">
+                        <span>Email ID</span>
+                        <input type="text" formControlName="email" disabled />
+                        <button class="editbtn-profile">
+                          <i aria-hidden="true" class="newicon icon-edit-member"
+                            (click)="updateProfileEmail(updateEmail)"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 martop">
+                      <div class="border-country">
+                        <span>Contact</span>
+                        <select formControlName="countryPhoneCode" class="profile_cntc" (click)="onFocusEvent($event)">
+                          <option class="options" *ngFor="let country of countryData" [ngValue]="country.phoneCode">
+                            <span>
+                              ({{country.phoneCode}}) {{country.name}}
+                            </span>
+                          </option>
+                        </select>
+                        <input type="text" formControlName="phone" (keypress)="numberOnly($event)" appPhoneMask
+                          (click)="onFocusEvent($event)" />
+                        <div *ngIf="this.submittedPform == false && f.phone.errors">
+                          <div *ngIf="this.submittedPform == false && f.phone.errors.required" class="valid-msg">
+                            phone is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <button type="submit" (click)="profileFormSubmit()" class="save-changes">Update</button>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 martop-date">
+                      <mat-checkbox [(ngModel)]="subscribeNewsLetter" [ngModelOptions]="{standalone: true}"
+                        (change)="newsletterChanges($event)" class="pull-right">Subscribe Newsletter
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="showAdmin =='ADMIN'">
+                    <div class="col-sm-12">
+                      <div class="add-signature">
+                        <h3>Add Signature</h3>
+
+                        <div class="imageup create-img-upload small-upload" (click)="click($event)">
+                          <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                            (maxFileSizeError)="fileSizeError()" (queueCompleted)="queueCompleted()"
+                            (uploadStarted)="uploadStarted()" [(uploadedFiles)]="mediaList" [uploadUrl]="mediaUploadUrl"
+                            [validTypes]="validTypesImage">
+                          </app-file-uploader-vertical>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn cancel" >Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #updateEmail>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Email</h5>
+
+        <!-- (click)="modalRef.hide()" -->
+        <button (click)="closeOtpMdl()" type="button" class="close-container2">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <form id="profileForm" [formGroup]="profileForm">
+            <div class="profiletop">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <div class="border-country">
+                    <span>Email ID</span>
+                    <input class="editemail" type="text" formControlName="email"
+                      (keyup)="inputChanged($event.target.value)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+            <div class="col-md-12 col-sm-12 text-aligncenter">
+              <button class="save-changes" (click)="update1()">Get OTP</button>
+            </div>
+          </div>
+          <div class="profiletop" *ngIf="flag==true">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <span class="verifytext">Enter verfication code</span>
+                <div class="otpinput">
+                  <!--                  <input  class="editemail1"-->
+                  <!--                    type="text"-->
+                  <!--                    [(ngModel)]="otp" [maxlength]="6"-->
+                  <!--                    (keypress)="numberOnly($event)"-->
+                  <!--                  />-->
+                  <ng-otp-input (onInputChange)="onOtpChange($event)"
+                    [config]="{length:6 ,allowNumbersOnly:true}"></ng-otp-input>
+                  <!--<input
+                    class="editemail1"
+                    type="text"
+                    [(ngModel)]="otp1"
+                    (keypress)="numberOnly($event)"
+                  />
+                  <input
+                    class="editemail1"
+                    type="text"
+                    [(ngModel)]="otp2"
+                    (keypress)="numberOnly($event)"
+                  />
+                  <input
+                    class="editemail1"
+                    type="text"
+                    [(ngModel)]="otp3"
+                    (keypress)="numberOnly($event)"
+                  />
+                  <input
+                    class="editemail1"
+                    type="text"
+                    [(ngModel)]="otp4"
+                    (keypress)="numberOnly($event)"
+                  />
+                  <input
+                    class="editemail1"
+                    type="text"
+                    [(ngModel)]="otp5"
+                    (keypress)="numberOnly($event)"
+                  />-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 text-aligncenter">
+                <button class="save-changes" [hidden]="flag==false" (click)="VerifyOtp()">
+                  Verify OTP
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn cancel" >Cancel</button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<i (click)="openModalWithClass1(template5)" id="openModal"></i>
+<ng-template #template5>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">File Upload</h5>
+    <!-- <button (click)="modalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeButton"
+              type="button">
+        <img alt="" src="assets/icon/delete-button.svg">
+      </button> -->
+    <button (click)="modalRef3.hide()" id="closeModal" type="button" class="close" data-dismiss="modal"
+      aria-label="Close" class="close-container uploadclose">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Uploaded Image</h2>
+        <div class="cropimage">
+          <image-cropper (cropperReady)="cropperReady()" (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()" [aspectRatio]="1 / 1"
+            [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" roundCropper="true"></image-cropper>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <h2>Cropped Image</h2>
+        <div class="cropedimage">
+          <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="hideModel" class="btn btn-secondary" (click)="modalRef3.hide()" type="button">
+      Cancel
+    </button>
+    <button class="save-changes" (click)="updateProfile1()" type="button">
+      Upload
+    </button>
+  </div>
+</ng-template>
+<ng-template #Basic>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div *ngFor="let memberDetail of memberDetail">
+          <span *ngIf="memberDetail['id']===dynamicFormId">
+            {{memberDetail.stepName}}</span>
+        </div>
+        <button type="button" (click)="dynamicClose()" class="close" data-dismiss="modal" aria-label="Close"
+          class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+          <form [formGroup]="addMemberForm" id="addMemberForm" class="">
+            <!-- first step -->
+            <div *ngFor="let memberDetail of memberDetail">
+              <div class="basic-information-profile" *ngIf="memberDetail['id']===dynamicFormId">
+                <!--<h1 class="changepass">{{memberDetail.stepName}}</h1>-->
+                <div *ngFor="let member of memberDetail?.fieldValues;let i=index">
+                  <div *ngIf="member.type!='RADIO_BUTTON' && member.type!='CHECK_BOX'"
+                    class="col-md-6 martop-date no-borin-res">
+                    <!-- text-->
+                    <div class="row">
+                      <div *ngIf="member.type=='TEXT'" class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{member.name}}
+                            <!-- <i *ngIf="member.required==true">*</i> -->
+                          </mat-label>
+                          <input formControlName="{{member.fieldName}}"
+                            onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)"
+                            matInput [maxLength]="15" />
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- text-->
+                      <!-- NUMBER-->
+                      <div *ngIf="member.type=='NUMBER'" class="col-md-12">
+                        <mat-form-field class="example-full-width" *ngIf="member.fieldName == 'zipCode'">
+                          <mat-label>{{member.name}}
+                            <i *ngIf="member.required==true">*</i></mat-label>
+                          <input (keypress)="numberOnly($event)" formControlName="{{member.fieldName}}" matInput
+                            [maxlength]="5" />
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- NUMBER-->
+                      <!-- PHONE NUMBER-->
+                      <div *ngIf="member.type=='PHONE_NUMBER'" class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{member.name}}
+                            <i *ngIf="member.required==true">*</i></mat-label>
+                          <input (input)="numberOnly($event)" appPhoneMask formControlName="{{member.fieldName}}"
+                            matInput [maxlength]="14" />
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- PHONE NUMBER-->
+                      <!-- URL-->
+                      <div *ngIf="member.type=='URL'" class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{member.name}}
+                            <i *ngIf="member.required == true">*</i>
+                          </mat-label>
+                          <input formControlName="{{member.fieldName}}" matInput />
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- URL-->
+                      <!-- DATE-->
+                      <div *ngIf="member.type=='DATE'" class="col-md-12">
+                        <mat-form-field class="example-full-width datematerial dateinfo">
+                          <mat-label>{{member.name}}
+                            <i *ngIf="member.required==true">*</i></mat-label>
+                          <!-- <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>-->
+                          <!-- <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>-->
+                          <!-- <input [matDatetimepicker]="datetimePicker" [min]="startDate" autocomplete="false"-->
+                          <!-- formControlName="{{member.fieldName}}"-->
+                          <!-- matInput>-->
+                          <mat-datepicker-toggle matSuffix [for]="datetimePicker"></mat-datepicker-toggle>
+                          <mat-datepicker #datetimePicker openOnFocus="true" timeInterval="5"
+                            type="date"></mat-datepicker>
+
+                          <input matInput [matDatepicker]="datetimePicker" [max]="maxDate" autocomplete="false"
+                            formControlName="{{member.fieldName}}" />
+                          <span><i class="fa fa-calendar"></i></span>
+                          <!-- <owl-date-time [pickerType]="'calendar'" #datetimePicker></owl-date-time> -->
+                        </mat-form-field>
+
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- DATE-->
+                      <!-- DROP_DOWN-->
+                      <div *ngIf="member.type=='DROP_DOWN'" class="col-md-12">
+                        <mat-form-field class="example-full-width profileselectheigh">
+                          <mat-label>{{member.name}}<i *ngIf="member.required==true">*</i></mat-label>
+                          <mat-select formControlName="{{member.fieldName}}">
+                            <mat-option>Select {{member.name}}</mat-option>
+                            <mat-option *ngFor="let m of member.options" value="{{m}}">
+                              {{m}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!-- DROP_DOWN-->
+                      <!--TEXT_AREA-->
+                      <div *ngIf="member.type=='TEXT_AREA'" class="col-md-12">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{member.name}}<i *ngIf="member.required==true">*</i></mat-label>
+                          <textarea formControlName="{{member.fieldName}}" matInput placeholder="..." rows="2"
+                            value="{{member.value}}">{{member.value}} </textarea>
+                        </mat-form-field>
+                        <div>
+                          <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                            class="valid-msg">{{member.name}} is required</span>
+                        </div>
+                      </div>
+                      <!--TEXT_AREA-->
+                    </div>
+                  </div>
+                </div>
+                <div *ngFor="let member of  memberDetail?.fieldValues;let i=index" class="volunteer-padd">
+                  <div *ngIf="member.type=='RADIO_BUTTON'" class="col-md-6 martop-date">
+                    <!--RADIO_BUTTON-->
+                    <div *ngIf="member.type=='RADIO_BUTTON'" class="{{member.type}}">
+                      <label class="example-margin">{{member.name}}<i *ngIf="member.required==true"
+                          style="color: red;">*</i></label>
+                      <section class="example-section">
+                        <mat-radio-group formControlName="{{member.fieldName}}">
+                          <mat-radio-button *ngFor="let m of member.options" [checked]="m == member.filedValue"
+                            class="example-margin" value="{{m}}">{{m}}</mat-radio-button>
+                        </mat-radio-group>
+                      </section>
+                      <div>
+                        <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                      </div>
+                    </div>
+                    <!--RADIO_BUTTON-->
+                  </div>
+                  <div *ngIf="member.type=='CHECK_BOX'" class="col-md-6 martop-date">
+                    <!--RADIO_BUTTON-->
+                    <div *ngIf="member.type=='CHECK_BOX'" class="{{member.type}}">
+                      <label class="example-margin">{{member.name}}<i *ngIf="member.required==true"
+                          style="color: red;">*</i></label>
+                      <section class="example-section">
+                        <ng-container *ngFor="let m of member.optionList">
+                          <mat-checkbox class="example-margin" [(ngModel)]="m['check']"
+                            [ngModelOptions]="{standalone: true}" [value]="m['value']"
+                            [checked]="m['check']==true">{{m['value']}}</mat-checkbox>
+                        </ng-container>
+                      </section>
+                      <div>
+                        <span *ngIf="submitBtn && addMemberForm['controls'][member.fieldName]['errors']"
+                          class="valid-msg">{{member.name}} is required</span>
+                      </div>
+                    </div>
+                    <!--RADIO_BUTTON-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row button-save-create">
+          <div class="col-md-12 saveinfo">
+            <button type="button" class="btn cancel" (click)="dynamicClose()">
+              Cancel
+            </button>
+            <button type="button" class="btn save" (click)="formSubmit()" [disabled]="!addMemberForm.dirty">
+              Save
+            </button>
+            <!-- <button  class="save-changes fright"  type="button" value="Save"> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

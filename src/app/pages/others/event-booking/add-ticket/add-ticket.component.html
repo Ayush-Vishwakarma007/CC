@@ -1,0 +1,141 @@
+<!-- ===================== Add Ticket ================== -->
+<div class="main-book">
+  <div class="row row-eq-height">
+    <div class="col-md-6">
+      <div class="book-ticket-left topmempaid">
+        <div class="total-fees guest-book-ticket">
+          Members
+        </div>
+        <mat-accordion class="book-ticket-accor" >
+          <mat-expansion-panel  [hideToggle]="eventRules.length == 0"  *ngFor="let user of allUser"   [expanded]="user.checked === true" (click)="calculateAge($event,user.birthYear)">
+            <mat-expansion-panel-header >
+              <mat-panel-title>
+                <div class="term-register family-back">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <mat-checkbox (change)="feesCalculation('fee',$event,user.id,user)" [(ngModel)]="user['checked']" [ngModelOptions]="{standalone: true}"><span> <img alt="" src="assets/images/thumb.png"> </span>{{user.firstName | titlecase}} {{user.lastName | titlecase}}</mat-checkbox>
+                    </div>
+                    <div class="col-md-3">
+                      <span class="adult-book">{{ageLabel}}</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="term-register family-back booktecket" >
+              <mat-radio-group aria-label="Select an option">
+                <mat-radio-button [value]="e['id']" *ngFor="let e of user.ageRules"
+                             [checked]="e['checked']"   (change)="changeRule(e.id,user)">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="food-pack">
+                        {{e.name}}
+                        <p>Reg End Date : {{e.endDateTime | date : "MMM dd,yyyy" }} | Remaining Seats : 10 </p>
+                        <i class="view-all-price">View All Price
+                          <div class="view-all-price-tooltips">
+                            <div class="adult-borddr" *ngFor="let age of e['ageRules']">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  {{age['name']}}
+                                </div>
+                                <div class="col-md-6 price-ad">
+                                  ${{age['price']}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </i>
+                        </div>
+                    </div>
+                    <div class="col-md-3" *ngFor="let age of e['ageRules']">
+                      <span *ngIf="age['name'] == 'Adult'" class="amount-min-pack">${{age['price']}}</span>
+                    </div>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div class="total-fees guest-book-ticket">
+          Guests
+        </div>
+        <mat-accordion class="book-ticket-accor" >
+          <mat-expansion-panel  [hideToggle]="eventRules.length == 0"  *ngFor="let user of guestData;let i = index" (click)="calculateAge($event,user.birthYear)">
+            <mat-expansion-panel-header >
+              <mat-panel-title>
+                <div class="term-register family-back">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <mat-checkbox  (change)="feesCalculation('fee',$event,user.id,user)" [(ngModel)]="user['checked']" [ngModelOptions]="{standalone: true}"><span> <img alt="" src="assets/images/thumb.png"> </span>{{user.firstName | titlecase}} {{user.lastName | titlecase}}</mat-checkbox>
+                    </div>
+                    <div class="col-md-3 add-bold">
+                      <span class="adult-book">{{ageLabel}}</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="term-register family-back booktecket" >
+              <mat-radio-group aria-label="Select an option">
+                <mat-radio-button [value]="e['id']" *ngFor="let e of user.ageRules"
+                                  [checked]="e['checked']"   (change)="changeRule(e.id,user)">
+                  <div class="row">
+                    <div class="col-md-9">
+                      <div class="food-pack">
+                        {{e.name}}
+                        <p>Reg End Date : {{e.endDateTime | date : "MMM dd,yyyy" }} | Remaining Seats : 10 </p>
+                        <i class="view-all-price">View All Price
+                          <div class="view-all-price-tooltips">
+                            <div class="adult-borddr" *ngFor="let age of e['ageRules']">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  {{age['name']}}
+                                </div>
+                                <div class="col-md-6 price-ad">
+                                  ${{age['price']}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </i>
+                      </div>
+                    </div>
+                    <div class="col-md-3" *ngFor="let age of e['ageRules']">
+                      <span *ngIf="age['name'] == 'Adult'" class="amount-min-pack">${{age['price']}}</span>
+                    </div>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!-- <div class="book-ticket-accor">
+          <div class="term-register family-back">
+            <div class="row">
+              <div class="col-md-9">
+                <mat-checkbox>
+                  <span>
+                    <div class="charactor-nm">
+                    <span>jm</span>
+                  </div>
+                </span> John McClane
+                </mat-checkbox>
+              </div>
+              <div class="col-md-3">
+                <span class="adult-book">Child</span>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <!-- Button trigger modal -->
+    </div>
+    <div class="col-md-6">
+      <div class="seating-arr">
+        Seating Arrangement
+      </div>
+      <div class="seating-book-ticket"><img alt="" src="assets/images/seating.png"></div>
+    </div>
+  </div>
+</div>
+ <!-- ===================== Add Ticket ================== -->

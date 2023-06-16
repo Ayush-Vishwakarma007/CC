@@ -1,0 +1,248 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event">
+    <h1>
+      Payment
+      <span>
+        Choose Payment Method from below options
+      </span>
+    </h1>
+    <div class="row row-eq-height no-equal-height">
+      <!-- left part -->
+      <div class="col-md-8 border-gray-right">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card-box active">
+              <ul>
+                <li><img src="assets/images/credit-card.png" alt=""></li>
+                <li>Pay with Credit Card</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-box">
+              <ul>
+                <li><img src="assets/images/paypal.png" alt=""></li>
+                <li>Pay with Paypal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card-box">
+              <ul>
+                <li><img src="assets/images/credit-card.png" alt=""></li>
+                <li>Pay with Stripe</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <h1>
+          My Cards <button  class="add_food addnewcard" data-toggle="modal" data-target="#paypalmodel">+ Add New Card</button> 
+        </h1>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-radio-group aria-label="Select an option" class="my-card">
+              <mat-radio-button value="1" [checked]="true"> 
+                <div class="visa-img">
+                  <div class="visa-sub"><img src="assets/images/visa.png" alt=""></div>
+                </div> 
+                <div class="credit-card-radio">
+                  <ul>
+                    <li>Visa Card</li>
+                    <li>4554 - xxxx - xxxx - 1991</li>
+                    <li>JOHN MCCLANE</li>
+                  </ul> 
+                </div>
+                <div class="right-card">
+                  <div class="credit-cvv">                 
+                      <input type="password" placeholder="C" value="C" class="cvv-clr">
+                      <input type="password" placeholder="V" class="cvv-clr">
+                      <input type="password" placeholder="V" class="cvv-clr">                  
+                  </div>
+                  <div class="more">
+                    <button class="dropdown-toggle more-icn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-more icon"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"  > Edit</a>
+                      <a class="dropdown-item"  > Delete </a>
+                    </div>
+                  </div>
+                </div>
+             </mat-radio-button>
+             <mat-radio-button value="2"> 
+                <div class="visa-img">
+                  <div class="visa-sub"><img src="assets/images/mastercard0.png" alt=""></div>
+                </div> 
+                <div class="credit-card-radio">
+                  <ul>
+                    <li>Master Card</li>
+                    <li>4554 - xxxx - xxxx - 1991</li>
+                    <li>JOHN MCCLANE</li>
+                  </ul> 
+                </div>
+                <div class="right-card">
+                  <div class="credit-cvv">                
+                    <input type="password" placeholder="C" value="C" class="cvv-clr">
+                    <input type="password" placeholder="V" class="cvv-clr">
+                    <input type="password" placeholder="V" class="cvv-clr">                 
+                  </div>
+                  <div class="more">
+                    <button class="dropdown-toggle more-icn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="icon-more icon"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"  >Edit</a>
+                      <a class="dropdown-item"  >Delete</a>
+                    </div>
+                  </div>
+                </div>
+            </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <!-- left part -->
+      <div class="col-md-4">
+        <div class="promo-code silver-plan">
+          <div class="row">
+            <div class="col-lg-12 txt-card">
+              <span>Silver Plan $50-$100 </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 enter-promo-code">
+              <input placeholder="Enter Amount Here" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="promo-code promo">
+          <div class="row">
+            <div class="col-lg-12 txt-card">
+              <img alt="" class="percentace" src="assets/icon/percentage.svg"> <span> Have a promo code ? </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 enter-promo-code">
+              <input placeholder="Enter Promo Code here" type="text">
+            </div>
+          </div>
+        </div>
+        <span class="total-fees fees-top">
+          Summary
+        </span>
+        <div class="tottal-fees-area">
+          <div class="main-tb">
+            <div class="row">
+              <div class="col-md-7">
+                <span>Payment</span>
+              </div>
+              <div class="col-md-5">
+                <span class="adult-dollar">$00.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-tb border-gray">
+            <div class="row">
+              <div class="col-md-7">
+                <span>Taxes</span>
+              </div>
+              <div class="col-md-5">
+                <span class="adult-dollar">$00.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-tb border-gray">
+            <div class="row">
+              <div class="col-md-7">
+                <span>Discount</span>
+              </div>
+              <div class="col-md-5">
+                <span class="adult-dollar red-clr">$00.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="main-tb bor-blue">
+            <div class="row">
+              <div class="col-md-7">
+                <span>Grand Total</span>
+              </div>
+              <div class="col-md-5">
+                <span class="adult-dollar green-value">$00.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <input class="save-changes fright confirm-pay-paypal" type="submit" value="Confirm & Pay">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add New Card model -->
+<div class="modal fade share-model" id="paypalmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Card</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="paypal-configure no-border">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Card Number</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Expiry</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>CVV</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Name on Card</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Save Card As</mat-label>
+                  <mat-select>
+
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="user-fill ticket-free-first no-backround">
+                  <mat-checkbox> I accept <a  >all T&C</a> </mat-checkbox>
+                </div>
+                <input class="save-changes add-card-paypal" type="button" value="ADD CARD">
+              </div>
+              <div class="col-md-6 support-card">
+                <span>Cards We Support</span>
+                <img src="assets/images/support.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+<!--      <button *ngIf="authDetail" class="addanother" (click)="formReset(); openModalWithClass(template)">Upload Media</button>-->
+<!--      <button *ngIf="!authDetail" class="addanother" (click)="loginRedirect()">Upload Media</button>-->
+    </div>
+  </div>
+  <div class="gallerynew" style="padding-bottom: 30px; text-align: center;">
+    <!-- <div class="subbox" *ngFor="let item of imageData; index as i"> -->
+    <app-gallery-main *ngIf="imageData.length != 0" [imageData]="imageData"></app-gallery-main>
+    <!-- </div> -->
+  </div>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-dialog newsletterpopup uploadmedia" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button (click)="modalRef.hide()" aria-label="Close" class="close-container" data-dismiss="modal"
+          id="closeModel">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <h5>Upload Media</h5>
+        <div class="row">
+         <div class="col-sm-12">
+          <h3>Upload media in {{this.galleryName}}</h3>
+         </div>
+          <form [formGroup]="mediaForm" class="example-form" id="mediaForm">
+            <div class="col-md-6">
+              <mat-form-field class="select-chap example-full-width">
+                <mat-label>Media Type<i>*</i></mat-label>
+                <mat-select formControlName="mediaType" (selectionChange)="onSelectionChange($event.value)">
+                  <mat-option *ngFor="let media of mediaTypeList" value="{{media['value']}}">{{media['name']}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="isSubmit && mediaForm.controls.mediaType.errors ">
+                <span *ngIf="isSubmit && mediaForm.controls.mediaType.errors" class="valid-msg">Media Type is
+                  required</span>
+              </div>
+            </div>
+          </form>
+          <div class="col-md-12" *ngIf="!isLink">
+            <div class="create-img-upload" *ngIf="!isShow">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                          (maxFileError)="maxFileErrorImage()"
+                                          (maxFileSizeError)="fileSizeError()"
+                                          (queueCompleted)="imageQueueCompleted()"
+                                          (uploadStarted)="uploadStarted()"
+                                          (uploadedFilesChange)="uploadedFilesChange()"
+                                          [(uploadedFiles)]="imageList"
+                                          [uploadUrl]="mediaUploadUrl"
+                                          [validTypes]="validTypesImage"
+                                          [maxFileCount]="5">
+              </app-file-uploader-vertical>
+
+            </div>
+            <div class="create-img-upload" *ngIf="isShow">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidVideoUploadFile()"
+                                           (maxFileError)="maxFileError()"
+                                           (maxFileSizeError)="fileSizeError()"
+                                           (queueCompleted)="videoQueueCompleted()"
+                                           (uploadStarted)="uploadStarted()"
+                                           (uploadedFilesChange)="uploadedFilesChange()"
+                                           [(uploadedFiles)]="videoList"
+                                           [maxFileSize]="maxFileSize"
+                                           [uploadUrl]="mediaUploadUrl"
+                                           [validTypes]="validTypesVideo"
+                                           [maxFileCount]="3">
+              </app-file-uploader-vertical>
+            </div>
+            <div class="col-md-12">
+              <div *ngIf="uploadedImageList?.length != 0 && !isShow" class="main-thumbs-model">
+                <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+                  <div [style.backgroundImage]="'url('+image.link+')'" class="blurimageabout" style="background: no-repeat;"></div>
+                  <img alt="" src="{{image.link}}">
+                  <button (click)="removeImage(i,image)"><img alt="" src="assets/icon/cancel.svg"></button>
+                </div>
+              </div>
+              <div *ngIf="uploadedVideoList?.length != 0 && isShow" class="main-thumbs-model">
+                <div *ngFor="let list of uploadedVideoList;let i = index" class="thumb video-up video-only">
+                  <video controls height="150" width="270" >
+                    <source src="{{list.link}}">
+                  </video>
+                  <button (click)="removeVideo(i,list)"><img alt="" src="assets/icon/cancel.svg"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="isLink">
+            <mat-form-field class="example-full-width">
+              <mat-label>Youtube Link</mat-label>
+              <input [(ngModel)]="youTubeLink" [ngModelOptions]="{standalone: true}" matInput placeholder="Enter Name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="submit()" class="save-changes" type="button">Upload Media</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

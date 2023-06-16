@@ -1,0 +1,164 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 ">
+        <h1>
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'admin.paymentManagement.title' | translate}}
+            <span>{{'admin.paymentManagement.text' | translate}} </span>
+        </h1>
+      </div>
+      <div class="col-md-6 col-lg-6 sel-right">
+        <mat-form-field class="marchaptername" *ngIf="chapterList.length!=1">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select (selectionChange)="getChapterDetail($event.value)" [disabled]="communityConfig?.globalPaymentConfiguration==true" [value]="chapterList[0]?.id">
+            <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="infobtn" data-target="#exampleModalPayment" data-toggle="modal" title="info">
+          <i class="icon-info newicon"></i>
+        </button>
+      </div>
+    </div>
+    <ng-container *ngFor="let list of paymentDetail;let i = index;">
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{list['name']}}
+          <button *ngIf="list['type'] == 'PAYPAL'" class="infobtn" data-target="#exampleModalinfo" data-toggle="modal"
+                  title="info">
+            <i class="icon-info newicon"></i>
+          </button>
+          <ui-switch (change)="onChange($event,i)" [(ngModel)]="list.enable" [defaultBgColor]="'#a2a2a2'"
+                     [defaultBoColor]="'#a2a2a2'" class="pull-right"></ui-switch>
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>{{i + 1}}</span>
+          </div>
+          <div class="right-member">
+            <div class="row">
+              <div *ngFor="let fields of list?.fields" class="col-md-6  martop-date">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{fields.name}}</mat-label>
+                  <input [(ngModel)]="fields.value" [ngModelOptions]="{standalone: true}"
+                         [type]="fields['show'] ? 'text' : 'password'" matInput>
+                  <!-- fa-eye-slash -->
+                  <span (click)="fields['show'] = !fields['show']" *ngIf="!fields['show']"
+                        class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                  <span (click)="fields['show'] = !fields['show']" *ngIf="fields['show']"
+                        class="fa fa-eye-slash field-icon toggle-password"></span>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="paymentDetail.length != 0">
+      <div class="main-section-membership">
+        <h5 class="edit-section">
+          {{'admin.paymentManagement.custom.lbl.text' | translate}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>{{paymentDetail.length + 1}}</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{'admin.paymentManagement.custom.contact.lbl.text' | translate}}</mat-label>
+                  <input [(ngModel)]="contactSupportForPayment" [ngModelOptions]="{standalone: true}"
+                         matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="paymentDetail.length != 0" class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <!--          <button   class="addsection">-->
+          <!--            + Add another section-->
+          <!--          </button>-->
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+          <button (click)="submit()" class="save-changes">
+            {{'admin.paymentManagement.save.Btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalinfo" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'admin.paymentManagement.paypal.info.title' | translate}}</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button  aria-label="Close" class="close-container add-participant-mod" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p>{{'admin.paymentManagement.paypal.info.description' | translate}}</p>
+          <ul class="paypalcontent">
+            <li>Create your PayPal Business account to accept payments <a
+              href="https://www.paypal.com/us/webapps/mpp/account-selection" target="_blank">https://www.paypal.com/us/webapps/mpp/account-selection</a>
+            </li>
+            <li>Verify your PayPal Account by clicking the link you receive in email</li>
+            <li>Open this link <a href="https://www.paypal.com/commercesetup/APICredentials?guided=true"
+                                  target="_blank">https://www.paypal.com/commercesetup/APICredentials?guided=true</a>
+            </li>
+            <li>Login if not already logged in</li>
+            <li>Copy your Credentials PayPal Community Connect</li>
+          </ul>
+          <p>** PayPal Terms & Conditions Applies while using PayPal for Checkout.</p>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel1" class="modal fade" id="exampleModalPayment" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">{{'admin.paymentManagement.chapterInfo.title' | translate}}</h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <!-- (click)="modalRef.hide()" -->
+        <button  aria-label="Close" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p>{{'admin.paymentManagement.chapterInfo.lbl' | translate}}</p>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

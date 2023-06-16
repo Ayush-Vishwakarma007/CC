@@ -1,0 +1,903 @@
+<div class="container">
+  <div class="mem-register">
+    <h2>
+      Vendor Registration 1
+    </h2>
+    <div>
+      <ul class="progressbar vendor-progress">
+        <li
+          [ngClass]="{'active':activeForm=='activeForm_2' || activeForm=='activeForm_3' || activeForm=='activeForm_4' || activeForm=='activeForm_5' || activeForm=='activeForm_6'}">
+          <span>Step 1</span>
+          <p>Member<Br>Selection</p></li>
+        <li
+          [ngClass]="{'active':activeForm=='activeForm_3' || activeForm=='activeForm_4' || activeForm=='activeForm_5' || activeForm=='activeForm_6'}">
+          <span>Step 2</span>
+          <p>Booth<Br>Selection</p></li>
+        <li
+          [ngClass]="{'active':activeForm=='activeForm_4' || activeForm=='activeForm_5' || activeForm=='activeForm_6'}">
+          <span>Step 3</span>
+          <p>Add<Br>Sponsors</p></li>
+        <li [ngClass]="{'active':activeForm=='activeForm_5' || activeForm=='activeForm_6'}"><span>Step 4</span>
+          <p>Food<Br>Selection</p></li>
+        <li [ngClass]="{'active':activeForm=='activeForm_6' }"><span>Step 5</span>
+          <p>Payment</p></li>
+      </ul>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="right-register">
+    <div class="padd-register">
+      <div class="main-reg-head">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="heading-event-detail full-mem-wid">
+              <span>New Year Eve’s Music Party</span>
+              <p class="sm-head">
+                Utroque detracto, pri eros velit intellegebat ea. Ne rebum senserit vel. Perp. Utroque detracto, pri
+                eros velit intellegebat ea. Ne rebum senserit vel. Perp.
+                Utroque detracto, pri eros velit intellegebat ea. Ne rebum senserit vel. Perp.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="heading-event-detail right-top-reg">
+              <p>
+                <i aria-hidden="true" class="fa fa-map-marker"></i> San Francisco | CA
+              </p>
+              <p class="date-mem head-r">
+                Sun, Dec 31, 2020 09:00 PM - 12:00 PM
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- First Step -->
+      <!-- <div class="main-step">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Adult Entry</span>
+                    <p class="marno">Price: $100 per member (Age: 18 & Above)</p>
+                    <p class="sm-text">Early Bird ends on 15 Dec, 2019.</p>
+                  </div>
+                  <div class="col-md-5">
+                      <div class="plus-minus-counter">
+                          <button class="btn btn-default">-</button>
+                          <input class="counter" ng-model="item.Quantity" type="text" name="" placeholder="0"/>
+                          <button class="btn btn-default fright" >+</button>
+                      </div>
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Kids Entry</span>
+                    <p class="marno">Price: $50 per member (Age: 18 & Below)  </p>
+                    <p class="sm-text">Early Bird ends on 15 Dec, 2019.</p>
+                  </div>
+                  <div class="col-md-5">
+                      <div class="plus-minus-counter">
+                          <button class="btn btn-default">-</button>
+                          <input class="counter" ng-model="item.Quantity" type="text" name="" placeholder="0"/>
+                          <button class="btn btn-default fright" >+</button>
+                      </div>
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row row-eq-height">
+          <div class="col-md-8 content-bottom-align">
+            <div class="term-register">
+              <mat-checkbox>I accept the <a href=""> terms</a> of service and have read the <a href=""> privacy policy. </a> </mat-checkbox>
+            </div>
+            <div class="term-register">
+              <mat-checkbox>I agree that Community Connect can use information Provided by me. </mat-checkbox>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <span class="total-fees fees-top">
+              Total Members & Fees
+            </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Adult Entry</span>
+                    <p class="marno"> 2 Members </p>
+
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Kids Entry</span>
+                    <p class="marno"> 1 Members </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <!-- First step end -->
+      <!-- Second Step -->
+      <div *ngIf="activeForm=='activeForm_1'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="borfamily">
+            <span class="total-fees">
+              Added Vendors
+            </span>
+              <div class="term-register family-back">
+                <mat-checkbox><span> <img alt="" src="../../../../assets/images/thumb.png"> </span> John McClane</mat-checkbox>
+              </div>
+              <div class="term-register family-back light-blue">
+                <mat-checkbox><span> <img alt="" src="../../../../assets/images/thumb.png"> </span> John McClane</mat-checkbox>
+              </div>
+              <div class="term-register family-back">
+                <mat-checkbox><span> <img alt="" src="../../../../assets/images/thumb.png"> </span> John McClane</mat-checkbox>
+              </div>
+              <div class="term-register family-back">
+                <mat-checkbox><span> <img alt="" src="../../../../assets/images/thumb.png"> </span> John McClane</mat-checkbox>
+              </div>
+              <div class="term-register family-back">
+                <mat-checkbox><span> <img alt="" src="../../../../assets/images/thumb.png"> </span> John McClane</mat-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button class="add-guest" data-target="#exampleModalAddGuest" data-toggle="modal">
+              + Add Employee
+            </button>
+            <!-- <span class="total-fees fees-top">
+              Sponsorship
+            </span>
+             <div class="border-country">
+              <span>Select Sponsorship</span>
+              <select disabled>
+                <option>$500 - Gold Sponsor </option>
+              </select>
+            </div> -->
+            <span class="total-fees fees-top">
+            Total Total Vendors
+          </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Adult Entry</span>
+                    <p class="marno"> 2 Vendors </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Second Step -->
+      <!-- third Step -->
+      <div *ngIf="activeForm=='activeForm_2'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="borfamily">
+            <span class="total-fees">
+              Booth Selection
+            </span>
+              <div class="booth-sele">
+                <div class="bor-dash">
+                  <div class="row row-eq-height">
+                    <div class="col-md-6 booth-txt">
+                      <h1>Mini Booth</h1>
+                      <span>Price: $500</span>
+                      <p>It includes 2 Chairs & 1 Table</p>
+                    </div>
+                    <div class="col-md-6 text-r">
+                      <div class="plus-minus-counter">
+                        <button class="btn btn-default">-</button>
+                        <input class="counter" name="" ng-model="item.Quantity" placeholder="0" type="text"/>
+                        <button class="btn btn-default fright">+</button>
+                      </div>
+                      <span class="adult-dollar">$00.00</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bor-dash">
+                  <div class="row row-eq-height">
+                    <div class="col-md-6 booth-txt">
+                      <h1>Regular Booth</h1>
+                      <span>Price: $500</span>
+                      <p>It includes 2 Chairs & 1 Table</p>
+                    </div>
+                    <div class="col-md-6 text-r">
+                      <div class="plus-minus-counter">
+                        <button class="btn btn-default">-</button>
+                        <input class="counter" name="" ng-model="item.Quantity" placeholder="0" type="text"/>
+                        <button class="btn btn-default fright">+</button>
+                      </div>
+                      <span class="adult-dollar">$00.00</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="bor-dash">
+                  <div class="row row-eq-height">
+                    <div class="col-md-6 booth-txt">
+                      <h1>Premium Booth</h1>
+                      <span>Price: $500</span>
+                      <p>It includes 2 Chairs & 1 Table</p>
+                    </div>
+                    <div class="col-md-6 text-r">
+                      <div class="plus-minus-counter">
+                        <button class="btn btn-default">-</button>
+                        <input class="counter" name="" ng-model="item.Quantity" placeholder="0" type="text"/>
+                        <button class="btn btn-default fright">+</button>
+                      </div>
+                      <span class="adult-dollar">$00.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="tottal-fees-area added-member-detail">
+              <h1>Added Vendor Details</h1>
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>3 Adult</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top">
+           <span style="padding-right:10px"> Booth Fees </span> <div class="tooltipmain update-tooltips"><img src="../../../../assets/icon/info-tooltip.svg" />
+              <span class="tooltiptext"> Text come here</span>
+            </div>
+          </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Mini Booth</span>
+                    <p class="marno"> 1 Booth </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- third Step -->
+      <!-- third Step -->
+      <div *ngIf="activeForm=='activeForm_3'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="borfamily">
+            <span class="total-fees">
+                Sponsors Details
+            </span>
+              <div class="border-country">
+                <span>Select Sponsorship</span>
+                <select>
+                  <option>$500 - Gold Sponsor</option>
+                </select>
+              </div>
+              <div class="styled-input notific_msg">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="Tech Ancubate Pvt. Ltd." type="text">
+                <label>Sponsor Title</label>
+              </div>
+              <div>
+                <a (click)="uploadphotoclick();" class="notification-pic all-imageup"  > <span> Attachments </span>
+                  <img alt="" src="../../../../assets/images/img-icon.svg">
+                  <p>Upload or Drag Media or File</p>
+                </a>
+                <div class="filetype">
+                  *We support .png, .jpg, .doc, .txt, .pdf & .mp4 file type only.
+                </div>
+                <div class="up-images">
+                  <span>1 Tech Ancubate Logo.png <button><img alt="" src="../../../../assets/icon/delete-blue.svg"></button> </span>
+                  <span>2 Tech Ancubate Logo.png <button><img alt="" src="../../../../assets/icon/delete-blue.svg"></button> </span>
+                  <span>3 Tech Ancubate Logo.png <button><img alt="" src="../../../../assets/icon/delete-blue.svg"></button> </span>
+                </div>
+                <button class="sub-sponsor">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="discount-sponsor">
+              <span>Sponsorship Discounts & Details</span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in
+                voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Excepteur sint occaecat cupidatat non proident, sunt in
+                culpa qui officia deserunt mollit anim id est
+              </p>
+              <div class="policy"><i>*</i> Community Connect Administrator has all rights to change discount offers or
+                <a  > Policy</a>.
+              </div>
+              <div class="policy"><i>*</i> <a  > Terms & Conditions </a>changes based on Event
+                Type.
+              </div>
+            </div>
+            <div class="discount-sponsor discount-off">
+              <span>Discount Offers</span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fourth Step -->
+      <div *ngIf="activeForm=='activeForm_4'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="borfamily">
+              <span class="total-fees">
+                Food & Beverages
+              </span>
+              <div class="accordian-member-register">
+                <accordion [isAnimated]="true">
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-link btn-block clearfix" type="button">
+                      <img alt="" src="../../../../assets/images/thumb.png">
+                      John McClane
+                      <div class="arrow"></div>
+                    </button>
+                    <div class="term-register family-back">
+                      <mat-checkbox>
+                        <div class="food-pack">
+                          Mini Lunch Pack
+                          <p>1 Small Pizza, Cold Drink(100ml)</p>
+                          <i>Price: $10.00 each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                    <div class="term-register family-back">
+                      <mat-checkbox>
+                        <div class="food-pack">
+                          Regular Lunch Pack
+                          <p>1 Medium Pizza, French Fries, Cold Drink(100ml) </p>
+                          <i>Price: $10.00 each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                    <div class="term-register family-back">
+                      <mat-checkbox>
+                        <div class="food-pack">
+                          Regular Lunch Pack
+                          <p>1 Medium Pizza, French Fries, Cold Drink(100ml) </p>
+                          <i>Price: $10.00 each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                    <div class="term-register family-back">
+                      <mat-checkbox>
+                        <div class="food-pack">
+                          Large Lunch Pack
+                          <p>1 Medium Pizza, French Fries, Cold Drink(100ml) </p>
+                          <i>Price: $10.00 each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+                    <div class="term-register family-back">
+                      <mat-checkbox>
+                        <div class="food-pack">
+                          Executive Lunch Pack
+                          <p>1 Medium Pizza, French Fries, Cold Drink(100ml) </p>
+                          <i>Price: $10.00 each</i>
+                        </div>
+                      </mat-checkbox>
+                    </div>
+
+                  </accordion-group>
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-block btn-link" type="button">
+                      <img alt="" src="../../../../assets/images/thumb.png">
+                      John McClane
+                      <div class="arrow"></div>
+                    </button>
+                    <span>And some HTML here</span>
+                  </accordion-group>
+                </accordion>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="tottal-fees-area added-member-detail">
+              <h1>Added Member Details</h1>
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>3 Adult</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>1 Kids</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top">
+              Total Food Pricing
+            </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Large Lunch Pack</span>
+                    <p class="marno"> 2 Items </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Mini Lunch Pack</span>
+                    <p class="marno"> 1 Item </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fourth Step -->
+      <!-- Fifth Step -->
+      <div *ngIf="activeForm=='activeForm_5'" class="main-step">
+        <div class="row row-eq-height">
+          <div class="col-md-8">
+            <div class="borfamily">
+              <span class="total-fees">
+                Select Payment Option
+              </span>
+              <div class="accordian-member-register payment-accordian">
+                <accordion [isAnimated]="true" is-open="group.open">
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-link btn-block clearfix" type="button">
+                      <i class="icon-paypal icon"></i>
+                      PayPal Payment
+                    </button>
+                    <div class="styled-input border-payment">
+                      <input class="ng-dirty ng-valid ng-touched" type="text">
+                      <label>Paypal ID</label>
+                    </div>
+                  </accordion-group>
+                  <accordion-group>
+                    <button accordion-heading class="btn btn-block btn-link" type="button">
+                      <i class="icon-credit-cards-payment icon"></i>
+                      Card Payment
+                    </button>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="bank-card blue-line">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="bank-card">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="bank-card">
+                          <div class="row">
+                            <div class="col-lg-4">
+                              <i class="icon-credit-cards-payment icon"></i>
+                            </div>
+                            <div class="col-lg-8 txt-card">
+                              ending with 6115
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12 ">
+                              <div class="single-inp">
+                                <input placeholder="C" type="text">
+                                <input placeholder="V" type="text">
+                                <input placeholder="V" type="text">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="add-new-card" data-target="#AddNewCard" data-toggle="modal">
+                          Add New Card
+                        </button>
+                      </div>
+                    </div>
+                  </accordion-group>
+                </accordion>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="promo-code">
+              <div class="row">
+                <div class="col-lg-4">
+                  <img alt="" class="percentace" src="../../../../assets/icon/percentage.svg">
+                </div>
+                <div class="col-lg-8 txt-card">
+                  Have a promo code ?
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 enter-promo-code">
+                  <input placeholder="Enter Promo Code here" type="text">
+                </div>
+              </div>
+            </div>
+            <span class="total-fees fees-top">
+                Total Payable Amount
+            </span>
+            <div class="tottal-fees-area">
+              <div class="main-tb">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Entry Charges</span>
+                    <p class="marno"> 4 Members </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Food Charges</span>
+                    <p class="marno"> 2 Item </p>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Taxes</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb border-gray">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Discount</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$00.00</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-tb bor-blue">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>Grand Total</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="adult-dollar">$60.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fifth Step -->
+
+      <div class="mem-next">
+        <div class="row">
+          <div class="col-lg-6">
+            <input (click)="back()" class="save-changes backbtn" type="button" value="Back">
+          </div>
+          <div class="col-lg-6">
+            <input (click)="next()" [ngClass]="{'confirm-pay':activeForm=='activeForm_5' }" class="save-changes fright"
+                   type="button" value="{{lastSubmitBtnValue}}">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- add Guest -->
+  <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade in" id="exampleModalAddGuest"
+       role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <img alt="" src="../../../../assets/icon/delete-button.svg">
+          </button>
+        </div>
+        <div class="modal-body rightmodel">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="styled-input">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="Enter First Name" type="text">
+                <label>First Name</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="styled-input">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="Enter Last Name" type="text">
+                <label>Last Name</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="border-country">
+                <span>Relation</span>
+                <select>
+                  <option>Select Relation</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="styled-input">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="+1 123-456-7890" type="text">
+                <label>Conatct</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="styled-input">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="Enter Email Id" type="text">
+                <label>Email Id</label>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="styled-input">
+                <input class="ng-dirty ng-valid ng-touched" placeholder="Enter Birth Year" type="text">
+                <label>Birth Year</label>
+              </div>
+            </div>
+            <!-- <div class="col-md-12 imageupload add-guest-upload">
+              <div class="imageup">
+                <span>Upload Image</span>
+                <app-file-uploader-vertical #imageUpload >
+                </app-file-uploader-vertical>
+              </div>
+            </div> -->
+            <div class="col-md-12">
+              <div class="border-country">
+                <span>Gender</span>
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="1">Male</mat-radio-button>
+                  <mat-radio-button value="2">Female</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="term-register family-back mar0">
+                <mat-checkbox><span> Register the Vendor as a Member. </span></mat-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <input class="submit" type="submit" value="Add Guest">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- add Guest -->
+
+
+<!-- Add New Card -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade" id="AddNewCard" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Card</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="../../../../assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="6165 - 4686 - 1464 - 1622" type="text">
+              <label>Card Number</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="Enter Name on Card" type="text">
+              <label>Name on Card</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="ng-dirty ng-valid ng-touched" placeholder="12/24" type="text">
+              <label>Expiry</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input">
+              <input class="cvv" placeholder="Enter CVV" type="password">
+              <label>CVV</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Save Card As</span>
+              <select>
+                <option>BUSINESS</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="term-register family-back">
+              <mat-checkbox> I accept Community Connect’s <a  > T&C </a></mat-checkbox>
+            </div>
+          </div>
+          <div class="col-md-12 card-supp">
+            <span>Cards We Support</span>
+            <div>
+              <img alt="" src="../../../../assets/images/visa.png">
+              <img alt="" src="../../../../assets/images/master-card.png">
+              <img alt="" src="../../../../assets/images/american-express.png">
+              <img alt="" src="../../../../assets/images/discover-network.png">
+              <img alt="" src="../../../../assets/images/western-union.png">
+            </div>
+          </div>
+          <input class="submit" type="submit" value="Add Card">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add New Card -->

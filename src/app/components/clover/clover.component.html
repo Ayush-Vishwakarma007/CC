@@ -1,0 +1,41 @@
+  <div class="mainclover">
+    <h5> Payment info </h5>
+    <p ><img  alt="" src="assets/icon/lock.svg"> Credit Card / Debit Card Info</p>
+  <form id="payment-form" autocomplete="off">
+    
+    <div class="form-row top-row">
+      <div id="card-number" class="field card-number"></div>
+      <div class="input-errors" id="card-number-errors" role="alert"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-row">
+          <div id="card-date" class="field third-width"></div>
+          <div class="input-errors" id="card-date-errors" role="alert"></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-row">
+          <div id="card-cvv" class="field third-width"></div>
+          <div class="input-errors" id="card-cvv-errors" role="alert"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div id="card-postal-code" class="field third-width"></div>
+      <div class="input-errors" id="card-postal-code-errors" role="alert"></div>
+    </div>
+
+    <!-- Used to display form errors. -->
+    <div id="card-errors" role="alert"></div>
+
+    <!-- Testing -->
+    <div id="card-response" role="alert"></div>
+
+    <!-- <div class="button-container">
+      <button (click)="submitPay()">Submit Payment</button>
+    </div> -->
+  </form>
+  </div>

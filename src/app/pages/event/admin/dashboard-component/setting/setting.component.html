@@ -1,0 +1,202 @@
+<div class="dashboard-chart">
+  <ul class="setting-dashboard">
+    <li (click)="userNoti(''); openModalWithClass(template)" class="colornotifition" >
+      <!-- href="/notifications"  -->
+      <div>
+        <h2>
+                    <span>
+                      <i aria-hidden="true" class="icon fa-bell"></i>
+                    </span>
+        </h2>
+        <span class="notification-setting">
+                    {{'event.dashboard.setting.notification.title' | translate}}
+                  </span>
+        <p>
+          {{'event.dashboard.setting.notification.text' | translate}}
+        </p>
+      </div>
+    </li>
+    <li>
+      <a (click)="edit()"  >
+        <h2>
+                    <span>
+                      <i class="icon fa-edit"></i>
+                    </span>
+        </h2>
+        <span class="notification-setting">
+                    {{'event.dashboard.setting.editEvent.title' | translate}}
+                  </span>
+        <p>
+          {{'event.dashboard.setting.editEvent.text' | translate}}
+        </p>
+      </a>
+    </li>
+    <li>
+      <a (click)="delete()"  >
+        <h2>
+                    <span>
+                      <i class="icon fa-trash"></i>
+                    </span>
+        </h2>
+        <span class="notification-setting">
+                    {{'event.dashboard.setting.deleteEvent.title' | translate}}
+                  </span>
+        <p>
+          {{'event.dashboard.setting.deleteEvent.text' | translate}}
+        </p>
+      </a>
+    </li>
+
+    <li>
+      <a (click)="copy()"  >
+        <h2>
+                    <span>
+                      <i class="icon fa-copy"></i>
+                    </span>
+        </h2>
+        <span class="notification-setting">
+                    {{'event.dashboard.setting.copyEvent.title' | translate}}
+                  </span>
+        <p>
+          {{'event.dashboard.setting.copyEvent.text' | translate}}
+        </p>
+      </a>
+    </li>
+  </ul>
+</div>
+<ng-template #template>
+  <div class="modal-dialog" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleaLabel"> {{'event.dashboard.setting.notification.popup.title' | translate}} </h5>
+          <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button aria-label="Close" (click)="modalRef.hide()" class="close-container" data-dismiss="modal" id="closeModal" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row-eq-height row martopsub">
+            <div class="col-lg-8">
+              <div class="notarea">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> {{'event.dashboard.setting.notification.popup.subjectlbl.text' | translate}}</mat-label>
+                  <input formControlName="subject" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors">
+                  <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 setMargin">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'event.dashboard.setting.notification.popup.sendTolbl.text' | translate}}</mat-label>
+                <mat-select formControlName="notificationAudiences" (selectionChange)="changeNotificationAudience($event.value)" multiple>
+                  <mat-checkbox [checked]="selectAll" (change)="selectAllChange($event)">Select All</mat-checkbox>
+                  <mat-option *ngFor="let list of notificationAudience;let i=index" value="{{list.value}}">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors ">
+                <span *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors " class="valid-msg">Send To is Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="notarea">
+            <div class="editor-main">
+              <span
+                class="sub-head notificationsub"> {{'event.dashboard.setting.notification.popup.messagelbl.text' | translate}} </span>
+                <angular-editor id="editor" [config]="editorConfig" [placeholder]="'Enter Description here...'" class="editor-icon"
+                                formControlName="message">
+                </angular-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">
+            {{'event.dashboard.setting.notification.popup.cancel.Btn.text' | translate}}
+          </button>
+          <button (click)="submitAllNotification()" class="save-changes" type="button">
+            {{'event.dashboard.setting.notification.popup.send.Btn.text' | translate}}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalAllnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"
+              id="exampleaLabel"> {{'event.dashboard.setting.notification.popup.title' | translate}} </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row-eq-height row martopsub">
+            <div class="col-lg-8">
+              <div class="notarea">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> {{'event.dashboard.setting.notification.popup.subjectlbl.text' | translate}}</mat-label>
+                  <input formControlName="subject" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+                  <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 setMargin">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'event.dashboard.setting.notification.popup.sendTolbl.text' | translate}}</mat-label>
+                <mat-select formControlName="notificationAudiences" (selectionChange)="changeNotificationAudience($event.value)" multiple>
+                  <mat-checkbox [checked]="selectAll" (change)="selectAllChange($event)">
+                    Select All</mat-checkbox>
+                  <mat-option *ngFor="let list of notificationAudience;let i=index"
+                              value="{{list.value}}">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors ">
+                <span *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors "
+                      class="valid-msg">Send To is Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="notarea">
+            <div class="editor-main">
+              <span
+                class="sub-head"> {{'event.dashboard.setting.notification.popup.messagelbl.text' | translate}} </span>
+                <angular-editor id="editor" [config]="editorConfig" [placeholder]="'Enter Description here...'" class="editor-icon"
+                                formControlName="message"></angular-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deletesNoti"
+                  type="button">{{'event.dashboard.setting.notification.popup.cancel.Btn.text' | translate}}</button>
+          <button (click)="submitAllNotification()" class="save-changes"
+                  type="button">{{'event.dashboard.setting.notification.popup.send.Btn.text' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div> -->

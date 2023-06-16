@@ -1,0 +1,304 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <div class="white-area-create-event new-dashboard">
+    <div class="title-news"> {{'donationSponsorship.chapterDonation.title.text' | translate}}  </div>
+    <div class="tab-main">
+      <mat-tab-group (selectedTabChange)="changeTab($event.tab.textLabel)">
+        <!-- =======================  STATISTICS  ======================= -->
+        <mat-tab label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <!-- <li>
+                <img alt="" class="tab-gray" src="assets/icon/tab1.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab1-b.svg">
+              </li> -->
+              <li>
+                <span>{{'donationSponsorship.chapterDonation.dashboard.tab.text' | translate}}</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-ch-dashboard *ngIf="chapterId != ''" [chapterId]="chapterId"
+                            [save]="statisticSubject"></app-ch-dashboard>
+        </mat-tab>
+        <mat-tab label="donation">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>{{'donationSponsorship.chapterDonation.plan.tab.text' | translate}}</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-ch-donation-detail  (completed)="planList()"  [chapterId]="chapterId" [currentTab]="currentTab"
+                                  [save]="donationSubject"></app-ch-donation-detail>
+        </mat-tab>
+        <mat-tab label="donor">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <span>{{'donationSponsorship.chapterDonation.donor.tab.text' | translate}}</span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-ch-donor-list (completed)="edit();openModalWithClass2(template1)" [currentTab]="currentTab" [reqData]="reqData"
+                              [(donor)]="editList" [save]="donorSubject"></app-ch-donor-list>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="addbtnright" >
+        <mat-form-field class="select-chap" *ngIf="chapterList.length!=1">
+          <mat-label>{{'donationSponsorship.chapterDonation.selectChapter.lbl.text' | translate}}</mat-label>
+          <mat-select (selectionChange)="getChapterDetail($event.value)" [value]="chapterList[0]?.id">
+            <mat-option *ngFor="let list of chapterList;let i = index" value="{{list.id}}">{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="addanother" (click)="formReset(); openModalWithClass2(template1)" type="button">{{'donationSponsorship.chapterDonation.addDonation.Btn.text' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template1>
+  <div class="modal-dialog newsletterpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button (click)="modalRef.hide()" aria-label="Close"  class="close-container" data-dismiss="modal" id="closeModel">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <div class="tabhead-icon">
+          <i class="icon-donors newicon"></i>
+        </div>
+        <h5 *ngIf="editId == ''">{{'donationSponsorship.chapterDonation.addDonation.popup.title' | translate}} </h5>
+        <h5 *ngIf="editId != ''">{{'donationSponsorship.chapterDonation.editDonation.popup.title' | translate}}</h5>
+        <div class="row ">
+          <div class="col-md-12 text-center">
+            <button (click)="search = ''; memberList= []; openModalWithClass3(template2)" class="addmember" data-target="#memberRecord" data-toggle="modal" type="button">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.Btn.text' | translate}}</button>
+          </div>
+        </div>
+        <form [formGroup]="addSponsorForm" class="example-form ">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <mat-form-field class="paymenttyep">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.slectPlan.lbl.text' | translate}}</mat-label>
+                <mat-select formControlName="categoryId">
+                  <mat-option value="Select Plan">Select Plan</mat-option>
+                  <mat-option *ngFor="let list of plan_list" value="{{list.id}}">
+                    {{list.categoryName}} ( ${{list['range']['min']}} - ${{list['range']['max']}} )</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.fname.lbl.text' | translate}} </mat-label>
+                <input formControlName="firstName" (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput placeholder="Enter First Name" (keypress)="charOnly($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.lname.lbl.text' | translate}} </mat-label>
+                <input formControlName="lastName"(keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput placeholder="Enter Last Name" (keypress)="charOnly($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.email.lbl.text' | translate}}</mat-label>
+                <input formControlName="email" (keydown.space)="$event.preventDefault();" [maxLength]="50" size="50" matInput placeholder="Enter Email">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.phone.lbl.text' | translate}}</mat-label>
+                <input (keypress)="numberOnly($event)"  [maxLength]="10" [minLength]="10" formControlName="phone" matInput
+                       placeholder="Enter Phone Number">
+              </mat-form-field>
+              <span *ngIf="addSponsorForm.controls.phone.errors && isSubmit">
+                <div *ngIf="addSponsorForm.controls.phone.errors.minlength" class="valid-msg">Please enter valid Phone Number</div>
+              </span>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.paymentType.lbl.text' | translate}} </mat-label>
+                <mat-select formControlName="paymentMethodUsed">
+                  <mat-option value="Select Plan">Select Payment Type</mat-option>
+                  <mat-option *ngFor="let list of paymentType_list" value="{{list.value}}">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="col-md-4 col-sm-4 readonly">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.paymentType.lbl.text' | translate}} <i>*</i></mat-label>
+                <input [value]="paymentMethod" matInput formControlName="paymentMethodUsed">
+              </mat-form-field>
+            </div> -->
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.amount.lbl.text' | translate}} </mat-label>
+                <input (keypress)="numberOnly($event)"  [maxLength]="6" size="6" formControlName="amount" matInput placeholder="Enter Amount" (blur)="onBlur($event)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-8">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.address.lbl.text' | translate}}</mat-label>
+                <input formControlName="addressLine1" matInput placeholder="Enter Address">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.displayName.lbl.text' | translate}}</mat-label>
+                <input formControlName="displayName"  [maxLength]="20" size="20" matInput placeholder="Enter Display Name">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.city.lbl.text' | translate}}</mat-label>
+                <input formControlName="city" [maxLength]="15" size="15" matInput placeholder="Enter City" (keypress)="charOnly($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.state.lbl.text' | translate}}</mat-label>
+                <input formControlName="state" [maxLength]="10" size="10" matInput placeholder="Enter State" (keypress)="charOnly($event)">
+              </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.zipcode.lbl.text' | translate}}</mat-label>
+                <input (keypress)="numberOnly($event)"  formControlName="zipCode" matInput [maxLength]="5" placeholder="Enter Zipcode">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row savetop">
+            <div *ngIf="editId == ''" class="col-md-4 main-screen">
+              <mat-checkbox class="sendmail" formControlName="sendMail">{{'donationSponsorship.chapterDonation.addDonation.popup.sendMail.chkbox.text' | translate}}</mat-checkbox>
+            </div>
+            <div class="col-md-4 main-screen">
+              <mat-checkbox class="sendmail" formControlName="anonymousDonation">{{'donationSponsorship.chapterDonation.addDonation.popup.anonymousName.chkbox.text' | translate}}</mat-checkbox>
+            </div>
+            <div *ngIf="editId != ''" class="col-md-4 main-screen">
+              <mat-checkbox class="sendmail" formControlName="successfulPayment">{{'donationSponsorship.chapterDonation.addDonation.popup.successfulPayment.chkbox.text' | translate}}</mat-checkbox>
+            </div>
+            <div class="col-md-4 main-screen">
+              <div (click)="submit()" class="btn-general">
+                <div class="eff-5"></div>
+                <a  >{{'donationSponsorship.chapterDonation.addDonation.popup.save.Btn.text' | translate}}</a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #template2>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.title' | translate}}</h5>
+        <!-- <button (click)="modalRef1.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+        <button (click)="modalRef1.hide()" aria-label="Close"  class="close-container" data-dismiss="modal" id="closeModel">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="searchmain">
+          <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.search.text' | translate}}</mat-label>
+              <input (change)="searchNewData()" [(ngModel)]="search" [ngModelOptions]="{standalone: true}"
+                matInput placeholder="{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.search.ph.text' | translate}}">
+            </mat-form-field>
+          </form>
+        </div>
+        <div class="committi-main">
+          <div class="committi-tab">
+            <table>
+              <tr>
+                <th width="40"></th>
+
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.member.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.chapter.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.email.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.phone.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.address.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.lbl.text' | translate}}</th>
+                <th>{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.action.lbl.text' | translate}}</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let list of memberList?.content;">
+                  <td></td>
+                  <td class="mem-name">
+                    <div *ngIf="list['profileShow'] == true" class="charector">
+                      <img alt="" src="{{list['profileUrl']}}">
+                    </div>
+                    <div *ngIf="list['profileShow'] == false" class="charector">
+                      <i>{{list['profileUrl']}}</i>
+                    </div>
+                    <ul class="firstnameandemail">
+                      <li> {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}} </li>
+                      <li> {{list['memberNumber']}} </li>
+                    </ul>
+                  </td>
+                  <td>{{list['chapterName']}}</td>
+                  <td>{{list['email']}}</td>
+                  <td>{{list['phone']}}</td>
+                  <td>{{list['city']}} {{list['country']}}</td>
+                  <td>
+                    <p *ngIf="list['mainUser']">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.yes.lbl.text' | translate}}</p>
+                    <p *ngIf="!list['mainUser']">{{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.mainUser.no.lbl.text' | translate}}</p>
+                  </td>
+                  <td>
+                    <button (click)="addMember(list)" class="addbtn " type="button"> {{'donationSponsorship.chapterDonation.addDonation.popup.searchMember.popup.table.header.action.add.Btn.text' | translate}}</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div *ngIf="memberList?.content && memberList?.numberOfElements != memberList?.totalElements"
+          class="pegination-main totalPosition">
+          <ul>
+            <li>
+              <button (click)="paginationNewMember('current','user',0)" [disabled]="memberList['first'] == true"
+                class="next">
+                First
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('prev','user')" [disabled]="memberList['first'] == true"
+                class="arrow">
+                <i aria-hidden="true" class="icon-left-arrow icon"></i>
+              </button>
+            </li>
+            <li (click)="paginationNewMember('current','user',i)"
+              *ngFor="let i of totalPages"
+              [ngClass]="reqNewData.page.page == i ?  'blue-peg' : ''">
+              <button class="numeric">{{i + 1}}</button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('next','user')" [disabled]="memberList['last'] == true"
+                class="arrow">
+                <i aria-hidden="true" class="icon-right-arrow icon"></i>
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('current','user',(memberList['totalPages']-1))"
+                [disabled]="memberList['last'] == true" class="next">Last
+              </button>
+            </li>
+          </ul>
+          <div class="totalShow"><span>Total :</span> {{memberList['totalElements']}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

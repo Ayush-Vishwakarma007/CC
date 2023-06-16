@@ -1,0 +1,116 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <div class="white-area-create-event committi-main no-paid">
+    <div class="row">
+      <div class="col-sm-9 col-md-12 col-lg-6 ">
+        <h1>
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png">
+          </div>
+          {{'admin.pageManagement.title' | translate}}
+          <span>{{'admin.pageManagement.text' | translate}}</span>
+        </h1>
+      </div>
+      <div class="col-sm-3 col-md-12 col-lg-6 martop-date">
+        <button class="addanother" [routerLink]="'/management/create-page'">{{'admin.pageManagement.addPage.Btn.text' | translate}}</button>
+      </div>
+    </div>
+    <!-- table -->
+    <div class="donation-sponsor">
+      <table>
+        <tr>
+          <th>
+            {{'admin.pageManagement.table.header.name.text' | translate}}
+          </th>
+          <th>
+           {{'admin.pageManagement.table.header.pageTitle.text' | translate}}
+          </th>
+          <th>
+            {{'admin.pageManagement.table.header.pageType.text' | translate}}
+          </th>
+          <th>
+           {{'admin.pageManagement.table.header.pagePath.text' | translate}}
+          </th>
+          <th width="70">
+            {{'admin.pageManagement.table.header.action.text' | translate}}
+          </th>
+        </tr>
+        <tr *ngFor="let list  of pageList?.content">
+          <td>
+            {{list['name']}}
+          </td>
+          <td>
+            {{list['pageTitle']}}
+          </td>
+          <td>
+            {{list['pageType']}}
+          </td>
+          <td>
+            {{list['path']}}
+          </td>
+          <td>
+            <button class="btn-edit" [routerLink]="'/management/edit-page/'+list['id']">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+            <button class="btn-edit" (click)="deletePage(list['id'])"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+            <!-- <div class="dropdown dropup moredrop editgallery">
+              <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                 data-toggle="dropdown"
+                 href="#" id="dropdownMenuLink" role="button">
+                <img alt="" src="assets/icon/interface.svg">
+              </a>
+              <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                <a class="dropdown-item" [routerLink]="'/management/edit-page/'+list['id']"  ><i
+                  class="fa fa-angle-right" aria-hidden="true"></i> {{'admin.pageManagement.table.header.action.edit.text' | translate}}</a>
+                <a class="dropdown-item" (click)="deletePage(list['id'])"  ><i
+                  class="fa fa-angle-right" aria-hidden="true"></i>
+                  {{'admin.pageManagement.table.header.action.delete.text' | translate}}</a>
+              </div>
+            </div> -->
+
+          </td>
+        </tr>
+
+      </table>
+      <div class="pegination-main totalPosition">
+        <ul>
+          <li>
+            <button (click)="pagination('current','user',0)" [disabled]="pageList['first'] == true"
+                    class="next">First
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('prev','user')" [disabled]="pageList['first'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-left-arrow icon"></i>
+            </button>
+          </li>
+          <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+              [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+            <button class="numeric">{{i + 1}}</button>
+          </li>
+          <li>
+            <button (click)="pagination('next','user')" [disabled]="pageList['last'] == true" class="arrow">
+              <i aria-hidden="true" class="icon-right-arrow icon"></i>
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('current','user',(pageList['totalPages']-1))"
+                    [disabled]="pageList['last'] == true"
+                    class="next">Last
+            </button>
+          </li>
+        </ul>
+        <div class="totalShow"><span>Total :</span> {{pageList['totalElements']}}</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="newslettermodel"
+     role="dialog" tabindex="1">
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+<!-- Modal -->

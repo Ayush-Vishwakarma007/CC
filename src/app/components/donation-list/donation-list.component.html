@@ -1,0 +1,85 @@
+<div class="donated-people">
+  <h5>{{donorList.totalElements}} {{'event.donation.dashboard.peopledonated.text' | translate}}</h5>
+  <mat-tab-group>
+    <!-- =========================== Dashboard ================================ -->
+    <mat-tab label="dashboard">
+      <ng-template mat-tab-label>
+        <ul>
+          <li class="throphy">
+            <svg height="17" id="sports-and-competition" viewBox="0 0 17 17" width="17"
+                 xmlns="http://www.w3.org/2000/svg">
+              <g data-name="Group 14004" id="Group_14004">
+                <path d="M16.15.85H13.6V0H3.4V.85H.85A.8.8,0,0,0,0,1.7V3.74A3.856,3.856,0,0,0,3.4,7.565V7.65a5.112,5.112,0,0,0,3.995,5.015L6.8,14.45H4.845a.816.816,0,0,0-.765.6L3.4,17H13.6l-.68-1.955a.816.816,0,0,0-.765-.595H10.2l-.6-1.785A5.112,5.112,0,0,0,13.6,7.65V7.565A3.856,3.856,0,0,0,17,3.74V1.7A.8.8,0,0,0,16.15.85ZM3.4,5.865A2.27,2.27,0,0,1,1.7,3.74V2.55H3.4ZM10.2,8.5,8.5,7.565,6.8,8.5l.425-1.7L5.95,5.1H7.735L8.5,3.4l.765,1.7H11.05L9.775,6.8Zm5.1-4.76a2.193,2.193,0,0,1-1.7,2.125V2.55h1.7Z" data-name="Path 14707"
+                      fill="#a2a2a2"
+                      id="Path_14707"/>
+              </g>
+            </svg>
+            <span> {{'event.donation.dashboard.topContributors.text' | translate}}</span></li>
+        </ul>
+      </ng-template>
+      <div>
+        <div (scrolled)="onScrollTopDonor()"
+           [infiniteScrollDistance]="3"
+           [infiniteScrollThrottle]="50"
+           [scrollWindow]="false"
+           class="contributor"
+           infiniteScroll>
+        <div *ngFor="let list of topDonorList?.content;let i = index;" class="col-sm-12">
+          <ul class="donationmem">
+            <li>
+                  <span *ngIf="list?.rank<=3" class="thumb1">
+                    <u>{{list?.rank}} </u>
+                  </span>
+              <span *ngIf="list?.rank>3" class="thumb1 thumb2"></span>
+            </li>
+            <li>
+              <i
+                style=" overflow: hidden; width: 100%; display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;">
+                {{list.firstName | titlecase}} {{list.lastName | titlecase}}</i>
+              <span  *ngIf="eventDetail.admin == true">{{list.finalAmount | currency:'USD'}} <u> {{list.dateTime | date:'MMM d, y'}}</u></span>
+              <span *ngIf="eventDetail.admin == false"  style="color: grey;font-size: 12px;"> {{list.dateTime | date:'MMM d, y'}}</span>
+
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+      <button *ngIf="isShowDonateButton" [routerLink]="'/donor-checkout-new/event/'+eventId" class="dailybutton">
+        <img alt=""
+             src="assets/icon/awesome-donate-w.svg"> {{'event.donation.dashboard.allContributors.donateNow.Btn.text' | translate}}
+      </button>
+    </mat-tab>
+    <mat-tab label="dashboard">
+      <ng-template mat-tab-label style="width: 100%">
+        <ul>
+          <li><span>{{'event.donation.dashboard.allContributors.text' | translate}}</span></li>
+        </ul>
+      </ng-template>
+      <div (scrolled)="onScroll()"
+           [infiniteScrollDistance]="3"
+           [infiniteScrollThrottle]="50"
+           [scrollWindow]="false"
+           class="contributor"
+           infiniteScroll>
+        <div *ngFor="let list of allDonors" class="col-sm-12">
+          <ul class="donationmem">
+            <li>
+              <span class="thumb1 thumb2"></span>
+            </li>
+            <li>
+              <i
+                style=" overflow: hidden; width: 100%; display: -webkit-box;-webkit-line-clamp: 1; -webkit-box-orient: vertical;">
+                {{list.firstName | titlecase}} {{list.lastName | titlecase}}</i>
+              <span>{{list.finalAmount | currency:'USD'}} <u> {{list.dateTime | date:'MMM d, y'}}</u></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button *ngIf="isShowDonateButton" [routerLink]="'/donor-checkout-new/event/'+eventId" class="dailybutton">
+        <img alt=""
+             src="assets/icon/awesome-donate-w.svg"> {{'event.donation.dashboard.allContributors.donateNow.Btn.text' | translate}}
+      </button>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

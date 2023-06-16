@@ -1,0 +1,708 @@
+<!-- <div class="event_gallery_main my-eventpaid">
+  <div class="container">
+      <div  class="profile-head"> My Events <button class="addbutton-mem" type="button" (click)="createEvent()"> + Create Event </button></div>
+     <div class="row">
+        <div class="col-lg-4" *ngFor="let e of eventList;let i=index">
+            <div class="group_img">
+              <div class="capcnhover-gallery">
+                <img src="{{e.eventProfilePicture}}" class="eglry" alt="event_gallery">
+                <div class="share-main">
+                  <div class="share">
+                      <button>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="bookmark">
+                      <button (click)="deleteEvent(e.id)">
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                </div>
+              </div>
+                <div class="gallery_caption">
+                  <a href="#">
+                    <h2>{{e.name}}</h2>
+                    <p>{{e.description}}</p>
+                    <div class="caption_btm">
+                      <i class="fa fa-map-marker" aria-hidden="true"></i> <span>{{e.city}} </span> <a>{{e.state}}</a>
+                      <h3>{{ e.dateTime | date : "MMM dd, yyyy"}}</h3>
+                      </div>
+                  </a>
+                </div>
+            </div>
+        </div>
+     </div>
+   </div>
+</div> -->
+
+
+<!-- ======================================== New Code ======================================= -->
+<div class="create-event-right-side common-page" id="page_form">
+  <!-- <div class="dashboard-heading">My Hosted Events</div> -->
+  <div class="white-area-create-event new-dashboard">
+    <div class="row member-header">
+      <div class="col-md-12 col-lg-8">
+        <h1>
+          {{'admin.event.myHostedEvent.title' | translate}}
+          <span> {{'admin.event.myHostedEvent.title' | translate}}</span>
+        </h1>
+      </div>
+
+
+      <div class="col-md-12 col-lg-4" *ngIf="chapterList.length!=1">
+
+        <!-- <mat-form-field *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'">
+          <mat-label> Search Here..</mat-label>
+          <input (change)="onLoad($event.target.value)" [(ngModel)]="search"   autocomplete="off"   matInput type="text">
+        </mat-form-field>
+        <button *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'" type="button" class="search-button" (click)="searchClick()"> Search </button> -->
+
+        <mat-form-field class="example-full-width chapter-name pull-right mar80">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select (selectionChange)="getChapterDetail($event.value)" multiple="true" [(ngModel)]="chapterIds">
+            <mat-checkbox [checked]="selectAllChapter" (change)="selectAllChange($event)">
+              Select All</mat-checkbox>
+            <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+              {{chapter['name']}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12 col-lg-12 text-right">
+       <div class="search-box">
+          <mat-form-field *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'">
+            <mat-label> Search Here..</mat-label>
+            <input (change)="onLoad($event.target.value)" [(ngModel)]="search"   autocomplete="off"   matInput type="text">
+          </mat-form-field>
+          <button *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'" type="button" class="search-button" (click)="searchClick()"> Search </button>
+       </div>
+        <div class="page-filter-new">
+          <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid" *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'">
+            <mat-label>Page Filter</mat-label>
+            <mat-select (selectionChange)="selected_pagelimit($event)" [(ngModel)]="this.communityService.pagelimit">
+              <mat-option *ngFor="let list of this.communityService.pagelist" [value]="list">{{list}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="example-full-width pagefilterwid select-btm-no-paid sortBy" *ngIf="type =='ongoing' || type=='upcoming' || type== 'past' || type == 'draft'">
+            <mat-label>SortBy</mat-label>
+            <mat-select (selectionChange)=" selected_sortBy($event)" [(ngModel)]="defaultsort">
+              <mat-option *ngFor="let list of sort" [value]="list.value">{{list.label}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <!-- tab section  -->
+    <div class="tab-main">
+      <mat-tab-group (selectedTabChange)="changeTab($event)" [selectedIndex]="activeTab">
+        <!-- =========================== Dashboard ================================ -->
+        <mat-tab label="dashboard" >
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span (click)=pickDate()>{{'event.myhostedevent.dashboard.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-- collection Area -->
+          <div class="collection-area">
+            <div class="row">
+              <div class="col-md-7 col-sm-7 col-xs-7">
+                <div class="totall-collection">
+                  <span>{{'event.myhostedevent.dashboard.totalCollection.title' | translate}}</span>
+                  <p>{{'event.myhostedevent.dashboard.totalCollection.text' | translate}}</p>
+                </div>
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-5">
+                <span class="tottal-collection-amount">
+                      {{dashboardTotalColetion | currency:'USD'}}
+                  </span>
+              </div>
+            </div>
+          </div>
+          <!-- collection Area -->
+          <!-- chart Area -->
+          <div class="dashboard-chart">
+            <div class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-7 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-12 col-lg-7">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img alt="" src="assets/icon/value.svg">
+                          </li>
+                          <li>
+                            {{'event.myhostedevent.dashboard.registration.title' | translate}}
+                            <p>{{'event.myhostedevent.dashboard.registration.text' | translate}} </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-12 col-lg-5 txt-align" >
+                        <button type="button" class="btn marginR"  [ngClass]="regChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('DAY')">{{'event.myhostedevent.dashboard.registrationChart.day.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('MONTH')">{{'event.myhostedevent.dashboard.registrationChart.month.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('QUARTER')">{{'event.myhostedevent.dashboard.registrationChart.quarter.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('YEAR')">{{'event.myhostedevent.dashboard.registrationChart.year.tab.text' | translate}}</button>
+                      </div>
+                      <!-- <div class="col-md-4 col-sm-4">
+                        <mat-form-field class="select-week">
+                          <mat-label>Select Week</mat-label>
+                          <mat-select>
+                          </mat-select>
+                        </mat-form-field>
+                      </div> -->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+                          <!-- <img src="assets/images/chart1.png" alt=""> -->
+                          <div #registrationChart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            {{'event.myhostedevent.dashboard.cumulativeRegistration.title' | translate}}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+
+                          <div #diffchart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-4 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img src="assets/icon/money-chart.svg" alt="">
+                          </li>
+                          <li>
+                            Sales
+                            <p>Your Earning will be shown below.</p>
+                            <div class="net-sales">
+                              Gross Sales
+                              <span>$4500.70</span>
+                            </div>
+                            <div class="net-sales">
+                              Net Sales
+                              <span>$4500.70</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            Tickets Sold
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="dash-border-bottm ticket-sold-res" *ngFor="let collection of tickitSoldcollectionData;let i=index">
+                      <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-4">
+                          <span class="tick-collection">{{collection.categoryName}}</span>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-5">
+                          <div class="progress dashboard-progress">
+                            <div class="progress-bar" role="progressbar" [style.width]="collection.percent+'%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> {{collection.totalTicket}}/{{collection.capacity}} </span></div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                          <span class="ticket-amount">${{collection.totalPaid}}</span>
+                        </div>
+                      </div>
+                    </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="tick-collection">VVIP Tickets</span>
+                </div>
+                <div class="col-md-6">
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> 75/1000 </span></div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount ">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="tick-collection">Vendor Booth</span>
+                </div>
+                <div class="col-md-6">
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 10%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> 50/1000 </span></div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+
+            <div class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-12 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-8 col-sm-8 registrationmain">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img alt="" src="assets/icon/earning-money.svg">
+                          </li>
+                          <li>
+                            {{'event.myhostedevent.dashboard.earning.title' | translate}}
+                            <p>{{'event.myhostedevent.dashboard.earning.text' | translate}} </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4 monthlybutton" style="text-align: right">
+                        <button type="button" class="btn marginR"  [ngClass]="erChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('DAY')">{{'event.myhostedevent.dashboard.earningChart.day.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="erChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('MONTH')">{{'event.myhostedevent.dashboard.earningChart.month.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="erChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('QUARTER')">{{'event.myhostedevent.dashboard.earningChart.quarter.tab.text' | translate}}</button>
+                        <button type="button" class="btn marginR" [ngClass]="erChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('YEAR')">{{'event.myhostedevent.dashboard.earningChart.year.tab.text' | translate}}</button>
+                      </div>
+                      <!-- <div class="col-md-4 col-sm-4">
+                        <mat-form-field class="select-week">
+                          <mat-label>Select Week</mat-label>
+                          <mat-select>
+
+                          </mat-select>
+                        </mat-form-field>
+                      </div> -->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart chartscrolmain">
+                          <!-- <img src="assets/images/chart1.png" alt=""> -->
+                          <div class="chartscrol" #earningChart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <!-- <div class="col-md-5 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            Tickets Sold
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+                          <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                              <div class="ticket-chart">
+                                <div #tickitSold></div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                              <ul class="ticket-chart-options">
+                                <li *ngFor="let collection of tickitSoldData;let i=index"> <span><i class="chart-cash"></i> {{collection.paymentMethodUsed}} </span> ${{collection.totalAmount}} </li> -->
+                <!-- <li> <span><i class="chart-paypal"></i> Paypal </span> $2500.00 </li>
+                <li> <span><i class="chart-dabit-card"></i> Debit Card </span> $2500.00 </li>
+                <li> <span><i class="chart-stripe"></i> Stripe </span> $2500.00 </li>
+                <li> <span><i class="chart-bank-payment"></i> Bank Payment </span> $2500.00 </li> -->
+                <!-- </ul>
+              </div>
+            </div> -->
+                <!-- <div class="ticket-chart">
+                  <div #tickitSold></div>
+                </div>
+                <ul class="ticket-chart-options">
+                  <li> <span><i></i> Cash </span> $2500.00 </li>
+                  <li> <span><i></i> Paypal </span> $2500.00 </li>
+                  <li> <span><i></i> Debit Card </span> $2500.00 </li>
+                  <li> <span><i></i> Stripe </span> $2500.00 </li>
+                  <li> <span><i></i> Bank Payment </span> $2500.00 </li>
+                </ul> -->
+                <!-- </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+              </div>
+            </div>
+
+
+            <!-- <div class="top-chart">
+              <div class="row row-eq-height no-equal-height">
+                <div class="col-md-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img src="assets/icon/dollar.svg" alt="">
+                          </li>
+                          <li>
+                            Collections
+                            <p>Over all collection from Sponsorship & Donation</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="dash-border-bottm">
+                      <div class="row">
+                        <div class="col-md-12" #collectionChart></div> -->
+            <!-- <div class="col-md-9">
+              <span class="tick-collection mardonation">Donation</span>
+              <div class="progress dashboard-progress">
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <span class="ticket-amount amnt-top">$3500.70</span>
+            </div> -->
+            <!-- </div>
+          </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-9">
+                  <span class="tick-collection mardonation">Sponsorship</span>
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount amnt-top">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+
+          </div>
+          <!-- chart Area -->
+        </mat-tab>
+        <!-- =========================== Dashboard ================================ -->
+        <mat-tab label="ongoing" >
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span (click)="getEvent()">{{'event.myhostedevent.ongoing.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------on going-------->
+          <div *ngIf="eventList.length != 0" class="on-going-event">
+
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture |  eventImages)+')'"></div>
+
+                        <img alt="hosted-event" [src]="e.profilePicture |  eventImages ">
+
+                      </li>
+                      <li class="hosted-title">
+                        <a routerLink="/event-dashboard/{{e.id}}"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p><b>Created By : {{e?.firstName | titlecase}} {{e?.lastName | titlecase}}</b></p>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date :
+
+                      this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }}  </span>
+                  </div>
+                  <a class="upcomming-event" routerLink="/event-dashboard/{{e.id}}">
+                    <i class="icon-statistics newicon"></i>
+                     {{'event.myhostedevent.ongoing.dashboard.Btn.text' | translate}}
+                  </a>
+                </div>
+              </div>
+            </div>
+           <div *ngIf="eventList?.content?.length ==0" class="hos-paid">
+              <div class="row row-eq-height">{{'event.myhostedevent.ongoing.noEventFound.text' | translate}}</div>
+            </div>
+            <div *ngIf="eventList.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of totalPages"
+                    [ngClass]="data.page.pageNumber == i ? 'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="upcoming">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span >{{'event.myhostedevent.upcoming.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------UP COMMING-------->
+          <div  *ngIf="eventList.length != 0"  class="on-going-event" >
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture|  eventImages)+')'"></div>
+                        <img alt="hosted-event"  [src]="e.profilePicture |  eventImages" >
+                      </li>
+                      <li class="hosted-title">
+                        <a routerLink="/event-dashboard/{{e.id}}"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p><b>Created By : {{e?.firstName | titlecase}} {{e?.lastName | titlecase}}</b></p>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                  {{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat  }}
+                  <span> {{e.startDateTime | date : "shortTime" }} </span>
+                </div>
+                  <a class="upcomming-event" routerLink="/event-dashboard/{{e.id}}" >
+                    <i class="icon-statistics newicon"></i>
+                     {{'event.myhostedevent.upcoming.dashboard.Btn.text' | translate}}
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf=" eventList?.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">{{'event.myhostedevent.upcoming.noEventFound.text' | translate}}</div>
+            </div>
+            <div *ngIf="eventList?.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of totalPages"
+                    [ngClass]="data.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="past">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>{{'event.myhostedevent.past.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------past-------->
+          <div *ngIf="eventList.length != 0"  class="on-going-event">
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture|  eventImages)+')'"></div>
+                        <img alt="hosted-event"  [src]="e.profilePicture|  eventImages" >
+                      </li>
+                      <li class="hosted-title">
+                        <a routerLink="/event-dashboard/{{e.id}}"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description | stripHtml"></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p><b>Created By : {{e?.firstName | titlecase}} {{e?.lastName | titlecase}}</b></p>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date :    this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }} </span>
+                  </div>
+                  <a routerLink="/event-dashboard/{{e.id}}" class="upcomming-event">
+                    <i class="icon-statistics newicon"></i>
+                     {{'event.myhostedevent.past.dashboard.Btn.text' | translate}} </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf=" eventList?.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">{{'event.myhostedevent.past.noEventFound.text' | translate}}</div>
+            </div>
+            <div *ngIf="eventList?.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of totalPages"
+                    [ngClass]="data.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))"
+                          [disabled]="eventList['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="draft">
+          <ng-template mat-tab-label>
+            <ul>
+              <li><span>{{'event.myhostedevent.draft.tab.text' | translate}}</span></li>
+            </ul>
+          </ng-template>
+          <!-------draft-------->
+          <div  *ngIf="eventList.length != 0"   class="on-going-event">
+            <div *ngFor="let e of eventList?.content" class="hos-paid">
+              <div class="row row-eq-height no-eualhieght">
+                <div class="col-md-8 col-sm-9">
+                  <div class="hosted-event-main">
+                    <ul class="hosted-details">
+                      <li class="myeventblur">
+                        <div class="blurevent-image" [style.backgroundImage]="'url('+(e?.profilePicture | eventImages)+')'"></div>
+                        <img alt="hosted-event" [src]="e.profilePicture | eventImages" >
+                      </li>
+                      <li class="hosted-title">
+                        <a routerLink="/event-dashboard/{{e.id}}"><h4>{{e.name}}</h4></a>
+                        <p *ngIf="e.description != null && e.description != ''" [innerHTML]="e.description | stripHtml "></p>
+                      </li>
+                    </ul>
+                  </div>
+                  <p><b>Created By : {{e?.firstName | titlecase}} {{e?.lastName | titlecase}}</b></p>
+                </div>
+                <div class="col-md-4 col-sm-3 datetime dateongoing">
+                  <div class="respdate">
+                    {{e.startDateTime | date : this.communityService.publicInfo?.webDateFormat }}
+                    <span> {{e.startDateTime | date : "shortTime" }} </span>
+                  </div>
+                  <a routerLink="/event-dashboard/{{e.id}}" class="upcomming-event">  <i class="icon-statistics newicon"></i> {{'event.myhostedevent.draft.dashboard.Btn.text' | translate}} </a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf=" eventList?.content.length ==0" class="hos-paid">
+              <div class="row row-eq-height">{{'event.myhostedevent.draft.noEventFound.text' | translate}}</div>
+            </div>
+            <div *ngIf="eventList?.content.length !=0" class="pegination-main totalPosition">
+              <ul>
+                <li>
+                  <button (click)="pagination('current',0)" [disabled]="eventList['first'] == true" class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev')" [disabled]="eventList['first'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-left-arrow icon"></i></button>
+                </li>
+                <li (click)="pagination('current',i)" *ngFor="let i of totalPages"
+                    [ngClass]="data.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                  <!-- <button  class="numeric" *ngIf="i < 5">{{i + 1}}</button>
+                  <button  class="numeric" *ngIf="i > 5">{{i + 1}}</button> -->
+                </li>
+                <li>
+                  <button (click)="pagination('next')" [disabled]="eventList['last'] == true" class="arrow"><i
+                    aria-hidden="true" class="icon-right-arrow icon"></i></button>
+                </li>
+                <li>
+                  <button (click)="pagination('current',(eventList['totalPages']-1))" [disabled]="eventList['last'] == true" class="next">Last
+                  </button>
+                </li>
+              </ul>
+              <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

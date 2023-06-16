@@ -1,0 +1,62 @@
+
+<div class="mainnewsscreen main-screen main-about" >
+  <section class="inner-banner commontopmargin">
+    <div class="blue-bg-banner"><span></span></div>
+    <div class="slid-left-blue-dots">
+      <img alt="" src="assets/images/inner-left-dots.png">
+    </div>
+    <div class="container">
+      <div class="red-inner">
+        <div class="row">
+          <div  animationName="animated slideInLeft" class="col-md-6 col-sm-6">
+            <h2 class="inner-page-tlt">{{'aboutTitle' | translate}}</h2>
+          </div>
+          <div  animationName="animated slideInRight" class="col-md-6 col-sm-6 news-bread">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">{{'home' | translate}}</a></li>
+                <li aria-current="page" class="breadcrumb-item active">{{'aboutTitle' | translate}}</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="about-us-home" *ngIf="showAboutUs ==true">
+    <div class="container">
+      <div class="row" *ngIf="aboutUsDetails.bannerUrl != null && aboutUsDetails.bannerUrl != ''">
+        <div class="col-md-5 col-sm-5">
+          <div  animationName="animated slideInLeft"  [ngClass] = "this.communityService.communityDetail?.aboutCommunity?.allowColorBackground ? 'about-img' : 'marginabout'">
+            <div class="mainaboutpage" >
+              <div class="blurimageabout" [ngStyle]="{'background-image':'url(' + aboutUsDetails.bannerUrl + ')'}"></div>
+                <img alt="" [src]="aboutUsDetails.bannerUrl | communityImages">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7 col-sm-7">
+          <div class="about-text">
+            <h2  animationName="animated slideInLeft" class="section-tlt">About Us</h2>
+            <p [innerHTML]="aboutUsDetails.details"></p>
+          </div>
+        </div>
+      </div>
+        <div class="row" *ngIf="aboutUsDetails.bannerUrl == null || aboutUsDetails.bannerUrl == ''">
+        <div class="col-md-12">
+          <div class="about-text">
+            <h2  animationName="animated slideInLeft" class="section-tlt">About Us</h2>
+            <p [innerHTML]="aboutUsDetails.details"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="create-event-right-side eventnotfound" *ngIf="showAboutUs==false">
+    <div class="event-not-found" >
+      <img src="assets/images/event-not.svg" alt=""><br>
+      <span>{{'about.aboutusNotFound.title' | translate}}</span><br>
+      <button (click)="backToHome()">{{'about.aboutusNotFound.back.btn' | translate}}</button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,217 @@
+<div class="reg-left">
+  <div class="reg-inner">
+    <h1>
+      Membership <br> Form Setup
+    </h1>
+  </div>
+  <ul class="stepprogress">
+<!--    <li class="stepprogress-item is-done">-->
+<!--      <a href="#">-->
+<!--        <strong>-->
+<!--          <i class="icon-file icon"></i> Basic Information</strong>-->
+<!--      </a>-->
+<!--    </li>-->
+<!--    <li class="stepprogress-item  complete-three-step">-->
+<!--      <a href="#">-->
+<!--        <strong>-->
+<!--          <i class="icon-wallet icon"></i> Membership Number</strong>-->
+<!--      </a>-->
+<!--    </li>-->
+  </ul>
+</div>
+
+<div class="create-event-right-side create-new-evnt">
+  <div class="white-area-create-event paddleftmember">
+
+
+    <!-- Section -->
+    <ng-container *ngFor="let steps of formStepsWithFields;let i=index">
+
+      <div *ngIf="steps.id" class="main-section-membership">
+        <h5 class="edit-section" (click)="editSection(steps,i)">
+          {{steps.stepName}}
+        </h5>
+        <div class="bluenumber">
+          <div class="bluebox">
+            <span>{{steps.index}}</span>
+          </div>
+          <div class="right-member">
+            <div class="row martop-date">
+
+              <div *ngFor="let field of steps.fieldValues;let c=index" class="col-md-6 margintop">
+                <button (click)="editField(field,c,steps.fieldValues,i)" [ngClass]="{'active':field.active}"
+                        class="btn addsection">{{field.name}}</button>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Add New Field</mat-label>
+                  <mat-select (selectionChange)="changeFieldEvent($event.value,i)"  [(ngModel)]="steps.value" [ngModelOptions]="{standalone: true}">
+                    <mat-option value="">Select Type</mat-option>
+                    <mat-option *ngFor="let type of fieldTypes" [value]="type.value">
+                      {{type.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="i == stepArray['index']" class="lightarea">
+        <form [formGroup]="fieldForm" id="fieldForm">
+          <div class="lightinner">
+            <div class="row" *ngIf="fieldForm.value.id != null && fieldForm.value.id != ''">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Change Type Field</mat-label>
+                  <mat-select formControlName="type" (selectionChange)="changeFieldType($event.value)">
+                    <mat-option value="">Select Type</mat-option>
+                    <mat-option *ngFor="let type of fieldTypes" [value]="type.value">
+                      {{type.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{stepArray.type.name}} Field Display Name</mat-label>
+                  <input   formControlName="name" matInput type="text">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>{{stepArray.type.name}} Field Name</mat-label>
+                  <input  formControlName="fieldName" matInput type="text">
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <div *ngIf="stepArray.type.allowOption == true">
+              <div class="row martop-date">
+                <div class="col-md-6">
+                  <button (click)="addOption()" class="save btn btn-primary">Add More Option</button>
+                </div>
+              </div>
+              <div class="row martop-date">
+                <div *ngFor="let option of options;let o = index;" class="col-lg-6">
+                  <div class="col-lg-11">
+                    <mat-form-field class="example-full-width ">
+                      <mat-label>{{stepArray.type.name}} Option Value</mat-label>
+                      <input [(ngModel)]="option.value" [ngModelOptions]="{standalone: true}" matInput>
+                    </mat-form-field>
+                  </div>
+                  <div class="removeBtn col-md-1">
+                    <button (click)="removeOption(o)">
+                      <i  class="icon-delete-blue newicon"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="bortopdashed">
+              <div class="row">
+                <div class="col-md-12 col-lg-6">
+                  <div class="border-country">
+                    <mat-radio-group formControlName="required" aria-label="Select an option">
+                      <mat-radio-button [checked]="fieldForm.value.required == true" [value]="true">Required</mat-radio-button>
+                      <mat-radio-button [checked]="fieldForm.value.required == false" [value]="false">Optional</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-6 text-right textlft">
+                  <button (click)="removeFiled(i,fieldForm.value.id)" class="removefield">
+                    <i class="icon-delete newicon"></i> Remove Field
+                  </button>
+                  <button (click)="cancelNewFiled(i)" class="cancel">Cancel</button>
+                  <button (click)="submitField(i)" class="save">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="steps['editSection']" class="lightarea">
+        <div class="lightinner">
+          <h1>Edit Section </h1>
+          <form [formGroup]="sectionForm" class="example-form" id="sectionsForm">
+            <div class="row martop-date">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>New Step Name</mat-label>
+                  <input formControlName="stepName" matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>New Step Detail</mat-label>
+                  <input formControlName="stepDetails" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <div class="bortopdashed">
+            <div class="row">
+              <div class="col-md-12 col-lg-6">
+              </div>
+              <div class="col-md-12 col-lg-6 text-right textlft">
+                <button (click)="removeSection(steps['id'])" class="removefield">
+                  <i class="icon-delete newicon"></i> Remove Section
+                </button>
+                <button (click)="cancelSection(i)" class="cancel">Cancel</button>
+                <button (click)="submitSection(steps['id'],i)" class="save">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Section -->
+    <div *ngIf="newSectionShow" class="lightarea" let i=index>
+      <div class="lightinner">
+        <h1>Add Section </h1>
+        <form [formGroup]="sectionForm" class="example-form" id="sectionForm">
+          <div class="row martop-date">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label>New Step Name</mat-label>
+                <input formControlName="stepName" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label>New Step Detail</mat-label>
+                <input formControlName="stepDetails" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="bortopdashed">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+            </div>
+            <div class="col-md-12 col-lg-6 text-right textlft">
+              <button (click)="newSectionShow = !newSectionShow" class="cancel">Cancel</button>
+              <button (click)="submitSection()" class="save">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addanothersection">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <button (click)="addSections()" class="addsection">
+            + Add another section
+          </button>
+        </div>
+        <div class="col-md-6 col-sm-6 text-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

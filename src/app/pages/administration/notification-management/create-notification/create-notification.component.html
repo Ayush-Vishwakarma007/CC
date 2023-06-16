@@ -1,0 +1,56 @@
+<app-notification-template *ngIf="!templateStatus" (completed)="completeConfig()" [(templateName)]="templateName"
+  [save]="submitConfig" [notificationId]="notificationId"></app-notification-template>
+<div *ngIf="templateStatus">
+  <div class="reg-left">
+    <div class="reg-inner">
+      <h1 *ngIf="!isEdit">
+        Create Notification
+      </h1>
+      <h1 *ngIf="isEdit">
+        Edit Notification
+      </h1>
+      <!-- <h1 *ngIf="editTime != undefined">
+        Edit Event
+      </h1> -->
+    </div>
+    <ul class="stepprogress">
+      <li class="stepprogress-item " [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'"
+        (click)="openActiveTab(step['step'])" *ngFor="let step of step;let i = index">
+        <strong><i class="{{step.class}} newicon"></i> {{step.name}}</strong>
+      </li>
+    </ul>
+  </div>
+  <div class="create-event-right-side create-new-evnt">
+    <div class="white-area-create-event">
+      <!-- Basic Information Section -->
+      <app-basic-information *ngIf="activeTabName=='BASIC_INFO'"
+        (completed)="completeStep();nextBackActiveTab(activeTabName,'next')" [save]="submitSubject"
+        [(templateName)]="templateName" [(basicInfoId)]="basicInfoId" [(basicInformation)]="basicInformation"
+        [notificationId]="notificationId">
+      </app-basic-information>
+      <!-- Basic Information Section End -->
+      <!-- Filter Section -->
+      <app-notification-filter  *ngIf="activeTabName=='FILTER'" [(basicInfoId)]="basicInfoId"
+        [(showUser)]="showUser"  [(filterDetail)]="filterDetail" [(communityFilter)]="communityFilter" [(eventFilter)]="eventFilter"
+        [templateName]="templateName" [save]="submitSubject" [notificationId]="notificationId">
+      </app-notification-filter>
+      <!-- Filter Section -->
+      <!-- back and next button -->
+      <div class="row button-save-create">
+        <div *ngIf="step.length != 0" class="col-md-4 col-sm-4 col-xs-4">
+          <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button"
+            value="Back">
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+          <input (click)="save()" *ngIf="activeTabName == 'BASIC_INFO'" class="save-changes fright buttoncolor" type="button"
+            value="Save and Next">
+          <!-- <input (click)="save()" *ngIf="activeTabName == 'FILTER'" class="save-changes fright" type="button"
+            value="Save As Draft"> -->
+          <!-- <input (click)="nextBackActiveTab(activeTabName,'finish')" *ngIf="lastStep == activeTabName"
+            class="save-changes fright" type="button" value="Publish"> -->
+        </div>
+      </div>
+      <!-- back and next button -->
+    </div>
+  </div>
+</div>

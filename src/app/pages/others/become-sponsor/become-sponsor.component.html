@@ -1,0 +1,61 @@
+<div class="header">
+  <div class="row row-eq-height no-equal-height-book-ticket">
+    <div class="col-md-6 col-sm-6 col-xs-12 year-party">
+      <ul class="text-off">
+        <li>{{eventDetail.name}}</li>
+        <li  [innerHTML]="eventDetail.description"></li>
+      </ul>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <span class="grand-t">Grand Total : <i> $ {{sponsorDetail['finalAmount']}} </i></span>
+    </div>
+  </div>
+  </div>
+  <div class="reg-left booticket-lft">
+    <div class="reg-inner">
+      <h1>
+        Become<br>
+        {{ typeDisplay }}
+      </h1>
+    </div>
+    <ul class="stepprogress">
+      <li class="stepprogress-item {{step.class}}"  [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'" (click)="openActiveTab(step['step'])" *ngFor="let step of step;let i = index" >
+        <strong><i class="icon-file icon"></i> {{step.name}}</strong>
+      </li>
+    </ul>
+  </div>
+
+<div class="create-event-right-side create-new-evnt bookticket-right">
+  <div class="book-ticket-main become-sponsor-top">
+    <!-- <div class="sponsorship-plans">
+      {{type  | titlecase}}ship Plans
+    </div> -->
+    <!--      Sponsor  -->
+    <app-donation-sponsor  *ngIf="(type == 'sponsor' || type == 'donation' ) && sponsor_list.length != 0 && activeTabName=='VENDOR_PLAN'" [eventId]="eventId"  [(sponsorId)]="sponsorId"  [sponsor_list]="sponsor_list" [save]="submitSubject"  (changeId)="changeId()" (completed)="completeStep()"   [(sponsorDetail)]="sponsorDetail"></app-donation-sponsor>
+    <!-- Sponsor -->
+
+    <!--  Vendor  -->
+    <app-vendor-booking  *ngIf="type == 'vendor' && sponsor_list.length != 0 && activeTabName=='VENDOR_PLAN'" [eventId]="eventId"  [(sponsorId)]="sponsorId"  [sponsor_list]="sponsor_list" [save]="submitSubject"  (changeId)="changeId()" (completed)="completeStep()"   [(sponsorDetail)]="sponsorDetail"></app-vendor-booking>
+    <!-- Vendor -->
+
+    <!-- Paymenb -->
+    <app-payment *ngIf="activeTabName=='PAYMENT'"  [eventId]="eventId" [paymentArray]="paymentArray" [save]="submitSubject"  (completed)="completeStep()"  [(paymentDetail)]="paymentDetail"></app-payment>
+    <!-- Paymenb -->
+    <div  *ngIf="showModal==true && lastStep != activeTabName">
+      <app-donate-event [eventId]="eventId"  [(sponsorDetail)]="sponsorDetail"  (completed)="completeStep()" [save]="submitSubject"> </app-donate-event>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <input class="save-changes backbtn" type="button" (click)="nextBackActiveTab(activeTabName,'back')"   value="Back">
+      </div>
+      <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+        <input class="save-changes fright" type="button" *ngIf="lastStep != activeTabName" (click)="submitSubject.next(null);"  value="Next" >
+        <input class="save-changes fright" type="button" *ngIf="lastStep == activeTabName" value="Finish" (click)="nextBackActiveTab(activeTabName,'finish')">
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Donation Model -->
+  <!-- Modal -->

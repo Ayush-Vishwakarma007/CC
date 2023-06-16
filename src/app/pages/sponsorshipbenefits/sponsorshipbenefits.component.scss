@@ -1,0 +1,61 @@
+
+
+
+.scholarship-head{  font-size: 25px; font-weight:bold ; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; color: #161616; margin: 0px 0 15px 0; padding: 0px 0 0 10px; letter-spacing: 1.7px;
+}
+.sponsorship-tab{
+    table{ width: 100%;
+        th{
+            span{ min-height: 80px; margin: 5px; font-size: 16px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #fff; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px; border-top-right-radius: 20px; border-top-left-radius: 20px; }
+        }
+    }
+    .sponsoramnt{
+        td{
+            span{  min-height: 50px; margin: 5px; font-size: 16px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #161616; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px; background: #fdf2e9; }
+        }
+    }
+    .sponsoramnt2{
+        td{
+            span{  min-height: 95px; margin: 5px; font-size: 15px; font-weight: 600; font-family: 'Montserrat', sans-serif; text-align: center; display: flex; color: #161616; align-items: center; justify-content: center; padding-left: 7px; padding-right: 7px;  }
+        }
+    }
+    
+    .bg1{ background: #56C0E8;}
+    .bg2{ background: #9E7BB5;}
+    .bg3{ background: #1F868B;}
+    .bg4{ background: #EDBB58;}
+    .bg5{ background: #729864;}
+    .bg6{ background: #ACCD41;}
+    .bg7{ background: #ED8427;}
+    .bg8{ background: #EFEFEF; color: #161616!important;}
+
+    .bg01{ background: #bbe6f6;}
+    .bg02{ background: #d8cae1;}
+    .bg03{ background: #a5ced0;}
+    .bg04{ background: #f8e4bc;}
+    .bg05{ background: #c6d6c1;}
+    .bg06{ background: #deebb3;}
+    .bg07{ background: #f8cea8;}
+    .bg08{ background: #EFEFEF; color: #161616!important; text-align: left!important; justify-content: flex-start!important;}
+
+    
+    
+}
+.virtualtop{ margin-top: 30px;}
+.textlist{ padding-bottom: 25px;
+    li{ font-size: 15px; font-weight:600; margin-bottom: 5px; font-family: 'Montserrat', sans-serif; color: #161616; margin: 0px 0 15px 0; padding: 0px 0 0 10px; letter-spacing: 1.7px;}
+}
+.button-benefit{ float: right; text-decoration: none; background: var(--secondary-color); color: #fff; border: 0px; padding: 7px 20px !important; font-size: 14px !important; height: 43px !important; margin-left: 0px !important; border-radius: 4px !important; display: inline-flex; align-items: center;
+    &:hover{ opacity: 0.7;}
+}
+
+@media screen and (max-width: 1199px) {
+    .sponsorship-tab{ overflow-x: scroll;
+        table{ width: 1150px;}
+    }
+}
+@media screen and (max-width: 767px) {
+.button-benefit{ float: left; margin-bottom: 15px;
+    &:hover{ opacity: 0.7;}
+    }
+}

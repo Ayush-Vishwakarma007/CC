@@ -1,0 +1,216 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main">
+    <div class="row">
+      <div class="col-md-6 col-lg-6">
+        <h1>
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png"></div>
+          {{'admin.userManagement.title' | translate}}
+          <span>{{'admin.userManagement.text' | translate}}</span>
+        </h1>
+        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Launch demo modal
+        </button> -->
+      </div>
+      <div class="col-md-6 col-lg-6 text-right" *ngIf="chapterList.length!=1">
+        <mat-form-field class="chapter-name">
+          <mat-label>Select Chapter</mat-label>
+          <mat-select  [value]="chapterList[0]?.id" (selectionChange)="getChapterDetail($event.value)">
+            <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="tabsection">
+      <mat-tab-group (selectedTabChange)="changeTab($event)" class="overview-height">
+        <!-- =========================== Admin Users ================================ -->
+        <mat-tab *ngFor="let list of roleList" label="{{list.specificRole}}">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                  <span>
+                      {{list.roleDescription}}
+                  </span>
+              </li>
+            </ul>
+          </ng-template>
+          <app-user-detail *ngIf="currentTab == list?.specificRole"  [hidden]="list?.specificRole != this.currentTab"  [type]="'user'" [userPermisssion]="userPermission" [reqData]="reqData"  [save]="userSubject"  [currentTab]="currentTab"></app-user-detail>
+
+        </mat-tab>
+        <!-- =========================== Admin Users ================================ -->
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog exceldata" role="document">
+    <div class="modal-content">
+     <!-- <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          </div>-->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="ccfield">
+              CC Field
+            </div>
+          </div>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-5">
+            <div class="ccfield">
+              Excel File Field
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <!-- <span aria-hidden="true">&times;</span> -->
+                <img src="assets/icon/close-gray.svg" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="email-inp">
+              <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" [readonly]="true">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="arrow-data">
+              <img src="assets/icon/nextdata.svg" alt="">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="selectemail">
+              <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option>
+                   Email
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row martopinvoice">
+          <div class="col-sm-5">
+            <div class="email-inp">
+              <mat-form-field class="example-full-width">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Email" [readonly]="true">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="arrow-data">
+              <img src="assets/icon/nextdata.svg" alt="">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="selectemail">
+              <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option>
+                   Email
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row martopinvoice">
+          <div class="col-sm-5">
+            <div class="email-inp">
+              <mat-form-field class="example-full-width">
+                <mat-label>Phone</mat-label>
+                <input matInput placeholder="Email" [readonly]="true">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="arrow-data">
+              <img src="assets/icon/nextdata.svg" alt="">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="selectemail">
+              <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option>
+                   Email
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row martopinvoice">
+          <div class="col-sm-5">
+            <div class="email-inp">
+              <mat-form-field class="example-full-width">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="Email" [readonly]="true">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="arrow-data">
+              <img src="assets/icon/nextdata.svg" alt="">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="selectemail">
+              <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option>
+                   Email
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row martopinvoice">
+          <div class="col-sm-5">
+            <div class="email-inp">
+              <mat-form-field class="example-full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Email" [readonly]="true">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="arrow-data">
+              <img src="assets/icon/nextdata.svg" alt="">
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="selectemail">
+              <mat-form-field appearance="fill">
+                <mat-label>Select</mat-label>
+                <mat-select>
+                  <mat-option>
+                   Email
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button> Done </button>
+      </div>
+    </div>
+  </div>
+</div>

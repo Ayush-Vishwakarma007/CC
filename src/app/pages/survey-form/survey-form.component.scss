@@ -1,0 +1,59 @@
+.survey-form-main{
+    .header-form{padding: 25px 25px; background: #fff;
+        h1{margin: 0 0 5px; color: #404040; font-size: 18px; font-weight: 600;}
+        p{margin: 0; font-size: 14px; font-weight: 500; color: #A2A2A2;}
+        mat-form-field{display: inline-block; width: auto; margin-right: 10px;}
+        .mat-form-field-wrapper{
+            .mat-form-field-flex{border: 1px solid #ccc; border-radius: 5px; padding: 0px 20px;}
+        }
+        .button-add-survey{display: inline-block;
+          button{background: var(--primary-color); color: #fff; box-shadow: 0 0 10px #797979; border-radius: 3px; font-size: 15px; font-weight: 700; padding: 13px 13px; border: 0; outline: none;}
+        }
+    }
+    .table-data{
+        .moredrop{ display: block!important;  width: 45px;   margin-top: 0px; position: relative;
+            .dropdown-toggle{ width: 45px; height: 45px; border: 1px solid #ccc; border-radius: 50px; position: relative;
+              img{ width: 20px; transform: translate(-50%, -50%); top: 50%; left: 50%; position: absolute; opacity: 0.7;}
+            }
+            .dropdown-toggle::after{ opacity: 0;}
+            .dropdown-menu{ padding: 0px; margin-left: -144px; min-width: 180px; margin-bottom: 12px;  border: 0px; box-shadow: 0 -3px 15px rgba(0,0,0,.175);
+              &::before{ position: absolute; bottom: -10px; right: 10px; content: "";  width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid white;}
+              a{ display: block; font-weight: 600; color: #404040; margin-bottom: 5px;  transition: all 0.5s ease 0s; font-size: 12px; display: block; border-bottom: 1px solid #f5f5f5; padding: 8px 9px; margin: 0; position: relative; padding-right: 15px; text-decoration: none;
+                i{position: absolute;right: 0; top: 0; bottom: 0; margin: auto; font-size: 27px;}
+              }
+              button{ border: none;  background-color: #FFFFFF; display: block; color: #666; margin-bottom: 5px; font-weight: 100; transition: all 0.5s ease 0s;}
+              a:hover{ color: #2866A0; transition: all 0.5s ease 0s; padding-left: 9px; background: #f5f5f5 !important;}
+              button:hover{ color: #2866A0; padding-left:0px; transition: all 0.5s ease 0s;}
+              [class*='fa-']:before{ font-size: 17px; margin-right: 5px; }
+            }
+          }
+        .dropdown-toggle::after{    font-size: 75px; border: 0;}
+        .donation-sponsor{ display: block; padding: 0px 20px; background: #fff;
+            table{ width: 100%;
+                thead{background: #F5F5F5;}
+                tbody{background: #fff;}
+              th{ padding:14px 14px; color: #404040;    position: relative;}
+              tr{ border-bottom: 2px solid #f5f5f5;
+                td{ font-weight: 600; font-size: 14px;  padding:7px 14px;
+                  span{ display: contents; color: #A2A2A2; font-size: 12px;}
+                  .title-data{
+                      h3{color: #404040; font-size: 15px; font-weight: 500; margin: 0;}
+                      p{color: #4AA295; font-size: 11px; font-weight: 500; margin: 0;}
+                  }
+                  span.blue{color: #0071BC;}
+                }
+              }
+            }
+            .imagealign{ display: flex; align-items: center;
+              span{ display: contents;}
+            }
+          }
+    }
+}
+// .collapse-left-menu .common-page{width: calc(100% - 81px) !important;}
+
+// @media screen and (max-width: 1600px){
+//     .collapse-left-menu .common-page {
+//         margin: 0px 0 0 81px !important;
+//     }
+// }

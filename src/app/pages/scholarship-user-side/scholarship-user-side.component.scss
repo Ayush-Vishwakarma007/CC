@@ -1,0 +1,48 @@
+
+
+
+
+.file-upload-data{padding: 10px 0;
+    label[for="file-input"]{ display: block; margin-bottom: 5px; margin-top: 10px; font-size: 14px; color: #404040; opacity: 1; font-weight: 600; text-transform: uppercase;}
+      input[type="file"] { cursor: pointer; padding: 0; background: #ECECEC; border-radius: 3px; outline: none; font-size: 13px;
+        &::-webkit-file-upload-button { background: #c6c6c6; border: 0; padding: 1em 2em; cursor: pointer; color: #fff; border-radius: .2em; outline: none;}
+        &::-ms-browse { background: #c6c6c6; border: 0; padding: 1em 2em; cursor: pointer; color: #fff; border-radius: .2em; outline: none;}
+      }
+}
+
+
+.scholaeship-data{
+    .page-head{padding: 20px 0;
+        h1{color: #404040; font-size: 25px; font-weight: 700; margin: 0; position: relative; display: inline-block; padding-bottom: 5px;
+            &::after{position: absolute; content: ""; bottom: 0; left: 0; width: 100%; height: 1px; background: #404040;}
+        }
+    }
+    .card-data-main{
+        mat-card{box-shadow: 0 0 10px #ccc; position: relative; padding-bottom: 30px; margin-bottom: 25px;
+            .left-data{
+                h4{color: var(--primary-color); font-weight: 700; font-size: 23px; margin: 0 0 8px;}
+                h6{font-size: 12px; font-weight: 400; color: #929497; margin: 0 0 8px;}
+                .descreption{
+                    p{font-size: 15px; font-weight: 400; color: #6D6D6D; margin: 0 0 5px;}
+                }
+                a{color: var(--primary-color); font-size: 15px; font-weight: 700; outline: none; text-decoration: none;}
+            }
+            .right-data{text-align: right; display: flex; align-items: flex-end; min-height: 127px; justify-content: space-between; flex-flow: column;
+                h5{font-size: 23px; font-weight: 700; margin: 0; color: #404040;}
+                button{background: var(--primary-color); font-weight: 700; font-size: 14px; text-transform: uppercase; color: #fff; border-radius: 5px ; outline: none; min-width: 160px; line-height: 50px; border: 0;
+                    &:focus{color: #fff;}
+                }
+            }
+            .tems-cnds{position: absolute; bottom: 5px; left: 15px;
+                a{font-weight: 600; font-size: 10px; text-decoration: none; outline: none; color: var(--primary-color);}
+            }
+        }
+    }
+}
+
+@media (max-width: 991px){
+    .right-data{min-height: 69px !important;
+        h5{font-size: 17px !important;}
+        button{ min-width: 130px !important; font-size: 12px !important; line-height: 40px !important;}
+    }
+}

@@ -1,0 +1,569 @@
+<div [ngClass]="activeTabForgotPass != 'forgotpass' ? 'show-forgot' : ''" class="main-slide">
+  <div [ngClass]="activeTab != 'signin' ? 'show-content' : ''" class="dragslider">
+    <!-- Signup  -->
+    <div class="img-dragger"  *ngIf="activeTab == 'signin'">
+      <!-- ================= registration form | pradip kor : 09-01-2020 ============  -->
+      <form [formGroup]="regForm" id="regForm">
+        <div class="login-rgt-bg noheight-res float-l">
+          <div class="login-input-area signup-head less-mar signup-res">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <!-- <a routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == '')" class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}">
+              </span>
+            </a> -->
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1>
+              Create New Account
+            </h1>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="styled-input">
+                  <input (keypress)="charOnly($event)" formControlName="firstName" type="text"/>
+                  <label>First Name
+                    <span class="valid-msg">*</span>
+                  </label>
+                  <span *ngIf="submitted && regFormCon.firstName.errors">
+                    <div *ngIf="regFormCon.firstName.errors.required" class="valid-msg">First Name is required</div>
+                    <div *ngIf="regFormCon.firstName.errors.cannotContainSpace" class="valid-msg">Please Enter Valid
+                      First Name</div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="styled-input">
+                  <input (keypress)="charOnly($event)" formControlName="lastName" type="text"/>
+                  <label>Last Name
+                    <span class="valid-msg">*</span>
+                  </label>
+                  <span *ngIf=" submitted &&regFormCon.lastName.errors">
+                    <div *ngIf="regFormCon.lastName.errors.required" class="valid-msg">Last Name is required</div>
+                    <div *ngIf="regFormCon.lastName.errors.cannotContainSpace" class="valid-msg">Please Enter Valid Last
+                      Name</div>
+                    </span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- <div class="col-md-6">
+								<div class="styled-input">
+									<input type="text" formControlName="userName"  />
+										<label>User Name</label>
+										<span *ngIf="submitted &&regFormCon.userName.errors">
+											<div *ngIf="regFormCon.userName.errors.required" class="valid-msg" class="valid-msg">User Name is required</div>
+										</span>
+								</div>
+								</div> -->
+              <div class="col-md-6">
+                <div class="styled-input">
+                  <input formControlName="email" type="text">
+                  <label>Email ID
+                    <span class="valid-msg">*</span>
+                  </label>
+                  <span *ngIf="submitted && regFormCon.email.errors">
+                    <div
+                      *ngIf="regFormCon.email.errors.required || regFormCon.email.errors.pattern || regFormCon.email.touched" class="valid-msg">Please enter valid email</div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="styled-input chaptername country_code no-line logincountrycode">
+                  <!-- <label>Country code <span class="valid-msg">*</span></label>
+
+                   <mat-form-field class="example-full-width"  [floatLabel]="'never'">
+                    <mat-label>Search</mat-label>
+                    <mat-select formControlName="countryPhoneCode" >
+
+                    <mat-option>
+                        <ngx-mat-select-search ></ngx-mat-select-search>
+                      </mat-option>
+
+                      <input matInput placeholder="Search" formControlName="countryPhoneCode" >
+
+
+                     <mat-option *ngFor="let code of dropdownList;let i = index" value="{{code['id']}}">
+
+                       {{code['itemName']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>  -->
+
+
+
+                  <mat-form-field class="example-full-width">
+                    <label>Country code <span class="valid-msg">*</span></label>
+                    <input type="text"
+                           aria-label="Country Code"
+                           matInput
+                           formControlName="countryPhoneCode"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                  <span *ngIf=" submitted &&regFormCon.countryPhoneCode.errors">
+                    <div *ngIf="regFormCon.countryPhoneCode.errors.required" class="valid-msg">Country Code is required</div>
+                    </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="styled-input">
+                  <input (keypress)="numberOnly($event)" [max]="16" appPhoneMask formControlName="phone" id="phone-number"
+                         type="text">
+                  <label>Phone Number
+                    <span class="valid-msg">*</span>
+                  </label>
+                  <span *ngIf="submitted && regFormCon.phone.errors">
+
+                    <div *ngIf="regFormCon.phone.errors.required" class="valid-msg">Contact No. is required</div>
+                    <div *ngIf="regFormCon.phone.errors.minlength" class="valid-msg">Please Enter 10 Digit Phone Number
+                    </div>
+                    <div *ngIf="regFormCon.phone.errors.maxlength" class="valid-msg">Please Enter 10 Digit Phone Number
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6 chaptername" *ngIf="communityService.chapterList?.length > 1">
+                <div class="styled-input country_code">
+                  <label>Chapter <span class="valid-msg">*</span></label>
+
+                  <mat-form-field class="example-full-width">
+                    <mat-select formControlName="chapterId">
+                      <mat-option *ngFor="let chapter of chapterList;let i = index" value="{{chapter['id']}}">
+                        {{chapter['name']}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <span *ngIf="submitted && this.regForm.controls.chapterId.errors">
+                    <div *ngIf="submitted && this.regForm.controls.chapterId.errors.required" class="valid-msg">Chapter is required</div>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="login-b">
+              <button type="button" (click)="HomeClick()" tabindex='4' style="margin-right: 15px;">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>Back to Home
+              </button>
+              <button type="button" (click)="submit()">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                SIGNUP
+              </button>
+            </div>
+            <div class="responsive-btn marsignup">
+              <button (click)="signupClick()" class="draw" id="signUp" type="button">Login</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- =============================================================================== -->
+
+      <div class="login-lft-bg float-l">
+        <div class="midle-content">
+          <h1>{{'signUpContent.title' | translate}}</h1>
+          <!-- <h2>EXPLORE MORE BY LOGGING</h2> -->
+          <p [innerHTML]="'signUpContent.description' | translate"></p>
+          <div class="registerbtn-b graylogin">
+            <button (click)="signupClick()" id="signUp" type="button">
+              Login
+              <span class="left-bor"></span>
+              <span class="right-bor"></span>
+              <span class="top-bor"></span>
+              <span class="bottom-bor"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Signup  -->
+    <!-- login -->
+    <div class="pages" *ngIf="activeTab == 'signup'" >
+      <div class="login-lft-bg float-l">
+        <div class="midle-content">
+          <h1> {{'signInContent.title' | translate}} </h1>
+          <!-- <h2>Community Connect Account</h2> -->
+          <p [innerHTML]="'signInContent.description' | translate"></p>
+          <div class="registerbtn-b">
+            <!--            <button (click)="signinClick()" id="signIn" type="button">-->
+            <button routerLink="/membership-plan" id="signIn" type="button">
+              {{'membershipTitle' | translate}}
+              <span class="left-bor"></span>
+              <span class="right-bor"></span>
+              <span class="top-bor"></span>
+              <span class="bottom-bor"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="login-rgt-bg float-l">
+
+
+        <!--
+     Purpose : login form | pradip kor : 09-01-2020
+    -->
+        <form  [formGroup]="loginForm" id="loginForm">
+          <div class="login-input-area">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1>
+              Login to your Account
+            </h1>
+            <div class="styled-input">
+              <input appAutofocus formControlName="email" autocomplete=on [autofocus]="true" id="emailId" tabindex='1' type="text"/>
+              <label>Your Email/Contact no</label>
+              <span></span>
+            </div>
+            <div class="styled-input">
+              <input formControlName="password" tabindex='2' autocomplete=on type="password"/>
+              <label>Password</label>
+              <span></span>
+            </div>
+            <div class="forgot">
+              <button (click)="forgotClick()" id="signIn" tabindex='4' type="button">
+                Forgot password?
+              </button>
+            </div>
+            <div class="login-b">
+              <button tabindex='3' type="submit" (click)="login()">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                LOGIN
+              </button>
+              <button type="button" class="signBtn" (click)="HomeClick()" tabindex='4' style="margin-right: 15px;">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Home
+              </button>
+
+            </div>
+            <a *ngIf="this.showBecomeMemberOnLogin" routerLink="/membership-plan">{{'membershipTitle' | translate}}</a>
+            <a (click)="signinClick()" *ngIf="this.showSignUpOnLogin">{{'signUpFor.User.Button' | translate}}</a>
+
+            <div class="row" *ngIf="communityService?.communityDetail?.allowFacebookLogin == true || communityService?.communityDetail?.allowGoogleLogin == true">
+              <div class="col-md-12 txtcenter">
+                <div class="login-social">
+                  <span>Login with Social Media</span>
+                </div>
+                <button *ngIf="communityService?.communityDetail?.allowFacebookLogin == true"  (click)="facebooklogin()" class="facebooklogin" type="button">
+                  <ul>
+                    <li><img alt="" src="assets/icon/facebook.svg"></li>
+                    <li>Facebook</li>
+                  </ul>
+                </button>
+
+                <button  *ngIf="communityService?.communityDetail?.allowGoogleLogin == true"  (click)="googlelogin()" class="facebooklogin" type="button">
+                  <ul>
+                    <li><img alt="" src="assets/icon/googlelogo.svg"></li>
+                    <li>Google</li>
+                  </ul>
+                </button>
+              </div>
+            </div>
+
+            <!-- <button (click)="facebooklogin()">Facebook Login</button> -->
+            <!-- {{fbUserData | json}} -->
+            <div class="responsive-btn">
+              <button (click)="signinClick()" class="draw" id="signIn" type="button">Register Now</button>
+            </div>
+          </div>
+        </form>
+        <!-- ============================================================================ -->
+
+      </div>
+      <!-- <button type="button" class="ghost" id="signIn" (click)="signinClick()">Sign In</button> -->
+    </div>
+    <!-- login  -->
+    <!-- Forgot password  -->
+    <div class="forgot-pass-area"  *ngIf="activeTab == 'forgot'">
+      <div class="login-lft-bg float-l ">
+        <div class="midle-content">
+          <h1 *ngIf="forgotPasswordHtml">{{'forgotPasswordContent.title' | translate}}</h1>
+          <h1 *ngIf="verifyOTPHTML">{{ 'otpConfirmationContent.title' | translate}}</h1>
+          <h1 *ngIf="ResetPasswordFormHTML">{{'resetPasswordContent.title' | translate}}</h1>
+          <!-- <h2>EXPLORE MORE BY LOGGING</h2> -->
+          <p *ngIf="forgotPasswordHtml" [innerHTML]="'forgotPasswordContent.description' | translate"></p>
+          <p *ngIf="verifyOTPHTML" [innerHTML]="'otpConfirmationContent.description' | translate"></p>
+          <p *ngIf="ResetPasswordFormHTML" [innerHTML]="'resetPasswordContent.description' | translate"></p>
+          <div class="registerbtn-b">
+            <button (click)="signInForgotClick()" id="signIn" type="button">
+              Login
+              <span class="left-bor"></span>
+              <span class="right-bor"></span>
+              <span class="top-bor"></span>
+              <span class="bottom-bor"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="login-rgt-bg float-l">
+
+        <!-- =============== forgot form | pradip kor : 09-01-2020 ============== -->
+        <form (ngSubmit)="sendOTP()" *ngIf="forgotPasswordHtml" [formGroup]="ForgotPasswordForm" id="ForgotPasswordForm">
+          <div class="login-input-area forgot-p">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1> Forgot Password </h1>
+            <div class="styled-input">
+              <input formControlName="email" (keydown.space)="$event.preventDefault();" type="text" [maxLength]="50" size="50"
+              />
+              <label>Enter Email ID</label>
+              <span></span>
+            </div>
+            <div class="login-b">
+              <button type="submit">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                SEND VERIFICATION CODE
+              </button>
+              <button type="button" (click)="HomeClick()" tabindex='4' style="margin-right: 15px;">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>Back to Home
+              </button>
+
+              
+            </div>
+            <div class="responsive-btn">
+              <button (click)="signInForgotClick()" class="draw" id="signIn" type="button">Login</button>
+            </div>
+          </div>
+        </form>
+        <!-- *ngIf="sendOTPHTML" -->
+        <form (ngSubmit)="sendOTP()" *ngIf="sendOTPHTML" [formGroup]="sendOtpForm" id="sendOtpForm">
+          <div class="login-input-area forgot-p">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1>
+              Choose any one
+            </h1>
+            <mat-radio-group formControlName="otpType">
+              <div class="col-sm-12">
+                <div class="bor-btm">
+                  <mat-radio-button [checked]='true' value="email">
+                    {{otpMail}}
+                  </mat-radio-button>
+                  <span class="txt">Email</span>
+                </div>
+              </div>
+              <!-- <div class="col-sm-12">
+                <div class="bor-btm">
+                  <mat-radio-button  value="mobile" >
+                    {{otpContact}}
+                  </mat-radio-button>
+                  <span class="txt">Mobile No.</span>
+                </div>
+              </div> -->
+            </mat-radio-group>
+
+            <!-- <div class="col-sm-5">
+                    <input type="radio" formControlName="otpType" value="email">
+                    <label for="multi">Email</label>
+                  </div>
+                  <div class="col-sm-7">
+                    <input type="radio" formControlName="otpType" value="mobile">
+                    <label for="single">Mobile No.</label>
+                  </div> -->
+
+            <div class="login-b">
+              <button type="submit">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                Send Verification Code
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <form (ngSubmit)="verifyOTP()" *ngIf="verifyOTPHTML" [formGroup]="verifyOTPForm" id="verifyOTPForm">
+          <div class="login-input-area forgot-p">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1>
+              Verify Verification Code
+            </h1>
+            <div class="styled-input">
+              <input class="otp" formControlName="otp" maxlength="6" type="text">
+              <label>Verification Code</label>
+              <span></span>
+            </div>
+            <div class="login-b">
+              <button type="submit">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                CONFIRM
+              </button>
+            </div>
+          </div>
+        </form>
+        <form (ngSubmit)="resetPassword()" *ngIf="ResetPasswordFormHTML"  [formGroup]="ResetPasswordForm"
+              id="ResetPasswordForm">
+          <div class="login-input-area forgot-p">
+            <div *ngIf="communityService.logo?.logo && communityService.logo?.logo2 != null && communityService.logo?.logo2.url != null && communityService.logo?.logo2.url != ''" class="toplogo">
+              <a   routerLink="">
+                <!-- <img *ngIf="communityService.logo?.logo" src="{{communityService.logo?.logo?.url}}" alt="">
+              <img *ngIf="communityService.logo?.logo2" src="{{communityService.logo?.logo2?.url}}" alt=""> -->
+                <ul>
+                  <li><img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+                  </li>
+                  <li><img *ngIf="communityService.logo?.logo2" alt="logo" [src]="communityService.logo?.logo2?.url|communityImages">
+                  </li>
+                </ul>
+              </a>
+            </div>
+            <a   routerLink="">
+              <span *ngIf="communityService.logo?.logo && (communityService.logo?.logo2 == null || communityService.logo?.logo2.url == null || communityService.logo?.logo2.url == '')"
+                    class="singlelogo">
+                <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+              </span>
+            </a>
+            <h1>
+              Reset Password
+            </h1>
+            <div class="passwordchange posreset">
+              <div class="styled-input" >
+                <input #password formControlName="password" type="password" (focus)="onChanegNewOldPassword('New')">
+                <label>Password</label>
+                <span></span>
+              </div>
+              <mat-password-strength-info  *ngIf="passwordStrength" [passwordComponent]="passwordComponent"></mat-password-strength-info>
+              <mat-password-strength #passwordComponent (onStrengthChanged)="onStrengthChanged($event)" [password]="password.value"></mat-password-strength>
+              <div class="styled-input">
+                <input formControlName="cPassword" type="password" (focus)="onChanegNewOldPassword('old')">
+                <label>Confirm Password</label>
+                <span></span>
+              </div>
+            </div>
+            <!-- <div class="valid-msg">Note :
+              <br>
+              <ul>
+                <li style="list-style: outside;">Password length should be at least 8 Characters.</li>
+                <li style="list-style: outside;">Password must contain following:
+                  <br>
+                  <ul>
+                    <li style="list-style: inside;">At least 1 number</li>
+                    <li style="list-style: inside;">At least 1 lowercase letter</li>
+                    <li style="list-style: inside;">At least 1 uppercase letter</li>
+                    <li style="list-style: inside;">At least 1 special character</li>
+                  </ul>
+                </li>
+              </ul>
+            </div> -->
+            <div class="login-b">
+              <button type="submit">
+                <span class="left-bor"></span>
+                <span class="right-bor"></span>
+                <span class="top-bor"></span>
+                <span class="bottom-bor"></span>
+                Change
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- =========================================================================== -->
+      </div>
+    </div>
+    <!-- Forgot password  -->
+  </div>
+</div>

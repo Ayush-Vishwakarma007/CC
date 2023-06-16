@@ -1,0 +1,28 @@
+<div  class="donorcheckout-header">
+  <ul>
+      <li class="button"> <button [routerLink]="'/event-details/'+eventId"><img src="assets/icon/arow-g.svg" alt=""></button> </li>
+      <li>
+          <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;"> {{eventDetail['name']}}</h4>
+        <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px;" [innerHTML]="eventDetail['description']"></p>
+      </li>
+  </ul>
+</div>
+
+<!-- left part -->
+<app-new-user-register *ngIf="guestShow == true" (completed)="addGuest()" [(guestDetail)]="guestDetail" ></app-new-user-register>
+
+<app-book-vendors   [discount]="discountSubject"  [eventId]="eventId" *ngIf="guestShow ==false && vendorExpoDetail.length != 0" (completed)="paymentStep()"   [(paymentDetail)] = "paymentExpoDetail"  [(vendorDetail)] = "vendorExpoDetail"></app-book-vendors>
+<!-- left part -->
+
+<!-- Right part -->
+<app-payment-detail (discountChange)="addDiscount()" [(discount)]="discountCode" [type]="'vendor'" (completePayment)="paymentCheckout()" [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentExpoDetail"></app-payment-detail>
+<!-- Right part -->
+
+<!-- <div class="row">
+  <div class="col-md-4 col-sm-4 col-xs-4">
+  </div>
+  <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+    <input class="save-changes fright" type="button" (click)="paymentCheckout()"  value="Finish">
+  </div>
+</div> -->
+

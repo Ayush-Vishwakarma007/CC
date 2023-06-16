@@ -1,0 +1,253 @@
+<div class="sections-main">
+  <h1>
+    <div class="img-create">
+      <img alt="community" src="assets/icon/configuration.svg"></div>
+    Configuration
+    <span>Kindly Select things based on your requirement.</span>
+  </h1>
+  <div class="border-line-bottom question-btm">
+    <form [formGroup]="configurationForm" class="example-form" id="configurationForm">
+      <div *ngFor="let list of configurationList; let i = index; " class="row">
+        <div class="col-md-8 question-text">
+          <span>{{list['name']}}</span>
+        </div>
+        <div class="col-md-4 radao-yes">
+          <mat-radio-group (change)="submitConfig($event, list)" [formControlName]="list['key']"
+                           aria-label="Select an option">
+            <mat-radio-button [checked]="list['checked'] == true" [value]="true">Yes</mat-radio-button>
+            <mat-radio-button [checked]="list['checked'] == false" [value]="false" class="marno">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </form>
+  </div>
+  <h1>
+    <div class="img-create">
+      <img alt="community" src="assets/icon/payment.svg"></div>
+    Payment Options
+    <span>Select Payment Methods which you want allow to be pay for the event.</span>
+  </h1>
+  <div class="border-line-bottom">
+    <div class="row">
+      <div class="col-lg-8 col-md-9 ">
+        <span class="payment-method">Which Payment Method do we use?</span>
+        <div class="payment-method-box paidbtm">
+          <span>Credit/Debit Cards We Support</span>
+          <img alt="" src="assets/images/payment.png">
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-3  paypal-clr">
+        <div *ngFor="let list of paymentTypeList;let i = index" class="row">
+          <div class="col-md-8 col-sm-6 sm-paymntleft">
+            <mat-checkbox (change)="onChangePaymentType($event, list)" [checked]="list['checked']"
+                          value="{{list['value']}}">{{list['name']}} </mat-checkbox>
+          </div>
+          <!--         <div class="col-md-4 col-sm-6 text-configure">-->
+          <!--          <button class="configure-btn" data-toggle="modal" data-target="#configuremodel">Configure</button>-->
+          <!--        </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showFood" class="food-option-main">
+    <h1>
+      <div class="img-create">
+        <img alt="Food Options" src="assets/images/plate.png"></div>
+      Food Options
+      <span>Add Food Items as per your choice. (You can add Single Items or also Packs)</span>
+    </h1>
+    <div class="border-line-bottom">
+      <form [formGroup]="foodForm" id="foodForm">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Food Item</mat-label>
+              <input formControlName="foodName" matInput>
+            </mat-form-field>
+            <div
+              *ngIf="this.submitFood == false && foodForm.controls.foodName.errors">
+              <span
+                *ngIf="this.submitFood == false && foodForm.controls.foodName.errors"
+                class="valid-msg">Food Item is required</span>
+            </div>
+          </div>
+          <div class="col-md-6 sm-paid">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Food Price</mat-label>
+              <input (keypress)="numberOnly($event)" formControlName="price" matInput type="text">
+            </mat-form-field>
+            <div
+              *ngIf="this.submitFood == false && foodForm.controls.price.errors">
+              <span
+                *ngIf="this.submitFood == false && foodForm.controls.price.errors"
+                class="valid-msg">Food Price is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="row martopevent">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Food Description</mat-label>
+              <input formControlName="description" matInput>
+            </mat-form-field>
+            <div
+              *ngIf="this.submitFood == false && foodForm.controls.description.errors">
+              <span
+                *ngIf="this.submitFood == false && foodForm.controls.description.errors"
+                class="valid-msg">Food Description is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="dashed-border martop-no">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="addFoodItem()" class="save-changes fright" type="button" value="Add Food">
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="added-ticket-section">
+        <h2>
+          Food Items
+        </h2>
+        <table class="table100">
+          <tr *ngFor="let food of foodList;let i = index;">
+            <td class="first-col">
+              <img alt="" src="assets/images/two-line.png">
+            </td>
+            <td class="txt-second-col">
+              {{food['foodName']}}
+              <span class="txt-justify"> {{food['description']}}</span>
+            </td>
+            <td class="txt-second-col tdcenter">
+              <span>Price</span>
+              $ {{food['price']}}
+            </td>
+            <td class="more-option">
+              <div class="more">
+                <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown"
+                        id="dropdownMenuButton"
+                        type="button">
+                  <img alt="" src="assets/icon/more.svg">
+                </button>
+                <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                  <a (click)="editFoodList(food,i)" class="dropdown-item"  > Edit</a>
+                  <a (click)="removeFoodList(i)" class="dropdown-item"  > Delete </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showParking" class="food-option-main">
+    <h1>
+      <div class="img-create">
+        <img alt="Parking" src="assets/images/parking.png"></div>
+      Parking
+      <span>Add Parking For Events</span>
+    </h1>
+    <div class="border-line-bottom">
+      <form [formGroup]="parkingForm" id="parkingForm">
+        <div class="row">
+          <div class="col-md-6 ">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Parking Title</mat-label>
+              <input formControlName="title" matInput>
+            </mat-form-field>
+            <div
+              *ngIf="this.submitParking == false && parkingForm.controls.title.errors">
+              <span
+                *ngIf="this.submitParking == false && parkingForm.controls.title.errors"
+                class="valid-msg">Parking Title is required</span>
+            </div>
+          </div>
+          <div class="col-md-6 sm-paid">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Parking Amount</mat-label>
+              <input (keypress)="numberOnly($event)" formControlName="price" matInput type="text"  (blur)="onBlur($event)">
+            </mat-form-field>
+            <div
+              *ngIf="this.submitParking == false && parkingForm.controls.price.errors">
+              <span
+                *ngIf="this.submitParking == false && parkingForm.controls.price.errors"
+                class="valid-msg">Parking Amount is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="row martopevent">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Slots</mat-label>
+              <input (keypress)="numberOnly($event)" formControlName="totalSlots" matInput type="text">
+            </mat-form-field>
+            <div
+              *ngIf="this.submitParking == false && parkingForm.controls.totalSlots.errors">
+              <span
+                *ngIf="this.submitParking == false && parkingForm.controls.totalSlots.errors"
+                class="valid-msg">Slots is required</span>
+            </div>
+          </div>
+          <div class="col-md-6 sm-paid">
+            <mat-form-field class="example-full-width ">
+              <mat-label>Info For Parking</mat-label>
+              <input formControlName="description" matInput>
+            </mat-form-field>
+            <div
+              *ngIf="this.submitParking == false && parkingForm.controls.description.errors">
+              <span
+                *ngIf="this.submitParking == false && parkingForm.controls.description.errors"
+                class="valid-msg">Info For Parking is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="dashed-border martop-no">
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="addParkingItem()" class="save-changes fright" type="button" value="Add Parking">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="added-ticket-section">
+        <h2>
+          Parking Slots
+        </h2>
+        <table *ngFor="let parking of parkingList;let i = index;" class="table100">
+          <tr>
+            <td class="first-col">
+              <img alt="" src="assets/images/two-line.png">
+            </td>
+            <td class="txt-second-col">
+              {{parking['title']}}
+              <span [innerHTML]="parking.description"></span>
+            </td>
+            <td class="txt-second-col tdcenter">
+              <span>Slots</span>
+              {{parking['totalSlots']}}
+            </td>
+            <td class="txt-second-col tdcenter">
+              <span>Price</span>
+              $ {{parking['price']}}
+            </td>
+            <td class="more-option">
+              <div class="more">
+                <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown"
+                        id="dropdownMenuButton"
+                        type="button">
+                  <img alt="" src="assets/icon/more.svg">
+                </button>
+                <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+                  <a (click)="editParkingList(parking,i)" class="dropdown-item"  > Edit</a>
+                  <a (click)="removeParkingList(i)" class="dropdown-item"  > Delete </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

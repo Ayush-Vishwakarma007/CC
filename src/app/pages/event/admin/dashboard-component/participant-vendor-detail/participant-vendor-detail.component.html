@@ -1,0 +1,401 @@
+<div class="padd-area">
+  <!-- top Search Section -->
+
+  <div class="main-search-top">
+    <div class="grid-button">
+      <button (click)="changeList('card')" [ngClass]="listType == 'card' ? 'active' : ''">
+        <!-- <img alt="" class="bluegridicon" src="assets/icon/squares-b.svg">
+        <img alt="" class="whitegridicon" src="assets/icon/squares-w.svg"> -->
+        <i class="icon-squares-b newicon"></i>
+      </button>
+      <button (click)="changeList('table')" [ngClass]="listType == 'table' ? 'active' : ''">
+        <!-- <img alt="" class="bluegridicon" src="assets/icon/menu-b.svg">
+        <img alt="" class="whitegridicon" src="assets/icon/menu-w.svg"> -->
+        <i class="icon-menu-w newicon"></i>
+      </button>
+    </div>
+    <div class="searchmember">
+      <mat-form-field class="example-full-width map-url searchform">
+        <mat-label> {{'event.dashboard.participant.search.text' | translate}}</mat-label>
+        <input (change)="memberData($event.target.value)" [(ngModel)]="search" autocomplete="off" matInput type="text">
+      </mat-form-field>
+      <button type="button" class="search-button"> Search </button>
+    </div>
+    <div class="top-export-button-main memexport">
+      <button (click)="exportMember()" *ngIf="eventDetail['admin']">
+        <img alt="" src="assets/icon/upload.svg"> {{'event.dashboard.participant.export.Btn.text' | translate}}
+      </button>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <!-- top Search Section -->
+  <!-- card  Section -->
+  <div *ngIf="listType == 'card'" class="row eventdash card-responsive">
+    <div *ngFor="let member of userList?.content;let i=index" class="col-sm-6 col-md-4 col-lg-3">
+      <div class="grid-card-box">
+        <div class="topbutton-thumb">
+          <div *ngIf="member?.mainUserInfo?.profilePictureUrl!=null&& member?.mainUserInfo?.profilePictureUrl!=''"  class="charector-mem imagethumb">
+            <img alt="" src="{{member?.mainUserInfo?.profilePictureUrl}}">
+          </div>
+          <div *ngIf="member?.mainUserInfo?.profilePictureUrl==null||member?.mainUserInfo?.profilePictureUrl==''" class="charector-mem">
+            <i>{{member?.mainUserInfo?.firstName[0]}}{{member?.mainUserInfo?.lastName[0]}}</i>
+          </div>
+
+          <button (click)="deleteUser(member['id'])" *ngIf="eventDetail['admin']" class="emailbutton" data-target="#exampleModalreject" data-toggle="modal">
+            <img alt="" class="small-icon" src="assets/icon/close.png">
+          </button>
+          <button *ngIf="eventDetail['admin'] || eventDetail['admin']" (click)="userNoti(member['id']); openModalWithClass(template)" class="emailbutton">
+            <!-- <img alt="" src="assets/icon/email-member.svg"> -->
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </button>
+          <div class="clear"></div>
+        </div>
+
+        <h4 *ngIf="member?.registrations.length==0" >{{member?.mainUserInfo?.firstName | titlecase}} {{member?.mainUserInfo?.lastName| titlecase}}
+        </h4>
+        <h4 *ngIf="member?.registrations.length!=0" (click)="openModalFamilyMember(template7,member?.registrations,member?.mainUserInfo?.firstName,member?.mainUserInfo?.lastName,i)" class="participant-title">{{member?.mainUserInfo?.firstName | titlecase}} {{member?.mainUserInfo?.lastName| titlecase}}
+        </h4>
+        <p class="member-number"><span *ngIf="member?.mainUserInfo?.memberNumber">{{member?.mainUserInfo?.memberNumber}}</span></p>
+        <span *ngIf="member?.mainUserInfo?.country" class="icon-village newicon">{{member?.mainUserInfo?.city}}
+          <b>| {{member?.mainUserInfo?.country}}</b>
+        </span>
+        <p *ngIf="eventDetail['admin']">
+          <!-- <img alt="" src="assets/icon/email-member.svg">  -->
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          {{member?.mainUserInfo?.email}}</p>
+          <p *ngIf="(member.fieldValues | keyvalue)?.length!=0" class="participant-title additionalinfo"  (click)="openModalAdditionalInformation(template8,member?.id)">Additional Information</p>
+      </div>
+
+    </div>
+  </div>
+  <!-- card  Section -->
+</div>
+
+<!-- table  Section -->
+<div *ngIf="listType == 'table'" class="new-member-tab">
+  <table>
+    <tr class="topbox">
+      <th (click)="sort('name')"
+          [ngClass]="regestredReqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || regestredReqData['sort']['sortBy'] == 'FIRST_NAME' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.name.text' | translate}}
+      </th>
+      <th (click)="sort('address')"
+          [ngClass]="regestredReqData['sort']['sortBy'] != 'ADDRESS' ? '' : '' || regestredReqData['sort']['sortBy'] == 'ADDRESS' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.address.text' | translate}}
+      </th>
+      <th (click)="sort('phone')"
+          [ngClass]="regestredReqData['sort']['sortBy'] != 'PHONE' ? '' : '' || regestredReqData['sort']['sortBy'] == 'PHONE' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.phone.text' | translate}}
+      </th>
+      <th (click)="sort('email')"
+          [ngClass]="regestredReqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || regestredReqData['sort']['sortBy'] == 'EMAIL' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.email.text' | translate}}
+      </th>
+    <!-- <th *ngIf="eventDetail['admin']">{{'event.dashboard.participant.table.header.fees.text' | translate}}</th>-->
+      <th (click)="sort('totalPayment')"
+          [ngClass]="regestredReqData['sort']['sortBy'] != 'TOTAL_PAYMENT' ? '' : '' || regestredReqData['sort']['sortBy'] == 'TOTAL_PAYMENT' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.totalPayment.text' | translate}}
+      </th>
+      <th (click)="sort('paymentType')" [ngClass]="regestredReqData['sort']['sortBy'] != 'PAYMENT_TYPE' ? '' : '' || regestredReqData['sort']['sortBy'] == 'PAYMENT_TYPE' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+         >{{'event.dashboard.participant.table.header.paymentTye.text' | translate}}</th>
+      <th (click)="sort('payment')" [ngClass]="regestredReqData['sort']['sortBy'] != 'PAYMENT' ? '' : '' || regestredReqData['sort']['sortBy'] == 'PAYMENT' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          >{{'event.dashboard.participant.table.header.paymentSuccessful.text' | translate}}</th>
+      <th >{{'event.dashboard.participant.table.header.totalRegiMember.text' | translate}}</th>
+      <th (click)="sort('checkInstatus')"  [ngClass]="regestredReqData['sort']['sortBy'] != 'CHECK_IN_STATUS' ? '' : '' || regestredReqData['sort']['sortBy'] == 'CHECK_IN_STATUS' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          >{{'event.dashboard.participant.table.header.checkInStatus.text' | translate}}</th>
+      <th (click)="sort('registerDate')" [ngClass]="regestredReqData['sort']['sortBy'] != 'REGISTRATION_DATE' ? '' : '' || regestredReqData['sort']['sortBy'] == 'REGISTRATION_DATE' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+          class="sortable">{{'event.dashboard.participant.table.header.registrationDate.text' | translate}}</th>
+      <th *ngIf="eventDetail['admin'] || eventDetail['admin']">{{'event.dashboard.participant.table.header.action.text' | translate}}</th>
+    </tr>
+    <tbody>
+    <tr *ngFor="let mainuser of userList?.content;let i=index">
+      <td style="color:cornflowerblue;cursor: pointer" (click)="openModalFamilyMember(template7,mainuser?.registrations,mainuser?.mainUserInfo?.firstName,mainuser?.mainUserInfo?.lastName,i)">{{mainuser?.mainUserInfo?.firstName | titlecase}} {{mainuser?.mainUserInfo?.lastName | titlecase}}
+        <span *ngIf="mainuser?.mainUserInfo?.memberNumber">{{mainuser?.mainUserInfo?.memberNumber}}</span>
+      </td>
+      <td>{{mainuser?.mainUserInfo?.addressLine1}}
+        <span>{{mainuser?.mainUserInfo?.city}}
+          <b *ngIf="mainuser?.mainUserInfo?.country">| {{mainuser?.mainUserInfo?.country}}</b>
+        </span>
+      </td>
+      <td >{{mainuser?.mainUserInfo?.phone}}</td>
+      <td >{{mainuser?.mainUserInfo?.email}}</td>
+    <!--  <td *ngIf="eventDetail['admin']">
+        <p *ngIf="mainuser['paidPrice'] == 0">{{'event.dashboard.participant.table.header.fees.free.text' | translate}}</p>
+        <p *ngIf="mainuser['paidPrice'] != 0">$ {{mainuser['paidPrice']}}</p>
+      </td>-->
+      <td >$ {{mainuser?.totalPayment}}</td>
+      <td >
+        <p *ngIf="mainuser['paidPrice'] == 0"> - </p>
+        <p *ngIf="mainuser['paidPrice'] != 0">{{mainuser['paymentMethodUsed']}}</p>
+      </td>
+      <td >
+        <p *ngIf="mainuser['successfulPayment'] == true">{{'event.dashboard.participant.table.header.paymentSuccessful.true.text' | translate}}</p>
+        <p *ngIf="mainuser['successfulPayment'] == false">{{'event.dashboard.participant.table.header.paymentSuccessful.false.text' | translate}}</p>
+      </td>
+      <td>
+        <p>{{mainuser?.registrations.length}}</p>
+      </td>
+      <td >
+        <p *ngIf="mainuser?.allCheckedInToEvent==true">{{'event.dashboard.participant.table.header.checkInStatus.main.true.text' | translate}}</p>
+        <p *ngIf="mainuser?.allCheckedInToEvent == false">{{'event.dashboard.participant.table.header.checkInStatus.main.false.text' | translate}}</p>
+        <!-- <span class="overth"> $300.00</span> -->
+      </td>
+      <td >
+        <p>{{mainuser?.registrationDate | date: this.communityService.publicInfo?.webDateFormat}}</p>
+      </td>
+      <td *ngIf="eventDetail['admin'] || eventDetail['admin']" class="notificationiconbel">
+        <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <!-- <a routerLink="/banner-display/{{banner.id}}" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+              Edit
+            </a> -->
+            <a (click)="deleteUser(mainuser['id'])" *ngIf="eventDetail['admin']" class="dropdown-item">
+              <!-- <img alt="" class="small-icon1" src="assets/icon/close.png">  -->
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              Delete
+            </a>
+            <a (click)="userNoti(mainuser['id']); openModalWithClass(template)" class="emailbutton dropdown-item" class="dropdown-item"  >
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              <!-- <i class="fa fa-envelope" aria-hidden="true"></i> -->
+              Send Notification
+            </a>
+            <a (click)="sendEmail(mainuser['id'])" class="emailbutton dropdown-item" class="dropdown-item"  >
+              <i aria-hidden="true" class="fa fa-angle-right"></i>
+              <!-- <i class="fa fa-envelope" aria-hidden="true"></i> -->
+              Send Email
+            </a>
+          </div>
+        </div>
+        <!-- <a (click)="deleteUser(mainuser['registrationId'])" *ngIf="eventDetail['admin']" class="emailbutton">
+          <img alt="" class="small-icon1" src="assets/icon/close.png">
+        </a> -->
+        <!-- <a (click)="userNoti(mainuser['registrationId'])" class="emailbutton" data-target="#exampleModalnotification" data-toggle="modal">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </a> -->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!-- table  Section -->
+<div class="pegination-main">
+  <ul>
+    <li>
+      <button (click)="pagination('current','user',0)" [disabled]="userList['first'] == true" class="next">First      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev','user')" [disabled]="userList['first'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-left-arrow icon"></i>
+      </button>
+    </li>
+    <li (click)="pagination('current','user',i)"  *ngFor="let i of totalPages"
+        [ngClass]="regestredReqData.page.pageNumber == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next','user')" [disabled]="userList['last'] == true" class="arrow">
+        <i aria-hidden="true" class="icon-right-arrow icon"></i>
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('current','user',(userList['totalPages']-1))"
+              [disabled]="userList['last'] == true"
+              class="next">Last
+      </button>
+    </li>
+  </ul>
+  <div class="totalShow"><span>Total :</span> {{userList['totalElements']}}</div>
+</div>
+
+<ng-template #template>
+  <div class="" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> {{'event.dashboard.participant.notification.popup.title' | translate}}  </h5>
+          <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button aria-label="Close" (click)="modalRef.hide()" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> {{'event.dashboard.participant.notification.popup.subjectlbl.text' | translate}}</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> {{'event.dashboard.participant.notification.popup.messagelbl.text' | translate}} </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" (click)="modalRef.hide()" type="button">{{'event.dashboard.participant.notification.popup.cancel.Btn.text' | translate}}</button>
+          <button (click)="submitNotification()" class="save-changes" type="button">{{'event.dashboard.participant.notification.popup.send.Btn.text' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #template7>
+  <div class="" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleLabel"> Elizabeth Perez </h5> -->
+          <button aria-label="Close" (click)="modalRef.hide()" id="hideModal" data-dismiss="modal" class="close-container evendash memberdetailicon" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+          <ul class="profilememberpop">
+            <li>
+              <span>{{mainMemFirstName[0]}}{{mainMemLastName[0]}}</span>
+            </li>
+            <li>
+              <p>{{mainMemFirstName}} {{mainMemLastName}}</p>
+              <i> {{totalFamilyMem}} Members</i>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-body">
+
+          <ul class="profilememberpop" *ngFor="let member of familyMemberData">
+            <li>
+              <span *ngIf="member.profilePictureUrl!=null &&  member.profilePictureUrl!=''"><img [src]="member?.memberProfile |authImages"> </span>
+              <span *ngIf="member.profilePictureUrl==null || member.profilePictureUrl=='' ">{{member?.memberProfile}} </span>
+            </li>
+            <li>
+              <p><strong>{{member.firstName}} {{member.lastName}}</strong></p>
+<!--              <span style="display: flex;"><strong>Covid Test Result:</strong>-->
+<!--             <p style="padding-left: 5px;" *ngIf="member.covidTestPass == null">-</p>-->
+<!--              <p style="padding-left: 5px;" *ngIf="member.covidTestPass==true">{{'event.dashboard.participant.table.header.covidTestPass.true.text' | translate}}</p>-->
+<!--             <p style="padding-left: 5px;" *ngIf="member.covidTestPass == false">{{'event.dashboard.participant.table.header.covidTestFail.false.text' | translate}}</p>-->
+<!--            </span>-->
+              <span style="display: flex;"><strong>Seat:</strong>
+              <p style="padding-left: 5px;">{{member.seatName}} - {{member.seatNumber}} </p>
+        </span>
+              <span style="display: flex;"><strong>Check In:</strong>
+             <p style="padding-left: 5px;" *ngIf="member.alreadyCheckIn == null">-</p>
+             <p style="padding-left: 5px;" *ngIf="member.alreadyCheckIn==true"> <img width="18" style="margin-top: -6px;" src="assets/icon/check.png" alt="">Yes</p>
+             <p style="padding-left: 5px;" *ngIf="member.alreadyCheckIn == false"><img width="18" style="margin-top: -6px;" src="assets/icon/remove.png" alt="">No</p>
+            </span>
+              <span style="display: flex;"><strong>Check In By:</strong>
+             <p style="padding-left: 5px;" *ngIf="member.checkInBy">{{member.checkInBy}} - </p>
+             <p style="padding-left: 5px;" *ngIf="member.checkInDate">{{member?.checkInDate | date:this.communityService.publicInfo?.webDateFormat}} </p>
+              </span>
+
+              <!-- <i> <i aria-hidden="true" class="fa fa-envelope"></i>{{member.email}} </i>
+               <i> <i aria-hidden="true" class="fa fa-phone"></i> {{member.phone}} </i>-->
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+
+<ng-template #template8 >
+  <div class="" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content" >
+        <div class="modal-header">
+           <h5 class="modal-title" id="exampleLabel"> Additional Information</h5>
+          <button aria-label="Close" (click)="modalRef.hide()" id="hideModal" data-dismiss="modal" class="close-container evendash memberdetailicon" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="modal-body"  >
+          <div class="col-sm-12" *ngFor="let memberDetail of additionalDetail;let i=index">
+            <div class="whitebg-profile addressinfo">
+              <h4>
+                {{memberDetail.stepName}}
+              </h4>
+              <div *ngFor="let member of memberDetail?.fieldValues;let i=index"  >
+                <span class="name">{{member.name}}</span>
+                <p *ngIf="member.type=='DATE'">{{member.value | date:
+                  this.communityService.publicInfo?.webDateFormat}} </p>
+                <p *ngIf="member.type!='DATE'">{{member.value}} </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> {{'event.dashboard.participant.notification.popup.title' | translate}} </h5>
+          <!-- <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button aria-label="Close" id="hideModal" data-dismiss="modal" class="close-container" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> {{'event.dashboard.participant.notification.popup.subjectlbl.text' | translate}}</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> {{'event.dashboard.participant.notification.popup.messagelbl.text' | translate}} </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">{{'event.dashboard.participant.notification.popup.cancel.Btn.text' | translate}}</button>
+          <button (click)="submitNotification()" class="save-changes" type="button">{{'event.dashboard.participant.notification.popup.send.Btn.text' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

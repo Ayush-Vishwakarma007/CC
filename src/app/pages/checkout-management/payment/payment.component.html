@@ -1,0 +1,101 @@
+<div class="bg-promocod">
+  <!-- promo-code Section -->
+  <div>
+    <div class="white100">
+      <div class="promo-code">
+        <div class="row">
+          <div class="col-lg-12 txt-card">
+            <i class="icon-percentage-b newicon"></i> <span> Have a promocode? </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 enter-promo-code">
+            <input  [(ngModel)]="discountCode"  class="enterpromo" placeholder="Enter Promo Code" type="text">
+            <button  (click)="discountChangeDetail($event)" class="addCode">Add</button>
+          </div>
+        </div>
+      </div>
+      <span class="total-fees fees-top">
+          Summary
+        </span>
+      <div class="tottal-fees-area">
+        <div class="main-tb paddtop0">
+          <div class="row" *ngFor="let list of paymentDetail?.display;let i = index" >
+            <div class="col-md-7 col-sm-7">
+              <span>{{list['name']}}</span>
+            </div>
+            <div class="col-md-5 col-sm-5">
+              <p><span class="adult-dollar">{{list['description']}}</span>
+                <span class="adult-dollar">{{list['value']}}</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="main-tb bor-blue">
+          <div class="row">
+            <div class="col-md-7 col-sm-7 col-xs-7">
+              <span>Grand Total</span>
+            </div>
+            <div class="col-md-5 col-sm-5 col-xs-5">
+              <span  class="adult-dollar">{{paymentDetail?.finalAmount}}</span>
+              <!-- <span *ngIf="!paymentDetail?.finalAmount" class="adult-dollar">$0</span> -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <span *ngIf="eventDetail?.paymentMethod?.length > 1 " class="total-fees fees-top"> Payment Options </span>
+      <div *ngIf="eventDetail?.paymentMethod?.length > 1 " class="paymentop">
+        <mat-radio-group [value]="paymentType" aria-label="Select an option">
+          <mat-radio-button  value="{{list.value}}" *ngFor="let list of eventDetail?.paymentMethod;let i =index">
+            <ul class="paypaltext">
+              <li>  {{list.name}} </li>
+            </ul>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row martop-date terms-conditions">
+      <div class="col-md-12">
+        <mat-checkbox [(ngModel)]="acceptTerms"></mat-checkbox>
+        Accept <a class="underline-text" data-target="#exampleModalTerms" data-toggle="modal">Terms & Conditions</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="finish-pay">
+          <button class="pay" (click)="paymentDone()">
+            Pay Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- promo-code Section -->
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalTerms" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" id="hideModal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p [innerHTML]="eventDetail?.termsAndCondition"></p>
+          <!--          <h2>-->
+          <!--            Heading will come Heading will come-->
+          <!--          </h2>-->
+          <!--          <p>-->
+          <!--           Text will come here Text will come hereText will come hereText will come hereText will come hereText will come hereText will come hereText will come here-->
+          <!--          </p>-->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

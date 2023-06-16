@@ -1,0 +1,118 @@
+<div class="scrolltab">
+  <h3>
+    <span> Add Accommodation  Details</span>
+    <button class="skip"(click)="skip()"> SKip</button>
+  </h3>
+
+  <div class="main-accommodation" *ngFor="let list of accomodationContent">
+    <span>{{list.name}}</span>
+    <div class="num-guest">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>Enter number of guest</mat-label>
+          <input
+          type="text"
+          matInput
+          placeholder=""
+          name="{{ list.numberOfGuest }}"
+          [(ngModel)]="list.numberOfGuest"
+          (keypress)="numberOnly($event)"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="mychange($event,list,i)" class="tickebook"
+        />
+        </mat-form-field>
+      </div>
+      <div class="col-md-4 rightform">
+        <mat-form-field class="example-full-width">
+          <mat-label>Enter contact number</mat-label>
+          <input
+          type="text"
+          matInput
+          appNgModelPhoneMask
+          placeholder="Enter Contact Number"
+          name="{{ list.guestCno}}"
+          [(ngModel)]="list.guestCno"
+          (keypress)="numberOnly($event)"
+          [ngModelOptions]="{ standalone: true }"
+          
+          (ngModelChange)="mychange($event,list,i)" class="tickebook"
+        />
+        </mat-form-field>
+      </div>
+      <div class="col-md-2 rightform">
+        <a href='{{list.profilePicture}}' target="_blank" class="hotelview">Hotel View</a>
+      </div>
+    </div>
+
+
+  </div>
+ <!-- <div class="main-accommodation">
+    <span> Other </span>
+    <div class="num-guest">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Number of Guests" value="">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 rightform">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Guest Contact Number" value="">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="main-accommodation">
+    <span>  </span>
+    <div class="num-guest">
+      <div class="col-md-12 rightform">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Hotel Name & Address" value="">
+        </mat-form-field>
+      </div>
+    </div>
+    </div>-->
+
+
+
+
+<!--  <div class="main-accommodation">
+    <span> Hotel 2 </span>
+    <div class="num-guest">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Number of Guests" value="">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 rightform">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Guest Contact Number" value="">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="main-accommodation">
+    <span> Other </span>
+    <div class="num-guest">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Number of Guests" value="">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 rightform">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Guest Contact Number" value="">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="main-accommodation">
+    <span>  </span>
+    <div class="num-guest">
+      <div class="col-md-12 rightform">
+        <mat-form-field class="example-full-width" floatLabel="never">
+          <input matInput placeholder="Hotel Name & Address" value="">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>-->

@@ -1,0 +1,24 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <h5 *ngIf="type == 'donor-checkout'">{{'event.registrationComponent.donorSponsor.donation.title' | translate}}  </h5>
+    <h5 *ngIf="type != 'donor-checkout'"> {{'event.registrationComponent.donorSponsor.sponsor.title' | translate}}  </h5>
+    <mat-radio-group aria-label="Select an option">
+      <div class="row">
+        <div class="col-md-12" *ngFor="let list of categoryDetail;let i = index" >
+          <mat-radio-button id="{{list['id']}}" (change)="categoryChange($event.source.checked,i)" [checked]="list['checked'] == true"  [value]="list['id']"> {{list['categoryName']}} </mat-radio-button>
+          <div class="primarydon">
+            <span>${{list['range']['min']}} - ${{list['range']['max']}}</span>
+            <p  [innerHTML]="list['description']"></p>
+            <mat-form-field class="example-full-width enteramount" *ngIf="list['checked']">
+              <mat-label>{{'event.registrationComponent.donorSponsor.enterAmount.lbl.text' | translate}}</mat-label>
+              <input matInput placeholder="Enter Amount" type="text" (change)="calculateAmount()" [(ngModel)]="list['amount']" [disabled]="!list['checked']" (keypress)="numberOnly($event)">
+
+              <img src="assets/icon/dollar-g.svg" alt="">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </mat-radio-group>
+  </div>
+</div>

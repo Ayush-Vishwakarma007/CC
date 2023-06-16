@@ -1,0 +1,60 @@
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$secondary-color2:var(--secondary-color2);
+$black-light-color: var(--black-light-color);
+$black-dark-color:  var(--black-dark-color);
+$greay: var(--greay);
+$greay-text: var(--greay-text);
+$red-light-bg: var(--red-light-bg);
+$red-light-main: var(--gred-light-main);
+$greay-card-head:var(--greay-card-head);
+$blue-dark: var(--secondary-color);
+$gray-dark: var(--gray-dark);
+$gray-light:var(--gray-light);
+$green-dark:var(--green-dark);
+$red-light-bg:var(--gred-light-bg);
+$red-light-main: var(--red-light-main);
+$blue-light: var(--blue-light);
+$blue-dark2: var(--blue-dark2);
+$gray-dark2: var(--gray-dark2);
+$gray75: var(--gray75);
+$gray-e7:var(--gray-e7);
+$green-dark:var(--green-dark);
+$green-light:var(--green-light);
+$red-dark:var(--red-dark);
+$red-light: var(--red-light);
+$tomatored: var(--tomatored);
+
+.remove{  position: absolute;  top: 0px;  right: 5px;  cursor: pointer;  padding: 0px!important;  background: #fff;  border-radius: 50px; }
+ul{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  li:first-child{margin-left: 0;}
+  li:last-child{margin-right: 0;}
+  li {
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    text-align: center;
+    position: relative;border: dashed 1px #cecece;padding: 10px;
+  }
+  .p10{padding: 10px;}
+
+}
+// new
+.preview-files{border: dashed 1px #cecece;position: relative;
+  td{padding: 2px;border: 0;min-width:25px;
+    .icon-delete-blue:before{
+      color: $secondary-color;
+    }
+  img{width: 25px;}
+}
+  .doc-nm{text-align:left;display: block;display: -webkit-box;width:calc(100% - 55px) ;height: 30px;line-height: 25px;-webkit-line-clamp: 1;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;word-break: break-all;color: var(--text-clr);font-weight: 600;font-size: 13px;padding-left: 0;word-wrap: break-word;white-space: normal;text-align: left;
+  }
+}

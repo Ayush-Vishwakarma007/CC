@@ -1,0 +1,10 @@
+<div class="eventgallery" *ngFor="let item of items; index as i"  animationName="animated slideInUp">
+  <div class="gallerybg"  *ngIf="item.type == 'image'"  [style.backgroundImage]="'url('+item.data.thumb+')'"></div>
+  <img class="gallery-img"  *ngIf="item.type == 'image' && item.data.includes('http')"  [lightbox]="i" [gallery]="'lightBox'" [src]="item.data.thumb">
+  <div class="gallerybg"  *ngIf="item.type != 'image'" style="opacity: 0.3" [style.backgroundImage]="'url(assets/images/background2.png)'"></div>
+  <!-- <video *ngIf="item.type == 'video'" width="150" height="125" controls [lightbox]="i" [gallery]="'lightBox'">
+    <source src="{{item.data.src}}">
+  </video> -->
+  <iframe *ngIf="item.type == 'video'" width="150" height="125" controls [lightbox]="i" [gallery]="'lightBox'" src="{{item.data.src}}"></iframe>
+  <div *ngIf="item.type == 'youtube'"  [innerHTML]="item.data.thumb"></div>
+</div>

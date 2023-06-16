@@ -1,0 +1,431 @@
+<section class="membership-plan-main ticketbooking-new" *ngIf="eventDetail?.registrationTimeOver == true">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 gaf-top">
+        <div class="left-part-plan login-right-view newevent btmborlight">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 p-0">
+            <div class="right-content textevent">
+              <h2><img (click)=" goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;">
+                {{eventDetail?.name}}</h2>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 logomobileevent">
+            <ul class="logoevent">
+              <li> <img src="assets/icon/logo/3.png" alt="" class="logoevent3"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/2.png" alt=""
+                  class="logoevent2"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/4.png" alt=""
+                  class="logoevent4"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/1.png" alt=""
+                  class="logoevent1"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 gaf-top">
+        <div class="mainlogin-regis">
+          <h4 class="head-guest" style="text-align: center; color:red"> Due to technical issues event has been
+            cancelled. Thank you.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="membership-plan-main ticketbooking-new" *ngIf="eventDetail?.registrationCapacityFull == true">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 gaf-top">
+        <div class="left-part-plan login-right-view newevent btmborlight">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 p-0">
+
+            <div class="right-content textevent">
+
+              <h2><img (click)=" goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;">
+                {{eventDetail?.name}}</h2>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 logomobileevent">
+            <ul class="logoevent">
+              <li> <img src="assets/icon/logo/3.png" alt="" class="logoevent3"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/2.png" alt=""
+                  class="logoevent2"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/4.png" alt=""
+                  class="logoevent4"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/1.png" alt=""
+                  class="logoevent1"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0 gaf-top">
+        <div class="mainlogin-regis">
+          <h4 class="head-guest" style="text-align: center; color:red"> Sold out! Thank you.</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="membership-plan-main ticketbooking-new"
+  *ngIf="eventDetail?.registrationTimeOver == false && eventDetail?.registrationCapacityFull == false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-md-7 col-lg-9 p-0 gaf-top">
+        <div class="left-part-plan login-right-view newevent btmborlight">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 p-0">
+
+            <div class="right-content textevent">
+
+              <h2><img (click)=" goBack()" src="assets/icon/close-new.svg" style="cursor: pointer;">
+                {{eventDetail?.name}}</h2>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 logomobileevent">
+            <ul class="logoevent">
+              <li> <img src="assets/icon/logo/3.png" alt="" class="logoevent3"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/2.png" alt=""
+                  class="logoevent2"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/4.png" alt=""
+                  class="logoevent4"></li>
+              <li *ngIf="eventId=='62e753dac3eb614cc21f7b05'"> <img src="assets/icon/logo/1.png" alt=""
+                  class="logoevent1"></li>
+            </ul>
+          </div>
+          <!-- <div class="col-xs-3 col-sm-1 col-md-3 col-lg-3 p-0">
+          <div class="header-tlt">
+            <div class="login-right-view" >
+              <div class="inner-bx">
+                 <p> If you already have an account, click on Login</p>
+                 <button (click)="openModalWithClass(template)"> Login </button>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        </div>
+        <div class="left-part-plan leftpartheight">
+          <div class="main-left">
+            <div class="tabmain-ticket">
+              <!-- <mat-tab-group>
+              <mat-tab>
+                <ng-template  mat-tab-label >
+                  <div class="ticket-booking-active">
+                    Purchase Ticket
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group> -->
+              <div class="ticket-booking-active">
+                Purchase Ticket
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="guest-details">
+                    <form [formGroup]="registerForm" autocomplete="off" class="example-form" id="registerForm"
+                      autocomplete="off">
+                      <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>First name </mat-label>
+                            <input (keypress)="charOnly($event)" ng-trim="false" [maxLength]="15" size="15"
+                              formControlName="firstName" matInput type="text">
+                          </mat-form-field>
+                          <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                            <div *ngIf="registerForm.controls.firstName.errors.required" class="valid-msg">First name is
+                              required</div>
+                            <div *ngIf="registerForm.controls.firstName.errors.cannotContainSpace" class="valid-msg">
+                              Please enter valid first name</div>
+                          </span>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Last name </mat-label>
+                            <input (keypress)="charOnly($event)" [maxLength]="15" size="15" formControlName="lastName"
+                              matInput type="text">
+                          </mat-form-field>
+                          <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                            <div *ngIf="registerForm.controls.lastName.errors.required" class="valid-msg">Last name is
+                              required</div>
+                            <div *ngIf="registerForm.controls.lastName.errors.cannotContainSpace" class="valid-msg">
+                              Please enter valid last name</div>
+                          </span>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                          <mat-form-field class="example-full-width ">
+                            <mat-label>Enter email address </mat-label>
+                            <input formControlName="email" matInput type="text">
+                          </mat-form-field>
+                          <span *ngIf="submitted && registerForm.controls.email.errors">
+                            <div *ngIf="registerForm.controls.email.errors" class="valid-msg">Please enter valid email.
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+
+                          <mat-form-field class="example-full-width ">
+                            <mat-label>Phone Number </mat-label>
+                            <input formControlName="phone" [max]="16" appPhoneMask matInput type="text">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-sm-6 " *ngIf="eventId=='62e753dac3eb614cc21f7b05'">
+                          <mat-radio-group formControlName="communityName">
+                            <mat-radio-button style="padding: 0px 0px 0px 5px;" value="DFW-GS"
+                              checked>DFW-GS</mat-radio-button>
+                            <mat-radio-button style="padding: 0px 0px 0px 5px;" value="SLPS">SLPS</mat-radio-button>
+                            <mat-radio-button style="padding: 0px 0px 0px 5px;" value="SPCS">SPCS</mat-radio-button>
+                            <mat-radio-button style="padding: 0px 0px 0px 5px;" value="CLPS">CLPS</mat-radio-button>
+                            <mat-radio-button style="padding: 0px 0px 0px 5px;" value="NA">N/A</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <!-- <div class="col-sm-6"> -->
+                        <!-- <div class=" countrycd select-chap example-full-width">
+                          <select formControlName="communitie" class="communitie" style="padding: 2rem 2rem !important;">                   
+                            <option  *ngFor="let communitie of communities;let i=index" [ngValue]="communitie">
+                              <span>{{communitie}}</span>
+                            </option>
+                          </select>
+                          <span>Select Community</span>
+                        </div> -->
+                        <!-- <mat-form-field class="select-chap example-full-width">
+                          <mat-label>NA </mat-label>
+                          <mat-select>
+                            <mat-option>Select</mat-option>
+                            
+                          </mat-select>
+                        </mat-form-field> -->
+                        <!-- </div> -->
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="scrolltab">
+                    <!-- <h3>
+                    <span> Please enter the Qty of tickets </span>
+                  </h3> -->
+                    <form class="example-form formnum">
+                      <div class="fullw">
+                        <div *ngFor="let cate of eventcategory; let i = index">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-md-12 p-0">
+                                <div class="general-ticket emailnewevent">
+                                  <div class="generalticket">
+                                    <!-- <i>
+                                    Category name
+                                  </i> -->
+                                    <span [ngStyle]="{ 'background': cate.color }">
+                                      {{ cate.name }}</span>
+                                  </div>
+                                  <mat-form-field class="example-full-width numberinp" style="margin-top: 5px;">
+                                    <mat-label>Enter number of tickets</mat-label>
+                                    <input type="text" matInput placeholder="" name="{{ cate.value }}"
+                                      [(ngModel)]="cate.value" (keypress)="numberOnly($event)" (keyup)="cate.value < 0 ? cate.value = 0 : cate.value; 
+                                  cate.value > cate.allowedSeats ? cate.value = '' : cate.value; 
+                                  cate.value > 25 ? cate.value = '' : cate.value;
+                                   mychange(cate)" [ngModelOptions]="{ standalone: true }" class="tickebook"
+                                      [disabled]="!this.registerForm.valid" />
+                                  </mat-form-field>
+                                  <div class="per-ticket">
+                                    {{ cate.amountValue }} <b *ngIf="cate.amount!=0">Per Ticket</b>
+                                    <span style="background: #ff1000b8 !important; color: white !important;"> Remaining
+                                      Ticket : {{cate.allowedSeats}} </span>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row paycard-center">
+                <div class="col-md-12 col-lg-6">
+                  <!-- <app-square class="creditcard" class="creditcard" *ngIf="paymentType =='SQUARE_PAYMENT'" (completed)="checkNonce()"
+              [(checkoutArray)]="checkoutArray"
+            [publicKey]="publicKey" [save]="paymentsSubject"></app-square> -->
+                  <div *ngIf="publicKey!='' && register['finalAmount']>0">
+                    <div class="row" style="padding: 11px 0px 0px 0px;" *ngIf="register['finalAmount']">
+                      <div class="col-md-6" style="text-align: center;">
+                        <h4 style="font-size: 15px;font-weight: 700;color: var(--primary-color);margin: 0 0 5px 0;">You
+                          will be charged : {{this.register['finalAmount'] |currency:'USD'}}</h4>
+                      </div>
+                      <div class="col-md-6" style="text-align: center;">
+                        <p style="color: red;font-size: 13px;">All sale is final and non-refundable</p>
+                      </div>
+                    </div>
+
+                    <app-e-check (completed)="checkNonce()" *ngIf=" checkoutArray?.achPayment == true"
+                      [(checkoutArray)]="checkoutArray" [publicKey]="publicKey" [save]="paymentSubject"></app-e-check>
+                    <app-affiny-pay-new #card (completed)="checkNonce()"
+                      *ngIf=" checkoutArray?.achPayment == false  && paymentType =='AFFINY_PAY'"
+                      [(checkoutArray)]="checkoutArray" [publicKey]="publicKey"
+                      [save]="paymentsSubject"></app-affiny-pay-new>
+                    <app-square class="creditcard" *ngIf="paymentType =='SQUARE_PAYMENT'" (completed)="checkNonce()"
+                      [(checkoutArray)]="checkoutArray" [publicKey]="publicKey" [save]="paymentsSubject"></app-square>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="tems-conditions">
+                    <h4 style="margin-top: 0px !important; margin-bottom: 0px !important;">
+                      <mat-checkbox [(ngModel)]="acceptTerms"></mat-checkbox>
+                      Accept <a data-target="#exampleModalTerms" data-toggle="modal">Terms & Conditions</a>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <button (click)="finalPayment()" type="button" class="paynow" style="margin: 0px auto !important;">Pay
+                    Now <i class="fa fa-check"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-5  col-lg-3 p-0 gaf-top">
+        <div class="right-part-plan">
+          <div *ngIf="register['finalAmount']>0">
+            <h2 class="summary-not-mobile">SUMMARY</h2>
+            <div class="table-part summary-not-mobile">
+              <table>
+                <tr>
+                  <td></td>
+                  <td class="blue-clr-text" nowrap></td>
+                </tr>
+                <tr *ngFor="let park of register?.summaryStore?.userParkingFees;let i = index">
+                  <td>{{park.name}}</td>
+                  <td class="blue-clr-text" nowrap>${{park.totalPrice}}</td>
+                </tr>
+                <tr *ngFor="let list of register?.summaryStore?.expoCategories">
+                  <td>{{list.name}}</td>
+                  <td class="blue-clr-text" nowrap>${{list. perCategoryAmount}}</td>
+                </tr>
+                <tr *ngFor="let list of register?.summery ">
+                  <td>{{list.name}}</td>
+                  <td class="blue-clr-text" nowrap>${{list.amount}}</td>
+                </tr>
+                <tfoot>
+                  <tr>
+                    <td class="blue-clr-text">Grand Total</td>
+                    <td class="blue-clr-text" nowrap>${{this.register['finalAmount']}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <h2 class="summary-not-mobile">Arena View</h2>
+          <div class="table-part summary-not-mobile">
+            <table>
+              <tr>
+                <td rowspan="1" style="padding: 0px !important;">
+                  <div class="arenaview">
+                    <div class="area-view-image">
+                      <img alt="" *ngIf="eventDetail?.profilePicture != '' "
+                        [src]="eventDetail?.profilePicture | eventImages">
+                      <!-- <img alt=""  *ngIf="eventDetail?.arenaPicture == '' "src="assets/icon/imageplaceholder1.png"> -->
+                      <i *ngIf="eventDetail?.profilePicture == '' " class="far fa-image placeholderimage"></i>
+                    </div>
+
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+        <!-- <div class="login-right-view">
+      <div class="inner-bx">
+        <h4>Welcome to <br> {{'community.name' |translate}} </h4>
+      </div>
+    </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<i id="openSuccessModel" (click)="openModalWithClass1(template1)"></i>
+<ng-template #template1>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your Payment is successfully done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <span>{{eventDetail['startDateTime'] | date:'MMM d, y, h:mm a' }} ({{timezone}}) - {{eventDetail['endDateTime']
+          | date:'MMM d, y, h:mm a' }} ({{timezone}})</span>
+        <h4>{{eventDetail?.name}}</h4>
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #template2>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="payment-done">
+      <div class="payment-top-part">
+        <img src="assets/icon/done-icon.svg">
+        <h4>Your payment is already done.</h4>
+      </div>
+      <div class="payment-info-new">
+        <!--              <h5>#608595478764</h5>-->
+        <!--              <span>20 Jan 2020 |10:00AM - 05:00PM</span>-->
+        <!--              <h4>Children's Day</h4>-->
+        <!--              <p><img src="assets/images/blue-icon.svg"> San Francisco | CA</p>-->
+        <button aria-label="Close" (click)="return()" class="done">Done</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalTerms" role="dialog"
+  tabindex="-1">
+  <div class="modal-dialog termsmain" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions</h5>
+        <button aria-label="Close" class="close-container" data-dismiss="modal" id="hideModal" type="button">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <!-- <p [innerHTML]="termsAndCondition"></p> -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

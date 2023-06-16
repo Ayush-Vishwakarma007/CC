@@ -1,0 +1,47 @@
+<div class="create-event-right-side eventnotfound">
+   <div class="event-not-found" *ngIf="!eventId">
+     <img src="assets/images/event-not.svg" alt=""><br>
+     <span>{{'event.eventNotFound.title' | translate}}</span><br>
+     <button (click)="backToHome()">{{'event.eventNotFound.back.Btn.text' | translate}}</button>
+   </div>
+   <div class="event-not-found" *ngIf="eventId">
+     <img src="assets/images/event-not.svg" alt=""><br>
+     <span>{{'event.live.streaming.notFound.text' | translate}}</span><br>
+     <button (click)="backToEvent()">{{'event.live.streaming.notFound.backBtn' | translate}}</button>
+   </div>
+
+  <!--<input (change)="fileChangeEvent($event)" type="file"/>
+
+  <i (click)="openModalWithClass(template)" id="openModal"></i>-->
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">File Upload </h5>
+    <button (click)="modalRef.hide()" aria-label="Close" class="close" data-dismiss="modal" id="closeButton"
+            type="button">
+      <img alt="" src="assets/icon/delete-button.svg">
+    </button>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-md-6">
+        <h5 style="margin-left:11px;">Uploaded Image</h5>
+        <image-cropper
+          (cropperReady)="cropperReady()"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"
+          [aspectRatio]="3 / 2"
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+        ></image-cropper>
+      </div>
+      <div class="col-md-6" style="padding-right:3%">
+        <h5>Cropped Image</h5>
+        <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'"/>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="save-changes" type="button">Upload</button>
+  </div>
+</ng-template>

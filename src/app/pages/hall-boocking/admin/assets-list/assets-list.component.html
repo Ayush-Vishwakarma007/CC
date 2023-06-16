@@ -1,0 +1,224 @@
+<div class="create-event-right-side common-page ">
+  <div class="main-asset">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>
+          Asset
+          <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry</span>
+        </h2>
+      </div>
+      <div class="col-md-6 searchmem">
+        <mat-form-field class="example-full-width search2">
+          <mat-label> Search..</mat-label>
+          <input  matInput type="text">
+        </mat-form-field>
+        <button class="add-assets" (click)="openModalWithClass1(template)"> + Add Asset </button>
+      </div>
+    </div>
+    <div class="assets-list0">
+      <table>
+        <tr>
+          <th width="20"></th>
+          <th>Asset Name</th>
+          <th>Asset Type</th>
+          <th>Mdified</th>
+          <th>Status </th>        
+          <th width="55"> Action  </th>
+        </tr>
+        <tbody>
+          <tr>
+            <td></td>
+            <td>Rose Valley Hall <br> <i>Created: 12/17/2020</i> </td>
+            <td>Conference Hall</td>
+            <td>12/17/2020</td>
+            <td> <span class="activestatus"> Active</span> </td>
+           
+            <td>
+              <div class="dropdown dropup moredrop editgallery">
+                <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                  data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                  <img alt="" src="assets/icon/interface.svg">
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a class="dropdown-item">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Edit
+                  </a>
+                  <a  class="dropdown-item">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Cancel
+                  </a>
+                  <a  class="dropdown-item">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    View
+                  </a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<ng-template #template>
+  <div role="document">
+    <form>
+      <div class="modal-content heightauto">
+        <div class="modal-header">
+          <h5 class="modal-title"> Add Asset  <mat-slide-toggle class="toggle"></mat-slide-toggle></h5>
+          <button aria-label="Close" class="close-container leftarrow" type="button">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+        </div>
+        <div class="mainarea-addassets">
+          <form class="example-form">
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Asset Name</mat-label>
+                  <input matInput placeholder="Enter Asset Name" >
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6 assetstype">                
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Asset Type</mat-label>
+                  <mat-select>
+                    <mat-option >
+                      Select type
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Asset Rent Price*</mat-label>
+                  <input matInput placeholder="Enter Rent Price" >
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6 assetstype">                
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Price Per Hours/Day</mat-label>
+                  <mat-select>
+                    <mat-option >
+                      10
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Capacity of Asset*</mat-label>
+                  <input matInput placeholder="Enter Capacity" >
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Contact Number</mat-label>
+                  <input matInput placeholder="Enter Contact Number" >
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Address 1*</mat-label>
+                  <input matInput placeholder="Enter Address" >
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Address 2*</mat-label>
+                  <input matInput placeholder="Enter Address" >
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>City</mat-label>
+                  <input matInput placeholder="Enter City" >
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6 assetstype">                
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>State</mat-label>
+                  <mat-select>
+                    <mat-option >
+                      Select State
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">              
+              <div class="col-sm-6 assetstype">                
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Country*</mat-label>
+                  <mat-select>
+                    <mat-option >
+                      Select Country
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Pincode*</mat-label>
+                  <input matInput placeholder="Enter Country" >
+                </mat-form-field>
+              </div>             
+            </div>
+            <div class="row">              
+              <div class="col-sm-12 assetstype textareaheight">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Detail of Asset*</mat-label>
+                  <textarea matInput placeholder="Enter Detail of Asset"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">              
+              <div class="col-sm-12 assetstype">
+                <mat-form-field class="example-full-width textareaheight">
+                  <mat-label>Terms & Conditions*</mat-label>
+                  <textarea matInput placeholder="Enter Terms & Conditions"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="image-main-up">
+                  <div class="imageup create-img-upload">
+                    <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()"
+                                                (maxFileError)="maxFileError()"
+                                                (maxFileSizeError)="fileSizeError()"
+                                                (queueCompleted)="profileQueueCompleted()" (uploadStarted)="uploadStarted()"
+                                                [(uploadedFiles)]="profilePicList" [maxFileCount]="1"
+                                                [uploadUrl]="mediaUploadUrl">
+                    </app-file-uploader-vertical>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <button class="save-changes save-changes"> Save </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+

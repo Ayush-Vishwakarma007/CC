@@ -1,0 +1,68 @@
+<div class="col-md-12">
+  <div class="img50 first-line" *ngFor="let file of uploadedFiles |slice:0:1;let i = index;">
+    <img [src]="file.responseData?.data?.imageUrl ? (file.responseData?.data?.imageUrl | communityImages) : UPLOAD_PLACEHOLDER " alt="community">
+    <button class="right-cls">
+      <img src="assets/icon/cancel.svg" alt="cancel" (click)="removeFile(i)">
+    </button>
+  </div>
+  <div class="img50">
+    <!-- small thumbs -->
+    <div class="thumb-right">
+      <div class="thumb" *ngFor="let file of uploadedFiles |slice:1 ;let i = index;">
+        <img [src]="file.responseData?.data?.imageUrl ? (file.responseData?.data?.imageUrl | communityImages) : UPLOAD_PLACEHOLDER " alt="community">
+        <button class="right-blue-close">
+          <i  class="icon-delete-blue newicon" (click)="removeFile(i+1)"></i>
+          <!-- <img src="assets/icon/cancel.svg" alt="cancel" (click)="removeFile(i+1)"> -->
+        </button>
+      </div>
+
+    </div>
+    <!-- small thumbs -->
+    <div class="image-main-up">
+      <div class="imageup create-img-upload small-upload">
+        <ul class="uploader m-0" *ngIf="uploadedFiles.length != 0" >
+          <li *ngIf="showUploader">
+            <div class="p10" (click)="addAttachement()">
+              <div class="img"><i class="mdi mdi-attachment mdi-rotate-135 p-0 color-skyblue mdi-24px"> </i></div>
+              <a class="fw-600 color-darkblue fs-14">
+                + {{uploaderText}} &nbsp;<i class="mdi mdi-information-outline" placement="top"
+                                            [matTooltip]="validTypes.join(', ')+' file extensions are allowed'"></i>
+              </a>
+            </div>
+            <input type="file" multiple class="__file_uploader_input" #fileInput1 [hidden]="true"
+                   (change)="fileUpload($event)">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mb-4" draggable="true">
+  <ul class="uploader m-0" *ngIf="uploadedFiles.length == 0">
+    <li *ngIf="showUploader">
+      <div class="p10" (click)="addAttachement()">
+        <div class="img"><i class="mdi mdi-attachment mdi-rotate-135 p-0 color-skyblue mdi-24px"> </i></div>
+        <a class="fw-600 color-darkblue fs-14">
+          + {{uploaderText}} &nbsp;<i class="mdi mdi-information-outline" placement="top"
+                                      [matTooltip]="validTypes.join(', ')+' file extensions are allowed'"></i>
+        </a>
+      </div>
+      <input type="file" multiple class="__file_uploader_input" #fileInput [hidden]="true"
+             (change)="fileUpload($event)">
+    </li>
+  </ul>
+
+  <br>
+<!--  <table class="table col-12 preview-files mb-1" *ngFor="let file of uploadedFiles;let i = index;">-->
+<!--    <tr>-->
+<!--      <td class="w-30px" *ngIf="file.responseData && showUploader">-->
+<!--        <img [src]="file.responseData?.data?.imageUrl" alt=" "-->
+<!--             width="20px">-->
+<!--      </td>-->
+<!--      <td class="doc-nm"> {{file.sortName}} </td>-->
+<!--      <td *ngIf="file.responseData && showUploader"  class="remove">-->
+<!--      <img src="assets/icon/delete-blue.svg" alt="" class="del-blue">  -->
+<!--      </td>-->
+<!--    </tr>-->
+<!--  </table>-->
+</div>

@@ -1,0 +1,142 @@
+<h1>
+  <div class="img-create">
+    <img alt="note" src="assets/images/note.png"></div>
+  {{'event.create.session.title' | translate}}
+  <span>{{'event.create.session.text' | translate}}</span>
+</h1>
+
+<form [formGroup]="sessionForm" id="sessionForm">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.session.sessionTitlelbl.text' | translate}} </mat-label>
+        <input formControlName="name" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.name.errors ">
+              <span
+                *ngIf="this.submitBtn == false && sessionForm.controls.name.errors "
+                class="valid-msg">Session Title is required</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.session.capacitylbl.text' | translate}} </mat-label>
+        <input type="number" formControlName="capacity" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.capacity.errors ">
+              <span
+                *ngIf="this.submitBtn == false && sessionForm.controls.capacity.errors "
+                class="valid-msg">Capacity is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martopevent">
+    <div class="col-md-6 starnone datefullclick">
+      <mat-form-field class="example-full-width dateinfo">
+        <mat-label>{{'event.create.session.sessionStartDatelbl.text' | translate}} <i>*</i></mat-label>
+        <mat-datetimepicker-toggle [for]="datetimePicker2" matSuffix></mat-datetimepicker-toggle>
+        <mat-datetimepicker #datetimePicker2 openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>
+        <input [matDatetimepicker]="datetimePicker2" autocomplete="false" formControlName="startDateTime" matInput
+               required>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.startDateTime.errors ">
+        <span *ngIf="this.submitBtn == false && sessionForm.controls.startDateTime.errors"  class="valid-msg">Session Start Date & Time is required</span>
+      </div>
+    </div>
+    <div class="col-md-6 sm-paid starnone datefullclick">
+      <mat-form-field class="example-full-width dateinfo">
+        <mat-label>{{'event.create.session.sessionEndDatelbl.text' | translate}} <i>*</i></mat-label>
+        <mat-datetimepicker-toggle [for]="datetimePicker3" matSuffix></mat-datetimepicker-toggle>
+        <mat-datetimepicker #datetimePicker3 openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>
+        <input [matDatetimepicker]="datetimePicker3" autocomplete="false" formControlName="endDateTime" matInput
+               required (ngModelChange)="handleDateChange($event)">
+      </mat-form-field>
+
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.endDateTime.errors ">
+          <span
+            *ngIf="this.submitBtn == false && sessionForm.controls.endDateTime.errors "
+            class="valid-msg">Session End Date & Time is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martopevent">
+    <div class="col-md-12">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{'event.create.session.venuelbl.text' | translate}} </mat-label>
+        <input formControlName="address" matInput>
+      </mat-form-field>
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.address.errors ">
+        <span
+          *ngIf="this.submitBtn == false && sessionForm.controls.address.errors "
+          class="valid-msg">Venue is required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row martopevent">
+    <div class="col-md-12">
+      <div class="editor-main">
+        <span class="sub-head">{{'event.create.session.descriptionlbl.text' | translate}}</span>
+        <ngx-editor [editor]="editor" [placeholder]="'Enter Description here...'" 
+                      class="editor-icon ngx-editor-button" formControlName="description"></ngx-editor>
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+      </div>
+      <div *ngIf="this.submitBtn == false && sessionForm.controls.description.errors " class="descrip-paid">
+        <span *ngIf="this.submitBtn == false && sessionForm.controls.description.errors " class="valid-msg">Description is required</span>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="dashed-border">
+  <div class="row">
+    <div class="col-md-12">
+      <input (click)="reset()" class="save-changes left-btn" type="button" value="Cancel">
+      <input (click)="submit()" class="save-changes fright clrprimary" type="button" value="{{'event.create.session.addSessionBtn.text' | translate}}">
+    </div>
+  </div>
+</div>
+<div class="added-ticket-section border-bottom-gray">
+  <h2>
+  {{'event.create.session.addedSession.title' | translate}}
+  </h2>
+  <div class="scroll-tab-event">
+    <table class="table100">
+      <tr *ngFor="let list of session_list; let i = index; ">
+        <td class="first-col">
+          <img alt="" src="assets/images/two-line.png">
+        </td>
+        <td class="txt-second-col">
+          <!-- {{list.name}} -->
+          Title
+          <span [innerHTML]="list['name']"></span>
+          {{list.description}}
+        </td>
+        <td class="txt-second-col tdcenter">
+          <span> Venue</span>
+         {{list.address}}
+        </td>
+        <td class="txt-second-col tddate">
+          <span>Date</span>
+          {{list.startDateTime | date : "MMM dd,yyyy H:m" }} - {{list.endDateTime | date : "MMM dd,yyyy H:m" }}
+        </td>
+        <td class="txt-second-col tdcenter">
+          <span>{{'event.create.session.addedSession.capacitylbl.text' | translate}}</span>
+          {{list.capacity}}
+        </td>
+        <td class="more-option">
+
+<button class="btn-edit" (click)="edit(list,'session');scrollFn('sessionForm')">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+<button class="btn-edit" [ngClass]="{'disabled':list?.isDisabled == true}" [disabled]="list?.isDisabled" (click)="delete(list,'session')"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+          <!-- <div class="more">
+            <button aria-expanded="false" aria-haspopup="true" class="dropdown-toggle more-icn" data-toggle="dropdown" id="dropdownMenuButton" type="button">
+              <img alt="" src="assets/icon/more.svg">
+            </button>
+            <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+              <a (click)="edit(list,'session');scrollFn('sessionForm')" class="dropdown-item"  >{{'event.create.session.addedSession.editBtn.text' | translate}}</a>
+              <a (click)="delete(list,'session')" class="dropdown-item"  >{{'event.create.session.addedSession.deleteBtn.text' | translate}}</a>
+            </div>
+          </div> -->
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

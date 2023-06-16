@@ -1,0 +1,13 @@
+.page-staps-details{padding: 10px 15px;
+    ul{margin: 0; padding: 0; background: #F5F5F5; padding: 10px; border-radius: 50px; display: flex; justify-content: space-around;
+        li{list-style: none; display: inline-block; color: var(--text-clr); font-size: 18px; font-weight: 400;
+            span{font-size: 20px; color: var(--text-clr); margin-right: 10px;}
+            &.selected{ color: var(--primary-color);
+                span{color: var(--primary-color);}
+            }
+            &.green-clr{color: #4CAF50;
+                span{color: #4CAF50;}
+            }
+        }
+    }
+}

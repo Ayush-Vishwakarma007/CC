@@ -1,0 +1,47 @@
+<i (click)="openModalWithClass(template)" id="editBtn"></i>
+<!-- Edit member popup -->
+<ng-template #template>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"  >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{'gallery.add.location.event.selectEvent.popup.title' | translate}}</h5>
+        <!-- <button (click)="modalRef.hide()" class="close" id="closeButton" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button> -->
+        <button (click)="modalRef.hide()" aria-label="Close" class="close-container" data-dismiss="modal" id="closeModal" type="button" (click)="hideBtn()">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <div class="searchmain">
+          <mat-form-field class="example-full-width">
+            <mat-label>{{'gallery.add.location.event.selectEvent.popup.search.text' | translate}}</mat-label>
+            <input [(ngModel)]="search" (change)="searchNewData($event.target.value)" matInput placeholder="Type here...">
+          </mat-form-field>
+        </div>
+        <div class="committi-main" style="height: 329px;overflow: auto; margin-top: 0px;">
+          <div class="committi-tab" style="margin-top: 0px;">
+            <table>
+              <tr>
+                <th width="40"></th>
+                <th>{{'gallery.add.location.event.selectEvent.popup.tabe.header.eventName.text' | translate}}</th>
+                <th>{{'gallery.add.location.event.selectEvent.popup.tabe.header.action.text' | translate}}</th>
+              </tr>
+              <tr *ngFor="let list of search_member">
+                <td></td>
+                <td>{{list?.name}}</td>
+                <td>
+                  <button (click)="submitEvent(list)" class="btn-location active"> {{'gallery.add.location.event.selectEvent.popup.tabe.add.Btn.text' | translate}}</button>
+                </td>
+              </tr>
+              <tr *ngIf="search_member.length ==0">
+                  <td colspan="3"> {{'gallery.add.location.event.selectEvent.popup.tabe.noeventfound.text' | translate}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

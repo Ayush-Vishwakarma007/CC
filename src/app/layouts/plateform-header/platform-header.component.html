@@ -1,0 +1,95 @@
+<div class="main-screen">
+  <!-- Header Section Start -->
+  <section class="header header-new" [ngClass]="{'mat-elevation-z5' : true, 'sticky' : isSticky}">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- <div class="col-sm-3 col-md-3 col-lg-3"  animationName="animated slideInLeft">
+          <div class="toplogo">
+            <a   routerLink="">
+              <ul class="logo-new-spcs">
+                <li *ngIf="communityService.logo?.logo">  <img alt="logo" src="{{communityService.logo?.logo?.url}}"></li>
+                <li *ngIf="communityService.logo?.logo2">  <img alt="logo" src="{{communityService.logo?.logo2?.url}}"></li>
+              </ul>
+            </a>
+          </div>
+        </div> -->
+        <div class="col-sm-12 col-md-12 col-lg-12"  animationName="animated slideInLeft">
+          <div class="main-menu">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <div class="toplogo">
+                <a   routerLink="">
+                  <ul class="logo-new-spcs">
+                    <li *ngIf="communityService.logo?.logo">  <img alt="logo" src="{{communityService.logo?.logo?.url}}"></li>
+                    <li *ngIf="communityService.logo?.logo2">  <img alt="logo" src="{{communityService.logo?.logo2?.url}}"></li>
+                    <!-- <li><img src="assets/images/cc-new-logo.png" alt=""></li> -->
+                  </ul>
+                </a>
+              </div>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <!-- <img src="assets/icon/menu.svg" alt=""> -->
+                <i class="fa fa-bars" aria-hidden="true"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item"  *ngFor="let menu of this.communityService.menu">
+                    <a class="nav-link"   routerLink="{{menu.link}}"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >{{menu.name}} <span class="sr-only">(current)</span></a>
+                  </li>
+                  <!-- <li class="nav-item dropdown arrow profile">
+                    <a class="nav-link dropdown-toggle"   data-toggle="dropdown"  type="button">demo </a>
+                    <div class="dropdown-menu">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul>
+
+                            <li><a   >Text come here</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </li> -->
+                  <li>
+                    <button class="create-event-button"  routerLink="/create-event-new">Create Event</button>
+                  </li>
+                  <li class="nav-item login-signup" *ngIf="!this.authService.isLogin">
+                    <a class="nav-link" type="button"   routerLink="/login">
+                      Login / Sign Up
+                    </a>
+                  </li>
+                  <!-- {{profileShow}} -->
+                  <li class="nav-item dropdown profile profileicontop" *ngIf="this.authService.isLogin">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" type="button"  >
+                      <span *ngIf="menuService?.profileDetail?.profileShow == true">
+                        <img
+                          src="{{menuService?.profileDetail?.profileUrl}}"  alt="">
+                      </span>
+                      <div class="profilecarector numprofile" *ngIf="menuService?.profileDetail?.profileShow == false">
+                        <span><i>{{menuService?.profileDetail?.profileUrl}}</i></span>
+                      </div>
+                    </a>
+                    <div class="dropdown-menu">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul>
+                            <li><a   routerLink="/profile">My Profile</a></li>
+                            <li *ngIf="this.authService.isLogin"><a   routerLink="/my-event">My Event</a></li>
+                            <li><a   (click)='logout()'>Log out</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="nav-item dashboardtop" *ngIf="this.authService.isLogin">
+                    <a class="nav-link" routerLink="/membership-dashboard" type="button"  >
+                      <i class="icon-dots-menu newicon"></i> Dashboard
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

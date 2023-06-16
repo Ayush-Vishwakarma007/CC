@@ -1,0 +1,38 @@
+<section class="volunteer">
+  <h1 *ngIf="false" class="volunteer__welcome">
+    Welcome Volunteer
+  </h1>
+  <div class="volunteer__img">
+    <img src="../../../../../assets/images/event-volunteer/logo.png" alt="" />
+  </div>
+  <form *ngIf="false" class="volunteer__form">
+    <!-- <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" />
+    </mat-form-field> -->
+    <div class="volunteer__input">
+      <label for="">Email</label>
+      <input type="email" placeholder="Email" />
+    </div>
+    <button class="volunteer__login-btn">LOGIN</button>
+  </form>
+  <form class="volunteer__form">
+    <div class="volunteer__verify">
+      <h2>Verify OTP</h2>
+      <a href="#">Change Email</a>
+    </div>
+    <h6>Enter your verification Code sent to</h6>
+    <h6>thisisadumyemail@dumymail.com</h6>
+    <div class="volunteer__otp">
+      <ng-otp-input
+        (onInputChange)="onOtpChange($event)"
+        [config]="{length:6}"
+      ></ng-otp-input>
+    </div>
+    <p class="volunteer__resend">
+      Your Code May Take a Few Moments
+      <span *ngIf="timeLeft !==0"> 00:{{timeLeft}} </span>
+      <span *ngIf="timeLeft ==0"> Resend? </span>
+    </p>
+    <button class="volunteer__login-btn">Verify OTP</button>
+  </form>
+</section>

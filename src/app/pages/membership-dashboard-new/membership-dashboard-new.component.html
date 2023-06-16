@@ -1,0 +1,517 @@
+<div class="create-event-right-side common-page">
+  <div class="main-dashboard">
+    <div class="row">
+      <div class="col-md-6 col-lg-8 col-sm-6 col-xs-12">
+        <button (click)="this._location.back()" class="backtn">
+          <!-- <img alt="" src="assets/icon/arrow-left.svg"> -->
+          <i aria-hidden="true" class="icon-left-arrow icon"></i> Back
+        </button>
+        <ul class="thumb">
+          <li>
+            <span *ngIf="userDetail?.profileShow == false" class="charector-thumb">
+              <i>{{userDetail?.profileUrl}}</i>
+            </span>
+            <span *ngIf="userDetail?.profileShow == true" class="image-thumb">
+              <img alt="" [src]="userDetail?.profileUrl | communityImages" />
+            </span>
+            <!-- <span class="image-thumb">
+              <img alt="" src="">
+            </span> -->
+          </li>
+          <li>
+            <div class="membership-name">
+              <h5>
+                {{userDetail.firstName | titlecase}} {{userDetail.lastName | titlecase}}
+              </h5>
+              <a class="newicon icon-edit-member" routerLink="/profile-member"></a>
+            </div>
+
+            <p class="status-show topshow" style="margin-top: 10px;">
+              <!-- <img *ngIf="member['userState']=='USER' || member['userState']=='MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073201_5f17135c8613362eb4b1f42a_Active_member.png"> -->
+              <span *ngIf="userDetail['userState']=='USER'" style="color: #24b56f;">
+                <i style="background: #24b56f;"></i>
+                {{'userDetails.list.member.durationType.lable' | translate}}
+              </span>
+              <span *ngIf="(userDetail['userState']=='MEMBER') && userDetail?.member?.durationType=='LIFETIME'"
+                style="color: #24b56f;">
+                <i style="background: #24b56f;"></i> Life Member 
+              </span>
+              <span *ngIf="(userDetail['userState']=='MEMBER') && userDetail?.member?.durationType !='LIFETIME'"
+                style="color: #24b56f;">
+                <i style="background: #24b56f;"></i> Member
+              </span>
+
+              <!-- <img *ngIf="member['userState']=='EXPIRED_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073240_5f17135c8613362eb4b1f42a_Expired.png"> -->
+              <span *ngIf="userDetail['userState']=='EXPIRED_MEMBERSHIP'" style="color: #ec703c;">
+                <i style="background: #ec703c;"></i> Expired Membership
+              </span>
+
+              <!-- <img *ngIf="member['userState']=='NEW_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073318_5f17135c8613362eb4b1f42a_Member.png"> -->
+              <span *ngIf="userDetail['userState']=='NEW_MEMBER'" style="color: #0170c1;">
+                <i style="background: #0170c1;"></i> Approval Pending
+              </span>
+
+              <!-- <img *ngIf="member['userState']=='REJECTED_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073351_5f17135c8613362eb4b1f42a_Rejected.png"> -->
+              <span *ngIf="userDetail['userState']=='REJECTED_MEMBER'" style="color: #f83c4a;">
+                <i style="background: #f83c4a;"></i> Rejected Member
+              </span>
+
+              <!-- <img *ngIf="member['userState']=='EXPIRING_MEMBERSHIP'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073406_5f17135c8613362eb4b1f42a_UPCOMING_EXPIRATION.png"> -->
+              <span *ngIf="userDetail['userState']=='EXPIRING_MEMBERSHIP'" style="color: #fea709;">
+                <i style="background: #fea709;"></i> Expiring Membership
+              </span>
+
+              <!-- <img *ngIf="member['userState']=='UNPAID_MEMBER'" style="height: 15px;width: 15px;" src="https://s3-us-west-2.amazonaws.com/iant.dev-media/20210522073632_5f17135c8613362eb4b1f42a_Unpaid.png"> -->
+              <span *ngIf="userDetail['userState']=='UNPAID_MEMBER'" style="color: #f7349c;">
+                <i style="background: #f7349c;"></i> Unpaid Member
+              </span>
+            </p>
+            <!-- <p>Registered on {{userDetails.registrationDate | date : "MMM dd, yyyy" }}</p> -->
+            <p>
+              Location: <u> {{userDetail?.city}} </u>
+              <b *ngIf="userDetail?.country"> | </b>
+              <u> {{userDetail?.country}} </u>
+            </p>
+            <p class="noitalic" *ngIf="userDetail?.memberNumber!=''&& userDetail?.memberNumber!=null">
+              Member Number:
+              <b *ngIf="userDetail?.memberNumber">
+                {{userDetail?.memberNumber}}</b>
+            </p>
+            <p class="noitalic" *ngIf="chapterList?.length != 1">
+              Chapter:
+
+              <b>{{userDetail?.chapterName}}</b>
+              <!-- <mat-form-field *ngIf="chapterList?.length > 1" class="example-full-width chapter-name pull-right mar80"
+                              style="margin-top: 11px;">
+                <mat-label>{{'memberList.chapteName.lbl.text' | translate}}</mat-label>
+                <mat-select (selectionChange)="changeChapter($event.value)" [value]="chapterId">
+                  <mat-option *ngFor="let list of chapterList" [disabled]="list?.mainChapter == true"
+                              value="{{list.id}}">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-6 col-lg-4 col-sm-6 col-xs-12">
+        <ul class="textright">
+          <li *ngIf="userDetail.lastLoginDate != null" class="lastlogin">
+            <span> Last Login </span> : {{userDetail.lastLoginDate | date : "MMM,dd, yyyy" }} {{userDetail.lastLoginDate | date : "shortTime" }}
+            
+          </li>
+          <li *ngIf="userDetail?.userState != 'USER'">
+            <div class="monthly-membership">
+              <div [ngClass]="
+              userDetail?.userState == 'NEW_MEMBER' ? 'pending' : '' ||
+                userDetail?.userState == 'UNPAID_MEMBER' ? 'pending' : '' ||
+                userDetail?.userState == 'MEMBER' ? 'active' : '' ||
+                userDetail?.userState == 'REJECTED_MEMBER' ? 'reject':'' ||
+                userDetail?.userState == 'EXPIRED_MEMBERSHIP' ? '':'' ||
+                userDetail?.userState == 'EXPIRING_MEMBERSHIP' ? 'reject':''
+                ">
+                <div class="topline"></div>
+                <button *ngIf="userDetail?.userState == 'NEW_MEMBER' ">
+                  Approval Pending
+                </button>
+                <button *ngIf="userDetail?.userState == 'UNPAID_MEMBER' ">
+                  Payment Pending
+                </button>
+                <button *ngIf="userDetail?.userState == 'MEMBER' ">
+                  Active
+                </button>
+                <button *ngIf="userDetail?.userState == 'REJECTED_MEMBER' ">
+                  Rejected
+                </button>
+                <button *ngIf="userDetail?.userState == 'EXPIRED_MEMBERSHIP' ">
+                  Expired
+                </button>
+                <button *ngIf="userDetail?.userState == 'EXPIRING_MEMBERSHIP' ">
+                  Expiring Soon
+                </button>
+                <button class="paynow" *ngIf="userDetail?.userState == 'UNPAID_MEMBER' "
+                  routerLink="/membership-checkout-new">
+                  Pay Now
+                </button>
+                <!-- {{userDetails['expirationDate']}} -->
+                <!-- <p *ngIf="userDetails['expirationDate']!=null"-->
+                <!-- class="date">{{userDetails['membershipStartDate'] | date :" MMM, yyyy"}} -->
+                <!-- {{userDetails['expirationDate'] | date :" MMM, yyyy"}}</p> -->
+                <!-- <p *ngIf="userDetails['expirationDate']==null"-->
+                <!-- class="date">{{userDetails['membershipStartDate'] | date :" MMM, yyyy"}} -->
+                <!-- {{userDetails['durationType']}}</p> -->
+                <h2>
+                  <!-- <i *ngIf="membershipDetail?.planName?.name !=null"> {{membershipDetail?.planName?.name}} </i>
+                  <i>Monthly Membership4</i> -->
+                  <p class="membrship">
+                    <i
+                      *ngIf="userDetail?.member?.membershipTypeName != null && userDetail?.member?.membershipTypeName != '' ">
+                      {{userDetail?.member?.membershipTypeName}}
+                    </i>
+                    <i
+                      *ngIf="userDetail?.member?.membershipTypeName ==null  || userDetail?.member?.membershipTypeName ==''">
+                      -</i>
+                  </p>
+                </h2>
+                <!-- <p>{{userDetails?.member?.membershipStartDate | date:'MMM dd, yyyy'}}
+                  <i *ngIf="userDetails?.member?.expirationDate"
+                     style="font-style: normal;">-{{userDetails?.member?.expirationDate | date:'MMM dd, yyyy'}}</i>
+                  <i *ngIf="!userDetails?.member?.expirationDate"
+                     style="font-style: normal;">{{userDetails?.member?.durationType | titlecase}}</i>
+                </p> -->
+                <p class="noitalic memship" *ngIf="userDetail?.member?.durationType == 'LIFETIME'">
+                  <b>Member Since: </b>
+                  <i *ngIf="userDetail?.member?.expirationDate != null " class="datebol">
+                    {{userDetail?.member?.membershipStartDate | date:
+                    this.communityService.publicInfo?.webDateFormat}} -
+                    {{userDetail?.member?.expirationDate | date:
+                    this.communityService.publicInfo?.webDateFormat}}
+                  </i>
+                  <i *ngIf="userDetail?.member?.expirationDate == null " class="datebol">
+                    {{userDetail?.member?.membershipStartDate | date:
+                    this.communityService.publicInfo?.webDateFormat}}
+                  </i>
+                </p>
+                <p class="noitalic memship" *ngIf="userDetail?.member?.durationType !='LIFETIME'">
+                  <b> Validity:</b>
+                  <i *ngIf="userDetail?.member?.expirationDate != null " class="datebol">
+                    {{userDetail?.member?.membershipStartDate | date:
+                    this.communityService.publicInfo?.webDateFormat}} -
+                    {{userDetail?.member?.expirationDate | date:
+                    this.communityService.publicInfo?.webDateFormat}}
+                  </i>
+                  <i *ngIf="userDetail?.member?.expirationDate == null " class="datebol">
+                    {{userDetail?.member?.membershipStartDate | date:
+                    this.communityService.publicInfo?.webDateFormat}} -
+                    {{userDetail?.member?.durationType}}
+                  </i>
+                </p>
+                <!-- *ngIf="userDetails?.fieldValues?.source" -->
+                <span class="noitalic" *ngIf="userDetail?.fieldValues?.source"><b>Source: </b>
+                  {{userDetail?.fieldValues?.source}}<br /></span>
+                <!-- *ngIf="userDetails?.memberId!='' && userDetails?.memberId !=null" -->
+                <span class="noitalic" *ngIf="userDetail?.memberId!='' && userDetail?.memberId !=null"><b>Member ID:
+                  </b> {{userDetail?.memberId}}<br /></span>
+                <span class="aproverejc">{{userDetail?.member?.totalAmount | currency:'USD'}}
+                  <button *ngIf="userDetail?.showRenew" (click)="renewMembership()" class="renew-btn">
+                    Renew
+                  </button>
+                </span>
+              </div>
+            </div>
+          </li>
+          <li *ngIf="userDetail?.userState =='USER'">
+            <!-- <button (click)="becomeMember()" class="becomemember-btn">Become A Member</button> -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="memberdashboarnew-tab">
+    <mat-tab-group>
+      <!-- =========================== Dashboard ================================ -->
+      <mat-tab label="dashboard" *ngIf="this.communityService.uiPermission['VIEW_OUR_COMMUNITY']">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>Dashboard</li>
+          </ul>
+        </ng-template>
+        <!-- <div class="no-row memdirectory"> -->
+        <!-- <div class="col-sm-6"> -->
+        <!-- <h2> Member Directory </h2> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="no-row">
+          <div class="back-round">
+            <div class="paddingDiv">
+              <div class="round">
+                <ul>
+                  <li>
+                    <img alt="" src="assets/icon/life-member.svg" />
+                  </li>
+                  <li class="lifem">
+                    <p>{{'myDahboard.card.lable' | translate}}</p>
+                  </li>
+                  <li>
+                    <span> {{memberDetail['totalMembers']}} </span>
+                  </li>
+                </ul>
+                <div class="roundimage">
+                  <img alt="" src="assets/images/back-round.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="back-round event-im">
+            <div class="paddingDiv">
+              <div class="round">
+                <ul>
+                  <li>
+                    <img alt="" src="assets/icon/event-f.svg" />
+                  </li>
+                  <li class="lifem3">
+                    <div class="row">
+                      <div class="col-md-6 col-xs-6">
+                        <p>Events</p>
+                        <span> {{eventDetail['totalEvents']}}</span>
+                      </div>
+                      <!-- <div class="col-md-6 col-xs-6">-->
+                      <!-- <p> Attendees</p>-->
+                      <!-- <span> {{eventDetail['totalAttendees']}}</span>-->
+                      <!-- </div>-->
+                    </div>
+                  </li>
+                  <!-- <li class="lifem">
+                 <p> Life Members</p>
+                </li>
+                <li>
+                 <span> 8866</span>
+                </li> -->
+                </ul>
+                <div class="roundimage">
+                  <img alt="" src="assets/images/back-round.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--          <div class="back-round fundraise">-->
+          <!--            <div class="round" style="cursor: pointer;" [routerLink]="'/membership-dashboard/event-fund'">-->
+          <!--              <ul>-->
+          <!--                <li>-->
+          <!--                  <img alt="" src="assets/icon/awesome-donate2.svg">-->
+          <!--                </li>-->
+          <!--                <li class="lifem2">-->
+          <!--                  <p> Fundraised to help other-->
+          <!--                    communities & people</p>-->
+          <!--                </li>-->
+          <!--                <li>-->
+          <!--                  <span>{{eventDetail['totalDonation'] +  eventDetail['totalSponsorship'] | currency:'USD'}}</span>-->
+          <!--                </li>-->
+          <!--              </ul>-->
+          <!--              <div class="roundimage">-->
+          <!--                <img alt="" src="assets/images/back-round.png">-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+      </mat-tab>
+      <!--      <mat-tab label="dashboard" *ngIf="userDetail?.userState != 'USER' && historyDetail?.content?.length !=0">-->
+      <!--        <ng-template mat-tab-label>-->
+      <!--          <ul>-->
+      <!--            <li> Membership History</li>-->
+      <!--          </ul>-->
+      <!--        </ng-template>-->
+      <!--        <div class="row no-row memdirectory">-->
+      <!--          <div class="col-sm-12 col-md-6">-->
+      <!--            <h2>Membership History </h2>-->
+      <!--          </div>-->
+      <!--          <div class="col-sm-12 col-md-6 searchmem">-->
+      <!--            &lt;!&ndash;<mat-form-field class="example-full-width search2">-->
+      <!--              <mat-label> Search..</mat-label>-->
+      <!--              <input matInput type="text">-->
+      <!--            </mat-form-field>&ndash;&gt;-->
+      <!--            <button routerLink="/membership-checkout-new" *ngIf="userDetail?.showRenew" class="renew"> Renew Now</button>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div *ngFor="let list of historyDetail?.content;let i = index;" class="main-box-dashboard">-->
+      <!--          <ul>-->
+      <!--            <li class="leftside">-->
+      <!--              <button [ngClass]="i==0 && userDetail?.userState == 'MEMBER' ? 'act-btn' : ''" *ngIf="i==0 && userDetail?.userState == 'MEMBER'"> Active</button>-->
+      <!--              <button [ngClass]="i==0 && userDetail?.userState == 'EXPIRING_MEMBERSHIP' ? 'pending-btn' : ''" *ngIf="i==0 && userDetail?.userState == 'EXPIRING_MEMBERSHIP'"> Expiring Soon</button>-->
+      <!--              <h3>{{list?.membershipTypeName}}</h3>-->
+      <!--              <p-->
+      <!--                style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; height: 48px;">{{list?.membershipTypeDetails}} </p>-->
+      <!--            </li>-->
+      <!--            <li class="rightside">-->
+      <!--              <span  class="date">{{list?.membershipStartDate | date:"MMM dd, yyyy"-->
+      <!--              }} - -->
+      <!--                <i *ngIf="list?.expirationDate"-->
+      <!--                   style="font-style: normal;">{{list?.expirationDate | date:"MMM dd, yyyy"-->
+      <!--                   }}</i>-->
+      <!--                <i *ngIf="!list?.expirationDate"-->
+      <!--                   style="font-style: normal;">{{list?.durationType | titlecase}}</i>-->
+      <!--              </span>-->
+      <!--&lt;!&ndash;              <span class="dollar">{{publicInfo?.currency}} {{list?.totalAmount}}</span>&ndash;&gt;-->
+      <!--            </li>-->
+      <!--            <li class="rightside" *ngIf="list['invoiceLink'] !=null && list['invoiceLink'] !=''"><a href="{{list['invoiceLink']}}"  style="float: right" target="_self"><i class="fa fa-download" aria-hidden="true"></i></a></li>-->
+      <!--          </ul>-->
+      <!--          <div class="clear"></div>-->
+      <!--        </div>-->
+      <!--        &lt;!&ndash; no data found &ndash;&gt;-->
+      <!--        &lt;!&ndash; <div class="nodatafound">-->
+      <!--          <ul>-->
+      <!--            <li><img src="assets/icon/no-found.svg" alt=""></li>-->
+      <!--            <li><span>No Membership Available</span></li>-->
+      <!--            <li><p>Click to Become a Member For Membership </p></li>-->
+      <!--            <li><button>Become A Member</button></li>-->
+      <!--          </ul>-->
+      <!--        </div> &ndash;&gt;-->
+      <!--        &lt;!&ndash; no data found &ndash;&gt;-->
+      <!--      </mat-tab>-->
+      <mat-tab label="dashboard">
+        <ng-template mat-tab-label>
+          <ul>
+            <li>Membership History</li>
+          </ul>
+        </ng-template>
+        <div class="row no-row memdirectory">
+          <div class="col-sm-12 col-md-6">
+            <h2>Membership History </h2>
+          </div>
+        </div>
+        <div class="row rightleftpaid">
+          <div class="col-md-4 col-sm-6">
+            <mat-form-field class="example-full-width dateinfo stardt">
+              <mat-label>Start Date</mat-label>
+              <input [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" [(ngModel)]="startDate"
+                (dateTimeChange)="changeDate()" matInput autocomplete="false" />
+              <span [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></span>
+              <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-sm-6">
+            <mat-form-field class="example-full-width dateinfo dateinfowid">
+              <mat-label>End Date</mat-label>
+              <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput [(ngModel)]="endDate"
+                (dateTimeChange)="changeDate()" autocomplete="false" />
+              <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span>
+              <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+            </mat-form-field>
+            <button class="search-button" type="button" (click)="clearFilter()">
+              Clear
+            </button>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <mat-form-field class="example-full-width tegsicon">
+              <mat-label>CC For Email Notification</mat-label>
+              <mat-chip-list #chipList>
+                <mat-chip *ngFor="let tag of tags;let i = index" [removable]="removable" [selectable]="selectable">
+                  {{tag}}
+                  <mat-icon (click)="remove(i)" matChipRemove>
+                    <!-- <i  class="icon-delete-blue newicon"></i> -->
+                  </mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+              <input (matChipInputTokenEnd)="addTag($event)" [matChipInputFor]="chipList" style="width: 100%;"
+                value="" />
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- *ngFor="let member of memberSettingHistory?.content;let i=index" -->
+        <div *ngFor="let member of historyDetail?.content;let i=index" class="main-box-dashboard">
+          <ul>
+            <li class="leftside">
+              <button *ngIf="i==0 && userDetails?.userState == 'MEMBER'"
+                [ngClass]="i==0 && userDetails?.userState == 'MEMBER' ? 'act-btn' : ''">
+                Active
+              </button>
+              <button *ngIf="i==0 && userDetails?.userState == 'EXPIRING_MEMBERSHIP'"
+                [ngClass]="i==0 && userDetails?.userState == 'EXPIRING_MEMBERSHIP' ? 'pending-btn' : ''">
+                Expiring Soon
+              </button>
+              <h3>{{member['membershipTypeName']}}</h3>
+              <p style="
+                  overflow: hidden;
+                  width: 100%;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  height: 35px;
+                ">
+                {{member?.membershipTypeDetails}}
+              </p>
+              <!--              <button class="pending-btn"> Active </button>-->
+              <!--              <h3>{{member['durationName']}}</h3>-->
+              <!--              <p-->
+              <!--                style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">-->
+              <!--                {{member['membershipTypeDetails']}} </p>-->
+              <span><b>Transaction ID :</b>{{member['transactionId']}}</span>
+            </li>
+            <li class="rightside">
+              <span *ngIf="member['expirationDate']!=null" class="date">{{member['membershipStartDate'] | date
+                :this.communityService.publicInfo?.webDateFormat }} -
+                {{member['expirationDate'] | date
+                :this.communityService.publicInfo?.webDateFormat }}</span>
+              <span *ngIf="member['expirationDate']==null" class="date">{{member['membershipStartDate'] | date
+                :this.communityService.publicInfo?.webDateFormat }} -
+                {{member['durationType']}}</span>
+
+              <!--              <span class="dollar">$501</span>-->
+              <!--              <button class="renew renew-tab"> Renew Now </button>-->
+              <button class="send-button" type="button" (click)="sendRecipt(member['id'])">
+                Send Receipt
+              </button>
+            </li>
+            <li class="rightside viewbtnlink" *ngIf="member['invoiceLink'] !=null && member['invoiceLink'] !=''">
+              <a href="{{member['invoiceLink']}}" style="float: right;" target="_self" class="btn-edit"><i
+                  class="fa fa-download" aria-hidden="true"></i>
+                <div class="toolnew">
+                  Download
+                </div>
+              </a>
+              <button *ngIf="member['invoiceLink'] !=null && member['invoiceLink'] !=''" style="margin-right: 15px;"
+                (click)="viewReceipt(member['id'])" class="btn-edit">
+                <i class="far fa-eye" style="opacity: 0.7;"></i>
+                <div class="toolnew">
+                  View Receipt
+                </div>
+              </button>
+            </li>
+            <li class="rightside viewbtnlink" *ngIf="member['invoiceLink'] ==null || member['invoiceLink'] ==''">
+              <a style="float: right;" (click)="noReceipt()" class="btn-edit"><i class="fa fa-download"
+                  aria-hidden="true"></i>
+                <div class="toolnew">
+                  Download
+                </div>
+              </a>
+              <button *ngIf="member['invoiceLink'] ==null || member['invoiceLink'] ==''" style="margin-right: 15px;"
+                (click)="noReceipt()" class="btn-edit">
+                <i class="far fa-eye" style="opacity: 0.7;"></i>
+                <div class="toolnew">
+                  View Receipt
+                </div>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="row rightleftpaid" *ngIf="historyDetail?.content?.length == 0">
+          <div class="col-sm-12">
+            <div style="border-top: 1px solid #e4e4e4; display: block; padding-top: 10px;">
+              No record found!
+            </div>
+          </div>
+        </div>
+        <div class="pegination-main" *ngIf="historyDetail?.content!=0">
+          <ul>
+            <li>
+              <button (click)="pagination1('current','user',0)" [disabled]="historyDetail['first'] == true"
+                class="next">
+                First
+              </button>
+            </li>
+            <li>
+              <button (click)="pagination1('prev','user')" [disabled]="historyDetail['first'] == true" class="arrow">
+                <i aria-hidden="true" class="icon-left-arrow icon"></i>
+              </button>
+            </li>
+            <li (click)="pagination1('current','user',i)" *ngFor="let i of totalSettingPages"
+              [ngClass]="req.page.page == i ?  'blue-peg' : ''">
+              <button class="numeric">{{i + 1}}</button>
+            </li>
+            <li>
+              <button (click)="pagination1('next','user')" [disabled]="historyDetail['last'] == true" class="arrow">
+                <i aria-hidden="true" class="icon-right-arrow icon"></i>
+              </button>
+            </li>
+            <li>
+              <button (click)="pagination1('current','user',(historyDetail['totalPages']-1))"
+                [disabled]="historyDetail['last'] == true" class="next">
+                Last
+              </button>
+            </li>
+          </ul>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

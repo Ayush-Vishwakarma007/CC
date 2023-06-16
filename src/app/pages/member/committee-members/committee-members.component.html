@@ -1,0 +1,448 @@
+<div class="create-event-right-side common-page" id="page_form">
+  <div class="dashboard-heading">
+    Committee Members
+    <button (click)="addMemberData = [];search_member = '';newMemberList= [];" class="addmember" data-target="#select-committee-member" data-toggle="modal" type="button">+ Add Member </button>
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="totalcommitteemem">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <h4>
+            Total Committee Members : {{committeeMemberList?.totalElements}}
+          </h4>
+        </div>
+
+        <div class="col-sm-6 col-md-3 col-lg-3 paidchp" *ngIf="chapterList.length!=1">
+          <mat-form-field class="select-chap example-full-width">
+            <mat-label>Select Chapter</mat-label>
+            <mat-select (selectionChange)="getChapterDetail($event.value)" [value]="chapterList[0]?.id">
+              <mat-option *ngFor="let list of chapterList;let i = index" value="{{list.id}}">{{list.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 paidchp">
+          <mat-form-field class="select-chap example-full-width">
+            <mat-label>Select Committee</mat-label>
+            <mat-select (selectionChange)="getCommitteeDetail($event.value)" [value]="committeeList[0]?.id">
+              <mat-option value="">Select Committee</mat-option>
+              <mat-option *ngFor="let committee of committeeList; " [value]="committee.id">{{committee.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <div class="searchmain">
+            <form class="example-form">
+              <mat-form-field class="example-full-width searchform">
+                <mat-label>Search here...</mat-label>
+                <input (change)="getCommitteeMemberList($event.target.value)" [(ngModel)]="search" [ngModelOptions]="{standalone: true}" matInput placeholder="Type here..." value="">
+              </mat-form-field>
+              <button class="search-button" (click)="searchClick()"> Search </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="committi-tab">
+      <table>
+        <tr>
+          <th width="40"></th>
+          <th (click)="sort('name')" [ngClass]="reqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || reqData['sort']['sortBy'] == 'FIRST_NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable namefield">
+            Member and Email ID
+          </th>
+          <!-- <th (click)="sort('phone')" [ngClass]="reqData['sort']['sortBy'] != 'PHONE' ? '' : '' || reqData['sort']['sortBy'] == 'PHONE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">
+            Phone Number
+          </th> -->
+          <!-- <th (click)="sort('email')" [ngClass]="reqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || reqData['sort']['sortBy'] == 'EMAIL' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable"> Email ID </th> -->
+          <th width="90px" *ngIf="chapterList.length!=1">Chapter</th>
+          <th>Committee</th>
+          <th width="110px" (click)="sort('designation')" [ngClass]="reqData['sort']['sortBy'] != 'DESIGNATION' ? '' : '' || reqData['sort']['sortBy'] == 'DESIGNATION' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Designation</th>
+          <th width="90px" (click)="sort('index')" [ngClass]="reqData['sort']['sortBy'] != 'INDEX' ? '' : '' || reqData['sort']['sortBy'] == 'INDEX' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Priority</th>
+          <th width="220px" (click)="sort('year')" [ngClass]="reqData['sort']['sortBy'] != 'START_YEAR' ? '' : '' || reqData['sort']['sortBy'] == 'START_YEAR' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Years</th>
+          <th width="70px" (click)="sort('status')" [ngClass]="reqData['sort']['sortBy'] != 'STATUS' ? '' : '' || reqData['sort']['sortBy'] == 'STATUS' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Status</th>
+          <th width="65px">Action</th>
+        </tr>
+        <tbody>
+          <tr [hidden]="!addMemberData['add']" class="add-membg">
+            <td></td>
+            <td class="mem-name">
+              <div *ngIf="addMemberData['profileShow'] == true" class="charector">
+                <img alt="" src="{{addMemberData['profileUrl']}}">
+              </div>
+              <div *ngIf="addMemberData['profileShow'] == false" class="charector">
+                <i>{{addMemberData['profileUrl']}}</i>
+              </div>
+              <ul class="firstnameandemail">
+                <li> {{addMemberData['firstName'] | titlecase}} {{addMemberData['lastName'] | titlecase}} </li>
+                <li> {{addMemberData['email']}} </li>
+              </ul>
+
+            </td>
+            <!-- <td>{{addMemberData['phone']}}</td> -->
+            <!-- <td>{{addMemberData['email']}}</td> -->
+            <td class="sel-chapter" *ngIf="chapterList.length!=1">
+              <span class="padd20">
+                <mat-form-field class="chapterwid">
+                  <mat-select [(ngModel)]="addMemberData['chapterId']" (selectionChange)="getChapterDetail($event.value)">
+                    <mat-option value="">Select Chapter1</mat-option>
+                    <mat-option *ngFor="let chapter of chapterList; " [value]="chapter.id">{{chapter.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <span class="padd20">
+                <mat-form-field class="chapterwid">
+                  <mat-select [(ngModel)]="addMemberData['committeeId']">
+                    <mat-option value="">Select Committee</mat-option>
+                    <mat-option *ngFor="let committee of committeeList; " [value]="committee.id">{{committee.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <span class="padd20">
+                <mat-form-field>
+                  <input [(ngModel)]="addMemberData['designation']" [matAutocomplete]="auto" aria-label="Number" matInput type="text">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option [value]="">Select Designation</mat-option>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <span class="padd20">
+                <mat-form-field class="priority">
+                  <input matInput autocomplete="false" [(ngModel)]="addMemberData['index']" (keypress)="numberOnly($event)">
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width dateinfo committeedit">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3 openOnFocus="true" timeInterval="5" type="date"></mat-datepicker>
+                <input matInput [matDatepicker]="picker3" autocomplete="false" [(ngModel)]="addMemberData['startDate']">
+              </mat-form-field>
+              -
+              <mat-form-field class="example-full-width dateinfo committeedit">
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4 openOnFocus="true" timeInterval="5" type="date"></mat-datepicker>
+                <input matInput [matDatepicker]="picker4" autocomplete="false" [(ngModel)]="addMemberData['endDate']">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-slide-toggle (change)="addMemberData['activeMember'] = !addMemberData['activeMember']" [checked]="addMemberData['activeMember']"></mat-slide-toggle>
+            </td>
+            <td>
+              <button (click)="submitMember(addMemberData)" class="save-btn">
+                save
+              </button>
+              <button (click)="addMemberData = [];" class="save-btn cancel-btn marcancel">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngFor="let list of committeeMemberList?.content;let i = index;">
+          <tr [hidden]="list['edit']">
+            <td></td>
+            <td class="mem-name">
+              <div *ngIf="list['profileShow'] == true" class="charector">
+                <img alt="" src="{{list['profileUrl']}}">
+              </div>
+              <div *ngIf="list['profileShow'] == false" class="charector">
+                <i>{{list['profileUrl']}}</i>
+              </div>
+              <ul class="firstnameandemail">
+                <li> {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}} </li>
+                <li> {{list['email']}} </li>
+              </ul>
+            </td>
+            <!-- <td>{{list['phone']}}</td> -->
+            <!-- <td>{{list['email']}}</td> -->
+            <td *ngIf="chapterList.length!=1">{{list['chapterName']}}</td>
+            <td>{{list['committeeName']}}</td>
+            <td>{{list['designation']}}</td>
+            <td>{{list['index']}}</td>
+            <td>{{list['startDate'] | date :
+              this.communityService.publicInfo?.webDateFormat}} - {{list['endDate'] | date :
+              this.communityService.publicInfo?.webDateFormat}} </td>
+            <td>
+              <mat-slide-toggle (click)="list['activeMember'] = !list['activeMember'];submitMember(list,list['id'])"
+                [checked]="list['activeMember']"></mat-slide-toggle>
+            </td>
+            <td>
+              <button class="btn-edit" (click)="editMember(list)">  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+              <button class="btn-edit" (click)="deleteMember(list['id'])"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+              <!-- <div class="dropdown dropup moredrop editgallery">
+                <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                  data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                  <img alt="" src="assets/icon/interface.svg">
+                </a>
+                <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                  <a class="dropdown-item" (click)="editMember(list)">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    Edit
+                  </a>
+                  <a class="dropdown-item" (click)="deleteMember(list['id'])">
+                    <i aria-hidden="true" class="fa fa-angle-right"></i>
+                    Delete
+                  </a>
+                </div>
+              </div> -->
+              <!-- <button (click)="editMember(list)" class="edit-btn">
+                <i class="icon-edit-member newicon"></i>
+              </button>
+              <button (click)="deleteMember(list['id'])" class="edit-btn">
+                <i class="icon-delete newicon"></i>
+              </button> -->
+            </td>
+          </tr>
+          <tr [hidden]="!list['edit']" class="add-membg">
+            <td></td>
+            <td class="mem-name">
+              <div *ngIf="list['profileShow'] == true" class="charector">
+                <img alt="" src="{{list['profileUrl']}}">
+              </div>
+              <div *ngIf="list['profileShow'] == false" class="charector">
+                <i>{{list['profileUrl']}}</i>
+              </div>
+              <ul class="firstnameandemail">
+                <li>
+                  {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}}
+                </li>
+                <li>
+                  {{list['email']}}
+                </li>
+              </ul>
+
+            </td>
+            <!-- <td>{{list['phone']}}</td> -->
+            <!-- <td>{{list['email']}}</td> -->
+            <td class="sel-chapter" *ngIf="chapterList.length!=1">
+              <span class="padd20">
+                <mat-form-field class="chapterwid">
+                  <mat-select [(ngModel)]="list['chapterId']" (selectionChange)="getOnlyCommittee($event.value)">
+                    <mat-option value="">Select Chapter </mat-option>
+                    <mat-option *ngFor="let chapter of chapterList; " [value]="chapter.id">{{chapter.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </td>
+            <td >
+              <span class="padd20">
+                <mat-form-field class="chapterwid">
+                  <mat-select [(ngModel)]="list['committeeId']">
+                    <mat-option value="">Select Committee</mat-option>
+                    <mat-option *ngFor="let committee of committeeListing; " [value]="committee.id">{{committee.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <span class="padd20 designation-committee">
+                <mat-form-field class="chapterwid">
+                  <input [(ngModel)]="list['designation']" [matAutocomplete]="auto" aria-label="Number" matInput
+                    type="text">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option [value]="">Select Designation</mat-option>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </span>
+            </td>
+            <td>
+              <mat-form-field class="priority">
+                <input matInput autocomplete="false" [(ngModel)]="list['index']" (keypress)="numberOnly($event)">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width dateinfo committeedit">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 openOnFocus="true" timeInterval="5" type="date"></mat-datepicker>
+                <input matInput [matDatepicker]="picker1" autocomplete="false" [(ngModel)]="list['startDate']">
+              </mat-form-field>
+              -
+              <mat-form-field class="example-full-width dateinfo committeedit">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 openOnFocus="true" timeInterval="5" type="date"></mat-datepicker>
+                <input matInput [matDatepicker]="picker2" autocomplete="false" [(ngModel)]="list['endDate']">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-slide-toggle [(ngModel)]="list['activeMember']" [checked]="list['activeMember']" value="true">
+              </mat-slide-toggle>
+            </td>
+            <td>
+              <button (click)="submitMember(list,list['id'])" class="save-btn"> save </button>
+              <button (click)="list['edit'] = null" class="save-btn marcancel"> Cancel </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pegination-main totalPosition">
+      <ul>
+        <li>
+          <button (click)="pagination('current','user',0)" [disabled]="committeeMemberList['first'] == true"
+            class="next"> First </button>
+        </li>
+        <li>
+          <button (click)="pagination('prev','user')" [disabled]="committeeMemberList['first'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-left-arrow icon"></i>
+          </button>
+        </li>
+        <li (click)="pagination('current','user',i)" *ngFor="let i of arrayTwo(committeeMemberList['totalPages'])"
+          [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+          <button class="numeric">{{i + 1}}</button>
+        </li>
+        <li>
+          <button (click)="pagination('next','user')" [disabled]="committeeMemberList['last'] == true" class="arrow">
+            <i aria-hidden="true" class="icon-right-arrow icon"></i>
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination('current','user',(committeeMemberList['totalPages']-1))"
+            [disabled]="committeeMemberList['last'] == true" class="next">Last </button>
+        </li>
+      </ul>
+      <div class="totalShow"><span>Total :</span> {{committeeMemberList['totalElements']}}</div>
+
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade committee-member-mod" id="select-committee-member" role="dialog" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select Committee Member </h5>
+        <!-- <button aria-label="Close" class="close" data-dismiss="modal" id="closeModal" type="button">
+          <span aria-hidden="true"> &times; </span>
+        </button> -->
+        <button aria-label="Close"  class="close-container" data-dismiss="modal" id="closeModal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="searchmain">
+          <form class="example-form">
+            <mat-form-field class="example-full-width seeachnewdat">
+              <mat-label>Search here...</mat-label>
+              <input (change)="searchNewData()" [(ngModel)]="search_member" [ngModelOptions]="{standalone: true}"
+                matInput placeholder="Type here...">
+            </mat-form-field>
+            <button class="search-button"> Search</button>
+          </form>
+        </div>
+        <div class="committi-main">
+          <div class="committi-tab">
+            <table>
+              <tr>
+                <th width="40"></th>
+                <th>Member</th>
+                <th *ngIf="chapterList.length!=1">Chapter</th>
+                <th>Email ID</th>
+                <th width="100">Phone Number</th>
+                <th>Address</th>
+                <th width="100">Main Member</th>
+                <th width="65">Action</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let list of newMemberList?.content;">
+                  <td></td>
+                  <td class="mem-name">
+                    <div *ngIf="list['profileShow'] == true" class="charector">
+                      <img alt="" src="{{list['profileUrl']}}">
+                    </div>
+                    <div *ngIf="list['profileShow'] == false" class="charector">
+                      <i>{{list['profileUrl']}}</i>
+                    </div>
+                    <ul class="firstnameandemail">
+                      <li> {{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}} </li>
+                      <li> {{list['memberNumber']}} </li>
+                    </ul>
+                  </td>
+                  <td *ngIf="chapterList.length!=1">{{list['chapterName']}}</td>
+                  <td>{{list['email']}}</td>
+                  <td>{{list['phone']}}</td>
+                  <td>{{list['city']}} {{list['country']}}</td>
+                  <td>
+                    <p *ngIf="list['mainUser']">Yes</p>
+                    <p *ngIf="!list['mainUser']">No</p>
+                  </td>
+                  <td>
+                    <button (click)="addMember(list)" class="addbtn " type="button"> Add</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!--            <div class="row">-->
+            <!--              <div class="col-sm-8">-->
+            <!--                <div *ngIf="list['profileShow'] == true" class="charector">-->
+            <!--                  <img alt="" src="{{list['profileUrl']}}">-->
+            <!--                </div>-->
+            <!--                <div *ngIf="list['profileShow'] == false" class="charector">-->
+            <!--                  <i>{{list['profileUrl']}}</i>-->
+            <!--                </div>-->
+            <!--                {{list['firstName']}} {{list['lastName']}}-->
+            <!--                <span> {{list['chapterName']}}   <span> {{list['memberNumber']}}</span></span>-->
+            <!--                <span>  {{list['email']}} {{list['phone']}} </span>-->
+            <!--                <span>{{list['city']}}-->
+            <!--                  <i *ngIf="list['country']">| {{list['country']}}</i>-->
+            <!--                </span>-->
+            <!--              </div>-->
+            <!--              <div class="col-sm-4">-->
+            <!--                <button class="addbtn" (click)="addMember(list)" type="button">-->
+            <!--                  Add-->
+            <!--                </button>-->
+            <!--              </div>-->
+            <!--            </div>-->
+          </div>
+        </div>
+        <div *ngIf="newMemberList?.content && newMemberList?.numberOfElements != newMemberList?.totalElements"
+          class="pegination-main">
+          <ul>
+            <li>
+              <button (click)="paginationNewMember('current','user',0)" [disabled]="newMemberList['first'] == true" class="next">
+                First
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('prev','user')" [disabled]="newMemberList['first'] == true" class="arrow">
+                <i aria-hidden="true" class="icon-left-arrow icon"></i>
+              </button>
+            </li>
+            <li (click)="paginationNewMember('current','user',i)" *ngFor="let i of totalPages"
+                [ngClass]="reqNewData.page.page == i ?  'blue-peg' : ''">
+              <button class="numeric">{{i + 1}}</button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('next','user')" [disabled]="newMemberList['last'] == true" class="arrow">
+                <i aria-hidden="true" class="icon-right-arrow icon"></i>
+              </button>
+            </li>
+            <li>
+              <button (click)="paginationNewMember('current','user',(newMemberList['totalPages']-1))"
+                      [disabled]="newMemberList['last'] == true" class="next">Last
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

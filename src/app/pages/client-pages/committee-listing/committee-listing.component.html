@@ -1,0 +1,530 @@
+<div class="main-screen mainnewsscreen">
+  <div *ngIf="this.committeeImageUrl != '' && this.committeeImageUrl != null" class="container-fluid slider_main">
+    <carousel>
+      <slide>
+        <div [style.backgroundImage]="'url('+committeeImageUrl+')'" class="blur-image"></div>
+        <img alt="First slide" [src]="committeeImageUrl |communityImages">
+        <!-- carousel-caption -->
+        <div class="eventlistbanner">
+          <!-- <h2 class="caption_title">Mon,24 Dec 2019 </h2> -->
+          <!-- <i class="fa fa-map-marker" aria-hidden="true"></i><span class="san_title">San Francisco | CA</span> -->
+          <!-- <div  animationName="animated slideInUp" class="explr_btn">
+            <button routerLink="/create-event-new" type="btn">Create Now</button>
+          </div> -->
+        </div>
+      </slide>
+    </carousel>
+  </div>
+  <section class="inner-banner">
+    <div class="blue-bg-banner"><span></span></div>
+    <div class="slid-left-blue-dots">
+      <img alt="" src="assets/images/inner-left-dots.png">
+    </div>
+    <div class="container">
+      <div class="red-inner">
+        <div class="row">
+          <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft">
+<!--            <a  (click)="back()">-->
+<!--              <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 23px;" width="100px"/>-->
+<!--            </a>-->
+            <h2 class="inner-page-tlt">
+              Committee</h2>
+          </div>
+          <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li aria-current="page" class="breadcrumb-item active">Committee</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="event_form">
+    <div class="container">
+      <div class="row" *ngIf="this.chapterList.length != 1">
+        <div class="col-md-12 col-sm-12 col-xs-12" >
+          <mat-form-field class="select-chap" style="margin-top: 30px; float: right; ">
+            <mat-select [(ngModel)]="chapterId" (ngModelChange)="getCommitteeMember(true)" >
+              <mat-option *ngFor="let list of chapterList" value="{{list.id}}">{{list.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="white_boxfrm">
+        <div class="row fil-full">
+          <h3 *ngIf="this.committeeTitle != '' && this.committeeTitle != null" animateOnScroll
+              animationName="animated slideInLeft" class="animated fadeInUpBig">
+            {{committeeTitle}}
+          </h3>
+          <p *ngIf="this.committeeDescription != '' && this.committeeDescription != null" [innerHtml]="committeeDescription" animateOnScroll
+             animationName="animated slideInLeft"
+             class="animated fadeInUpBig">
+            <!-- SPCS have been standing on very strong pillars. iquam laoreet libero bibendum, gravida diam id, molestie
+            justo. Donec et velit vel arcu iaculis condimentum vel et arcu. Nulla fringilla risus a venenatis
+            faucibus. Curabitur vel nibh ligulanteger dignissim eros tortor. Aquam laoreet libero bibendum, gravida
+            diam id, molestie justo. -->
+            <!-- The National Executive Committee (NEC) of Saurashtra Patel Cultural Samaj is comprised of hard-working volunteers, who give selflessly of their time and effort to advance the mission and goals of Saurashtra Patel Cultural Samaj. This committee is made up of National Officers and Executive Members from each of our local chapters. -->
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <!-- Inner Banner Section Start -->
+  <!--    <section class="inner-banner">
+          <div class="blue-bg-banner"><span></span></div>
+          <div class="slid-left-blue-dots">
+              <img src="assets/images/inner-left-dots.png" alt="">
+          </div>
+          <div class="container">
+              <div class="red-inner">
+                  <div class="row">
+                      <div class="col-md-6 col-sm-6">
+                          <h2 class="inner-page-tlt"> Our Team</h2>
+                      </div>
+                      <div class="col-md-6 col-sm-6">
+                          <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb">
+                                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                  <li class="breadcrumb-item active" aria-current="page">Our Team</li>
+                              </ol>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>-->
+  <!-- Inner Banner Section End -->
+  <!--  <section class="committee-main">
+        <div class="container">
+            <div class="banner-committee" *ngIf="this.committeeImageUrl != '' && this.committeeImageUrl != null">
+                <img src="{{committeeImageUrl}}" alt="">
+            </div>
+            <h3 *ngIf="this.committeeTitle != '' && this.committeeTitle != null"  animationName="animated slideInLeft" class="animated fadeInUpBig">
+                {{committeeTitle}}
+            </h3>
+            <p  animationName="animated slideInLeft" class="animated fadeInUpBig"
+               [innerHtml] = "committeeDescription"
+               *ngIf="this.committeeDescription != '' && this.committeeDescription != null" >
+                &lt;!&ndash; SPCS have been standing on very strong pillars. iquam laoreet libero bibendum, gravida diam id, molestie
+                justo. Donec et velit vel arcu iaculis condimentum vel et arcu. Nulla fringilla risus a venenatis
+                faucibus. Curabitur vel nibh ligulanteger dignissim eros tortor. Aquam laoreet libero bibendum, gravida
+                diam id, molestie justo. &ndash;&gt;
+                &lt;!&ndash; The National Executive Committee (NEC) of Saurashtra Patel Cultural Samaj is comprised of hard-working volunteers, who give selflessly of their time and effort to advance the mission and goals of Saurashtra Patel Cultural Samaj. This committee is made up of National Officers and Executive Members from each of our local chapters. &ndash;&gt;
+
+            </p>
+            <p>
+              &lt;!&ndash; The SPCS Board of Trustees have previously served in a leadership role with SPCS. Their primary role is to help establish and drive strategic goals while providing support and stability to each of our local chapters. &ndash;&gt;
+            </p>
+        </div>
+
+    </section>-->
+  <section  animationName="animated slideInLeft" class="committee-listing-main animated fadeInUpBig">
+    <div class="container">
+      <div class="row mtb-10">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div *ngIf="(nationalMember?.length != 0 && nationalMember.committeeMemberList?.length != 0) || (nationalMember.description != '' && nationalMember.description != null)"
+               class="network-icon">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="commitee">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <h5>{{nationalMember.description}}</h5>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 ">
+                      <ul class="column-dev">
+                        <li *ngFor="let Nmember of nationalMember.committeeMemberList;">
+                          <div class="main-committee">
+                            <div *ngIf="Nmember.profilePictureUrl != '' && Nmember.profilePictureUrl != null"
+                                 class="thum-img">
+                              <img alt="" [src]="Nmember.profilePictureUrl|authImages">
+                            </div>
+                            <div *ngIf="Nmember.profilePictureUrl == '' || Nmember.profilePictureUrl == null"
+                                 class="no-image">
+                              <span>{{Nmember?.firstName?.charAt(0)}}{{Nmember?.lastName?.charAt(0)}}</span>
+                            </div>
+                            <h6>
+                              {{Nmember?.firstName | titlecase}} {{Nmember?.lastName | titlecase}}
+                            </h6>
+                            <p>
+                              {{Nmember?.designation}}
+                              <br>
+                              <!-- (click)="contactUs(Nmember.email,Nmember.id)" -->
+                              <button (click)="openModalWithClass(contactUsModel, Nmember.email,Nmember.id); "  class="button contactBtn">
+                                <i aria-hidden="true" class="fa fa-envelope"></i> Contact
+                              </button>
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4" *ngFor="let Nmember of nationalMember.committeeMemberList;">
+
+                      <div class="main-committee">
+                            <div class="thum-img" *ngIf="Nmember.profilePictureUrl != '' && Nmember.profilePictureUrl != null">
+                                <img src="{{Nmember.profilePictureUrl}}" alt="">
+                            </div>
+                            <div class="no-image" *ngIf="Nmember.profilePictureUrl == '' || Nmember.profilePictureUrl == null">
+                              <span>{{Nmember?.firstName.charAt(0)}}{{Nmember?.lastName.charAt(0)}}</span>
+                            </div>
+                            <h6>
+                                {{Nmember.firstName}} {{Nmember.lastName}}
+                            </h6>
+                            <p>
+
+                                {{Nmember.designation}}
+                                <br>
+                            <button class="button contactBtn"  (click)="contactUs(Nmember.email,Nmember.id)"> <i class="fa fa-envelope" aria-hidden="true"></i>
+                            Contact </button>
+                            </p>
+                        </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="contry-name">
+              <span>{{nationalMember.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- committee member -->
+  <section class="committee-listing-main animated fadeInUpBig committee-strap">
+    <div class="container">
+      <div class="row mtb-10">
+
+        <ng-container *ngFor="let commitee of comitymemberList;index as i">
+          <ng-container *ngIf="i != 0">
+            <div *ngIf="commitee.committeeMemberList?.length > 0 || (commitee.description != null && commitee.description != '')"
+                 [ngClass]="commitee.committeeMemberList?.length > 3 ? 'col-sm-12 col-md-12 col-lg-12 col-xl-12' : 'col-sm-12 col-md-12 col-lg-12 col-xl-12'"
+                 class="">
+              <div  animationName="animated slideInUp" class="network-icon member animated fadeInUpBig">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="commitee bottom-paid ">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <h5>{{commitee.description}}</h5>
+                      </div>
+                      <div class="row">
+                        <ng-container>
+                          <!-- <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" *ngFor="let c of commitee.committeeMemberList;">
+                              <ul>
+                                  <li>
+                                      <div class="thum-member" *ngIf="c.profilePictureUrl != '' && c.profilePictureUrl != null">
+                                          <img src="{{c.profilePictureUrl}}" alt="">
+                                      </div>
+                                      <div class="no-image small-img" *ngIf="c.profilePictureUrl == '' || c.profilePictureUrl == null">
+                                        <span>{{c?.firstName.charAt(0)}}{{c?.lastName.charAt(0)}}</span>
+                                      </div>
+                                  </li>
+                                  <li>
+                                      <h6> {{c.firstName}} {{c.lastName}}</h6>
+                                      <p>{{c.designation}} </p>
+                                      <a href="javascript:void(0);" (click)="contactUs(c.email,c.id)"> <i class="fa fa-envelope" aria-hidden="true"></i> <span > Contact </span></a>
+                                  </li>
+                              </ul>
+                          </div> -->
+
+                          <ul class="sub-committee-mem">
+                            <li *ngFor="let c of commitee.committeeMemberList;" class="sub">
+                              <ul>
+                                <li>
+                                  <div *ngIf="c.profilePictureUrl != '' && c.profilePictureUrl != null"
+                                       class="thum-member">
+                                    <img alt="" [src]="c.profilePictureUrl|authImages">
+                                  </div>
+                                  <div *ngIf="c.profilePictureUrl == '' || c.profilePictureUrl == null"
+                                       class="no-image small-img">
+                                    <span>{{c?.firstName.charAt(0)}}{{c?.lastName.charAt(0)}}</span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <h6> {{c.firstName | titlecase}} {{c.lastName | titlecase}}</h6>
+                                  <p>{{c.designation}} <!--{{c.startYear}} - {{c.endYear}}--></p>
+                                  <!-- (click)="contactUs(c.email,c.id)"  -->
+                                  <a (click)="openModalWithClass(contactUsModel, c.email,c.id);" href="javascript:void(0);"> <i
+                                    aria-hidden="true" class="fa fa-envelope"></i> <span> Contact </span></a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="contry-name">
+                  <span>{{commitee.name}}</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+</div>
+
+<button data-target="#contactusModal" data-toggle="modal" id="contactus_modal_btn" style="display: none;"></button>
+<!-- <div #contactUsModel class="modal contactpopupmain" id="contactusModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Contact us</h4>
+        <button (click)="modalRef.hide()" aria-label="Close" id="closeModel" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="">
+          <div class="">
+            <div class="row">
+              <form [formGroup]="contactUsForm" id="contactUsForm">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="">
+                    <div class="row">
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field  class="example-full-width">
+                          <mat-label>First Name</mat-label>
+                          <input formControlName="firstName" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.firstName.errors">
+                          <div *ngIf="contactUsFormvalid.firstName.errors.required" class="valid-msg"> First Name is required </div>
+                          <div *ngIf="contactUsFormvalid.firstName.errors.pattern" class="valid-msg">Only allowed character </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Last Name</mat-label>
+                          <input formControlName="lastName" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.lastName.errors">
+                          <div *ngIf="contactUsFormvalid.lastName.errors.required" class="valid-msg">Last Name is
+                            required
+                          </div>
+                          <div *ngIf="contactUsFormvalid.lastName.errors.pattern" class="valid-msg">Only allowed
+                            character
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Phone Number</mat-label>
+                          <input (keypress)="numberOnly($event)" appPhoneMask formControlName="phoneNumber" id="phone-number" matInput maxlength="16" placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.phoneNumber.errors">
+                          <div *ngIf="contactUsFormvalid.phoneNumber.errors.required" class="valid-msg">
+                            Phone Number is required
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Email</mat-label>
+                          <input formControlName="email" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.email.errors">
+                          <div *ngIf="contactUsFormvalid.email.errors.required" class="valid-msg">Email is required
+                          </div>
+                          <div *ngIf="contactUsFormvalid.email.errors.pattern" class="valid-msg">Please enter valid
+                            email.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Select Subject</mat-label>
+                          <mat-select formControlName="subject" placeholder="">
+                            <mat-option>Select Subject</mat-option>
+                            <mat-option *ngFor="let sub of subjectList;" value="{{sub.subject}}">
+                              {{sub.subject}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.subject.errors">
+                          <div *ngIf="contactUsFormvalid.subject.errors.required" class="valid-msg">
+                            Subject is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Message</mat-label>
+                          <textarea formControlName="message" matInput placeholder=""></textarea>
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.message.errors">
+                          <div *ngIf="contactUsFormvalid.message.errors.required" class="valid-msg">
+                            Message is required
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div  animationName="animated slideInUp"
+                           class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div (click)="ContactUsSubmit()" class="main-screen">
+                          <div class="btn-general">
+                            <div class="eff-5"></div>
+                            <a> Submit </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div> -->
+<ng-template #contactUsModel >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Contact us</h4>
+        <button (click)="modalRef.hide()" aria-label="Close" id="closeModel" class="close-container">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="">
+          <div class="">
+            <div class="row">
+              <form [formGroup]="contactUsForm" id="contactUsForm">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                  <div class="">
+                    <div class="row">
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field  class="example-full-width">
+                          <!-- <span class="fa fa-user icon"></span> -->
+                          <mat-label>First Name</mat-label>
+                          <input formControlName="firstName" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.firstName.errors">
+                          <div *ngIf="contactUsFormvalid.firstName.errors.required" class="valid-msg"> First Name is required </div>
+                          <div *ngIf="contactUsFormvalid.firstName.errors.pattern" class="valid-msg">Only allowed character </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field  class="example-full-width">
+                          <!-- <span class="fa fa-user icon"></span> -->
+                          <mat-label>Middle Name</mat-label>
+                          <input formControlName="middletName" matInput placeholder="">
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field class="example-full-width">
+                          <!-- <span class="fa fa-user icon"></span> -->
+                          <mat-label>Last Name</mat-label>
+                          <input formControlName="lastName" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.lastName.errors">
+                          <div *ngIf="contactUsFormvalid.lastName.errors.required" class="valid-msg">Last Name is
+                            required
+                          </div>
+                          <div *ngIf="contactUsFormvalid.lastName.errors.pattern" class="valid-msg">Only allowed
+                            character
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <mat-form-field class="example-full-width">
+                          <!-- <span class="fa fa-phone icon"></span> -->
+                          <mat-label>Phone Number</mat-label>
+                          <input (keypress)="numberOnly($event)" appPhoneMask formControlName="phoneNumber" id="phone-number" matInput maxlength="16" placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.phoneNumber.errors">
+                          <div *ngIf="contactUsFormvalid.phoneNumber.errors.required" class="valid-msg">
+                            Phone Number is required
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <mat-form-field class="example-full-width">
+                          <!-- <span class="fa fa-envelope icon"></span> -->
+                          <mat-label>Email</mat-label>
+                          <input formControlName="email" matInput placeholder="">
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.email.errors">
+                          <div *ngIf="contactUsFormvalid.email.errors.required" class="valid-msg">Email is required </div>
+                          <div *ngIf="contactUsFormvalid.email.errors.pattern" class="valid-msg">Please enter valid email. </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <!-- <mat-form-field appearance="Subject">
+                          <span class="fa fa-tag icon"></span>
+                          <mat-label>Subject</mat-label>
+                          <input matInput placeholder="Placeholder">
+                      </mat-form-field> -->
+                        <mat-form-field class="example-full-width">
+                          <!-- <span class="fa fa-tag icon" style="margin-top:-10px;"></span> -->
+                          <mat-label>Select Subject</mat-label>
+                          <mat-select formControlName="subject" placeholder="">
+                            <mat-option>Select Subject</mat-option>
+                            <mat-option *ngFor="let sub of subjectList;" value="{{sub.subject}}">
+                              {{sub.subject}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.subject.errors">
+                          <div *ngIf="contactUsFormvalid.subject.errors.required" class="valid-msg">
+                            Subject is required
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <mat-form-field class="example-full-width">
+                          <!-- <span class="fa fa-comment icon"></span> -->
+                          <mat-label>Message</mat-label>
+                          <textarea formControlName="message" matInput placeholder=""></textarea>
+                        </mat-form-field>
+                        <div *ngIf="submitted && contactUsFormvalid.message.errors">
+                          <div *ngIf="contactUsFormvalid.message.errors.required" class="valid-msg">
+                            Message is required
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div  animationName="animated slideInUp" class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div (click)="ContactUsSubmit()" class="main-screen">
+                          <div class="btn-general">
+                            <div class="eff-5"></div>
+                            <a> Submit </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    </div>
+</ng-template>

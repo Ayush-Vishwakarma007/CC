@@ -1,0 +1,14 @@
+<svg id="ic-ecommerce-card" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+  <rect id="Rectangle_109" data-name="Rectangle 109" width="15" height="15" fill="none"/>
+  <g id="ic-ecommerce-card-2" data-name="ic-ecommerce-card" transform="translate(0.625 2.5)">
+    <g id="Layer">
+      <path id="Path_194" data-name="Path 194" d="M12.875,4h-10A1.875,1.875,0,0,0,1,5.875v6.25A1.875,1.875,0,0,0,2.875,14h10a1.875,1.875,0,0,0,1.875-1.875V5.875A1.875,1.875,0,0,0,12.875,4Zm-10,1.25h10a.625.625,0,0,1,.625.625V6.5H2.25V5.875A.625.625,0,0,1,2.875,5.25Zm10,7.5h-10a.625.625,0,0,1-.625-.625V7.75H13.5v4.375A.625.625,0,0,1,12.875,12.75Z" transform="translate(-1 -4)" fill="#b40001"/>
+    </g>
+    <g id="Layer-2" data-name="Layer" transform="translate(1.875 5)">
+      <path id="Path_195" data-name="Path 195" d="M4.625,13.25h2.5a.625.625,0,0,0,0-1.25h-2.5a.625.625,0,0,0,0,1.25Z" transform="translate(-4 -12)" fill="#b40001"/>
+    </g>
+    <g id="Layer-3" data-name="Layer" transform="translate(1.875 6.875)">
+      <path id="Path_196" data-name="Path 196" d="M9,15H4.625a.625.625,0,0,0,0,1.25H9A.625.625,0,0,0,9,15Z" transform="translate(-4 -15)" fill="#b40001"/>
+    </g>
+  </g>
+</svg>

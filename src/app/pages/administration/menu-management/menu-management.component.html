@@ -1,0 +1,211 @@
+<div class="create-event-right-side common-page">
+  <div class="white-area-create-event committi-main no-paid">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 ">
+        <h1>
+          <div class="img-create">
+            <img alt="note" src="assets/images/note.png">
+          </div>
+          {{'admin.menuManagement.title' | translate}}
+          <span>{{'admin.menuManagement.text' | translate}}</span>
+        </h1>
+      </div>
+      <div class="col-md-6 col-lg-6">
+        <div class="menu-maincenter">
+          <i id="openMenu"  (click)="editMenu = true" data-target="#newslettermodel" data-toggle="modal"></i>
+          <button class="addanother" (click)="editMenu = false;this.pageId = '';this.new['menuItem'] = {};isSubmit = false; openModalWithClass2(template1); formReset();">
+            {{'admin.menuManagement.addmenu.Btn.text' | translate}}
+          </button>
+          <!-- <button class="addanother" (click)="editMenu = false;this.pageId = '';this.new['menuItem'] = {};isSubmit = false"
+                  data-target="#newslettermodel"
+                  data-toggle="modal">+ Menu
+          </button> -->
+          <mat-form-field style="margin: 16px;" class="select-chap pull-right ">
+            <mat-label>Select Menu</mat-label>
+            <mat-select [value]="true" (selectionChange)="getMenuList($event.value)">
+              <mat-option [value]="true" >HEADER</mat-option>
+              <mat-option [value]="false" >OTHER</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <!-- table -->
+    <div class="donation-sponsor">
+      <div class="row">
+        <div class="col-md-12 tab-center-btn">
+          <div class="buttontab">
+            <button
+              type="button" *ngFor="let list of menuDetail;"  (click)="changeMenuType(list)" [ngClass]="list['name'] == currentMenu['name'] ? 'active' : '' "   >
+              {{list.name}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 37px;">
+      <div class="col-md-6">
+        <h1>{{'admin.menuManagement.enableMenu.title' | translate}}</h1>
+        <div class="change-tree">
+          <tree-root  *ngIf="this.nodes1.length != 0" [state]="state1" [options]="options1" [focused]="true" [nodes]="nodes1">
+            <ng-template #treeNodeTemplate let-node let-index="index" class="edit-icon">
+              <span>{{ node.data.name }} </span>
+              <i *ngIf="node.data.detail?.defaultMenu == false"
+                _ngcontent-cks-c10=""  (click)="getMenuDetail(node.data); openModalWithClass2(template1)" aria-hidden="true"
+                class="pull-right  newicon icon-edit-member"></i>
+            </ng-template>
+          </tree-root>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h1>{{'admin.menuManagement.disableMenu.title' | translate}}</h1>
+        <div class="change-tree">
+          <tree-root [state]="state2" [options]="options2" [focused]="true" [nodes]="nodes2">
+            <ng-template #treeNodeTemplate let-node let-index="index" class="edit-icon">
+              <span>{{ node.data.name }}</span>
+              <i  *ngIf="node.data.detail?.defaultMenu == false" (click)="getMenuDetail(node.data); openModalWithClass2(template1)"
+                _ngcontent-cks-c10="" aria-hidden="true"
+                class="pull-right  newicon icon-edit-member"></i>
+            </ng-template>
+          </tree-root>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+
+<ng-template #template1>
+  <!-- <i id="editSponsorModal" (click)="openModalWithClass2(template1)"></i> -->
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <button (click)="modalRef.hide()" aria-label="Close" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <h5 class="modal-title" *ngIf="!editMenu">{{'admin.menuManagement.addmenu.popup.title' | translate}} </h5>
+        <h5 class="modal-title" *ngIf="editMenu">{{'admin.menuManagement.editmenu.popup.title' | translate}} </h5>
+      </div>     
+        <div class="modal-body">         
+          <form [formGroup]="menuForm" class="example-form ">
+          <div class="row martop-date">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.menuManagement.addmenu.popup.selectPage.lbl.text' | translate}}
+                </mat-label>
+                <mat-select formControlName="pageId" (selectionChange)="changePage($event.value)">
+                  <mat-option value="">Select Page</mat-option>
+                  <mat-option *ngFor="let list of pageList?.content;let i = index" [value]="i"> {{list?.name}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="isSubmit && menuForm.controls.pageId.errors ">
+                  <span *ngIf="isSubmit && menuForm.controls.pageId.errors.required" class="valid-msg">Select Page is Required</span>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.menuManagement.addmenu.popup.menuName.lbl.text' | translate}}</mat-label>
+                <input formControlName="name" matInput>
+              </mat-form-field>
+              <div *ngIf="isSubmit && menuForm.controls.name.errors">
+                <span *ngIf="menuForm.controls.name.errors" class="valid-msg">Menu Name is required</span>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.menuManagement.addmenu.popup.className.lbl.text' | translate}}</mat-label>
+                <input formControlName="class" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4" [hidden]="true">
+              <mat-form-field class="example-full-width">
+                <mat-label>{{'admin.menuManagement.addmenu.popup.menuPath.lbl.text' | translate}}</mat-label>
+                <input matInput  [(ngModel)]="this.new['menuItem']['link']" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pull-left">
+              <button
+                class="deletebtnmem" (click)="deleteMenu()" *ngIf="details?.defaultMenu == false && this.editMenu== true" >
+                <i class="icon-delete newicon"></i>
+                {{'admin.menuManagement.addmenu.popup.deleteMenu.lbl.text' | translate}}
+              </button>
+            </div>
+            <div class="col-md-6 ">
+              <button class="save-changes pull-right" (click)="addMenu()">{{'admin.menuManagement.addmenu.popup.submit.Btn.text' | translate}}</button>
+            </div>
+          </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="newslettermodel" role="dialog" tabindex="1">
+  <div class="modal-dialog add-donation newsletterpopup" role="document">
+    <div class="modal-content"> 
+        <div class="modal-body">
+          <button (click)="formReset()" aria-label="Close" id="closeModel" class="close-container" data-dismiss="modal">
+            <div class="leftright"></div>
+            <div class="rightleft"></div>
+          </button>
+          <h5>Add Menu</h5>
+          <form [formGroup]="menuForm" class="example-form ">
+          <div class="row martop-date">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Select Page
+                </mat-label>
+                <mat-select formControlName="pageId" (selectionChange)="changePage($event.value)">
+                  <mat-option value="">Select Page</mat-option>
+                  <mat-option *ngFor="let list of pageList?.content;let i = index" [value]="i"> {{list?.name}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="isSubmit && menuForm.controls.pageId.errors ">
+                  <span *ngIf="isSubmit && menuForm.controls.pageId.errors.required" class="valid-msg">Select Page is Required</span>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Menu Name</mat-label>
+                <input formControlName="name" matInput>
+              </mat-form-field>
+              <div *ngIf="isSubmit && menuForm.controls.name.errors">
+                <span *ngIf="menuForm.controls.name.errors" class="valid-msg">Menu Name is required</span>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <mat-form-field class="example-full-width">
+                <mat-label>Class Name</mat-label>
+                <input formControlName="class" matInput>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4" [hidden]="true">
+              <mat-form-field class="example-full-width">
+                <mat-label>Menu Path</mat-label>
+                <input matInput  [(ngModel)]="this.new['menuItem']['link']" [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pull-left">
+              <button
+                class="deletebtnmem" (click)="deleteMenu()" *ngIf="details?.defaultMenu == false && this.editMenu== true" >
+                <i class="icon-delete newicon"></i>
+                Delete Menu
+              </button>
+            </div>
+            <div class="col-md-6 ">
+              <button class="save-changes pull-right" (click)="addMenu()">Submit</button>
+            </div>
+          </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div> -->
+<!-- Modal -->

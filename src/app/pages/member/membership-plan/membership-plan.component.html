@@ -1,0 +1,39 @@
+
+<!-- membership content -->
+
+<div class="main-screen mainnewsscreen">
+  <div class="create-event-right-side common-page whitebg">
+    <div class="paddingaround">
+      <div class="membershiplan">
+
+        <h2>Select a Membership Plan
+          <span class="buttontab" *ngIf="count >1">
+            <button [class]="list['count'] ? '' : 'hide-div'" (click)="changePlanType(list)" *ngFor="let list of durationTypeList;" [ngClass]="list['value'] == planType ? 'active' : '' "  >
+              {{list.name}}</button>
+          </span>
+        </h2>
+        <div class="box-flex martop-date" *ngFor="let array of currentArray;" >
+          <u (click)="changeMembership(list)" [class]="list['checked'] == true ? 'active' : '' " [ngClass]="currentArray.length == 1 && array.length == 1? 'one-box' : '' || array.length == 2 ? 'two-box' : '' " *ngFor="let list of array;">
+            <div *ngIf="list['checked'] == true" class="checked">
+              <img alt="" src="assets/icon/check-event.svg">
+            </div>
+            <div class="box">
+              <h3>
+                {{list['name']}}
+              </h3>
+              <span> <i>$</i>{{list['currentPlan']['price']}}<i>.00</i></span>
+              <ul>
+                <li *ngFor="let benefit of list['benefits']">{{benefit}}</li>
+              </ul>
+            </div>
+            <div class="clear"></div>
+          </u>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="buybtn" (click)="redirectPayment()">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

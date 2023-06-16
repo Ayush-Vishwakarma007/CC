@@ -1,0 +1,35 @@
+
+<div class="mainnewsscreen main-screen">
+ <section class="inner-banner">
+  <div class="blue-bg-banner"><span></span></div>
+  <div class="slid-left-blue-dots">
+    <img alt="" src="assets/images/inner-left-dots.png">
+  </div>
+  <div class="container">
+    <div class="red-inner">
+      <div class="row">
+        <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft">
+<!--          <a  (click)="back()">-->
+<!--            <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 23px;" width="100px"/>-->
+<!--          </a>-->
+          <h2 class="inner-page-tlt">
+            {{pageDetail?.pageTitle}} </h2>
+        </div>
+        <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li aria-current="page" class="breadcrumb-item active">{{pageDetail?.pageTitle}}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section class="inner-banner commontopmargin">
+    <p [innerHTML]="pageDetail?.content  | safeHtml">
+
+    </p>
+  </section>
+</div>

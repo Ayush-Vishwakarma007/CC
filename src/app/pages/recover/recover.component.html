@@ -1,0 +1,28 @@
+<div class="mainotp-box">
+  <div class="login-logo">
+    <img *ngIf="communityService.logo?.logo" alt="logo" src="{{communityService.logo?.logo?.url}}">
+  </div>
+  <div class="rightpart">
+    <div class="main-box">
+      <h3>
+        Welcome
+      </h3>
+      <!--            <span *ngIf="token && phoneNo">-->
+      <!--              Your email address verify successfully.-->
+      <!--            </span>-->
+
+      <p>Email Address: {{email}}</p>
+      <textarea  placeholder="Enter Message Here" class="textarea" [(ngModel)]="reason"  [ngModelOptions]="{standalone: true}"></textarea>
+
+      <div class="login-button">
+        <button (click)="submit()">Submit </button>
+      </div>
+
+      <!--            <div class="login-button">-->
+      <!--                <button (click)="verifyPhone()">Set Password</button>-->
+      <!--            </div>-->
+
+    </div>
+  </div>
+</div>
+

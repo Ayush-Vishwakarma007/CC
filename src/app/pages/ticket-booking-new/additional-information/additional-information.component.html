@@ -1,0 +1,112 @@
+<div class="scrolltab">
+<form [formGroup]="editMemberForm" id="editMemberForm">
+  <button class="skip" (click)="skip()"> SKip</button>
+  <div *ngFor="let form of formDetail">
+  <h3> {{form?.stepName}} </h3>
+  <div *ngFor="let field of form?.fieldValues">
+  <div *ngIf="field.type!='RADIO_BUTTON' && field.type!='CHECK_BOX'">
+    <div *ngIf="field.type=='TEXT'">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-label>{{field.name}} <i  *ngIf="field.required==true">*</i></mat-label>
+          <input formControlName="{{field.fieldName}}" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-12"  *ngIf="field.type=='URL'" >
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width ">
+        <mat-label>{{field.name}}
+          <i *ngIf="field.required == true">*</i>
+        </mat-label>
+        <input formControlName="{{field.fieldName}}" matInput>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12"  *ngIf="field.type=='NUMBER'">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>{{field.name}}  <i *ngIf="field.required==true">*</i></mat-label>
+        <input (keypress)="numberOnly($event)" formControlName="{{field?.fieldName}}" value="{{field?.fieldName}}" matInput>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12"  *ngIf="field.type=='DATE'">
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width dateinfo">
+        <mat-label>{{field.name}} </mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="{{field?.fieldName}}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <span><i class="fa fa-calendar"></i></span>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div  class="col-sm-12" *ngIf="field.type=='DROP_DOWN'" >
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>{{field.name}} <i *ngIf="field.required==true">*</i></mat-label>
+        <mat-select formControlName="{{field.fieldName}}">
+          <mat-option>Select {{field.name}}</mat-option>
+          <mat-option *ngFor="let m of field.options" value="{{m}}">
+            {{m}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12" *ngIf="field.type=='TEXT_AREA'"  >
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field class="example-full-width">
+        <mat-label>{{field.name}} <i *ngIf="field.required==true">*</i></mat-label>
+        <textarea formControlName="{{field.fieldName}}" matInput placeholder="..."
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+</div>
+<div  *ngIf="field.type =='RADIO_BUTTON' " class="col-md-12">
+  <div *ngIf="field.type=='RADIO_BUTTON'">
+    <label class="testgame">{{field.name}} <i
+      *ngIf="field.required==true">*</i></label>
+      <section class="example-section">
+    <mat-radio-group formControlName="{{field.fieldName}}">
+      <mat-radio-button *ngFor="let m of field.options" [checked]="m == field.filedValue"
+                        class="example-margin" value="{{m}}">{{m}}</mat-radio-button>
+    </mat-radio-group>
+  </section>
+  </div>
+</div>
+<div *ngIf="field.type=='CHECK_BOX'" class="col-md-12">
+  <label class="testgame">{{field.name}}  <i *ngIf="field.required==true">*</i></label>
+  <section class="example-section">
+    <ng-container *ngFor="let m of field.optionList">
+      <mat-checkbox [(ngModel)]="m['check']" [checked]="m['check']==true"
+                    [ngModelOptions]="{standalone: true}" [value]="m['value']"
+                    class="example-margin">{{m['value']}}</mat-checkbox>
+    </ng-container>
+  </section>
+</div>
+
+</div>
+</div>
+  </form>
+</div>
+ 
+  

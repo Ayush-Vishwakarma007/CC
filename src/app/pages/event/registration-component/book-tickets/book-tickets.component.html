@@ -1,0 +1,238 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <!-- Members -->
+    <div class="becomeheight">
+
+      <h5>
+        {{'event.registrationComponent.bookTicket.title' | translate}}  <button (click)="guestReset()" class="save-changes pull-right mar0"  data-target="#registerModal" data-toggle="modal">{{'event.registrationComponent.bookTicket.addGuest.Btn.text' | translate}}</button>
+      </h5>
+      <!--check Members -->
+      <div class="maincheckbox">
+        <div *ngFor="let list of userDetail?.members;let i =index;">
+          <div class="heading-top pointer-cursor"  [ngClass]="list['showDiv'] == true ? 'arrow-toggle' : ''">
+            <mat-checkbox (change)="feesCalculation($event['checked'],list)"  [(ngModel)]="list['checked']" [ngModelOptions]="{standalone: true}" ></mat-checkbox>
+<!--            <div class="thumbimg"><img alt="" src="assets/images/background.png"></div>-->
+
+            <div *ngIf="list['profileShow'] == true" class="charector">
+              <img alt="" src="{{list['profileUrl']}}">
+            </div>
+            <div *ngIf="list['profileShow'] == false" class="charector">
+              <i>{{list['profileUrl']}}</i>
+            </div>
+            <div  (click)="list['showDiv'] = !list['showDiv']"  class="pointer-cursor">
+              <span class="textname">{{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}}</span>
+              <!-- <span [hidden]="!list['showDiv']" class="acc-icon"><img src="assets/icon/top-arrow.svg"/></span> -->
+              <!-- <span [hidden]="list['showDiv']" class="acc-icon down-img"><img src="assets/icon/top-down.svg"/></span> -->
+              <span *ngIf="eventRules.length != 0" class="acc-icon down-img"><img src="assets/icon/top-down.svg"/></span>
+            </div>
+
+          </div>
+          <mat-radio-group  [hidden]="!list['showDiv']" aria-label="Select an option">
+            <div class="mainvipsesating" *ngFor="let age of list?.ageRules">
+              <div class="radion-heading">
+                <mat-radio-button  [value]="age['id']"  (change)="changeRule(age.id,list)" [checked]="age.checked == true" value="{{age.id}}">{{age.name}}</mat-radio-button>
+                <div class="amount" *ngIf="age['prices_'+i]"> $ {{age['prices_'+i]}}</div>
+              </div>
+              <p>{{'event.registrationComponent.bookTicket.regEndDate.lbl.text' | translate}} : {{age.endDateTime | date :'MMM d, y' }} | {{'event.registrationComponent.bookTicket.remainingSeats.lbl.text' | translate}} : {{age.allowedSeats}} </p>
+            </div>
+          </mat-radio-group>
+        </div>
+        <div *ngFor="let list of userDetail?.guests;let i =index;">
+          <div class="heading-top pointer-cursor"  [ngClass]="list['showDiv'] == true ? 'arrow-toggle' : ''">
+            <mat-checkbox (change)="feesCalculation($event['checked'],list,true)"  [(ngModel)]="list['checked']" [ngModelOptions]="{standalone: true}" ></mat-checkbox>
+            <!--            <div class="thumbimg"><img alt="" src="assets/images/background.png"></div>-->
+
+            <div *ngIf="list['profileShow'] == true" class="charector">
+              <img alt="" src="{{list['profileUrl']}}">
+            </div>
+            <div *ngIf="list['profileShow'] == false" class="charector">
+              <i>{{list['profileUrl']}}</i>
+            </div>
+            <div  (click)="list['showDiv'] = !list['showDiv']" class="pointer-cursor">
+              <span class="textname">{{list['firstName'] | titlecase}} {{list['lastName'] | titlecase}}</span>
+              <span *ngIf="eventRules.length != 0" class="acc-icon down-img"><img src="assets/icon/top-down.svg"/></span>
+            </div>
+
+          </div>
+          <mat-radio-group  [hidden]="!list['showDiv']" aria-label="Select an option">
+            <div class="mainvipsesating" *ngFor="let age of list?.ageRules">
+              <div class="radion-heading">
+                <mat-radio-button  [value]="age['id']"  (change)="changeRule(age.id,list)" [checked]="age.checked == true" value="{{age.id}}">{{age.name}}</mat-radio-button>
+                <div class="amount">{{communityService?.publicInfo?.currency}}  {{age['price_'+i]}}</div>
+              </div>
+              <p>{{'event.registrationComponent.bookTicket.regEndDate.lbl.text' | translate}} : {{age.endDateTime | date :'MMM d, y' }} | {{'event.registrationComponent.bookTicket.remainingSeats.lbl.text' | translate}} : {{age.allowedSeats}}</p>
+            </div>
+          </mat-radio-group>
+        </div>
+      </div>
+      <!-- check  Members -->
+
+
+      <button  *ngIf="eventRules.length != 0" class="donateetop" data-target="#exampleModal" data-toggle="modal">
+        <ul>
+          <li>
+            <h6>{{'event.registrationComponent.bookTicket.checkSeating.lbl.title' | translate}}</h6>
+          </li>
+        </ul>
+      </button>
+    </div>
+  </div>
+
+  <div class="modal left fade seatingarrange" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{'event.registrationComponent.bookTicket.checkSeating.popup.title' | translate}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="assets/icon/close-gray.svg" alt="">
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="seatingmain">
+<!--              <div class="seating">-->
+<!--                <img src="assets/images/seating-b.png" alt="">-->
+<!--              </div>-->
+              <div class="sectionseating" *ngFor="let list of  eventRules;">
+                <h4>{{list['name']}}</h4>
+                <p>{{'event.registrationComponent.bookTicket.checkSeating.popup.regEndDate.lbl.text' | translate}} : {{list['endDateTime'] | date :'MMM d, y'}} </p>
+                <p>{{'event.registrationComponent.bookTicket.checkSeating.popup.remainingTicket.lbl.text' | translate}} : {{list['allowedSeats']}} </p>
+                <div class="viewprice">{{'event.registrationComponent.bookTicket.checkSeating.popup.viewAllPrice.lbl.text' | translate}}
+                  <div class="tooltips">
+                    <u class="adulttool" *ngFor="let age of list['ageRules']">
+                      <li>{{age['name']}}</li> <li> {{communityService?.publicInfo?.currency}} {{age['price']}}</li>
+                    </u>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+
+  <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal left fade seatingarrange" id="registerModal"
+       role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{'event.registrationComponent.bookTicket.addGuest.popup.title' | translate}}</h5>
+          <button aria-label="Close" class="close" id="cloaseModal" data-dismiss="modal" type="button">
+            <img alt="" src="assets/icon/close-gray.svg">
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <form [formGroup]="registerForm" class="example-form" id="registerForm"  >
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{'event.registrationComponent.bookTicket.addGuest.popup.fname.lbl.text' | translate}} <i>*</i></mat-label>
+                          <input (keypress)="charOnly($event)" formControlName="firstName"  (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput type="text">
+                        </mat-form-field>
+                        <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                         <div *ngIf="registerForm.controls.firstName.errors.required"
+                              class="valid-msg">First Name is required</div>
+                              <div *ngIf="registerForm.controls.firstName.errors.cannotContainSpace" class="valid-msg">Please enter valid First Name</div>
+                      </span>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{'event.registrationComponent.bookTicket.addGuest.popup.lname.lbl.text' | translate}} <i>*</i></mat-label>
+                          <input (keypress)="charOnly($event)"  [maxLength]="15" size="15" formControlName="lastName" matInput type="text">
+                        </mat-form-field>
+                        <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                         <div *ngIf="registerForm.controls.lastName.errors.required"
+                              class="valid-msg">Last Name is required</div>
+                              <div *ngIf="registerForm.controls.lastName.errors.cannotContainSpace" class="valid-msg">Please enter valid Last Name</div>
+                      </span>
+                      </div>
+                    </div>
+                    <div class="row martopevent">
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{'event.registrationComponent.bookTicket.addGuest.popup.email.lbl.text' | translate}}</mat-label>
+                          <input formControlName="email"  [maxLength]="50" size="50" matInput type="text">
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width address-evnt">
+                          <mat-label>{{'event.registrationComponent.bookTicket.addGuest.popup.phone.lbl.text' | translate}} </mat-label>
+                          <input (keypress)="numberOnly($event)" [max]="16" appPhoneMask formControlName="phone" matInput
+                                 type="text">
+                        </mat-form-field>
+                        <span *ngIf="submitted && registerForm.controls.phone.errors">
+                         <div *ngIf="registerForm.controls.phone.errors"
+                              class="valid-msg">Phone Number is required</div>
+                      </span>
+                      </div>
+                    </div>
+                    <div class="row martopevent">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-md-6 sm-paid">
+                            <mat-form-field class="example-full-width address-evnt">
+                              <mat-label>{{'event.registrationComponent.bookTicket.addGuest.popup.birthYear.lbl.text' | translate}}</mat-label>
+                              <input (keypress)="numberOnly($event)" [maxLength]="4" [minLength]="4" formControlName="birthYear"
+                                     matInput type="text">
+                            </mat-form-field>
+                            <!-- <span *ngIf="submitted && registerForm.controls.birthYear.errors">
+                         <div *ngIf="registerForm.controls.birthYear.errors"
+                              class="valid-msg">Birth Year is required</div>
+                      </span> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <input (click)="addGuest()" class="save-changes full-width" type="button" value="{{'event.registrationComponent.bookTicket.addGuest.popup.submit.Btn.text' | translate}}">
+            </div>
+          </div>
+          <!-- <div class="row">
+             <div class="col-md-12 txtcenter">
+               <div class="login-social">
+                 <span>Already has an Account ? <a (click)="loginRedirect()" class="underline-text">Login</a></span>
+               </div>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col-md-12 txtcenter">
+               <div class="login-social">
+                 <span>Login with Social Media</span>
+               </div>
+               <button (click)="facebooklogin()" class="facebooklogin" type="button">
+                 <ul>
+                   <li><img alt="" src="assets/icon/facebook.svg"></li>
+                   <li>Facebook</li>
+                 </ul>
+               </button>
+
+               <button (click)="googlelogin()" class="facebooklogin" type="button">
+                 <ul>
+                   <li><img alt="" src="assets/icon/googlelogo.svg"></li>
+                   <li>Google</li>
+                 </ul>
+               </button>
+             </div>
+           </div>-->
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>

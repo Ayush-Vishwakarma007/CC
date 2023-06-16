@@ -1,0 +1,183 @@
+<div class="rightpartmain">
+  <div class="container full-id-res">
+    <div class="row">
+      <div class="col-md-12 nomargin">
+        <div class="profile-head">
+          My Sponsorship
+        </div>
+        <form [formGroup]="addSponsorForm" class="example-form ">
+          <div class="profiletop">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-img">
+                  <img alt="" src="{{logo}}" class="" *ngIf="showProfile">
+                  <img alt="" src="assets/images/No_Logo_Image.png" class="" *ngIf="!showProfile">
+                  <br>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="image-main-up">
+                        <div class="imageup create-img-upload small-upload invoice-upload">
+                          <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                            (maxFileSizeError)="fileSizeError()" (queueCompleted)="queueCompleted()" (uploadStarted)="uploadStarted()"
+                            [(uploadedFiles)]="logoList" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl" [validTypes]="validTypesImage">
+                          </app-file-uploader-vertical>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a *ngIf="showProfile" (click)="removeLogo();">Remove Logo</a>
+                </div>
+                <div class="selectedplan">
+                  <span>Plan :</span>
+                  <p> {{sponsorDetail.sponsorshipCategory?.categoryName}} (
+                    ${{sponsorDetail.sponsorshipCategory?.range?.min}} -
+                    ${{sponsorDetail.sponsorshipCategory?.range?.max}} )</p>
+                  <span>Payment Type: </span>
+                  <p *ngIf="sponsorDetail?.paymentMethodUsed != null && sponsorDetail?.paymentMethodUsed != ''">
+                    {{sponsorDetail?.paymentMethodUsed}}</p>
+                  <span> </span>
+                  <p *ngIf="sponsorDetail?.paymentMethodUsed == null || sponsorDetail?.paymentMethodUsed == ''"> CASH
+                  </p>
+                  <span>Amount : </span>
+                  <p> {{sponsorDetail?.finalAmount}}</p>
+                  <span *ngIf="sponsorDetail?.expiryDate != null && sponsorDetail?.expiryDate != ''">Expiry Date
+                    :</span>
+                  <p> {{sponsorDetail?.expiryDate | date:'MMM d, y'}}</p>
+                  <span *ngIf="sponsorDetail?.expiryDate == null || sponsorDetail?.expiryDate == ''">Validity :</span>
+                  <p> LifeTime</p>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.fname.lbl.text' | translate}}
+                          <i>*</i></mat-label>
+                        <input formControlName="firstName" matInput placeholder="Enter First Name"
+                          (keypress)="charOnly($event)">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.lname.lbl.text' | translate}}
+                          <i>*</i></mat-label>
+                        <input formControlName="lastName" matInput placeholder="Enter Last Name"
+                          (keypress)="charOnly($event)">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.email.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="email" matInput placeholder="Enter Email">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.phone.lbl.text' | translate}}
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" [maxLength]="10" [minLength]="10" formControlName="phone"
+                          matInput placeholder="Enter Phone Number">
+                      </mat-form-field>
+                      <span *ngIf="addSponsorForm.controls.phone.errors && isSubmit">
+                        <div *ngIf="addSponsorForm.controls.phone.errors.minlength" class="valid-msg">Please enter valid
+                          Phone
+                          Number</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.address.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="addressLine1" matInput placeholder="Enter Address">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterSponsorship.addSponsor.popup.website.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="websiteUrl" matInput placeholder="Enter Website URL ">
+                      </mat-form-field>
+                    </div>
+
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterSponsorship.addSponsor.popup.companyName.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="companyName" matInput placeholder="Enter Company Name"
+                          (keypress)="charOnly($event)">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>{{'donationSponsorship.chapterDonation.addDonation.popup.city.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="city" matInput placeholder="Enter City" (keypress)="charOnly($event)">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.state.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="state" matInput placeholder="Enter State" (keypress)="charOnly($event)">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.zipcode.lbl.text' | translate}}
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" formControlName="zipCode" matInput [maxLength]="5"
+                          placeholder="Enter Zipcode">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <mat-label>
+                          {{'donationSponsorship.chapterDonation.addDonation.popup.displayName.lbl.text' | translate}}
+                        </mat-label>
+                        <input formControlName="displayName" matInput placeholder="Enter Display Name">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-checkbox class="sendmail" formControlName="anonymousDonation">
+                        {{'donationSponsorship.chapterDonation.addDonation.popup.anonymousName.chkbox.text' | translate}}
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                      <button (click)="submit()" type="submit" class="save-changes">Save</button>
+                      <button (click)="cancel()" type="submit" class="btn btn-secondary">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

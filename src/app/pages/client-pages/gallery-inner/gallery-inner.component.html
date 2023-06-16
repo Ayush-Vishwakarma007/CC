@@ -1,0 +1,73 @@
+<div class="main-screen mainnewsscreen">
+    <!-- Inner Banner Section Start -->
+      <section class="inner-banner">
+          <div class="blue-bg-banner"><span></span></div>
+          <div class="slid-left-blue-dots">
+              <img src="assets/images/inner-left-dots.png" alt="">
+          </div>
+          <div class="container">
+              <div class="red-inner">
+                  <div class="row">
+                      <div class="col-sm-6 col-md-6 animated slideInLeft"  animationName="animated slideInLeft">
+                          <h2 class="inner-page-tlt">Gallery</h2>
+                      </div>
+                      <div class="col-sm-6 col-md-6 animated slideInRight"  animationName="animated slideInRight">
+                          <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Gallery</li>
+                              </ol>
+                            </nav>
+                      </div>
+                  </div>
+              </div>
+            </div>
+      </section>
+    <section class="gallery-inner">
+        <div class="container">
+            <div class="row scrollbottom">
+                <div class="col-md-12">
+                    <div class="tab-design">
+                      <mat-tab-group mat-align-tabs="center">
+
+                        <!-- (click)="CatList(cat)" -->
+                        <mat-tab *ngFor="let cat of CatList; index as i" label="{{cat}}" >
+                            <ng-template mat-tab-label>
+                                <span (click)="topcat(cat)">{{cat}}</span>
+                            </ng-template>
+                        <div class="row scrollbottom">
+                            <div class="col-md-3">
+                                <div class="inner-gall-left">
+                                    <!-- actove -->
+                                    <div *ngFor="let side of sideList; index as i" class="box-main" [ngClass]="selectedEvent == side.id ? 'actove' : ''" (click)="catSelect(side.id)">
+                                        <img src="{{side.media}}" >
+                                        <div class="text-thumb">
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-8">
+                                                    {{side.eventName}} - {{side.dateTime | date : "yyyy"}}
+                                                </div>
+                                                <div class="col-md-12 col-lg-4">
+                                                    <img src="assets/icon/photo.svg" alt=""> <i>{{side.totalMedias}}</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row gallery-no-scroll">
+                                  <!-- <div class="search-results" infinite-scroll [infiniteScrollDistance]="scrollDistance" [infiniteScrollUpDistance]="scrollUpDistance" [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()"> -->
+                                    <app-gallery-main *ngIf="imageData.length != 0" [imageData]="imageData"></app-gallery-main>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        </mat-tab>
+                      </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

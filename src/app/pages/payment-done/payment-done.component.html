@@ -1,0 +1,96 @@
+<div class="container" style="height: 678px;">
+  <div *ngIf="type =='event' &&(this.paymentStatus=='success' || paymentStatus=='payment-success')" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container"  (click)="redirect()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/rightblue.svg"></span>
+
+      <h4 *ngIf="paymentStatus=='payment-success'"> Your Registration is successfully done.</h4>
+      <h4 *ngIf="paymentStatus!='payment-success'">Your payment is successfully done.</h4>
+      <div class="left-shadow"></div>
+      <p><img alt="" src="assets/icon/heart.svg"> Thank you for your support. </p>
+      <a (click)="redirect()" class="write animated-button victoria-three greendone"  >Done</a>
+    </div>
+  </div>
+  <div *ngIf="type =='auth' &&(this.paymentStatus=='success' || paymentStatus=='payment-success')" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container" (click)="redirect()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/rightblue.svg"></span>
+
+      <h4>Your membership application submitted.</h4>
+      <p *ngIf="this.paymentStatus=='success'">Your payment is successfully done.</p>
+      <div class="left-shadow"></div>
+      <p><img alt="" src="assets/icon/heart.svg"> Thank you for your support. </p>
+      <a (click)="redirect()" class="write animated-button victoria-three greendone"  >Done</a>
+      <p *ngIf="this.authDetail"> <a  [routerLink]="'/profile'"   >Update Profile</a></p>
+
+    </div>
+  </div>
+  <div *ngIf="type =='donate' &&(this.paymentStatus=='success' || paymentStatus=='payment-success')" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container"  (click)="redirect()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/rightblue.svg"></span>
+
+      <h4>Your payment is successfully done.</h4>
+      <div class="left-shadow"></div>
+      <p><img alt="" src="assets/icon/heart.svg"> Thank you for your support. </p>
+      <a (click)="redirect()" class="write animated-button victoria-three greendone"  >Done</a>
+    </div>
+  </div>
+  <div *ngIf="type == 'pay-page' &&(this.paymentStatus=='success' || paymentStatus=='payment-success')" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container"  (click)="redirect()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/rightblue.svg"></span>
+
+      <h4>Your payment is successfully done.</h4>
+      <div class="left-shadow"></div>
+      <p><img alt="" src="assets/icon/heart.svg"> Thank you for your support. </p>
+      <a (click)="redirect()" class="write animated-button victoria-three greendone"  >Done</a>
+    </div>
+  </div>
+  <div *ngIf="type =='chapter' &&(this.paymentStatus=='success' || paymentStatus=='payment-success')" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container"  (click)="redirect()">
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/rightblue.svg"></span>
+
+      <h4 *ngIf="paymentStatus=='payment-success'">Your Payment is successfully done.</h4>
+      <h4 *ngIf="paymentStatus!='payment-success'">Your payment is successfully done.</h4>
+      <div class="left-shadow"></div>
+      <p><img alt="" src="assets/icon/heart.svg"> Thank you for your support. </p>
+      <a (click)="redirect()" class="write animated-button victoria-three greendone"  >Done</a>
+    </div>
+  </div>
+  <div *ngIf="this.paymentStatus=='fail' || this.paymentStatus=='cancel'" class="mainpopup">
+    <div class="deletepopup">
+      <button class="close-container"  (click)="failRedirect()" >
+        <div class="leftright"></div>
+        <div class="rightleft"></div>
+      </button>
+      <span><img alt="" src="assets/icon/payment-through.svg"></span>
+      <h4>Payment did not go through.</h4>
+      <div class="left-shadow"></div>
+      <a (click)="failRedirect()" class="write animated-button victoria-three greendone"  >Try
+        Again</a>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+

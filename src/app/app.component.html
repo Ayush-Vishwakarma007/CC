@@ -1,0 +1,9 @@
+ <router-outlet (activate)="onActivate($event, outlet)" #outlet>
+<!--  <ngx-loading-spinner   [template]="template" [threshold]="0" class="loading"></ngx-loading-spinner>-->
+   <ngx-spinner     class="loading"></ngx-spinner>
+</router-outlet>
+<!-- <ngx-alerts></ngx-alerts> -->
+<div class="cookies-box" *ngIf="show">
+  <p>Your website needs a Cookies Policy if you use cookies to collect personal data from visitors and your visitors are located within the EU (even if you aren't). Cookies are small text files that act as a short-term memory for the web. A site can easily remember bits of information between visits or pages as the cookies are stored in the user's browser.</p>
+  <button (click)="setCookies()"> Accept</button>
+</div>

@@ -1,0 +1,133 @@
+<div class="scrolltab">
+  <h3>
+    <span *ngIf="this.activeTabName=='SPONSOR'"> Select Sponsorship Plan</span>
+    <span *ngIf="this.activeTabName!='SPONSOR'"> Select Donation Plan</span>
+    <button class="skip" (click)="skip()"> SKip</button>
+  </h3>
+  <div class="">
+    <div class="plan-main" *ngFor="let list of categoryList;let i = index">
+      <mat-radio-group aria-label="Select an option">
+        <div class="card-data">
+          <mat-card>
+            <div class="box-part-main">
+              <div class="text-part">
+                <!-- <mat-radio-button (change)="categoryChange($event.source.checked,i)" [checked]="list['checked']==true"
+                                  [value]="list['id']" id="{{list['id']}}"></mat-radio-button> -->
+
+
+  <mat-checkbox (change)="categoryChange($event.source.checked,i)" [checked]="list['checked']==true"
+  [value]="list['id']" id="{{list['id']}}"></mat-checkbox>
+
+                <h4>{{list?.categoryName}}</h4>
+                <h3>{{list?.range?.min | currency:'USD'}} - {{list?.range?.max |currency:'USD'}}</h3>
+                <p [innerHTML]="list?.description" class="text-two-ln"></p>
+<!--                        <p>{{list?.description}}</p>-->
+              </div>
+              <div *ngIf="list['checked']" class="input-box">
+                <mat-form-field class="example-full-width" floatLabel="never" appearance="fill">
+                  <input (change)="changeAmount(list)" (keypress)="numberOnly($event)"
+                         [(ngModel)]="list['amount']" [disabled]="!list['checked']" matInput
+                         placeholder="Amount" value="">
+                        <span matPrefix>$</span>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="membership-plan-main2">
+    <div class="basic-information-part ">
+      <form  [formGroup]="userForm" class="example-form">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>First name</mat-label>
+              <input formControlName="firstName" (blur)=" displayName()" (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput placeholder="First name" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Middle name </mat-label>
+              <input formControlName="middleName" (blur)=" displayName1()" (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput placeholder="Last name" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Last name</mat-label>
+              <input formControlName="lastName" (blur)=" displayName2()" (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput placeholder="Last name" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email address</mat-label>
+              <input formControlName="email" (keydown.space)="$event.preventDefault();"  matInput placeholder="Email">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Phone number</mat-label>
+              <input formControlName="phone" (keydown.space)="$event.preventDefault();" appPhoneMask matInput placeholder="phone">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Company name</mat-label>
+              <input formControlName="companyName" matInput placeholder="Company name" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-label>Company website</mat-label>
+              <input matInput placeholder="Company website"  formControlName="companyWebsite">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Name on the Receipt</mat-label>
+              <input formControlName="displayName" matInput placeholder="">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6" *ngIf="activeTabName =='DONATION'">
+            <div class="check-box-design">
+              <mat-checkbox class="example-margin" formControlName="stayAnonymous" [checked]="checkvalue">Stay Anonymous</mat-checkbox>
+            </div>
+          </div>
+
+          <div class="col-md-6" *ngIf="activeTabName =='SPONSOR'">
+            <div class="uploadimgsponor">
+              <app-file-uploader #imageUpload (invalidFile)="invalidUploadFile()"
+              (maxFileError)="maxFileError()"
+              (maxFileSizeError)="fileSizeError()"
+              (queueCompleted)="queueCompleted1()"
+              (uploadStarted)="uploadStarted()"
+              [(uploadedFiles)]="uploadedLogo"
+              [maxFileCount]="1"
+
+              [validTypes]="validTypesImage">
+</app-file-uploader>
+
+              <h5>Upload logo</h5>
+            </div>
+          </div>
+         <!--<div class="col-md-6" *ngIf="activeTabName =='SPONSOR'">
+            <div class="uploadimgsponor">
+              <app-file-uploader #imageUpload (invalidFile)="invalidUploadFile()"
+              (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+              (queueCompleted)="queueCompleted1()" (uploadStarted)="uploadStarted()"
+               [validTypes]="validTypesImage" [maxFileCount]="1"
+              [uploaderText]="'Upload flyer'">
+              </app-file-uploader>
+              <h5>Upload flyer</h5>
+            </div>
+          </div>-->
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

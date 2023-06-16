@@ -1,0 +1,319 @@
+<div class="container-fluid bg-gray">
+  <div *ngFor="let list of sponsorList;let i= index;" class="row">
+    <div class="col-md-12">
+      <span *ngIf="list?.sponsors?.length >= 1" class="diamondtxt">
+        <u>{{list.categoryName}}</u>
+        <i class="line"></i>
+      </span>
+    </div>
+    <!-- <div class="col-md-12">
+      <div [ngClass]="list?.sponsors.length >= 6 ?  'sponsor-center' : ''">
+      <owl-carousel-o *ngIf="i == 0" [options]="customOptions" class="sponsorlogo">
+        <ng-template *ngFor="let s of list?.sponsors" carouselSlide>
+          <div (click)="openModalWithClass(s,template)" class="logoimage" style="cursor: pointer;">
+            <img *ngIf="s['profileShow'] == false" src="assets/images/No_Logo_Image.png"> 
+            <i *ngIf="s['profileShow'] == false"> {{s.logo}} </i>
+
+            <img *ngIf="s['profileShow'] == true" alt="" [src]="s.logo |communityImages">
+          </div>
+          <span>{{s.displayName}}</span>
+        </ng-template>
+      </owl-carousel-o>
+      </div>
+      <div [ngClass]="list?.sponsors.length >= 6 ?  'sponsor-center' : ''">
+      <owl-carousel-o *ngIf="i == 1" [options]="customOptions1" class="sponsorlogo1">
+        <ng-template *ngFor="let s of list?.sponsors" carouselSlide>
+          <div (click)="openModalWithClass(s,template)" class="logoimage" style="cursor: pointer;">
+            
+            <i *ngIf="s['profileShow'] == false"> {{s.logo}} </i>
+
+            <img *ngIf="s['profileShow'] == true " alt="" [src]="s.logo |communityImages">
+          </div>
+          <span>{{s.displayName}}</span>
+        </ng-template>
+      </owl-carousel-o>
+      </div>
+      <div [ngClass]="list?.sponsors.length >= 6 ?  'sponsor-center' : ''">
+      <owl-carousel-o *ngIf="i >= 2" [options]="customOptions2" class="sponsorlogo2">
+        <ng-template *ngFor="let s of list?.sponsors" carouselSlide>
+          <div (click)="openModalWithClass(s,template)" class="logoimage">
+            
+            <i *ngIf="s['profileShow'] == false"> {{s.logo}} </i>
+
+            <img *ngIf="s['profileShow'] == true " alt="" [src]="s.logo |communityImages">
+          </div>
+          <span>{{s.displayName}}</span>
+        </ng-template>
+      </owl-carousel-o>
+      </div>
+    </div> -->
+    <div class="col-md-12">
+      <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" responsive="breakpoints">
+        <div ngxSlickItem *ngFor="let s of list?.sponsors"  class="slide sponsorlogo2" style="padding:0px 10px;">
+          <div (click)="openModalWithClass(s,template)" class="logoimage">
+            <i *ngIf="s['profileShow'] == false"> {{s.logo}} </i>
+            <img *ngIf="s['profileShow'] == true" alt="" [src]="s.logo | communityImages">
+          </div>
+          <span>{{s.displayName}}</span>
+        </div>
+      </ngx-slick-carousel>
+    </div>
+  </div>
+</div>
+
+<!-- <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig" responsive="breakpoints">
+          <div ngxSlickItem  class="slide" style=" padding: 10px;">
+            <img src="assets/images/cc-new-logo.png" alt="">
+          </div>
+</ngx-slick-carousel> -->
+<!-- <div class="row">
+  <div class="col-md-12">
+    <span class="diamondtxt">DIAMOND
+      <i class="line"></i>
+    </span>
+  </div>
+  <div class="col-md-12">
+    <owl-carousel-o [options]="customOptions" class="sponsorlogo">
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/background3.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/card.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+  <div class="col-md-12">
+    <span class="diamondtxt">PLATINUM
+      <i class="line"></i>
+    </span>
+  </div>
+  <div class="col-md-12">
+    <owl-carousel-o [options]="customOptions1" class="sponsorlogo1">
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/background3.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/card.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+  <div class="col-md-12">
+    <span class="diamondtxt">GOLD
+      <i class="line"></i>
+    </span>
+  </div>
+  <div class="col-md-12">
+    <owl-carousel-o [options]="customOptions2" class="sponsorlogo2">
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/background3.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/card.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="logoimage">
+          <img src="assets/images/cc-new-logo.png" alt="">
+        </div>
+        <span> Logo Name</span>
+      </ng-template>
+    </owl-carousel-o>
+  </div>
+</div> -->
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Sponsor Details</h4>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button (click)="modalRef.hide()" aria-label="Close" class="close-container" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-design">
+      <div class="row">
+        <div class="col-md-2 col-sm-3">
+          <div class="logo-part">
+            <!-- <img *ngIf="!sponsorDetail['logo']" src="assets/images/No_Logo_Image.png"> -->
+            <i *ngIf="!sponsorDetail['logo']"> {{sponsorDetail.displayName}} </i>
+
+
+            <img *ngIf="sponsorDetail['logo'] " alt="" [src]="sponsorDetail['logo'] |communityImages">
+          </div>
+          <div class="view-more-btn" *ngIf="sponsorDetail?.websiteUrl" >
+            <div class="btn-general">
+              <div class="eff-5"></div>
+              <a href="{{sponsorDetail?.websiteUrl}}" target="_blank"> Visit Website </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10 col-sm-9">
+          <div class="right-data">
+            <div class="sponsor-data">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-data">
+                    <h5>Name</h5>
+                    <p>{{sponsorDetail?.firstName}} {{sponsorDetail?.lastName}}</p>
+                  </div>
+                </div>
+                <div class="col-md-6" *ngIf="sponsorDetail?.companyName">
+                  <div class="form-data">
+                    <h5>Company Name</h5>
+                    <p>{{sponsorDetail?.companyName}}</p>
+                  </div>
+                </div>
+                <div class="col-md-12" *ngIf="sponsorDetail?.addressLine1">
+                  <div class="form-data">
+                    <h5>Address</h5>
+                    <p>
+                      {{sponsorDetail?.addressLine1}}
+                      <span *ngIf="sponsorDetail?.city"> {{sponsorDetail?.city}}, </span>
+                      <span *ngIf="sponsorDetail?.state">{{sponsorDetail?.state}} , </span>
+                      {{sponsorDetail?.country}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h5 *ngIf="sponsorDetail.description">Description</h5>
+            <p [innerHTML]="sponsorDetail.description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

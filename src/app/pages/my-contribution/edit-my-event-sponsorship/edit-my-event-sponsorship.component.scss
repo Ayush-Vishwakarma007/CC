@@ -1,0 +1,44 @@
+.save-changes {
+
+    padding: 10px 33px;
+    width: auto;
+    border-radius: 3px;
+    color: #fff;
+    margin-top: 20px;
+    min-width: 142px;
+    height: 43px;
+    font-size: 14px;
+
+}
+
+.btn-secondary{
+
+    margin-left: 10px;
+    height: 43px;
+    width: 140px;
+    margin-top: -7px;
+    text-transform: capitalize;
+}
+.selectedplan{ text-align: center; display: block; margin-top: 20px; margin-left: 15px; border-top: 1px solid #ccc; padding-top: 15px;
+    span{ display: block; font-weight: bold;}
+}
+.profile-img a { margin-top: 0px; }
+.create-img-upload{ margin-top: 10px; width: 137px; padding: 0px;
+    br{ display: none;}
+}
+.profiletop { padding: 30px 15px 30px 0px; }
+@media screen and (max-width: 1199px) {
+  .profile-img img { width: 105px; height: 105px; }
+  .profile-head { padding-left: 0px; }
+}
+@media screen and (max-width: 991px) {
+    .selectedplan { padding-bottom: 50px; }
+    .profiletop { padding: 30px 15px 30px 15px; }
+    .selectedplan { margin-left: 0px; }
+}
+
+@media screen and (max-width: 767px) {
+    .profile-head { font-size: 18px; }
+    .save-changes{ min-width: 100px; }
+    .btn-secondary { width: 100px; }
+}

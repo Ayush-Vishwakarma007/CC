@@ -1,0 +1,187 @@
+<div class="main-screen mainnewsscreen">
+<div class="container-fluid slider_main slider">
+  <carousel data-pause="hover" [interval]="this.rotationTime">
+    <slide *ngFor="let e of imagesData;let i=index">
+      <div *ngIf="e.bannerType == 'IMAGE'" class="blur-image" [style.backgroundImage]="'url('+(e.bannerUrl| eventImages)+')'"></div>
+      <img *ngIf="e.bannerType == 'IMAGE'" alt="First slide" [src]="e.bannerUrl | eventImages">
+      <video *ngIf="e.bannerType == 'VIDEO'" class="videobanner" autoplay loop>
+        <source src="{{e.bannerUrl}}"></video>
+      <!-- carousel-caption -->
+      <div class="eventlistbanner">
+        <!-- <h2 class="caption_title">Mon,24 Dec 2019 </h2> -->
+        <p  animationName="animated slideInUp" class="sub_title" [style.color] ="e?.nameColor?.foregroundColorCode">{{e.bannerName}}</p>
+        <p  animationName="animated slideInRight" [style.color] = "e?.textColor?.foregroundColorCode">{{e.bannerDisplayText}}</p>
+        <div *ngIf="e.buttonText != null && e.buttonAction != null && e.buttonText != '' && e.buttonAction != ''"   animationName="animated slideInUp" class="col-md-12 text-center">
+          <div class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode">
+            <!-- <div class="eff-5" ></div> -->
+            <a *ngIf="e?.buttonAction.indexOf('http') > -1 || e?.buttonAction.indexOf('https') > -1" target="_blank" href="{{e.buttonAction}}" class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode" [style.color]="e?.buttonTextColor?.foregroundColorCode">{{e.buttonText}}</a>
+            <div routerLink="{{e.buttonAction}}" *ngIf="e?.buttonAction.indexOf('http') == -1 && e?.buttonAction.indexOf('https') == -1" class="btn-general" [style.background]="e?.buttonColor?.foregroundColorCode">
+              <a [style.color]="e?.buttonTextColor?.foregroundColorCode">{{e.buttonText}}</a>
+            </div>
+          </div>
+        </div>
+        <!-- <i class="fa fa-map-marker" aria-hidden="true"></i><span class="san_title">San Francisco | CA</span> -->
+        <!-- <div  animationName="animated slideInUp" class="explr_btn">
+          <button routerLink="/create-event-new" type="btn">Create Now</button>
+        </div> -->
+      </div>
+    </slide>
+  </carousel>
+</div>
+<section class="inner-banner">
+  <div class="blue-bg-banner"><span></span></div>
+  <div class="slid-left-blue-dots">
+    <img alt="" src="assets/images/inner-left-dots.png">
+  </div>
+  <div class="container">
+    <div class="red-inner">
+      <div class="row">
+        <div  animationName="animated slideInLeft" class="col-sm-6 col-md-6 animated slideInLeft">
+<!--          <a  (click)="back()">-->
+<!--            <img src="assets/icon/back-button.svg" style="width: 30px; margin-right: 23px;" width="100px"/>-->
+<!--          </a>-->
+          <h2 class="inner-page-tlt">
+            Events </h2>
+        </div>
+        <div  animationName="animated slideInRight" class="col-sm-6 col-md-6 animated slideInRight">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li aria-current="page" class="breadcrumb-item active">Events</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="event_form" id="event_form">
+  <div class="container">
+    <!-- <button class="filtermain" (click)="toggleDiv()"> <i class="fas fa-filter"></i> </button>
+    <div *ngIf="showDiv" [@flyInOut]>
+      dsfd
+    </div> -->
+    <button class="filtermain" (click)="clickEvent()" style="font-size: x-large" > Filters <i class="fas fa-filter"></i> </button>
+    <div class="white_boxfrm" [ngClass]="status ? 'filterarea' : 'filterareaheight0'">
+
+      <form class="row row-eq-height fil-full">
+        <div class="col-md-12 col-sm-12 col-12">
+          <div class="row padd-sort">
+            <div class="col-lg-4 col-md-4 col-sm-6"  *ngIf="userPermisssion['PLATFORM']">
+              <label class="event_day">{{'event.list.filter.community.lbl.text' | translate}}</label>
+              <mat-form-field class="event_slctlist  select-chap">
+                <mat-select (selectionChange)="changeCommunity($event.value)" [value]="this.community">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let s of communityList;" value="{{s.name}}">{{s.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6" *ngIf="userPermisssion['WHITELABEL']">
+              <label class="event_day">{{'event.list.filter.chapter.lbl.text' | translate}}</label>
+              <mat-form-field class="event_slctlist select-chap" *ngIf="chapterList.length >1" >
+                <mat-select  (selectionChange)="changeChapter($event.value)" [value]="this.ChapterId" >
+                  <mat-option value="" >All</mat-option>
+                  <mat-option *ngFor="let s of chapterList;" value="{{s.id}}">{{s.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="event_slctlist readonly-input select-chap" *ngIf="chapterList.length ==1" >
+                <input matInput  [value]="this.ChapterName"  readonly>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 location-event">
+
+              <label class="event_day">{{'event.list.filter.sorting.lbl.text' | translate}}</label>
+
+              <mat-form-field class="event_slctlist  select-chap">
+                <mat-select (selectionChange)="sortingChange($event.value)" [value]="selectedSort">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let s of sortingType;" value="{{s.value}}">{{s.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+              <label class="event_day"> {{'event.list.filter.eventType.lbl.text' | translate}}</label>
+              <mat-form-field class="event_slctlist  select-chap">
+                <mat-select (selectionChange)="eventChange($event.value)" [value]="eType">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let s of eventTypes;" value="{{s.name}}">{{s.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <label class="event_day"> {{'event.list.filter.eventSchedule.lbl.text' | translate}}</label>
+              <mat-form-field class="event_slctlist  select-chap">
+                <mat-select (selectionChange)="scheduleChange($event.value)" [value]="sType">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let schedule of scheduleTypeList;" value="{{schedule.value}}">{{schedule.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4">
+              <label class="event_day"> {{'event.list.filter.eventTiming.lbl.text' | translate}}</label>
+              <mat-form-field class="event_slctlist  select-chap">
+                <mat-select (selectionChange)="eventTimingChange($event.value)" [value]="timing">
+                  <mat-option value="">All</mat-option>
+                  <mat-option *ngFor="let e of eventTimingList;" value="{{e.value}}">{{e.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+           <div class="col-lg-6 col-md-6 col-sm-8">
+             <div class="searchinp searchuser">
+              <label class="event_day"> {{'userDetail.search.text' | translate}}</label>
+              <div class="styled-input">
+                <input type="text"  (keydown.enter)="eventSearch($event.target.value);false" [(ngModel)]="search"  name="search" autocomplete="off"   matInput >
+
+                 <button class="closebt" (click)="clearSearch()"><img alt="" src="assets/icon/close-white.png"></button>
+                 </div>
+             </div>
+                <mat-checkbox class="near-me" (change)="checkNearMe($event)" [value]="true">{{'event.list.filter.nearMe.lbl.text' | translate}}</mat-checkbox>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--  <div *ngIf="eventList?.content?.length==0">-->
+<!--    <div style="text-align: center;"><b>No record found !</b></div>-->
+<!--  </div>-->
+<div class="clear"></div>
+<div  animationName="animated slideInUp" class="event_gallery_main">
+  <div class="container">
+    <div class="row eventlistpagecontent">
+
+      <app-event *ngIf="eventList?.content" [eventList]="eventList?.content"></app-event>
+      <div class="pegination-main eventpagination totalPosition" *ngIf="totalPage > 1">
+        <ul>
+          <li>
+            <button (click)="pagination('current','user',0)" [disabled]="eventList['first'] == true" class="next">
+              First
+            </button>
+          </li>
+          <li>
+            <button (click)="pagination('prev','user')" [disabled]="eventList['first'] == true" class="arrow"><i
+              aria-hidden="true" class="icon-left-arrow icon"></i></button>
+          </li>
+          <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+              [ngClass]="reqData.pageNumber == i ?  'blue-peg' : ''">
+            <button class="numeric">{{i + 1}}</button>
+          </li>
+          <li>
+            <button (click)="pagination('next','user')" [disabled]="eventList['last'] == true" class="arrow"><i
+              aria-hidden="true" class="icon-right-arrow icon"></i></button>
+          </li>
+          <li>
+            <button (click)="pagination('current','user',(eventList['totalPages']-1))"
+                    [disabled]="eventList['last'] == true"
+                    class="next">Last
+            </button>
+          </li>
+        </ul>
+        <div class="totalShow"><span>Total :</span> {{eventList['totalElements']}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>

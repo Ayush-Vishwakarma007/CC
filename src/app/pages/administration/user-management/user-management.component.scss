@@ -1,0 +1,48 @@
+span.field-icon {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+  right: 2rem;
+  top: 1rem;
+  z-index: 2;
+}
+.chapter-name{ width: 50%;  margin: 25px 0px 5px 0;  float: right; }
+.exceldata{ width: 700px;
+  .arrow-data{ width: 100%; height: 50px; display: flex; align-items: center; justify-content: center;
+    img{ width: 20px;}
+  }
+  .email-inp{ box-shadow: 1px 1px 11px 0px rgba(0, 0, 0, 0.2); border-radius: 5px;
+    .mat-form-field-wrapper{ padding-bottom: 0px!important; }
+  }
+  .selectemail{ box-shadow: 1px 1px 11px 0px rgba(0, 0, 0, 0.2); border-radius: 5px;
+    .mat-form-field-flex { background-color: transparent!important;}
+  }
+  .martopinvoice{ margin-top: 15px;}
+  .modal-footer{  text-align: center!important; border-top: 1px solid #ccc!important;
+    button{ background: var(--secondary-color); margin: 10px 0px; font-size: 15px; padding: 10px 20px; color: #fff; border-radius: 5px; display: inline-block; border: 0px; font-weight: 100; }
+  }
+  .close{ opacity: 1; position: absolute; right: 15px; top: -12px;
+    img{ width: 18px;}
+ }
+}
+.ccfield{ display: flex; height: 40px; font-size: 18px; margin-bottom: 10px; font-weight: 700; align-items: center; justify-content: center;}
+.exceldata { transform: translate(-50%, -50%) scale(0);  transition: all 0.5s ease 0s; }
+.modal.fade .exceldata { transform: translate(-50%, -50%) scale(1)!important;  transition: all 0.5s ease 0s; position: absolute;  left: 50%;  top: 50%; }
+.white-area-create-event h1{padding-left: 35px !important;}
+.tabsection{ border-top: 1px solid #e0dfdf;}
+
+@media screen and (max-width: 1199px){
+  .white-area-create-event {
+   margin: 20px !important;  
+    padding: 0px 23px 23px 23px !important;  
+  }
+}
+
+@media screen and ( max-width: 991px ) {
+  .chapter-name { width:100%; margin: 15px 0px 0px 0px; float: none;}
+  .white-area-create-event h1{    padding-left: 0px !important;}
+  .tabsection .mat-tab-body-wrapper{padding: 15px 0 !important;}
+  .padd-area{padding: 30px 0 !important;}
+  .tabsection .mat-tab-body-wrapper { padding: 15px 0px; }
+  
+}

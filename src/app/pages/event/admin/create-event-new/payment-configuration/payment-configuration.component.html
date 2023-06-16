@@ -1,0 +1,75 @@
+<div class="sections-main">
+  <h1>
+    <div class="img-create">
+      <img alt="Pricing" src="assets/images/money.png"></div>
+    Payment Configuration
+    <span>Add all the Payment Configuration which you would like to provide.</span>
+  </h1>
+  <div class="border-line-bottom online-event-tab">
+    <form [formGroup]="configurationForm" class="example-form" id="configurationForm">
+      <div class="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="paypalclient">
+              <mat-form-field class="example-full-width map-url">
+                <mat-label>Paypal Client Id</mat-label>
+                <input formControlName="clientId" matInput>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && configurationForm.controls.clientId.errors ">
+                  <span *ngIf="this.submitBtn == false && configurationForm.controls.clientId.errors" class="valid-msg">Paypal Client Id is required</span>
+              </div>
+            </div>
+            <button class="infobtn" data-target="#exampleModalinfo" data-toggle="modal" title="info">
+              <i class="icon-info newicon"></i></button>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label>Paypal Client Secret</mat-label>
+              <input formControlName="clientSecret" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && configurationForm.controls.clientSecret.errors ">
+                <span *ngIf="this.submitBtn == false && configurationForm.controls.clientSecret.errors" class="valid-msg">
+                  Paypal Client Secret is required
+                </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalinfo" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Obtaining PayPal Client ID</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="termscondition">
+          <p>Accepting Payment has been very easy with PayPal. Please create your PayPal business account if you do not
+            have one to receive payment online.</p>
+          <ul class="paypalcontent">
+            <li>Create your PayPal Business account to accept payments <a
+              href="https://www.paypal.com/us/webapps/mpp/account-selection" target="_blank">https://www.paypal.com/us/webapps/mpp/account-selection</a>
+            </li>
+            <li>Verify your PayPal Account by clicking the link you receive in email</li>
+            <li>Open this link <a href="https://www.paypal.com/commercesetup/APICredentials?guided=true"
+                                  target="_blank">https://www.paypal.com/commercesetup/APICredentials?guided=true</a>
+            </li>
+            <li>Login if not already logged in</li>
+            <li>Copy your Credentials PayPal Community Connect</li>
+          </ul>
+          <p>** PayPal Terms & Conditions Applies while using PayPal for Checkout.</p>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

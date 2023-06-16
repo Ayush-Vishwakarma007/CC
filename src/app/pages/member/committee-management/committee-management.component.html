@@ -1,0 +1,230 @@
+<div class="create-event-right-side common-page">
+    <div class="dashboard-heading"> Committee Management
+      <button (click)="formReset(); openModalWithClass(template)" class="addmember" id="openModel" type="button">+ Add Committee </button>
+      <i id="openEditCommitteeModel" data-toggle="modal" data-target="#addcommitteeModal"></i>
+    </div>
+    <div class="white-area-create-event committi-main">
+        <div class="totalcommitteemem">
+            <div class="row">
+                <div class="col-sm-7 col-md-8 col-lg-9">
+                  <mat-form-field class="select-chap"  *ngIf="chapterList.length!=1">
+                    <mat-label>Select Chapter</mat-label>
+                    <mat-select (selectionChange)="getChapterDetail($event.value)" [value]="chapterList[0]?.id">
+                      <mat-option value="">Select Chapter</mat-option>
+                      <mat-option *ngFor="let list of chapterList;let i = index" value="{{list.id}}">{{list.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3">
+                    <div class="searchmain">
+                      <form class="example-form">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>Search here...</mat-label>
+                          <input (change)="getAllCommittee($event.target.value)" [ngModelOptions]="{standalone: true}" [(ngModel)]="search" autocomplete="off" matInput type="text">
+                        </mat-form-field>
+                      </form>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <!-- table -->
+<div class="committi-tab">
+  <table>
+    <tr>
+      <th width="300" (click)="sort('name')" [ngClass]="reqData['sort']['sortBy'] != 'NAME' ? '' : '' || reqData['sort']['sortBy'] == 'NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Committee Name</th>
+      <th *ngIf="isShow">Chapter Name</th>
+      <th (click)="sort('description')" [ngClass]="reqData['sort']['sortBy'] != 'DESCRIPTION' ? '' : '' || reqData['sort']['sortBy'] == 'DESCRIPTION' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Description</th>
+      <th width="80" (click)="sort('priority')" [ngClass]="reqData['sort']['sortBy'] != 'DISPLAY_PRIORITY' ? '' : '' || reqData['sort']['sortBy'] == 'DISPLAY_PRIORITY' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">Priority</th>
+      <th width="120" (click)="sort('hightpriority')" [ngClass]="reqData['sort']['sortBy'] != 'HIGH_PRIORITY' ? '' : '' || reqData['sort']['sortBy'] == 'HIGH_PRIORITY' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'" class="sortable">High Priority</th>
+      <th width="160">Include in contact us</th>
+      <th width="70">Action</th>
+    </tr>
+    <tr *ngFor="let list of committeeList?.content;let i = index;">
+      <td>
+        {{list['name']}}
+      </td>
+      <td *ngIf="isShow">
+        {{list['chapterName']}}
+      </td>
+      <td>
+        <span style="overflow: hidden; width:100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical">
+        {{list['description']}}
+        </span>
+      </td>
+      <td>
+        {{list['displayPriority']}}
+      </td>
+      <td>
+        <ui-switch (change)="onChange($event,list)" [(ngModel)]="list.highPriority" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'"></ui-switch>
+      </td>
+      <td>
+        <ui-switch (change)="onChange1($event,list)" [(ngModel)]="list.includeInContactUs" [defaultBgColor]="'#a2a2a2'" [defaultBoColor]="'#a2a2a2'"></ui-switch>
+      </td>
+      <td >
+        <button class="btn-edit" (click)="edit(list);openModalWithClass(template)" >  <i aria-hidden="true" class="newicon icon-edit-member"></i> </button>
+        <button class="btn-edit" (click)="delete(list)"> <i aria-hidden="true" class="icon-delete newicon"></i> </button>
+        <!-- <div class="dropdown dropup moredrop editgallery">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+             data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a  (click)="edit(list);openModalWithClass(template)" class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i> Edit</a>
+            <a (click)="delete(list)"  class="dropdown-item"  ><i aria-hidden="true" class="fa fa-angle-right"></i>
+              Delete</a>
+          </div>
+        </div> -->
+      </td>
+    </tr>
+  </table>
+</div>
+<!-- pagination -->
+<div *ngIf="committeeList?.length !=0" class="pegination-main totalPosition">
+  <ul>
+    <li>
+      <button (click)="pagination('current',0)" [disabled]="committeeList['first'] == true" class="next">First
+      </button>
+    </li>
+    <li>
+      <button (click)="pagination('prev')" [disabled]="committeeList['first'] == true" class="arrow"><i
+        aria-hidden="true" class="icon-left-arrow icon"></i></button>
+    </li>
+    <li (click)="pagination('current',i)" *ngFor="let i of arrayTwo(committeeList['totalPages'])"
+        [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+      <button class="numeric">{{i + 1}}</button>
+    </li>
+    <li>
+      <button (click)="pagination('next')" [disabled]="committeeList['last'] == true" class="arrow"><i
+        aria-hidden="true" class="icon-right-arrow icon"></i></button>
+    </li>
+    <li>
+      <button (click)="pagination('current',(committeeList['totalPages']-1))"
+              [disabled]="committeeList['last'] == true"
+              class="next">Last
+      </button>
+    </li>
+  </ul>
+  <div class="totalShow"><span>Total :</span> {{committeeList['totalElements']}}</div>
+</div>
+<!-- pagination -->
+<!-- table -->
+    </div>
+</div>
+<ng-template #template>
+  <div class="" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-label="Close" (click)="formReset(); modalRef.hide()" id="closeModel" class="close-container" >
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <h5 class="modal-title" *ngIf="editId == ''">Add Committee </h5>
+        <h5 class="modal-title" *ngIf="editId != ''">Edit Committee </h5>
+      </div>
+      <div class="modal-body">       
+        <form class="example-form " [formGroup]="committeeForm" autocomplete="off">
+          <div class="row ">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label> Committee Name </mat-label>
+                <input formControlName="name" matInput>
+              </mat-form-field>
+              <div  *ngIf="this.submitBtn == false && committeeForm.controls.name.errors ">
+              <span *ngIf="this.submitBtn == false && committeeForm.controls.name.errors "
+                    class="valid-msg">Committee Name is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>Priority</mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="displayPriority" matInput type="text">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && committeeForm.controls.displayPriority.errors ">
+              <span *ngIf="this.submitBtn == false && committeeForm.controls.displayPriority.errors "
+                    class="valid-msg">Priority is required
+              </span>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Enter Description"  formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row savetop">
+            <div class="col-md-12 main-screen">
+              <div class="btn-general" type="button" tabindex="0"  (click)="submitcommittee()">
+                <div class="eff-5"></div>
+                <a   >Save </a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Model starts here -->
+<!-- <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade add-donation-bg" id="addcommitteeModal" role="dialog"
+     tabindex="1">
+  <div class="modal-dialog add-donation" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button aria-label="Close" (click)="formReset();" id="closeModel" class="close-container" data-dismiss="modal">
+          <div class="leftright"></div>
+          <div class="rightleft"></div>
+        </button>
+        <h5 *ngIf="editId == ''">Add Committee</h5>
+        <h5 *ngIf="editId != ''">Edit Committee </h5>
+        <form class="example-form " [formGroup]="committeeForm" autocomplete="off">
+          <div class="row ">
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width ">
+                <mat-label> Committee Name <i>*</i></mat-label>
+                <input formControlName="name" matInput>
+              </mat-form-field>
+              <div  *ngIf="this.submitBtn == false && committeeForm.controls.name.errors ">
+              <span *ngIf="this.submitBtn == false && committeeForm.controls.name.errors "
+                    class="valid-msg">Committee Name is required
+              </span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width sm-paid">
+                <mat-label>Priority  <i>*</i></mat-label>
+                <input (keypress)="numberOnly($event)" formControlName="displayPriority" matInput type="text">
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && committeeForm.controls.displayPriority.errors ">
+              <span *ngIf="this.submitBtn == false && committeeForm.controls.displayPriority.errors "
+                    class="valid-msg">Priority is required
+              </span>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Enter Description"  formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row savetop">
+            <div class="col-md-12 main-screen">
+              <div class="btn-general" type="button" tabindex="0"  (click)="submitcommittee()">
+                <div class="eff-5"></div>
+                <a   >Save changes</a></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Model -->

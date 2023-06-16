@@ -1,0 +1,368 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+Dynamic Form
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="totalcommitteemem">
+      <div class="row">
+
+        <div class="page-content">
+          <div class="create-form">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="left-part">
+                  <div class="top-white">
+                    <div class="headpart">
+                      <div class="tlt-box">
+                        <div class="form-tlt-with-icon">
+                          <!-- <h4 class="clr-black" contenteditable="true"  > Enter Form Name</h4> -->
+                          <div class="inpu-tlt">
+                            <input type="text" placeholder="Enter Form Name" [(ngModel)]="formName"
+                                   (keypress)="charOnly($event)"  (keydown)="AvoidSpace($event);">
+                          </div>
+                        </div>
+                          <div class="input-item">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Description</mat-label>
+                              <input matInput type="text"  [(ngModel)]="description">
+                            </mat-form-field>
+                          </div>
+      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="example-container">
+                    <div cdkDropList [cdkDropListData]="steps" (cdkDropListDropped)="drop($event)">
+                      <div class="left-box" cdkDropList cdkDrag #formItemList="cdkDropList"
+                           *ngFor="let step of steps let i=index;" style="margin-bottom: 10px;"
+                           [cdkDropListData]="step.formsFields"
+                           [cdkDropListConnectedTo]="getArray()" (cdkDropListDropped)="drop($event)">
+                        <div class="headpart">
+      
+                          <div class="tlt-box">
+                            <div class="form-tlt-with-icon">
+                              <!-- <h4 class="clr-black" contenteditable="true"  > Enter Form Name</h4> -->
+                              <div class="inpu-tlt">
+                                <input type="text" placeholder="Enter section name" [(ngModel)]="step.stepName" (keydown)="AvoidSpace($event);">
+                              </div>
+                              <div class="edit-tlt-icon">
+                                <img src="assets/icon/text-icn.svg">
+                              </div>
+                            </div>
+                          </div>
+                          <a class="delete" (click)="remove(steps,i)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a>
+                          <!-- <a class="delete" (click)="remove(steps,i)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a> -->
+                        </div>
+                        <div class="move" cdkDragHandle><img src="assets/icon/drag-indicator.svg"></div>
+                        <div class="example-box" *ngFor="let item of step.formsFields; let i2=index; " cdkDrag>
+                          <div class="move-inner" cdkDragHandle><img src="assets/icon/drag-indicator.svg"></div>
+                          <div class="input-item" *ngIf="item['type'] == 'TEXT'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                <div class="tlt-box">
+                                  <div class="form-tlt-with-icon">
+                                    <div class="inpu-tlt">
+                                      <input type="text" (keydown)="AvoidSpace($event);" placeholder="Field name" [(ngModel)]="item.fieldName" (keypress)="charOnly($event)">
+                                    </div>
+                                    <div class="edit-tlt-icon">
+                                      <img src="assets/icon/text-icn.svg">
+                                    </div>
+                                  </div>
+                                </div>
+                                <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="basic-info-inner">
+                                <!-- <div class="move-inner"> <img src="assets/icon/drag-indicator.svg"></div> -->
+                                <div class="input-item">
+                                  <mat-form-field class="example-full-width">
+                                    <mat-label>Default text</mat-label>
+                                    <input matInput type="text" (keydown)="AvoidSpace($event);" [(ngModel)]="item.defaultValue"
+                                           (keypress)="charOnly($event)">
+                                  </mat-form-field>
+                                </div>
+      
+                              </div>
+                              <div class="required">
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+      
+                          <div class="input-item" *ngIf="item['type'] == 'DROPDOWN'">
+                            <div class="example-box basic-info bdr-box" >
+                              <div class="headpart">
+                                <div class="tlt-box">
+                                  <div class="form-tlt-with-icon">
+                                    <!--                              <h4 class="clr-black" contenteditable="true">Dropdown</h4>-->
+                                    <div class="inpu-tlt">
+                                      <input type="text" (keydown)="AvoidSpace($event);" (keypress)="charOnly($event)" placeholder="Dropdown"
+                                             [(ngModel)]="item.fieldName">
+                                    </div>
+                                    <!--                              <div class="edit-tlt">-->
+                                    <!--                                <img src="assets/icon/edit-tlt.svg">-->
+                                    <!--                              </div>-->
+                                    <div class="edit-tlt-icon">
+                                      <img src="assets/icon/dropdown.svg">
+                                    </div>
+                                  </div>
+                                </div>
+                                <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <!-- <div class="move"> <img src="assets/icon/drag-indicator.svg"></div> -->
+                              <div class="example-box dropdown">
+                                <div class="dropdown-inner">
+                                  <!-- <div class="move-inner"> <img src="assets/icon/drag-indicator.svg"></div> -->
+      
+                                  <!-- <a class="delete-inner"> <img src="assets/icon/delete-icon-gray.svg"> delete</a> -->
+                                </div>
+                                <div class="dropdown-inner" *ngFor="let opt of item.options; let i=index;">
+                                  <div class="input-item">
+                                    <mat-form-field class="example-full-width">
+                                      <mat-label>Option {{i + 1}}</mat-label>
+                                      <!--                                <input matInput type="text">-->
+                                      <input matInput (keydown)="AvoidSpace($event);" type="text" [(ngModel)]="opt.value">
+                                      <img matSuffix (click)="remove(item.options,i)" src="assets/icon/delete-icon-gray.svg">
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                                <div class="add-more-option">
+                                  <a (click)="item.options.push({})">+ Add More Options</a>
+                                </div>
+      
+                              </div>
+                              <div class="required">
+      
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+      
+                          <div class="input-item"  *ngIf="item['type'] == 'DATE'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                  <div class="tlt-box">
+                                    <div class="form-tlt-with-icon">
+                                      <div class="inpu-tlt">
+                                        <input type="text" placeholder="Date" (keydown)="AvoidSpace($event);" [(ngModel)]="item.fieldName" (keypress)="charOnly($event)">
+                                      </div>
+                                      <div class="edit-tlt-icon">
+                                        <img src="assets/icon/date.svg">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img
+                                    src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="required">
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                          </div>
+                          </div>
+      
+                          <div class="input-item" *ngIf="item['type'] == 'TIME'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                  <div class="tlt-box">
+                                    <div class="form-tlt-with-icon">
+                                      <div class="inpu-tlt">
+                                        <input type="text" placeholder="Time" (keydown)="AvoidSpace($event);" [(ngModel)]="item.fieldName" (keypress)="charOnly($event)">
+                                      </div>
+                                      <div class="edit-tlt-icon">
+                                        <img src="assets/icon/time.svg">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img
+                                    src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="required">
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+      
+                          <div class="input-item" *ngIf="item['type'] == 'NUMBER'">
+                              <div class="example-box basic-info bdr-box">
+                                <div class="headpart">
+                                    <div class="tlt-box">
+                                      <div class="form-tlt-with-icon">
+                                        <div class="inpu-tlt">
+                                          <input type="text" (keydown)="AvoidSpace($event);" (keypress)="charOnly($event)" placeholder="Number"
+                                                [(ngModel)]="item.fieldName">
+                                        </div>
+                                        <div class="edit-tlt-icon">
+                                          <img src="assets/icon/number.svg">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img
+                                      src="assets/icon/delete-icon-gray.svg"> delete</a>
+                                </div>
+                                  <div class="basic-info-inner">
+                                    <div class="input-item">
+                                      <mat-form-field class="example-full-width">
+                                          <mat-label>Default number</mat-label>
+                                          <input matInput type="text" (keydown)="AvoidSpace($event);" (keypress)="numberOnly($event)"  [(ngModel)]="item.defaultValue">
+                                      </mat-form-field>
+                                    </div>
+      
+                                  </div>
+                                  <div class="required">
+                                    <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                                  </div>
+                              </div>
+                          </div>
+      
+      
+                          <div class="input-item" *ngIf="item['type'] == 'LABEL'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                  <div class="tlt-box">
+                                    <div class="form-tlt-with-icon">
+                                      <div class="inpu-tlt">
+                                        <input type="text" (keydown)="AvoidSpace($event);" placeholder="Label" [(ngModel)]="item.fieldName" (keypress)="charOnly($event)">
+                                      </div>
+                                      <div class="edit-tlt-icon">
+                                        <img src="assets/icon/label.svg">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img
+                                    src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="basic-info-inner">
+                                <div class="input-item">
+                                  <mat-form-field class="example-full-width">
+                                      <mat-label>Default text</mat-label>
+                                      <input matInput type="text" (keydown)="AvoidSpace($event);" (keypress)="charOnly($event)"  [(ngModel)]="item.description">
+                                  </mat-form-field>
+                                </div>
+      
+                              </div>
+      
+                              <div class="required">
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+      
+                          <div class="input-item" *ngIf="item['type'] == 'TEXTAREA'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                <div class="tlt-box">
+                                  <div class="form-tlt-with-icon">
+                                    <div class="inpu-tlt">
+                                      <input type="text" placeholder="Paragraph" (keydown)="AvoidSpace($event);" [(ngModel)]="item.fieldName" (keypress)="charOnly($event)">
+                                    </div>
+                                    <div class="edit-tlt-icon">
+                                      <img src="assets/icon/textarea.svg">
+                                    </div>
+                                  </div>
+                                </div>
+                                <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="basic-info-inner">
+                                  <div class="input-item">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Default text</mat-label>
+                                        <textarea matInput type="text" (keydown)="AvoidSpace($event);" (keypress)="charOnly($event)" [(ngModel)]="item.defaultValue"></textarea>
+                                    </mat-form-field>
+                                  </div>
+      
+                              </div>
+      
+                              <div class="required">
+                                  <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+      
+      
+                          <div class="input-item" *ngIf="item['type'] == 'CHECKBOX'">
+                            <div class="example-box basic-info bdr-box">
+                              <div class="headpart">
+                                <div class="tlt-box">
+                                  <div class="form-tlt-with-icon">
+                                    <div class="inpu-tlt">
+                                      <input type="text" placeholder="Checkbox" (keydown)="AvoidSpace($event);" [(ngModel)]="item.fieldName"
+                                             (keypress)="charOnly($event)">
+                                    </div>
+                                    <div class="edit-tlt-icon">
+                                      <img src="assets/icon/check-box.svg">
+                                    </div>
+                                  </div>
+                                </div>
+                                <a class="delete-inner" (click)="remove(step.formsFields,i2)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a>
+                              </div>
+                              <div class="example-box checkbox">
+                                <div class="checkbox-inner" *ngFor="let check of item.options let i=index;">
+                                  <div class="input-item">
+                                    <mat-form-field class="example-full-width">
+                                      <mat-label>Option {{i + 1}}</mat-label>
+                                      <input matInput type="text" [(ngModel)]="check.value" (keydown)="AvoidSpace($event);">
+                                      <img matSuffix (click)="remove(item.options ,i)" src="assets/icon/delete-icon-gray.svg">
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                                <div class="add-more-option">
+                                  <a (click)="item.options .push({})">+ Add More Options</a>
+                                </div>
+                              </div>
+                              <div class="required">
+                                <mat-checkbox [(ngModel)]="item.required">Required</mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <a class="delete-inner" (click)="remove(step.items,i2)"> <img src="assets/icon/delete-icon-gray.svg"> delete</a> -->
+                        </div>
+      
+                      </div>
+      
+                    </div>
+                    <button class="add-section" (click)="steps.push({formsFields:[]})">+ Add Section</button>
+                    <mat-checkbox  (change)="onChangeCheckbox($event)">Add Signature</mat-checkbox>
+      
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="right-part">
+                  <div class="example-container">
+                    <h2>Create Field</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultrices sem non viverra placerat.
+                      Aenean varius, eros sit amet porttitor mattis, lacus ligula dignissim urna, finibus luctus lorem nulla
+                      ut lacus. Nam porttitor porta urna f</p>
+                    <div class="right-box" cdkDropList #doneList="cdkDropList" [cdkDropListData]="formsFields"
+                         [cdkDropListConnectedTo]="getArray()" (cdkDropListDropped)="drop($event)">
+                      <div class="example-box" *ngFor="let item of formsFields" cdkDrag><img src={{item.icon}}
+                                                                                             style="width: 20px;"> {{item.name}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="next-back-btn">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="next-back">
+                  <button type="button" (click)="removeForm()"><img src="assets/icon/delete-icon-gray.svg">Discard</button>
+                </div>
+              </div>
+              <div class="col-md-6 text-right">
+                <div class="round-btn-design">
+                  <button type="button" (click)="submitForm()">Save <img src="assets/icon/save.svg"></button>
+                </div>
+                <div class="next-back">
+                  <button type="button" (click)="previewForm()"> Preview <img src="assets/icon/preview.svg"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

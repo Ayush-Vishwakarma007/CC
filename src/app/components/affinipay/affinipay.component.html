@@ -1,0 +1,40 @@
+<div class="mainwhite">
+  <div class="payment-info">
+    <h5>
+      Payment info
+    </h5>
+    <p><img alt="" src="assets/icon/lock.svg"> Credit Card / Debit Card Info</p>
+    <form id="paymentForm"  autocomplete="off">
+      <div class="row">
+        <div class="col-md-12 paymentMember">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="cardheading" for="credit_card_field_id">Credit Card / Debit Card </label>
+              <div id="credit_card_field_id"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="cardheading" for="exp_month">Exp Month</label>
+              <input id="exp_month" name="exp_month" [maxLength]="2" type="text"  (keypress)="numberOnly($event)">
+            </div>
+            <div class="col-md-6">
+              <label class="cardheading" for="exp_year">Exp Year</label>
+              <input id="exp_year" name="exp_year" [maxLength]="4" type="text"  (keypress)="numberOnly($event)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="cardheading" for="cvv_field_id">CVV</label>
+              <div id="cvv_field_id"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="cardheading" for="postal_code">Zip Code/ Postal Code</label>
+              <input id="postal_code" name="postal_code"  [maxLength]="5"   (keypress)="numberOnly($event)" type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

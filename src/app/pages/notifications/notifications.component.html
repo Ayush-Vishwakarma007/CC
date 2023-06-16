@@ -1,0 +1,183 @@
+
+
+<div class="my-eventpaid">
+  <div class="container inner-page-responsive">
+    <div class="profile-head notification_head"> Notifications <button  class="addbutton-mem" type="button" data-toggle="modal" data-target="#notificationmodel"> + Add Notification </button></div>
+    <ng-container *ngFor="let notification of notificationData">
+    <div class="profiletop pad-not notification_top">
+      <div class="notification-scrl">
+        <table class="notification-bor">
+          <tr>
+            <td class="icon-notification"> <img alt="" src="assets/icon/time-left.svg" class="timer-icon"> </td>
+            <td class="notification-nm"> {{notification.subject}} </td>
+            <td><span class="txt-notification"> {{notification.message}} </span></td>
+            <td class="email-not">Email Notiﬁcation</td>
+            <td class="date-not">{{notification.created | date : "MMM dd, yyyy"}}</td>
+            <td class="btn-action">
+              <button class="edit-button edit-gap"><img alt="" src="assets/icon/pencil-edit-button.svg"></button>
+              <button class="edit-button" (click)="deleteNotification(notification.id)"> <i class="icon-delete newicon"></i></button>
+            </td>
+          </tr>
+        </table>
+        <table class="main-scheduel" >
+          <tr *ngFor="let schedules of notification.dateSchedules;let i=index">
+            <td class="first-sch">Schedule {{i+1}}</td>
+            <td><p>{{schedules.scheduleDate | date : "MMM dd, yyyy HH:mm a"}}</p></td>
+            <td><span class="sent-not">{{schedules.executed ? "Executed" : "Not Execute"}}</span></td>
+            <td><span class="sent-not">{{schedules.canceled ? "Canceled" : ""}}</span></td>
+            <td class="last-sch">
+              <button *ngIf="!schedules.canceled" (click)="deleteSchudule(notification.id,schedules.scheduleId)"> Cancel</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="view-more">
+    <a   (click)="readmore()">View More..</a>
+  </div>
+
+  </div>
+</div>
+
+<!-- model content -->
+<div class="modal right fade" id="notificationmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Notiﬁcation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+
+      <input type="file" id="notificationFile" accept="image/png, image/jpeg" #notificationPic (change)="updateImage()" style="display: none"/>
+
+      <form id="addNotificationForm" [formGroup]="addNotificationForm" (ngSubmit)="addNotificationSubmit()">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="border-country fild-type">
+              <span>Notiﬁcation Type</span>
+              <ng-container *ngFor="let type of eventType">
+                <button type="button" (click)="ActiveType(type.value)" [ngClass]="avtiveType == type.value ? 'active-btn' : ''" >
+                  <i [ngClass]="dynamicFieldIconMapping[type.value]" class="icon"></i> {{type.name}}
+                </button>
+              </ng-container>
+                <!-- <button class="active-btn">
+                  <i class="icon-drop-down-round-button icon"></i> Dropdown
+                </button>
+                <button>
+                  <i class="icon-drop-down icon"></i> Dropdown Multiple
+                </button> -->
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input notific_msg">
+              <input type="text" class="ng-dirty ng-valid ng-touched" formControlName="subject">
+              <label>Subject *</label>
+            </div>
+            <div
+                *ngIf="addNotificationForm.controls.subject.dirty || addNotificationForm.controls.subject.touched || addNotificationForm.controls.subject.valid">
+                <span
+                  *ngIf="addNotificationForm.controls.subject.errors && addNotificationForm.controls.subject.errors.required"
+                  class="valid-msg">Subject is required</span>
+              </div>
+          </div>
+          <div class="col-md-12">
+            <div class="styled-input notific_msg">
+              <textarea formControlName="message" id="" cols="30" rows="2"></textarea>
+              <label>Message</label>
+            </div>
+            <div
+                *ngIf="addNotificationForm.controls.message.dirty || addNotificationForm.controls.message.touched || addNotificationForm.controls.message.valid">
+                <span
+                  *ngIf="addNotificationForm.controls.message.errors && addNotificationForm.controls.message.errors.required"
+                  class="valid-msg">Message is required</span>
+              </div>
+          </div>
+          <div class="col-md-12">
+            <!-- <div class="imageup">
+                <span>Upload Image</span>
+                <div class="mod-img">
+                    <app-file-uploader-vertical
+                    #imageUpload  >
+                  </app-file-uploader-vertical>
+                </div>
+            </div> -->
+              <a class="imageup notification-pic"   (click)="uploadphotoclick();"> <span> Upload Photo </span></a>
+            <div class="bor-upload-img" *ngIf="notificationImg!=''">
+              <img src="{{notificationImg}}" style="height: 50px;width: 50px;" >
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let schedule of scheduleList;let i = index">
+            <!-- <div class="styled-input">
+              <input type="text" class="ng-dirty ng-valid ng-touched" [(ngModel)]="schedule.name" [ngModelOptions]="{standalone: true}">
+              <label>Schedule</label>
+            </div> -->
+            <div class="styled-input datematerial martop-date">
+              <input type="text" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle [for]="picker" class="dateicon-mat"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <label>Start Date & Time</label>
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+            <button type="button" class="add-shedul" (click)="addNewScheduled()">+ Add New Schedule</button>
+            <div class="filter-mod">
+                Select Filters
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span >City/State/Country</span>
+              <select disabled>
+                <option >Manhattan, NY, USA</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Role Based</span>
+              <select disabled>
+                <option >Members Only</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Approved Based</span>
+              <select disabled>
+                <option>Active Members</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Event participation Based</span>
+              <select disabled>
+                <option>Any Event</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="border-country">
+              <span>Age Range</span>
+              <mat-radio-group aria-label="Select an option">
+                <mat-radio-button value="1">18 Below</mat-radio-button>
+                <mat-radio-button value="2" [checked]='true'>18 Above</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <input type="submit" class="submit" value="Send Notiﬁcation">
+        </div>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- model content -->

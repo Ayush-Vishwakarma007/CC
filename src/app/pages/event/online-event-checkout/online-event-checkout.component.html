@@ -1,0 +1,97 @@
+<div  class="donorcheckout-header">
+  <ul>
+    <li class="button"> <button [routerLink]="'/event-details/'+eventId"><img src="assets/icon/arow-g.svg" alt=""></button> </li>
+    <li>
+      <h4 style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;"> {{eventDetail['name']}}</h4>
+      <p style="overflow: hidden; width: 100%; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; height: 20px;" [innerHTML]="eventDetail['description']"></p>
+    </li>
+  </ul>
+</div>
+
+<div >
+  <div class="leftdonorpart">
+    <div class="innerpaid">
+      <div class="becomeheight">
+        <h5>
+          {{'event.onlineeventCheckout.title' | translate}}
+        </h5>
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <form [formGroup]="registerForm"  autocomplete="off" class="example-form" id="registerForm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>{{'event.onlineeventCheckout.firstName.lbl.text' | translate}} <i>*</i></mat-label>
+                        <input (keypress)="charOnly($event)"  (keydown.space)="$event.preventDefault();"  [maxLength]="15" size="15" formControlName="firstName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                         <div *ngIf="registerForm.controls.firstName.errors"
+                              class="valid-msg">First Name is required</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>{{'event.onlineeventCheckout.lastName.lbl.text' | translate}} <i>*</i></mat-label>
+                        <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();"  [maxLength]="15" size="15" formControlName="lastName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                         <div *ngIf="registerForm.controls.lastName.errors"
+                              class="valid-msg">Last Name is required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>{{'event.onlineeventCheckout.email.lbl.text' | translate}} <i>*</i></mat-label>
+                        <input formControlName="email" (keydown.space)="$event.preventDefault();"  matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.email.errors">
+                         <div *ngIf="registerForm.controls.email.errors"
+                              class="valid-msg">Please enter valid email.</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>{{'event.onlineeventCheckout.phone.lbl.text' | translate}} <i>*</i></mat-label>
+                        <input (keypress)="numberOnly($event)" [maxLength]="10" [minLength]="10" appPhoneMask formControlName="phone" matInput
+                               type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.phone.errors">
+                         <div *ngIf="registerForm.controls.phone.errors.required"
+                              class="valid-msg">Phone Number is required</div>
+                         <div *ngIf="registerForm.controls.phone.errors.minlength"
+                              class="valid-msg">Please enter valid Phone Number</div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+       <!-- <div class="row" *ngIf="!authDetail">
+          <div class="col-md-12">
+            <input (click)="submitRegister()" class="save-changes full-width" type="button" value="Register As Guest">
+          </div>
+        </div>-->
+        <div class="row" *ngIf="!authDetail">
+          <div class="col-md-12 txtcenter">
+            <div class="login-social noline">
+              <span>{{'event.onlineeventCheckout.alreadyHaveAccount.lbl.text' | translate}} <a (click)="loginRedirect()" class="underline-text">{{'event.onlineeventCheckout.login.lbl.text' | translate}}</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+<app-payment-detail [ticket]="'ticket'" (discountChange)="this.discountSubject.next(this.discountCode)" [(discount)]="discountCode" [type]="'ticket'" (completePayment)="submitRegister()"  [save]="submitSubject" [eventId]="eventId" [(paymentDetail)] = "paymentDetail"></app-payment-detail>
+</div>
+
+

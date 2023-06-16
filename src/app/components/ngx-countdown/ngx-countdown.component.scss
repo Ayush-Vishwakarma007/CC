@@ -1,0 +1,13 @@
+span.countdown{ font-size: 23px; color: #0074c1;  font-family: "Montserrat", sans-serif; font-weight: 700; text-transform: uppercase; padding: 0px 0px;     width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    strong{ font-size: 11px; color: #cbcbcb;  font-family: "Montserrat", sans-serif; font-weight: 700;}
+    ul{
+        li{ line-height: 16px;}
+    }
+}
+.counttop{ display: block; vertical-align: top;}
+
+@media screen and (max-width: 767px) {
+    span.countdown { width: 27%; }
+}

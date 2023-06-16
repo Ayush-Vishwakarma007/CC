@@ -1,0 +1,1929 @@
+<app-paypal (tokenOutput)="getPaymentToken()" *ngIf="eventDetail.eventConfigurations"
+           [save]="submitSubject"></app-paypal>
+<app-donate (completed)="completepayment()" (skipDonation)="skipDonation()" [(sponsorDetail)]="totalAmount"
+                   [eventId]="eventId"
+                   [save]="donateSubject" [type]="typeForDonation"></app-donate>
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+    Event Dashboard
+  </div>
+
+  <div class="white-area-create-event dashboard-white">
+    <!-- top section -->
+    <div class="row">
+      <div class="col-md-8 col-sm-8">
+        <ul class="dashboard-top">
+          <li>
+            <img alt="" src="{{eventDetail?.profilePicture}}">
+          </li>
+          <li class="interior-txt">
+            <h1>{{eventDetail?.name}}
+              <span *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent == true">( Fund Raising Event ) </span>
+            </h1>
+            <ul class="category-dashboard">
+              <li>
+                <span>Category</span>
+                {{eventDetail?.type}}
+              </li>
+              <li>
+                <span>Sub-Category</span>
+                {{eventDetail?.category}}
+              </li>
+
+            </ul>
+            <div class="clear"></div>
+            <ul class="date-dashboard">
+              <li *ngIf="eventDetail.noMeetingUrl == false">
+                <img alt="" src="assets/icon/date.svg">
+                <span>{{ eventDetail?.startDateTime | date : "MMM dd, yyyy h:mm a"}}
+                  - {{ eventDetail?.endDateTime | date : "MMM dd, yyyy h:mm a"}}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="eventDetail.selfCreated == true" class="col-md-4 col-sm-4">
+        <!-- <div class="right-dashboard-address">
+          <p> <img src="assets/icon/location2.svg" alt=""> {{eventDetail?.addressLine1}}, <br>
+            {{eventDetail?.city}}, {{eventDetail?.state}}, <br>
+            {{eventDetail?.country}} {{eventDetail?.zipCode}}.</p>
+            <div class="in-progress" *ngIf="eventDetail?.onGoingEvent">
+              In Progress
+            </div>
+        </div> -->
+<!--        <ul style="margin-left: 53%;">-->
+<!--          <li>-->
+<!--            <button (click)="edit()" class=" btn  btn-default edit-btn" title="Edit">Edit Event-->
+<!--              &lt;!&ndash;              <span><i class="icon fa-edit"></i></span>&ndash;&gt;-->
+<!--            </button>-->
+<!--            <button (click)="cancel()" *ngIf="eventDetail.eventState != 'CANCEL'" class="btn btn-default edit-btn">-->
+<!--              Cancel Event-->
+<!--            </button>-->
+<!--          </li>-->
+<!--          <li class="publishmar">-->
+<!--            &lt;!&ndash;              <img alt="" src="assets/icon/icon-material-publish.svg"> &ndash;&gt;-->
+<!--            <button (click)="publish()" *ngIf="eventDetail.eventState == 'UNDER_REVIEW'" class="create-event-button">-->
+<!--              Publish Event-->
+<!--            </button>-->
+<!--            <button (click)="unPublish()" *ngIf="eventDetail.eventState != 'UNDER_REVIEW'" class="create-event-button">-->
+<!--              Unpublish Event-->
+<!--            </button>-->
+<!--          </li>-->
+<!--        </ul>-->
+        <div class="dropdown show moredrop">
+          <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+             href="#" id="dropdownMenuLink" role="button">
+            <img alt="" src="assets/icon/interface.svg">
+          </a>
+          <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+            <a class="dropdown-item"   (click)="edit()" >Edit Event</a>
+            <button type="button" class="dropdown-item"  *ngIf="eventDetail.eventState == 'PUBLISHED'" data-toggle="modal" data-target="#modalCancelEvent" >Cancel Event</button>
+            <a class="dropdown-item"   *ngIf="eventDetail.eventState == 'PUBLISHED'" (click)="unPublish()">UnPublish Event</a>
+            <a class="dropdown-item"   *ngIf="eventDetail.eventState == 'UNDER_REVIEW' || eventDetail.eventState == 'CANCELED'" (click)="publish()">Republish Event</a>
+<!--            <a class="dropdown-item"   *ngIf="eventDetail.eventState != 'PUBLISHED'" (click)="publish()">Publish Event</a>-->
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!authDetail  && eventDetail.registrationTimeOver == false && eventDetail.eventConfigurations.fundRaisingEvent == true" class="col-md-4 col-sm-4">
+         <button class="save-changes pull-right" data-toggle="modal" data-target="#modalDonateNow">Donate Now</button>
+      </div>
+      <div *ngIf="authDetail && eventDetail.selfCreated == false && eventDetail.registrationTimeOver == false && eventDetail.eventConfigurations.fundRaisingEvent == true" class="col-md-4 col-sm-4">
+        <button class="save-changes pull-right"  (click)="setDonationType('donor')">Donate Now</button>
+      </div>
+    </div>
+    <!-- top section -->
+    <!-- tab section  -->
+    <div class="tab-main">
+      <mat-tab-group (selectedTabChange)="changeTab($event)">
+        <!-- =======================  STATISTICS  ======================= -->
+        <mat-tab *ngIf="eventDetail.selfCreated == true && eventDetail?.eventConfigurations?.fundRaisingEvent == false" label="dashboard">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <!-- <img alt="" class="tab-gray" src="assets/icon/tab1.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab1-b.svg"> -->
+                <i class="icon-statistics newicon"></i>
+              </li>
+              <li>
+                <span>Statistics</span>
+              </li>
+            </ul>
+          </ng-template>
+          <!-- collection Area -->
+          <div class="collection-area">
+            <div *ngIf="eventDetail?.eventConfigurations?.registrationFees != 0" class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Collection</span>
+                  <p>Amount is displayed till Present Date & Time</p>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  ${{dashboardTotalColetion}}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="eventDetail?.eventConfigurations?.registrationFees  == 0" class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Participant </span>
+                  <p>Participant is displayed till Present Date & Time</p>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  {{totalMember}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- collection Area -->
+          <!-- chart Area -->
+          <div class="dashboard-chart">
+            <div class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-7 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-8 col-sm-8">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img alt="" src="assets/icon/value.svg">
+                          </li>
+                          <li>
+                            Registration
+                            <p>Remains Days of Registration & Event </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4" style="text-align: right">
+                        <button type="button" class="btn marginR"  [ngClass]="regChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('DAY')">D</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('MONTH')">M</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('QUARTER')">Q</button>
+                        <button type="button" class="btn marginR" [ngClass]="regChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'" (click)="regChartClick('YEAR')">Y</button>
+                      </div>
+                      <!-- <div class="col-md-4 col-sm-4">
+                        <mat-form-field class="select-week">
+                          <mat-label>Select Week</mat-label>
+                          <mat-select>
+                          </mat-select>
+                        </mat-form-field>
+                      </div> -->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+                          <!-- <img src="assets/images/chart1.png" alt=""> -->
+                          <div #registrationChart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            Cumulative Collection
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+
+                          <div #diffchart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- <div class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-4 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img src="assets/icon/money-chart.svg" alt="">
+                          </li>
+                          <li>
+                            Sales
+                            <p>Your Earning will be shown below.</p>
+                            <div class="net-sales">
+                              Gross Sales
+                              <span>$4500.70</span>
+                            </div>
+                            <div class="net-sales">
+                              Net Sales
+                              <span>$4500.70</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            Tickets Sold
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="dash-border-bottm ticket-sold-res" *ngFor="let collection of tickitSoldcollectionData;let i=index">
+                      <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-4">
+                          <span class="tick-collection">{{collection.categoryName}}</span>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-5">
+                          <div class="progress dashboard-progress">
+                            <div class="progress-bar" role="progressbar" [style.width]="collection.percent+'%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> {{collection.totalTicket}}/{{collection.capacity}} </span></div>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-3">
+                          <span class="ticket-amount">${{collection.totalPaid}}</span>
+                        </div>
+                      </div>
+                    </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="tick-collection">VVIP Tickets</span>
+                </div>
+                <div class="col-md-6">
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> 75/1000 </span></div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount ">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="tick-collection">Vendor Booth</span>
+                </div>
+                <div class="col-md-6">
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 10%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> <span> 50/1000 </span></div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+
+            <div *ngIf="eventDetail?.eventConfigurations?.registrationFees != 0" class="top-chart">
+              <div class="row row-eq-height no-equal-height-sm">
+                <div class="col-md-12 col-sm-12">
+                  <div class="pad-right">
+                    <div class="row">
+                      <div class="col-md-8 col-sm-8">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img alt="" src="assets/icon/earning-money.svg">
+                          </li>
+                          <li>
+                            Earning
+                            <p>Remains Days of Registration & Event </p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-4" style="text-align: right">
+                        <button type="button" class="btn marginR"  [ngClass]="earningChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('DAY')">D</button>
+                        <button type="button" class="btn marginR" [ngClass]="earningChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('MONTH')">M</button>
+                        <button type="button" class="btn marginR" [ngClass]="earningChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('QUARTER')">Q</button>
+                        <button type="button" class="btn marginR" [ngClass]="earningChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'" (click)="erChartClick('YEAR')">Y</button>
+                      </div>
+                      <!-- <div class="col-md-4 col-sm-4">
+                        <mat-form-field class="select-week">
+                          <mat-label>Select Week</mat-label>
+                          <mat-select>
+
+                          </mat-select>
+                        </mat-form-field>
+                      </div> -->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+                          <!-- <img src="assets/images/chart1.png" alt=""> -->
+                          <div #earningChart></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <!-- <div class="col-md-5 col-sm-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li>
+                            Tickets Sold
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="chart">
+                          <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                              <div class="ticket-chart">
+                                <div #tickitSold></div>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                              <ul class="ticket-chart-options">
+                                <li *ngFor="let collection of tickitSoldData;let i=index"> <span><i class="chart-cash"></i> {{collection.paymentMethodUsed}} </span> ${{collection.totalAmount}} </li> -->
+                <!-- <li> <span><i class="chart-paypal"></i> Paypal </span> $2500.00 </li>
+                <li> <span><i class="chart-dabit-card"></i> Debit Card </span> $2500.00 </li>
+                <li> <span><i class="chart-stripe"></i> Stripe </span> $2500.00 </li>
+                <li> <span><i class="chart-bank-payment"></i> Bank Payment </span> $2500.00 </li> -->
+                <!-- </ul>
+              </div>
+            </div> -->
+                <!-- <div class="ticket-chart">
+                  <div #tickitSold></div>
+                </div>
+                <ul class="ticket-chart-options">
+                  <li> <span><i></i> Cash </span> $2500.00 </li>
+                  <li> <span><i></i> Paypal </span> $2500.00 </li>
+                  <li> <span><i></i> Debit Card </span> $2500.00 </li>
+                  <li> <span><i></i> Stripe </span> $2500.00 </li>
+                  <li> <span><i></i> Bank Payment </span> $2500.00 </li>
+                </ul> -->
+                <!-- </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+              </div>
+            </div>
+
+
+            <!-- <div class="top-chart">
+              <div class="row row-eq-height no-equal-height">
+                <div class="col-md-12 border-right-chart">
+                  <div class="pad-left">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ul class="registration-admn">
+                          <li class="icon-registran">
+                            <img src="assets/icon/dollar.svg" alt="">
+                          </li>
+                          <li>
+                            Collections
+                            <p>Over all collection from Sponsorship & Donation</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="dash-border-bottm">
+                      <div class="row">
+                        <div class="col-md-12" #collectionChart></div> -->
+            <!-- <div class="col-md-9">
+              <span class="tick-collection mardonation">Donation</span>
+              <div class="progress dashboard-progress">
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <span class="ticket-amount amnt-top">$3500.70</span>
+            </div> -->
+            <!-- </div>
+          </div> -->
+            <!-- <div class="dash-border-bottm">
+              <div class="row">
+                <div class="col-md-9">
+                  <span class="tick-collection mardonation">Sponsorship</span>
+                  <div class="progress dashboard-progress">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"> </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <span class="ticket-amount amnt-top">$3500.70</span>
+                </div>
+              </div>
+            </div> -->
+            <!-- </div>
+          </div>
+        </div>
+      </div> -->
+
+
+          </div>
+          <!-- chart Area -->
+        </mat-tab>
+        <!-- =======================  STATISTICS  ======================= -->
+        <!-- ======================= Members Area ======================= -->
+        <mat-tab *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent != true" label="user">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <img alt="" class="tab-gray" src="assets/icon/tab2.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab2-b.svg">
+              </li>
+              <li>
+                <span>Participant</span>
+              </li>
+            </ul>
+          </ng-template>
+          <!-- collection Area -->
+          <div class="collection-area">
+            <div *ngIf="eventDetail?.eventConfigurations?.registrationFees != 0" class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Collection</span>
+                  <p>Amount is displayed till Present Date & Time</p>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  ${{dashboardTotalColetion}}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="eventDetail?.eventConfigurations?.registrationFees  == 0" class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Participant </span>
+                  <p>Participant is displayed till Present Date & Time</p>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  {{totalMember}}
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- collection Area -->
+          <!-- chart Area -->
+          <div class="dashboard-chart">
+            <!-- <div class="col-md-1 col-sm-1 col-xs-1 pull-right">
+
+            </div> -->
+            <div class="col-md-5 col-sm-6 col-xs-4 pull-right marginsearch">
+              <mat-form-field class="example-full-width map-url searchcollection">
+                <mat-label>Search here ..</mat-label>
+                <input (change)="regestredUser($event.target.value)" matInput>
+              </mat-form-field>
+              <div class="top-export-button-main uploadexcel" (click)="exportMember()" *ngIf="selfCreted">
+                <button>
+                  <img alt="" src="assets/icon/upload.svg"> Export</button>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-chart">
+            <div class="top-chart mem-coll">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="totallmember">
+                    <!--                    <span>Total: {{totalMember}}</span>-->
+                    <!-- <span *ngFor="let m of memberTypes">{{m.ageGroup}}: {{m.count}}</span> -->
+                    <!-- <span>Adult: 296</span>
+                    <span>Children: 112</span> -->
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="top-export-button-main">
+                    <!-- <input class="top-search search-member"  [formControl]="searchBox"  placeholder="Search here..." type="search"> -->
+                    <!-- <button data-toggle="modal" data-target="#addMemberDashboard">+ Add Member</button> -->
+                    <!-- <button><img src="assets/icon/upload.svg" alt=""> Export</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="member-collection-table">
+              <table [ngClass]="sideMenuLarge?'table-collapse':''">
+                <thead>
+                  <tr>
+                    <th class="tab1"></th>
+                    <th (click)="sort('name')" [ngClass]="regestredReqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || regestredReqData['sort']['sortBy'] == 'FIRST_NAME' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Name</th>
+                    <!-- <th class="tab-chapter">Chapter</th> -->
+                    <th *ngIf="selfCreted" (click)="sort('phone')" [ngClass]="regestredReqData['sort']['sortBy'] != 'PHONE' ? '' : '' || regestredReqData['sort']['sortBy'] == 'PHONE' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Phone</th>
+                    <th *ngIf="selfCreted" (click)="sort('email')" [ngClass]="regestredReqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || regestredReqData['sort']['sortBy'] == 'EMAIL' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Email</th>
+                    <th>Fees</th>
+                    <th (click)="sort('totalPayment')" [ngClass]="regestredReqData['sort']['sortBy'] != 'TOTAL_PAYMENT' ? '' : '' || regestredReqData['sort']['sortBy'] == 'TOTAL_PAYMENT' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Total Payment</th>
+                    <th>Payment Successful</th>
+                    <th>Check In Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="tabl-body">
+                  <tr *ngFor="let mainuser of registredUser?.content;let i=index">
+                    <!-- <td class="tr-collaplse-btn"><button class="down-arr"> <img src="assets/icon/arrow-down.svg" alt=""> </button></td> -->
+                    <td></td>
+                    <td>{{mainuser.firstName | titlecase}} {{mainuser.lastName | titlecase}}
+                      <!--<span>NONLM - 015951</span>-->
+                    </td>
+                    <!-- <td>Georgia</td> -->
+                    <td *ngIf="selfCreted">{{mainuser.phone}}</td>
+                    <td *ngIf="selfCreted">{{mainuser.email}}</td>
+                    <td>
+                      <p *ngIf="mainuser.paidPrice == 0">Free</p>
+                      <p *ngIf="mainuser.paidPrice != 0">$ {{mainuser.paidPrice}}</p>
+                      <!-- <span class="overth"> $300.00</span> -->
+                    </td>
+                    <td>$ {{mainuser.totalPayment}}</td>
+
+                  <td>
+                    <p *ngIf="mainuser.successfulPayment == true">YES</p>
+                    <p *ngIf="mainuser.successfulPayment == false">NO</p>
+                  </td>
+
+                  <!-- <td *ngIf="mainuser.paidPrice != 0" class="tab-status"><i *ngIf="mainuser.successfulPayment == true"
+                                                                          class="paid">
+                  Paid</i>
+                  <i *ngIf="mainuser.successfulPayment == false" class="unpaid"> Unpaid</i></td>
+                <td *ngIf="mainuser.paidPrice == 0" class="tab-status">-</td> -->
+
+                  <td>
+                    <p *ngIf="mainuser.checkInStatus ==true">Yes</p>
+                    <p *ngIf="mainuser.checkInStatus == false">No</p>
+                    <!-- <span class="overth"> $300.00</span> -->
+                  </td>
+                  <td class="notificationiconbel">
+                    <a (click)="deleteUser(mainuser.registrationId)"  >
+                        <span>
+                          <i class="icon fa-trash"></i>
+                        </span>
+                    </a>
+                    <a (click)="userNoti(mainuser.registrationId)" data-target="#exampleModalnotification"
+                       data-toggle="modal">
+                      <i aria-hidden="true" class="icon fa-bell"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td *ngIf="totalMember == 0" colspan="7">
+                    <p style="text-align: center">No Participant Found</p>
+                  </td>
+                </tr>
+                <!-- <tr class="sub-tr-hide">
+                    <td>  </td>
+                    <td colspan="7">
+                      <table>
+                        <tr>
+                          <td class="tab-name">Dr. Mayur Dudhat <span>NONLM - 015951</span></td>
+                          <td>107 Westminster Dr, North Wales <span>Pennsylvania | USA</span></td>
+                          <td class="tab-chapter">Georgia</td>
+                          <td class="tab-gender">Male</td>
+                          <td class="tab-age-group">Adult</td>
+                          <td class="tab-phone">(215) 390-1234</td>
+                          <td class="tab-email">mayurdudhat@yahoo.com</td>
+                          <td class="tab-fees">$250.00 <span class="overth"> $300.00</span></td>
+                          <td class="tab-status"><i class="paid"> paid</i></td>
+                        </tr>
+                        <tr>
+                          <td>Dr. Mayur Dudhat <span>NONLM - 015951</span></td>
+                          <td>107 Westminster Dr, North Wales <span>Pennsylvania | USA</span></td>
+                          <td>Georgia</td>
+                          <td>Male</td>
+                          <td>Adult</td>
+                          <td>(215) 390-1234</td>
+                          <td>mayurdudhat@yahoo.com</td>
+                          <td>$250.00 <span class="overth"> $300.00</span></td>
+                          <td><i class="paid"> paid</i></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>  </td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+            <div class="pegination-main">
+              <ul>
+                <li>
+                  <button (click)="pagination('current','user',0)" [disabled]="registredUser['first'] == true"
+                          class="next">First
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('prev','user')" [disabled]="registredUser['first'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                  </button>
+                </li>
+                <li (click)="pagination('current','user',i)" *ngFor="let i of arrayTwo(registredUser['totalPages'])"
+                    [ngClass]="regestredReqData.page.pageNumber == i ?  'blue-peg' : ''">
+                  <button class="numeric">{{i + 1}}</button>
+                </li>
+                <li>
+                  <button (click)="pagination('next','user')" [disabled]="registredUser['last'] == true" class="arrow">
+                    <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                  </button>
+                </li>
+                <li>
+                  <button (click)="pagination('current','user',(registredUser['totalPages']-1))"
+                          [disabled]="registredUser['last'] == true"
+                          class="next">Last
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- ======================= Members Area ======================= -->
+
+
+        <!-- =============== Vendor =============================== -->
+         <mat-tab  *ngIf="eventDetail?.eventConfigurations?.fundRaisingEvent != true"  label="vendor">
+          <ng-template mat-tab-label>
+            <ul>
+              <li> <img src="assets/icon/tab3.svg" alt="" class="tab-gray"> <img src="assets/icon/tab3-b.svg" alt="" class="tab-blue"> </li>
+              <li> <span>Vendors</span></li>
+            </ul>
+          </ng-template>
+
+           <div class="collection-area">
+            <div class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Vendors Collection</span>
+                  <p>Amount is displayed till Present Date & Time</p>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  ${{vendorCollection}}
+                </span>
+              </div>
+              </div>
+            </div>
+
+          <div class="dashboard-chart">
+            <div class="top-chart mem-coll">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="totallmember">
+                    <span>Vendor: {{ vendors?.totalElements}}</span>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="top-export-button-main">
+                    <input class="top-search search-member"   (change)="getVendors($event.target.value)" placeholder="Search here..." type="search">
+<!--                    <button data-toggle="modal" data-target="#addVendorDashboard">+ Add Vendor</button>-->
+<!--                    <button><img src="assets/icon/upload.svg" alt=""> Export</button>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="member-collection-table">
+              <table [ngClass]="sideMenuLarge?'table-collapse':''">
+                <thead>
+                <tr>
+                  <th class="tab1"></th>
+                  <th (click)="vsort('name')" [ngClass]="regestredReqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || regestredReqData['sort']['sortBy'] == 'FIRST_NAME' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Name</th>
+                  <!-- <th class="tab-chapter">Chapter</th> -->
+                  <th *ngIf="selfCreted" (click)="vsort('phone')" [ngClass]="regestredReqData['sort']['sortBy'] != 'PHONE' ? '' : '' || regestredReqData['sort']['sortBy'] == 'PHONE' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Phone</th>
+                  <th *ngIf="selfCreted" (click)="vsort('email')" [ngClass]="regestredReqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || regestredReqData['sort']['sortBy'] == 'EMAIL' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Email</th>
+                  <th>Fees</th>
+                  <th (click)="vsort('totalPayment')" [ngClass]="regestredReqData['sort']['sortBy'] != 'TOTAL_PAYMENT' ? '' : '' || regestredReqData['sort']['sortBy'] == 'TOTAL_PAYMENT' && regestredReqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Total Payment</th>
+                  <th>Payment Successful</th>
+                  <th>Check In Status</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody class="tabl-body">
+                <tr *ngFor="let mainuser of vendors?.content;let i=index">
+                  <!-- <td class="tr-collaplse-btn"><button class="down-arr"> <img src="assets/icon/arrow-down.svg" alt=""> </button></td> -->
+                  <td></td>
+                  <td>{{mainuser.firstName | titlecase}} {{mainuser.lastName | titlecase}}
+                    <!--<span>NONLM - 015951</span>-->
+                  </td>
+                  <!-- <td>Georgia</td> -->
+                  <td *ngIf="selfCreted">{{mainuser.phone}}</td>
+                  <td *ngIf="selfCreted">{{mainuser.email}}</td>
+                  <td>
+                    <p *ngIf="mainuser.paidPrice == 0">Free</p>
+                    <p *ngIf="mainuser.paidPrice != 0">$ {{mainuser.paidPrice}}</p>
+                    <!-- <span class="overth"> $300.00</span> -->
+                  </td>
+                  <td>$ {{mainuser.totalPayment}}</td>
+
+                  <td>
+                    <p *ngIf="mainuser.successfulPayment == true">YES</p>
+                    <p *ngIf="mainuser.successfulPayment == false">NO</p>
+                  </td>
+
+                  <!-- <td *ngIf="mainuser.paidPrice != 0" class="tab-status"><i *ngIf="mainuser.successfulPayment == true"
+                                                                          class="paid">
+                  Paid</i>
+                  <i *ngIf="mainuser.successfulPayment == false" class="unpaid"> Unpaid</i></td>
+                <td *ngIf="mainuser.paidPrice == 0" class="tab-status">-</td> -->
+
+                  <td>
+                    <p *ngIf="mainuser.checkInStatus ==true">Yes</p>
+                    <p *ngIf="mainuser.checkInStatus == false">No</p>
+                    <!-- <span class="overth"> $300.00</span> -->
+                  </td>
+                  <td class="notificationiconbel">
+                    <a (click)="deleteUser(mainuser.registrationId)"  >
+                        <span>
+                          <i class="icon fa-trash"></i>
+                        </span>
+                    </a>
+                    <a (click)="userNoti(mainuser.registrationId)" data-target="#exampleModalnotification"
+                       data-toggle="modal">
+                      <i aria-hidden="true" class="icon fa-bell"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td *ngIf="totalMember == 0" colspan="7">
+                    <p style="text-align: center">No Participant Found</p>
+                  </td>
+                </tr>
+                <!-- <tr class="sub-tr-hide">
+                    <td>  </td>
+                    <td colspan="7">
+                      <table>
+                        <tr>
+                          <td class="tab-name">Dr. Mayur Dudhat <span>NONLM - 015951</span></td>
+                          <td>107 Westminster Dr, North Wales <span>Pennsylvania | USA</span></td>
+                          <td class="tab-chapter">Georgia</td>
+                          <td class="tab-gender">Male</td>
+                          <td class="tab-age-group">Adult</td>
+                          <td class="tab-phone">(215) 390-1234</td>
+                          <td class="tab-email">mayurdudhat@yahoo.com</td>
+                          <td class="tab-fees">$250.00 <span class="overth"> $300.00</span></td>
+                          <td class="tab-status"><i class="paid"> paid</i></td>
+                        </tr>
+                        <tr>
+                          <td>Dr. Mayur Dudhat <span>NONLM - 015951</span></td>
+                          <td>107 Westminster Dr, North Wales <span>Pennsylvania | USA</span></td>
+                          <td>Georgia</td>
+                          <td>Male</td>
+                          <td>Adult</td>
+                          <td>(215) 390-1234</td>
+                          <td>mayurdudhat@yahoo.com</td>
+                          <td>$250.00 <span class="overth"> $300.00</span></td>
+                          <td><i class="paid"> paid</i></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>  </td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+            <div class="pegination-main">
+              <ul>
+                <li> <button class="next" (click)="pagination('current','vendor',0)" [disabled]="vendors['first'] == true">First</button> </li>
+                <li> <button class="arrow" (click)="pagination('prev','vendor')" [disabled]="vendors['first'] == true"><i aria-hidden="true" class="icon-left-arrow icon"></i></button></li>
+                <li [ngClass]="regestredReqData.page.pageNumber == i ?  'blue-peg' : ''" (click)="pagination('current','vendor',i)" *ngFor="let i of arrayTwo(vendors['totalPages'])" > <button class="numeric" >{{i+1}}</button> </li>
+
+                <li> <button class="arrow" (click)="pagination('next','vendor')" [disabled]="vendors['last'] == true"><i aria-hidden="true" class="icon-right-arrow icon"></i></button> </li>
+                <li> <button class="next" (click)="pagination('current','vendor',(vendors['totalPages']-1))" [disabled]="vendors['last'] == true">Last</button> </li>
+              </ul>
+            </div>
+          </div>
+        </mat-tab>
+        <!--====================  Vendor ==================== -->
+
+
+        <!--====================  donors ==================== -->
+        <mat-tab *ngIf="eventDetail?.eventConfigurations?.allowDonor == true" label="donors">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <img alt="" class="tab-gray" src="assets/icon/tab4.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab4-b.svg">
+              </li>
+              <li>
+                <span>donors</span>
+              </li>
+            </ul>
+          </ng-template>
+          <div class="collection-area">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-7 col-sm-12 col-xs-12">
+                  <div class="totall-collection">
+                    <span>Total Donors Collection</span>
+                    <p>Amount is displayed till Present Date & Time</p>
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12">
+                <span class="tottal-collection-amount">
+
+                   <div class="progress-main" >
+                    <div class="col-md-4 col-sm-4 col-xs-4">
+                     <span class="progress-amt-color"> ${{totalDonorcollection}}</span>
+                     </div>
+                     <div class="col-md-3 col-sm-3 col-xs-3">
+<!--                     //<span class="progress-amt">$45100</span>-->
+                     </div>
+                     <div class="col-md-4 col-sm-4 col-xs-4">
+                     <span class="progress-amt-color-left">$ {{eventDetail?.eventConfigurations?.donationGoal}}</span>
+                     </div>
+                     <div class="progress ">
+                       <div class="progress-bar progress-color" role="progressbar"  [ngStyle]="{'width':width + '% '}"> </div>
+                      </div>
+                    </div>
+                      ${{totalDonorcollection}}
+                  </span>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="mat-content-border row">
+            <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+              <div class="top-chart mem-coll">
+                <div class="row">
+                  <div class="col-md-5">
+                    <div class="totallmember">
+                      <span>Donor: {{donorList.totalElements}}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="top-export-button-main" *ngIf="selfCreted">
+                      <button (click)="ExportDoner()">
+                        <img alt="" src="assets/icon/upload.svg"> Export</button>
+                      <button data-toggle="modal" (click)="resetDonor()" data-target="#donorFormModal">+ Add Donor</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="member-collection-table">
+                <table class="table-responsive" [ngClass]="sideMenuLarge?'table-collapse':''">
+                  <thead>
+                    <tr>
+                      <th class="tab1"></th>
+                      <th (click)="Dsort('name')" [ngClass]="reqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || reqData['sort']['sortBy'] == 'FIRST_NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                        class="sortable">Name</th>
+                      <th *ngIf="selfCreted" (click)="Dsort('phone')" [ngClass]="reqData['sort']['sortBy'] != 'PHONE' ? '' : '' || reqData['sort']['sortBy'] == 'PHONE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                        class="sortable">Phone</th>
+                      <th *ngIf="selfCreted" (click)="Dsort('email')" [ngClass]="reqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || reqData['sort']['sortBy'] == 'EMAIL' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                        class="sortable">Email</th>
+                      <th (click)="Dsort('date')" [ngClass]="reqData['sort']['sortBy'] != 'DATE' ? '' : '' || reqData['sort']['sortBy'] == 'DATE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable"> Date</th>
+                      <th  *ngIf="selfCreted"> Method</th>
+                      <th  *ngIf="selfCreted"> Anonymous</th>
+                      <th (click)="Dsort('amount')" [ngClass]="reqData['sort']['sortBy'] != 'TOTAL_PAYMENT' ? '' : '' || reqData['sort']['sortBy'] == 'TOTAL_PAYMENT' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable" style="    width: 12%;"> Amount</th>
+                      <th style="width: 8%;" *ngIf="selfCreted"> Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tabl-body">
+                    <tr *ngFor="let d of donorList?.content;let i=index">
+                      <td class="tr-collaplse-btn"></td>
+                      <td> {{d.firstName | titlecase}} {{d.lastName | titlecase}} </td>
+                      <td *ngIf="selfCreted">{{d.phone}}</td>
+                      <td *ngIf="selfCreted">{{d.email}}</td>
+                      <td>{{d.dateTime | date:'MMM d, y'}}</td>
+                      <td  *ngIf="selfCreted">{{d.paymentMethodUsed}} </td>
+                      <td  *ngIf="selfCreted">
+                        <b *ngIf="d.anonymousDonation == true"> Yes </b>
+                        <b *ngIf="d.anonymousDonation == false"> No </b>
+                      </td>
+                      <td>${{d.finalAmount}} </td>
+                      <td  *ngIf="selfCreted"><a (click)="getNotificationReceipt(d.id)"  ><img  style="width: 32%;"src="assets/icon/receipt_icon.png"></a></td>
+                    </tr>
+                    <tr *ngIf="donorList.totalElements == 0">
+                      <td colspan="5" style="text-align: center">No Donors Found</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pegination-main">
+                <ul>
+                  <li>
+                    <button (click)="pagination('current','donor',0)" [disabled]="donorList['first'] == true"
+                            class="next">First
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('prev','donor')" [disabled]="donorList['first'] == true" class="arrow">
+                      <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li (click)="pagination('current','donor',i)" *ngFor="let i of arrayTwo(donorList['totalPages'])"
+                      [ngClass]="reqData.page.pageNumber == i ?  'blue-peg' : ''">
+                    <button class="numeric">{{i + 1}}</button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('next','donor')" [disabled]="donorList['last'] == true" class="arrow">
+                      <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="pagination('current','donor',(donorList['totalPages']-1))"
+                            [disabled]="donorList['last'] == true" class="next">Last
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <ul class="registration-admn">
+                    <li class="icon-registran">
+                      <img alt="" src="assets/icon/earning-money.svg">
+                    </li>
+                    <li>
+                      Donations
+                      <p>Daily donations received</p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12" style="text-align: right">
+                  <button type="button" class="btn marginR" [ngClass]="donationChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="dChartClick('DAY')">D</button>
+                  <button type="button" class="btn marginR" [ngClass]="donationChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'"
+                          (click)="dChartClick('MONTH')">M</button>
+                  <button type="button" class="btn marginR" [ngClass]="donationChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'"
+                          (click)="dChartClick('QUARTER')">Q</button>
+                  <button type="button" class="btn marginR" [ngClass]="donationChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'"
+                          (click)="dChartClick('YEAR')">Y</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="chart">
+                    <!-- <img src="assets/images/chart1.png" alt=""> -->
+                    <div #donorcollectionChart></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mat-content-border top-chart">
+            <div class="row row-eq-height no-equal-height-sm">
+              <div class="col-md-12 col-sm-12">
+                <div class="pad-right">
+                  <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                      <ul class="registration-admn">
+                        <li class="icon-registran">
+                          <img alt="" src="assets/icon/earning-money.svg">
+                        </li>
+                        <li>
+                          Donations
+                          <p> Daily donation count   </p>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-4" style="text-align: right">
+                      <button type="button" class="btn marginR" [ngClass]="doChartActiveTab == 'DAY' ? 'btn-secondary' : 'btn-primary'" (click)="doChartClick('DAY')">D</button>
+                      <button type="button" class="btn marginR" [ngClass]="doChartActiveTab == 'MONTH' ? 'btn-secondary' : 'btn-primary'"
+                        (click)="doChartClick('MONTH')">M</button>
+                      <button type="button" class="btn marginR" [ngClass]="doChartActiveTab == 'QUARTER' ? 'btn-secondary' : 'btn-primary'"
+                        (click)="doChartClick('QUARTER')">Q</button>
+                      <button type="button" class="btn marginR" [ngClass]="doChartActiveTab == 'YEAR' ? 'btn-secondary' : 'btn-primary'" (click)="doChartClick('YEAR')">Y</button>
+                    </div>
+
+                    <!-- <div class="col-md-4 col-sm-4">
+                      <mat-form-field class="select-week">
+                        <mat-label>Select Week</mat-label>
+                        <mat-select>
+
+                        </mat-select>
+                      </mat-form-field>
+                    </div> -->
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="chart">
+                        <!-- <img src="assets/images/chart1.png" alt=""> -->
+                        <div #donorsChart></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-5 col-sm-12 border-right-chart">
+                <div class="pad-left">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <ul class="registration-admn">
+                        <li>
+                          Tickets Sold
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="chart">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-12">
+                            <div class="ticket-chart">
+                              <div #tickitSold></div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-12">
+                            <ul class="ticket-chart-options">
+                              <li *ngFor="let collection of tickitSoldData;let i=index"> <span><i class="chart-cash"></i> {{collection.paymentMethodUsed}} </span> ${{collection.totalAmount}} </li> -->
+              <!-- <li> <span><i class="chart-paypal"></i> Paypal </span> $2500.00 </li>
+              <li> <span><i class="chart-dabit-card"></i> Debit Card </span> $2500.00 </li>
+              <li> <span><i class="chart-stripe"></i> Stripe </span> $2500.00 </li>
+              <li> <span><i class="chart-bank-payment"></i> Bank Payment </span> $2500.00 </li> -->
+              <!-- </ul>
+            </div>
+          </div> -->
+              <!-- <div class="ticket-chart">
+                <div #tickitSold></div>
+              </div>
+              <ul class="ticket-chart-options">
+                <li> <span><i></i> Cash </span> $2500.00 </li>
+                <li> <span><i></i> Paypal </span> $2500.00 </li>
+                <li> <span><i></i> Debit Card </span> $2500.00 </li>
+                <li> <span><i></i> Stripe </span> $2500.00 </li>
+                <li> <span><i></i> Bank Payment </span> $2500.00 </li>
+              </ul> -->
+              <!-- </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="eventDetail?.eventConfigurations?.allowSponsorship == true" label="sponsors">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <img alt="" class="tab-gray" src="assets/icon/tab5.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab5-b.svg">
+              </li>
+              <li>
+                <span>Sponsors</span>
+              </li>
+            </ul>
+          </ng-template>
+
+          <div class="collection-area">
+            <div class="row">
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="totall-collection">
+                  <span>Total Sponsors Collection</span>
+                  <p>Amount is displayed till Present Date & Time</p>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <span class="tottal-collection-amount">
+                  ${{totalSponsercollection}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-chart">
+            <div class="top-chart mem-coll">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="totallmember">
+                    <span>Sponsors: {{sponserList.totalElements}}</span>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="top-export-button-main" (click)="ExportSponser()" *ngIf="selfCreted">
+                    <button>
+                      <img alt="" src="assets/icon/upload.svg"> Export
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="member-collection-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="tab1"></th>
+                    <th (click)="Ssort('name')" [ngClass]="reqData['sort']['sortBy'] != 'FIRST_NAME' ? '' : '' || reqData['sort']['sortBy'] == 'FIRST_NAME' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Name</th>
+                    <th *ngIf="selfCreted" (click)="Ssort('phone')" [ngClass]="reqData['sort']['sortBy'] != 'PHONE' ? '' : '' || reqData['sort']['sortBy'] == 'PHONE' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Phone</th>
+                    <th *ngIf="selfCreted" (click)="Ssort('email')" [ngClass]="reqData['sort']['sortBy'] != 'EMAIL' ? '' : '' || reqData['sort']['sortBy'] == 'EMAIL' && reqData['sort']['orderBy'] == 'ASC'  ? 'asc' : 'desc'"
+                      class="sortable">Email</th>
+                    <th>Sponsorship Amount</th>
+                  </tr>
+                </thead>
+                <tbody class="tabl-body">
+                <tr *ngFor="let s of sponserList?.content;let i=index">
+                  <td class="tr-collaplse-btn"></td>
+                  <td>{{s.firstName | titlecase}} {{s.lastName | titlecase}}
+
+                    </td>
+                    <td *ngIf="selfCreted">{{s.phone}}</td>
+                    <td *ngIf="selfCreted">{{s.email}}</td>
+                    <td>${{s.finalAmount}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-tab>
+        <!--====================  Sponsors ==================== -->
+        <!--====================  Admin / Volunteer ==================== -->
+        <!-- <mat-tab label="admin/volunteer">
+          <ng-template mat-tab-label>
+            <ul>
+              <li> <img src="assets/icon/tab6.svg" alt="" class="tab-gray"> <img src="assets/icon/tab6-b.svg" alt="" class="tab-blue"> </li>
+              <li> <span>Admin /
+                Volunteer</span></li>
+            </ul>
+          </ng-template>
+
+          <div class="dashboard-chart">
+            <div class="top-chart mem-coll">
+              <div class="row">
+                <div class="col-md-5 col-sm-12">
+                  <div class="totallmember">
+                    <span>Admin: {{adminList.length}}  </span>
+                    <span>Volunteer: {{volunteerList.length}} </span>
+                  </div>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                  <div class="top-export-button-main">
+                    <input class="top-search search-member" placeholder="Search here..." type="search">
+                     <button><img src="assets/icon/upload.svg" alt=""> Export</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <mat-accordion class="dashboard-accor">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header >
+                  <mat-panel-title>
+                    Admin
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="member-collection-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="tab1"></th>
+                        <th >Name</th>
+                        <th >Phone</th>
+                        <th >Email</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tabl-body">
+                      <tr   *ngFor="let list of adminList;let i=index">
+                        <td class="tr-collaplse-btn"></td>
+                        <td>{{list.firstName}} {{list.laststName}} </td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.email}}</td>
+                        <td><button class="make-volunteer">Make Volunteer</button> <button class="make-volunteer remove-ad">Remove Admin</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Volunteer
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="member-collection-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="tab1"></th>
+                        <th >Name</th>
+                        <th >Phone</th>
+                        <th >Email</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tabl-body">
+                    <tr *ngFor="let list of volunteerList;let i=index">
+                      <td class="tr-collaplse-btn"></td>
+                      <td>{{list.firstName}} {{list.lastName}} </td>
+                      <td>{{list.phone}}</td>
+                      <td>{{list.email}}</td>
+                      <td><button class="make-volunteer">Make Volunteer</button> <button class="make-volunteer remove-ad">Remove Admin</button></td>
+                    </tr>
+                     </tbody>
+                  </table>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+
+          </div>
+
+        </mat-tab> -->
+        <!--====================  Admin / Volunteer ==================== -->
+        <!-- =========================== Food ============================= -->
+        <!-- <mat-tab label="food">
+          <ng-template mat-tab-label>
+            <ul>
+              <li> <img src="assets/icon/tab7.svg" alt="" class="tab-gray"> <img src="assets/icon/tab7-b.svg" alt="" class="tab-blue"> </li>
+              <li> <span>Food</span></li>
+            </ul>
+          </ng-template>
+
+         <div class="collection-area">
+          <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+              <div class="totall-collection">
+                <span>Total Food Collection</span>
+                <p>Amount is displayed till Present Date & Time</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <span class="tottal-collection-amount">
+                ${{totalFoodcollection}}
+              </span>
+            </div>
+            </div>
+          </div>
+
+        <div class="dashboard-chart">
+          <div class="member-collection-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="tab1"></th>
+                  <th >Food Item</th>
+                  <th >Quantity</th>
+                  <th >Price</th>
+                </tr>
+              </thead>
+              <tbody class="tabl-body">
+                <tr *ngFor="let food of foodItem;let i=index">
+                  <td class="tr-collaplse-btn"></td>
+                  <td>{{food.foodName}}<span [innerHTML]="food['description']"></span></td>
+                  <td><i data-toggle="modal" data-target="#foodPackmodel" class="food-clr">{{food.foodCount}}</i></td>
+                  <td>${{food.foodPrice}} </td>
+                </tr>
+               </tbody>
+            </table>
+          </div>
+        </div>
+
+        </mat-tab> -->
+
+        <!-- <mat-tab label="accommodation">
+          <ng-template mat-tab-label>
+            <ul>
+              <li> <img src="assets/icon/tab8.svg" alt="" class="tab-gray"> <img src="assets/icon/tab8-b.svg" alt="" class="tab-blue"> </li>
+              <li> <span>Accommodation </span></li>
+            </ul>
+          </ng-template>
+
+         <div class="collection-area">
+          <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8">
+              <div class="totall-collection">
+                <span>Total Accommodation</span>
+                <p>Amount is displayed till Present Date & Time</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <span class="tottal-collection-amount">
+                $5000.000
+              </span>
+            </div>
+            </div>
+          </div>
+
+          <div class="dashboard-chart">
+            <div class="member-collection-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="tab1"></th>
+                    <th >Name</th>
+                    <th >No. of rooms</th>
+                    <th >Allowed Members</th>
+                  </tr>
+                </thead>
+                <tbody class="tabl-body">
+                  <tr>
+                    <td class="tr-collaplse-btn"></td>
+                    <td>Dr. Mayur Dudhat</td>
+                    <td>5</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td class="tr-collaplse-btn"></td>
+                    <td>Dr. Mayur Dudhat</td>
+                    <td>5</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td class="tr-collaplse-btn"></td>
+                    <td>Dr. Mayur Dudhat</td>
+                    <td>5</td>
+                    <td>4</td>
+                  </tr>
+                  <tr>
+                    <td class="tr-collaplse-btn"></td>
+                    <td>Dr. Mayur Dudhat</td>
+                    <td>5</td>
+                    <td>4 </td>
+                  </tr>
+                  <tr>
+                    <td class="tr-collaplse-btn"></td>
+                    <td>Dr. Mayur Dudhat</td>
+                    <td>5</td>
+                    <td>4</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-tab> -->
+
+        <mat-tab *ngIf="eventDetail.selfCreated == true" label="setting">
+          <ng-template mat-tab-label>
+            <ul>
+              <li>
+                <img alt="" class="tab-gray" src="assets/icon/tab9.svg">
+                <img alt="" class="tab-blue" src="assets/icon/tab9-b.svg">
+              </li>
+              <li>
+                <span>Settings</span>
+              </li>
+            </ul>
+          </ng-template>
+          <div class="dashboard-chart">
+            <ul class="setting-dashboard">
+              <li (click)="userNoti('')" class="colornotifition" data-target="#exampleModalAllnotification"
+                  data-toggle="modal">
+                <!-- href="/notifications"  -->
+                <div>
+                  <h2>
+                    <span>
+                      <i aria-hidden="true" class="icon fa-bell"></i>
+                    </span>
+                  </h2>
+                  <span class="notification-setting">
+                    Notification
+                  </span>
+                  <p>
+                    Click here to view or create Notification
+                  </p>
+                </div>
+              </li>
+              <li>
+                <a (click)="edit()"  >
+                  <h2>
+                    <span>
+                      <i class="icon fa-edit"></i>
+                    </span>
+                  </h2>
+                  <span class="notification-setting">
+                    Edit Event
+                  </span>
+                  <p>
+                    Click here to Edit Entire Event.
+                  </p>
+                </a>
+              </li>
+              <li>
+                <a (click)="delete()"  >
+                  <h2>
+                    <span>
+                      <i class="icon fa-trash"></i>
+                    </span>
+                  </h2>
+                  <span class="notification-setting">
+                    Delete Event
+                  </span>
+                  <p>
+                    Deleting will wipe all data of Event.
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Member model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade" id="addMemberDashboard"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="height100">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Member</h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <img alt="" src="assets/icon/delete-button.svg">
+          </button>
+        </div>
+        <div class="button-botm">
+          <div class="modal-body">
+            <div class="paypal-configure">
+              <mat-form-field class="example-full-width ">
+                <mat-label>First Name</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width ">
+                <mat-label>Last Name</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Age group</mat-label>
+                <mat-select>
+                  <mat-option>
+
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Contact</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width ">
+                <mat-label>Email Id</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <div class="border-country gendor-ad-member">
+                <span>Gender</span>
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="1">Female</mat-radio-button>
+                  <mat-radio-button [checked]='true' value="2">Male</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <mat-form-field class="example-full-width fees-pad">
+                <mat-label>Fees paid</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Chapter</mat-label>
+                <mat-select>
+                  <mat-option>
+                    jklj
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <input class="submit blue-clr" type="submit" value="Add Member">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Add Member model -->
+<!-- Add Member model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal right fade" id="addVendorDashboard"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form class="height100">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Vendor</h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <img alt="" src="assets/icon/delete-button.svg">
+          </button>
+        </div>
+        <div class="button-botm">
+          <div class="modal-body">
+            <div class="paypal-configure">
+              <mat-form-field class="example-full-width ">
+                <mat-label>First Name</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width ">
+                <mat-label>Last Name</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Age group</mat-label>
+                <mat-select>
+                  <mat-option>
+                    hjk
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Contact</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width ">
+                <mat-label>Email Id</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <div class="border-country gendor-ad-member">
+                <span>Gender</span>
+                <mat-radio-group aria-label="Select an option">
+                  <mat-radio-button value="1">Female</mat-radio-button>
+                  <mat-radio-button [checked]='true' value="2">Male</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <mat-form-field class="example-full-width fees-pad">
+                <mat-label>Fees paid</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <mat-label>Chapter</mat-label>
+                <mat-select>
+                  <mat-option>
+                    hjk
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <input class="submit blue-clr" type="submit" value="Add Member">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Add Member model -->
+<!-- Stripe Configuration Details model -->
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade share-model" id="foodPackmodel"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Premium Food Pack</h5>
+        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <ul class="food-item-pop">
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+            <li> Dr. Mayur Dudhat
+              <span>Adult</span>
+            </li>
+          </ul>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Stripe Configuration Details model -->
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleLabel"> Notification </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> Subject</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> Message </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor> 
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button>
+          <button (click)="submitNotification()" class="save-changes" type="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalAllnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleaLabel"> Notification </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row-eq-height">
+            <div class="col-lg-8 pull-right"></div>
+            <div class="col-lg-4 setMargin pull-right">
+              <mat-form-field class="example-full-width">
+                <mat-label>Send To</mat-label>
+                <mat-select formControlName="notificationAudiences" multiple>
+                  <mat-option *ngFor="let list of notificationAudience;let i=index"
+                              value="{{list.value}}">{{list.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors ">
+                <span *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors "
+                      class="valid-msg">Send To is Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> Subject</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> Message </span>  
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deletesNoti" type="button">Cancel</button>
+          <button (click)="submitAllNotification()" class="save-changes" type="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="donorFormModal"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="addDonorForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleaLabel">Donor's Details </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="donorClose" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="area-paidregistration">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> First Name</mat-label>
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.firstName.errors ">
+                    <span *ngIf="this.submitDonor == false && addDonorForm.controls.firstName.errors.required"
+                          class="valid-msg">First Name is required</span>
+                  <span *ngIf="this.submitDonor == false && addDonorForm.controls.firstName.errors.pattern" class="valid-msg">Only allowed character</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 lastpaid">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Last Name</mat-label>
+                  <input formControlName="lastName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.lastName.errors ">
+                    <span *ngIf="this.submitBtn == false && addDonorForm.controls.lastName.errors.required"
+                          class="valid-msg">Last Name is required</span>
+                  <span *ngIf="this.submitDonor == false && addDonorForm.controls.lastName.errors.pattern" class="valid-msg">Only allowed character</span>
+                </div>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-6 col-sm-6 ">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Email</mat-label>
+                  <input formControlName="email" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.email.errors ">
+                    <span *ngIf="this.submitDonor == false && addDonorForm.controls.email.errors"
+                          class="valid-msg">Email is invalid</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 ">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Amount</mat-label>
+                  <input formControlName="amount" matInput (keypress)="numberOnly($event)">
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.amount.errors ">
+                    <span *ngIf="this.submitDonor == false && addDonorForm.controls.amount.errors"
+                          class="valid-msg">Amount is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-6 col-sm-6 ">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label>Donation Category</mat-label>
+                  <mat-select [(ngModel)]="defaultDonation" formControlName="categoryId">
+                    <mat-option *ngFor="let  donation of  donationList;" value="{{donation.id}}">{{donation.categoryName}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.categoryId.errors ">
+                    <span *ngIf="this.submitDonor == false && addDonorForm.controls.categoryId.errors"
+                          class="valid-msg">Donation Category is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 ">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Payment Type</mat-label>
+                  <mat-select  formControlName="paymentMethodUsed">
+                    <mat-option value="CASH">Cash</mat-option>
+                    <mat-option value="ACH">ACH</mat-option>
+                    <mat-option value="CHEQUE">Cheque</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="this.submitDonor == false && addDonorForm.controls.paymentMethodUsed.errors ">
+                    <span *ngIf="this.submitDonor == false && addDonorForm.controls.paymentMethodUsed.errors"
+                          class="valid-msg"> Payment Type is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="addDonor()" class="save-changes" type="button">Register</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="modalDonateNow"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="addGuestMemberForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="examplesLabel"> Donation As Guest </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="guestClosed" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="area-paidregistration">
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> First Name</mat-label>
+                  <input formControlName="firstName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.firstName.errors"
+                          class="valid-msg">First Name is required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 lastpaid">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Last Name</mat-label>
+                  <input formControlName="lastName" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.lastName.errors"
+                          class="valid-msg">Last Name is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row martop-date">
+              <div class="col-md-12">
+                <mat-form-field class="example-full-width map-url">
+                  <mat-label> Email</mat-label>
+                  <input formControlName="email" matInput>
+                </mat-form-field>
+                <div *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors ">
+                    <span *ngIf="this.submitBtn == false && addGuestMemberForm.controls.email.errors"
+                          class="valid-msg">Email is invalid</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <!-- <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button> -->
+          <button (click)="addGuest()" class="save-changes" type="button">Submit</button>
+          <div class="orline"><span>Or</span></div>
+          <button (click)="loginRedirect()" class="save-changes confirm-pay" type="button">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="modalCancelEvent"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="font-size: 19px;" id="examplesLabel">Are you want to send event cancellation email to all participants?</h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" id="cancelClosed" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- <div class="modal-body">
+          <div class="area-paidregistration">
+
+          </div>
+        </div> -->
+        <div class="modal-footer text-aligncenter">
+          <!-- <button class="btn btn-secondary" data-dismiss="modal" id="deleteNoti" type="button">Cancel</button> -->
+          <button  class="save-changes" (click)="cancel('true')" type="button">Send</button>
+          <div class="orline"><span>Or</span></div>
+          <button (click)="cancel('false')"  class="save-changes confirm-pay" type="button">Skip</button>
+        </div>
+      </div>
+  </div>
+</div>

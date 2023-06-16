@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2 class="section-tlt">Our Sponsors</h2>
+      <!-- <span class="diamondtxt ng-star-inserted"><u>twestt</u><i class="line"></i></span>
+      <div class=" sponsorlogo2" style="padding:0px 10px;">
+        <div class="logoimage">
+
+          <img alt="" src="assets/images/background3.png">
+        </div>
+        <span>Sponsor name</span>
+      </div>
+      <div class=" sponsorlogo2" style="padding:0px 10px;">
+        <div class="logoimage">
+
+          <img  alt="" src="assets/images/background3.png">
+        </div>
+        <span>Sponsor name</span>
+      </div>
+      <div class=" sponsorlogo2" style="padding:0px 10px;">
+        <div  class="logoimage">
+
+          <img alt="" src="assets/images/background3.png">
+        </div>
+        <span>Sponsor name</span>
+      </div> -->
+
+  </div>
+
+  </div>
+</div>
+
+
+<section class="committee-listing-main animated fadeInUpBig " *ngFor="let list of sponsorList;let i= index;" >
+  <div class="container">
+    <div class="row mtb-30" >
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="network-icon" >
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center sponsorlogobig" [ngClass]="list?.index == 1 ?  'sponsorlogobig' : 'sponsorlogomedium'">
+              <div class=" sponsorlogo2 " *ngFor="let s of list?.sponsors" >
+                <div class="logoimage">
+                  <i *ngIf="s['profileShow'] == false"> {{s.logo}} </i>
+                  <img *ngIf="s['profileShow'] == true" alt="" [src]="s.logo | communityImages">
+                </div>
+                <span>{{s.displayName}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="contry-name">
+            <span>{{list.categoryName}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--<section class="committee-listing-main animated fadeInUpBig committee-strap">-->
+<!--  <div class="container">-->
+<!--    <div class="row mtb-30">-->
+<!--      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">-->
+<!--        <div class="network-icon member" >-->
+<!--          <div class="row">-->
+<!--            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center sponsorlogomedium">-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div class="logoimage">-->
+<!--                  <img  alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--              <div class=" sponsorlogo2" >-->
+<!--                <div  class="logoimage">-->
+<!--                  <img alt="" src="assets/images/background3.png">-->
+<!--                </div>-->
+<!--                <span>Sponsor name</span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="contry-name">-->
+<!--            <span>SPONSNSOR PLAN</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+

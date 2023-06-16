@@ -1,0 +1,136 @@
+<div class="header">
+<div class="row row-eq-height">
+  <div class="col-md-6 year-party">
+    <ul class="text-off">
+      <li>{{eventDetail['name']}}</li>
+      <li  [innerHTML]="eventDetail.description"></li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <span class="grand-t">Grand Total : <i> ${{totalAmount['finalAmount']}} </i></span>
+  </div>
+</div>
+</div>
+
+<div class="reg-left booticket-lft">
+  <div class="reg-inner">
+    <h1>
+      Book<br>
+      Ticket
+    </h1>
+  </div>
+  <ul class="stepprogress">
+    <!-- <li class="stepprogress-item is-done"> <a href="#"> <strong><i class="icon-file icon"></i> Add Ticket</strong> </a> </li>
+    <li class="stepprogress-item "> <a href="#"> <strong> <i class="icon-insert-picture-icon icon"></i> Food Selection</strong> </a> </li>
+    <li class="stepprogress-item "> <a href="#"> <strong> <i class="icon-gear icon"></i> Payment & Summary </strong> </a> </li> -->
+
+     <li class="stepprogress-item {{step.class}}"  [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'" (click)="openActiveTab(step['step'])" *ngFor="let step of step;let i = index" >
+      <strong><i class="icon-file icon"></i> {{step.name}}</strong>
+     </li>
+
+  </ul>
+</div>
+<div class="create-event-right-side create-new-evnt bookticket-right">
+  <div class="book-ticket-main">
+    
+    <!-- add ticket -->
+    <app-add-ticket *ngIf="activeTabName=='ADD_TICKET' && status == true && userDetail.length != 0"
+        [save]="submitSubject"  [allUser] = "allUser" (completed)="completeStep()" [eventId]="eventId"
+        [userDetail]="userDetail" [eventRules]="eventRules" [(finalDetail)]="totalAmount"
+        [(checkedMembers)] = "checkedMembers">
+    </app-add-ticket>
+    <!-- add ticket -->
+
+    <!-- food selection -->
+    <app-food-selection *ngIf="activeTabName=='FOOD_SELECTION' && foodOptions != 0" 
+        [eventId]="eventId" (completed)="completeStep()" [(finalDetail)]="totalAmount" [save]="submitSubject" [(checkedMembers)] = "checkedMembers" [foodOptions]="foodOptions" [selectedMember]="selectedMember">
+    </app-food-selection>
+    <!-- food selection -->
+
+    <!-- Paymenb -->
+    <app-payment *ngIf="activeTabName=='PAYMENT'"  [eventId]="eventId" [paymentArray]="paymentArray" [save]="submitSubject"  (completed)="completeStep()"  [(paymentDetail)]="paymentDetail"></app-payment>
+    <!-- Paymenb -->
+    <div  *ngIf="showModal==true && lastStep != activeTabName">
+      <app-donate-event [eventId]="eventId"  [(sponsorDetail)]="totalAmount"  (completed)="completepayment()" [save]="submitSubject"> </app-donate-event>
+    </div>
+
+     <!-- back and next button -->
+     <div class="row">
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <input class="save-changes backbtn" type="button" (click)="nextBackActiveTab(activeTabName,'back')"   value="Back">
+      </div>
+      <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+        <input class="save-changes fright" type="button" *ngIf="lastStep != activeTabName" (click)="submitSubject.next(null);"  value="Next" >
+        <input class="save-changes fright" type="button" *ngIf="lastStep == activeTabName" value="Finish" (click)="nextBackActiveTab(activeTabName,'finish')">      </div>
+    </div>
+    <!-- back and next button -->
+    
+  </div>
+</div>
+<!-- Add New Card model -->
+<div class="modal fade share-model" id="paypalmodel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Card</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <img alt="" src="assets/icon/delete-button.svg">
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="paypal-configure no-border">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Card Number</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Expiry</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>CVV</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width ">
+                  <mat-label>Name on Card</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Save Card As</mat-label>
+                  <mat-select>
+
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="user-fill ticket-free-first no-backround">
+                  <mat-checkbox> I accept <a  >all T&C</a> </mat-checkbox>
+                </div>
+                <input class="save-changes add-card-paypal" type="button" value="ADD CARD">
+              </div>
+              <div class="col-md-6 support-card">
+                <span>Cards We Support</span>
+                <img src="assets/images/support.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

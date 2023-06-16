@@ -1,0 +1,110 @@
+<div class="create-event-right-side common-page">
+  <div class="dashboard-heading">
+    Preview Form
+  </div>
+  <div class="white-area-create-event committi-main">
+    <div class="totalcommitteemem">
+      <div class="row">
+        <div class="view-form">
+          <div class="form-div">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form view-form-tlt">
+                    <div class="form-name">
+                      <h2>{{formDetails['name']}}</h2>
+                    </div>
+                  </div>
+                  <div class="form" *ngFor="let step of formDetails['formSteps'];let i=index">
+                    <div class="form-tlt">
+                      <h4> {{step.stepName}}</h4>
+                    </div>
+                    <div *ngFor="let fields of step['formsFields'];let j=index">
+                      <div class="form-group" *ngIf="fields['type'] =='TEXT'">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red">
+                              *</span>
+                          </mat-label>
+                          <input matInput type="text" [(ngModel)]="fields.defaultValue">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group" *ngIf="fields['type'] =='NUMBER'">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red">
+                              *</span>
+                          </mat-label>
+                          <input matInput type="text" [(ngModel)]="fields.defaultValue">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group" *ngIf="fields['type'] =='LABEL'">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red">
+                              *</span>
+                          </mat-label>
+                          <input matInput type="text" [(ngModel)]="fields.description">
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group" *ngIf="fields['type'] =='DROPDOWN'">
+                        <p>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red"> *</span></p>
+                        <mat-form-field>
+                          <mat-label>Select Option
+                          </mat-label>
+                          <mat-select type="text" [(ngModel)]="fields.value">
+                            <mat-option *ngFor="let opt of fields['options'];" value="{{opt._id}}">{{opt.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group" *ngIf="fields['type'] =='TEXTAREA'">
+                        <mat-form-field appearance="fill">
+                          <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red">
+                              *</span>
+                          </mat-label>
+                          <textarea matInput [(ngModel)]="fields.defaultValue"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group" *ngIf="fields['type'] =='DATE'">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red">
+                              *</span>
+                          </mat-label>
+                          <input matInput [matDatepicker]="picker" [(ngModel)]="fields.value">
+                          <mat-datepicker-toggle matSuffix [for]=picker></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                          <!--                <img matSuffix src="assets/icon/calendar-gray.svg">-->
+                        </mat-form-field>
+                      </div>
+
+
+                      <!-- <div class="form-group" *ngIf="fields['type'] =='TIME'">
+                <mat-form-field class="example-full-width">
+                  <mat-label>{{fields['fieldName']}}<span *ngIf="fields['required'] ==true" class="red"> *</span>
+                  </mat-label>
+                  <input matInput [ngxTimepicker]="picker" [(ngModel)]="fields.value">
+                  <ngx-material-timepicker #picker></ngx-material-timepicker>
+                </mat-form-field>
+              </div> -->
+                      <div class="form-group" *ngIf="fields['type'] =='CHECKBOX'">
+                        <p>{{fields['fieldName']}} <span *ngIf="fields['required'] ==true" class="red"> *</span></p>
+                        <div *ngFor="let opt of fields['options']; let k=index">
+                          <mat-checkbox [(ngModel)]="opt.selected">
+                            {{ opt.value }}
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="submit">
+                    <button class="btn" (click)="close()">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

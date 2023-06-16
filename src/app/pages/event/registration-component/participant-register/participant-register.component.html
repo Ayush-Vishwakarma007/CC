@@ -1,0 +1,368 @@
+<div class="leftdonorpart">
+  <div class="innerpaid">
+    <!-- New Accordian section -->
+    <mat-accordion class="newparticipantdesign">
+      <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>
+              {{'event.registrationComponent.participantRegister.choreographer.title' | translate}}
+            </h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <form [formGroup]="registerChoreographerForm" class="example-form" id="registerChoreographerForm"
+              autocomplete="off">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.fname.lbl.text' | translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();" [maxLength]="15"
+                          size="15" formControlName="firstName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.firstName.errors">
+                        <div *ngIf="registerChoreographerForm.controls.firstName.errors" class="valid-msg">First Name is
+                          required</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.lname.lbl.text' | translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" (keydown.space)="$event.preventDefault();" [maxLength]="15"
+                          size="15" formControlName="lastName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.lastName.errors">
+                        <div *ngIf="registerChoreographerForm.controls.lastName.errors" class="valid-msg">Last Name is
+                          required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.email.lbl.text' | translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input formControlName="email" (keydown.space)="$event.preventDefault();" [maxLength]="50"
+                          size="50" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.email.errors">
+                        <div *ngIf="registerChoreographerForm.controls.email.errors" class="valid-msg">Please enter
+                          valid email.</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.phone.lbl.text' | translate}}
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" [maxLength]="10" [minLength]="10" formControlName="phone"
+                          matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.phone.errors">
+                        <div *ngIf="registerChoreographerForm.controls.phone.errors.minLength" class="valid-msg">Please
+                          Enter
+                          Valid Phone Number</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.performanceName.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="performanceName" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.performanceName.errors">
+                        <div *ngIf="registerChoreographerForm.controls.performanceName.errors" class="valid-msg">
+                          Performance Name is required</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.description.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="description" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.description.errors">
+                        <div *ngIf="registerChoreographerForm.controls.description.errors" class="valid-msg">Description
+                          is required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.choreographer.duration.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" formControlName="duration" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitBtn && registerChoreographerForm.controls.duration.errors">
+                        <div *ngIf="registerChoreographerForm.controls.duration.errors" class="valid-msg">Performance
+                          Duration is required</div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                         Choreographer Business Name
+                          <i>*</i>
+                        </mat-label>
+                        <input  formControlName="contactChoreographerBusinessName" matInput type="text">
+                      </mat-form-field> 
+                    </div>
+                  </div>                    
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <input (click)="addChoreographer(); nextStep(true)" class="save-changes full-width" type="button"
+              value="{{'event.registrationComponent.participantRegister.choreographer.submit.Btn.text' | translate}}">
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>
+              {{'event.registrationComponent.participantRegister.participant.title' | translate}}
+            </h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <form [formGroup]="registerForm" class="example-form" id="registerForm" autocomplete="off">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.participant.add.popup.fname.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="firstName"
+                          (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.firstName.errors">
+                        <div *ngIf="registerForm.controls.firstName.errors" class="valid-msg">First Name is required
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.participant.add.popup.lname.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="lastName"
+                          (keydown.space)="$event.preventDefault();" [maxLength]="15" size="15" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.lastName.errors">
+                        <div *ngIf="registerForm.controls.lastName.errors" class="valid-msg">Last Name is required</div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.participant.add.popup.email.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input formControlName="email" (keydown.space)="$event.preventDefault();" [maxLength]="50"
+                          size="50" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.email.errors">
+                        <div *ngIf="registerForm.controls.email.errors" class="valid-msg">Please enter valid email.
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          {{'event.registrationComponent.participantRegister.participant.add.popup.age.lbl.text' |
+                          translate}}
+                          <i>*</i>
+                        </mat-label>
+                        <input (keypress)="numberOnly($event)" (keydown.space)="$event.preventDefault();" [max]="16"
+                          appPhoneMask formControlName="age" matInput type="text">
+                      </mat-form-field>
+                      <span *ngIf="submitted && registerForm.controls.age.errors">
+                        <div *ngIf="registerForm.controls.age.errors" class="valid-msg">Age is required</div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <input (click)="addParticipant()" class="save-changes full-width" type="button"
+              value="{{'event.registrationComponent.participantRegister.participant.add.popup.submit.Btn.text' | translate}}">
+          </div>
+          <div class="col-md-6">
+            <input (click)="nextStep()" class="save-changes full-width" type="button" value="Next">
+          </div>
+        </div>
+        <div class="row" *ngIf="participantDetail?.length != 0">
+          <div class="col-md-12">
+            <table class="tabceaograpsh">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th width="60">Action</th>
+              </tr>
+              <tr *ngFor="let list of participantDetail; let i = index">
+                <td>{{list.firstName | titlecase}} {{list.lastName | titlecase}}</td>
+                <td>{{list.email}}</td>
+                <td>{{list.age}}</td>
+                <td>
+                  <div class="dropdown dropup moredrop editgallery">
+                    <a aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle "
+                      data-toggle="dropdown" href="#" id="dropdownMenuLink" role="button">
+                      <img alt="" src="assets/icon/interface.svg">
+                    </a>
+                    <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                      <a (click)="editParticipant(list,i)" class="dropdown-item"><i aria-hidden="true"
+                          class="fa fa-angle-right"></i> Edit</a>
+                      <a (click)="deleteParticipant(i)" class="dropdown-item"><i aria-hidden="true"
+                          class="fa fa-angle-right"></i> Delete</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h5>
+             Media Information
+            </h5>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row">
+          <div class="col-md-12 col-lg-12">
+            <div class="imageup create-img-upload">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidUploadFile()" (maxFileError)="maxFileError()"
+                (maxFileSizeError)="fileSizeError()" (queueCompleted)="imageQueueCompleted()"
+                (uploadStarted)="uploadStarted()" (uploadedFilesChange)="uploadedFilesChange()"
+                [(uploadedFiles)]="imageList" [maxFileCount]="1" [uploadUrl]="mediaUploadUrl"
+                [validTypes]="validTypesImage">
+              </app-file-uploader-vertical>
+            </div>
+            <div *ngIf="uploadedImageList?.length != 0" class="main-thumbs-model-main">
+              <div *ngFor="let image of uploadedImageList;let i = index" class="thumb">
+                <div [style.backgroundImage]="'url('+image.link+')'" class="blurimageabout"
+                  style="background: no-repeat;"></div>
+                <img alt="" [src]="image.link | galleryImagePipe" class="img-upload">
+                <button (click)="removeImage(i,image)" class="iconclose">
+                  <i class="icon-delete-blue newicon"></i></button>
+              </div>
+            </div>
+            <div class="imageup create-img-upload uploadvc">
+              <app-file-uploader-vertical #imageUpload (invalidFile)="invalidVideoUploadFile()"
+                (maxFileError)="maxFileError()" (maxFileSizeError)="fileSizeError()"
+                (queueCompleted)="videoQueueCompleted()" (uploadStarted)="uploadStarted()"
+                (uploadedFilesChange)="uploadedFilesChange()" [(uploadedFiles)]="videoList" [maxFileCount]="1"
+                [uploadUrl]="mediaUploadUrl" [validTypes]="validTypesVideo">
+              </app-file-uploader-vertical>
+            </div>
+          </div>
+        
+        <div *ngIf="uploadedVideoList?.length != 0" class="main-thumbs-model-main">
+          <div *ngFor="let list of uploadedVideoList;let i = index" class="thumb video-up">
+            <video controls height="30" width="60" class="vc">
+              <source [src]="list.link | galleryImagePipe">
+            </video>
+            <button (click)="removeVideo(i,list)" class="iconclose">
+              <i class="icon-delete-blue newicon"></i></button>
+          </div>
+        </div>
+        </div>
+        <!--<form [formGroup]="businessDetailForm" class="example-form" id="businessDetailForm" autocomplete="off">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Business Name
+                        </mat-label>
+                        <input (keypress)="charOnly($event)" formControlName="businessName" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Website
+                        </mat-label>
+                        <input formControlName="website" matInput type="text">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row martopevent">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Business Detail
+                        </mat-label>
+                        <textarea formControlName="businessDetail" matInput type="text"></textarea>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width address-evnt">
+                        <mat-label>
+                          Address
+                        </mat-label>
+                        <textarea (keypress)="charOnly($event)" formControlName="address" matInput
+                          type="text"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>-->
+  
+
+<div class="row">
+  <div class="col-md-12">
+    <input (click)="addBusinessInfo(); nextStep()" class="save-changes full-width" type="button" value="Done">
+  </div>
+</div>
+</mat-expansion-panel>
+</mat-accordion>
+<!-- New Accordian section -->
+</div>
+</div>

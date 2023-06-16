@@ -1,0 +1,399 @@
+<div class="reg-left">
+  <div class="reg-inner">
+    <h1 *ngIf="!isEdit">
+      Create Newsletter
+    </h1>
+    <h1 *ngIf="isEdit">
+      Edit Newsletter
+    </h1>
+  </div>
+  <ul class="stepprogress createnewsletter-progress">
+    <li *ngFor="let step of step;let i = index" (click)="nextBackActiveTab(step['step'],'current')"  [ngClass]="step['active'] == true ? 'is-done' : 'complete-three-step'" class="stepprogress-item">
+      <strong><i class="{{step.class}} newicon"></i> {{step.name}}</strong>
+    </li>
+  </ul>
+
+</div>
+<div class="create-event-right-side create-new-evnt">
+  <div class="white-area-create-event">
+    <form [formGroup]="newsletterForm" class="example-form" id="newsletterForm">
+      <div *ngIf="activeTabName == 'BASIC_INFO' && !showUser" class="row bortopgray">
+        <div class="col-md-12 col-lg-12">
+          <div class="row">
+            <div class="">
+              <h1>
+                <div class="img-create">
+                  <img alt="basic-info" src="assets/icon/basic-info.svg">
+                </div>
+                Basic Information
+                <span>Provide general information about your newsletter.</span>
+              </h1>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field class="example-full-width" *ngIf="chapterList.length >1" >
+                      <mat-label>Chapter <i>*</i></mat-label>
+                      <mat-select (selectionChange)="changeChapterSelection($event.value)"
+                                  formControlName="chapterIds" multiple="true">
+                        <mat-checkbox (change)="selectAllChange($event)" [checked]="selectAllChapter">
+                          Select All
+                        </mat-checkbox>
+                        <mat-option *ngFor="let chapter of chapterList;let i = index"
+                                    value="{{chapter['id']}}">
+                          {{chapter['name']}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" *ngIf="chapterList.length ==1">
+                      <mat-label>Select Chapter</mat-label>
+                      <mat-select [value]="myselectchapter"  >
+                        <mat-option *ngFor="let list of chapterList" value="{{list.id}}"  >{{list.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div *ngIf="this.submitBtn == false && newsletterForm.controls.chapterIds.errors ">
+                      <span *ngIf="this.submitBtn == false && newsletterForm.controls.chapterIds.errors"
+                            class="valid-msg">Chapter is required</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field class="example-full-width address-evnt">
+                      <mat-label>Description </mat-label>
+                      <textarea [rows]="2" formControlName="description" matInput type="text"></textarea>
+                    </mat-form-field>
+                    <div *ngIf="this.submitBtn == false && newsletterForm.controls.description.errors ">
+                      <span *ngIf="this.submitBtn == false && newsletterForm.controls.description.errors"
+                            class="valid-msg">Description is required</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Newsletter Title <i>*</i></mat-label>
+                      <input formControlName="name" matInput>
+                    </mat-form-field>
+                    <div *ngIf="this.submitBtn == false && newsletterForm.controls.name.errors " class="descrip-paid">
+                      <span *ngIf="this.submitBtn == false && newsletterForm.controls.name.errors" class="valid-msg">Newsletter Title is required</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <mat-form-field class="example-full-width dateinfo">
+                      <mat-label>Date to Publish  <i>*</i></mat-label>
+                      <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                      <mat-datetimepicker #datetimePicker openOnFocus="true" timeInterval="5" type="datetime"></mat-datetimepicker>
+                      <input [matDatetimepicker]="datetimePicker" [min]="startDate" autocomplete="false" formControlName="dateTime" matInput required>
+                    </mat-form-field>
+                    <div *ngIf="this.submitBtn == false && newsletterForm.controls.dateTime.errors" class="descrip-paid">
+                      <span *ngIf="this.submitBtn == false && newsletterForm.controls.dateTime.errors" class="valid-msg"> Date & Time is required </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <mat-checkbox [(ngModel)]="checked" formControlName="quickJobExecution">Send Now </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div [hidden]="activeTabName != 'EDITOR' || showUser == true" class="row bortopgray paddtopdiscrip">
+
+        <div >
+          <button class="preview-editor" (click)="openModalWithClassAdd(templatepreview)" *ngIf="activeTabName == 'EDITOR' && !showUser">Preview</button>
+          <mat-radio-button  class="business-radio" name="account_holder_type_radio" type="radio" id="div1" (click)="show1('advance');" [checked]="editorType=='advance'">Advanced Editor</mat-radio-button>
+
+          <mat-radio-button  class="business-radio" name="account_holder_type_radio" type="radio"  id="div2" (click)="show1('simple');"  [checked]="editorType=='simple'">Simple Editor</mat-radio-button>
+          <div [hidden]="editorType != 'advance'" >
+            <div  id="gjs">  </div>
+          </div>
+          <ngx-editor  [hidden]="editorType != 'simple'"   [(ngModel)]=" editorContent1" [ngModelOptions]="{standalone: true}"
+                           [placeholder]="'Enter Full Description here...'" class="editor-icon"></ngx-editor>
+
+
+
+        </div>
+      </div>
+
+      <div *ngIf=" activeTabName=='USER_SELECTION'" class="row bortopgray paddtopdiscrip">
+        <div class="col-md-12">
+          <h1>
+            <div class="img-create">
+              <img alt="basic-info" src="assets/icon/basic-info.svg">
+            </div>
+            User Selection
+            <span>Select user to send newsletter.</span>
+          </h1>
+        </div>
+        <div class="row martopevent">
+          <div class="row borbtm" style="margin: 21px;">
+            <div class="col-sm-6">
+              <div class="topheadnew">
+                <div class="row">
+                  <div class="col-md-6 selectall"  >
+                    <input  (change)="selectedUser()" [(ngModel)]="selectedAll" [ngModelOptions]="{standalone: true}"
+                           type="checkbox" > Select all
+
+                  </div>
+                  <!--<div class="col-md-6 selectall"*ngIf="search!=''"  >
+                  <input  *ngIf="search!=''"(change)="selectedUser()" [(ngModel)]="selectedAll" [ngModelOptions]="{standalone: true}"
+                  type="checkbox" [disabled]="search!=''"> Select
+                  </div>-->
+                  <div class="col-md-6 selected">
+                    <b *ngIf="(selectedAll == true && search=='') " (click)=" openModalWithClassSelect(selectmember)"> {{ this.memberList['totalElements'] }}
+                   selected </b>
+                    <b *ngIf="selectedAll == false  " (click)=" openModalWithClassSelect(selectmember)"> {{ checkUncheckUser['userIds'].length }} selected </b>
+                    <b *ngIf=" selectedAll == true && isShown==true && search!='' " (click)=" openModalWithClassSelect(selectmember)"> {{checkUncheckUser['userIds'].length}} selected </b>
+                    <b *ngIf=" selectedAll == true && isShown==false && search!='' " (click)=" openModalWithClassSelect(selectmember)"> {{this.checkUncheckUser["userIdsNotIn"]['0']}} selected </b>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <mat-form-field class="example-full-width map-url search-not">
+                <mat-label> Search Here..</mat-label>
+                <input (change)="this.userReqData.page.page=0;userData($event.target.value)" [(ngModel)]="search"
+                       [ngModelOptions]="{standalone: true}" autocomplete="off" matInput
+                       type="text">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!--        <div class="topheadnew">-->
+          <!--          <div class="row">-->
+          <!--            <div class="col-md-6 selectall">-->
+          <!--              <input (change)="selectedUser()" [(ngModel)]="selectedAll" [ngModelOptions]="{standalone: true}" type="checkbox"> Select all-->
+          <!--            </div>-->
+
+          <!--            <div class="col-md-6 selected">-->
+
+          <!--              <b *ngIf="selectedAll == true"> {{ this.memberList['totalElements'] - -->
+          <!--              checkUncheckUser['userIdsNotIn'].length }} selected </b>-->
+          <!--              <b *ngIf="selectedAll == false"> {{ checkUncheckUser['userIds'].length }} selected </b>-->
+
+          <!--            </div>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <div class="scrl">
+            <div *ngFor="let member of memberList?.content;let i=index"  class="row martoppr" style="margin: 21px;">
+              <div  *ngIf="member.email !=''&& member.email!=null" class="col-md-4">
+                <div class="profiletext">
+                  <ul class="mainpr" >
+
+                    <li><input (change)="getCheckUncheckUser(member)" [(ngModel)]="member['checked']"
+                               [ngModelOptions]="{standalone: true}" type="checkbox"></li>
+                    <li>
+                      <div *ngIf="member['profileShow'] == false" class="txtprofile">
+                        {{member['profileUrl']}}
+                      </div>
+                      <div *ngIf="member['profileShow'] == true" class="txtprofile"><img alt=""
+                                                                                         src="{{member['profileUrl']}}">
+                      </div>
+
+                      <h4 >{{member['firstName'] | titlecase}}
+                        <p> <strong>{{member['lastName'] | titlecase}}</strong> </p>
+                        <p>{{member['memberNumber']}}</p>
+                      </h4>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+              <div class="col-sm-4">
+                {{member['email']}}
+              </div>
+              <div class="col-sm-2">
+                {{member['phone']}}
+              </div>
+              <div class="col-md-2 state-txt">
+                <i *ngIf="member['country'] && member['city']">{{member['city']}}
+                  <i *ngIf="member['country']">| {{member['country']}}</i>
+                </i>
+              </div>
+            </div>
+          </div>
+          <div class="pegination-main">
+            <ul>
+              <li>
+                <button (click)="pagination('current','user',0)" [disabled]="memberList['first'] == true"
+                        class="next">
+                  First
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('prev','user')" [disabled]="memberList['first'] == true"
+                        class="arrow">
+                  <i aria-hidden="true" class="icon-left-arrow icon"></i>
+                </button>
+              </li>
+              <li (click)="pagination('current','user',i)" *ngFor="let i of totalPages"
+                  [ngClass]="userReqData.page.page == i ?  'blue-peg' : ''">
+                <button class="numeric">{{i + 1}}</button>
+              </li>
+              <li>
+                <button (click)="pagination('next','user')" [disabled]="memberList['last'] == true"
+                        class="arrow">
+                  <i aria-hidden="true" class="icon-right-arrow icon"></i>
+                </button>
+              </li>
+              <li>
+                <button (click)="pagination('current','user',(memberList['totalPages']-1))"
+                        [disabled]="memberList['last'] == true" class="next">Last
+                </button>
+              </li>
+
+            </ul>
+            <div class="totalShow"><span>Total :</span> {{memberList['totalElements']}}</div>
+          </div>
+        </div>
+      </div>
+      <div  *ngIf="activeTabName=='USER_CONFIRMATION' "  class="row bortopgray paddtopdiscrip newslet">
+        <h1>
+          <div class="img-create">
+            <img alt="basic-info" src="assets/icon/basic-info.svg">
+          </div>
+          User Confirmation Details
+
+        </h1>
+
+        <p *ngIf="editorType=='simple'" [innerHtml]="editorContent1" ></p>
+        <p *ngIf="editorType=='advance'" [innerHtml]="editorContent" ></p>
+
+
+          <b *ngIf="(selectedAll == true && search=='') " >Total member selected: {{ this.memberList['totalElements'] }}
+             </b>
+             <b *ngIf="selectedAll == false  ">Total member selected: {{ checkUncheckUser['userIds'].length }}  </b>
+             <b *ngIf=" selectedAll == true && isShown==true && search!='' ">Total member selected: {{checkUncheckUser['userIds'].length}}  </b>
+             <b *ngIf=" selectedAll == true && isShown==false && search!='' "> Total member selected: {{this.checkUncheckUser["userIdsNotIn"]['0']}}  </b>
+
+        <!--<b *ngIf="(selectedAll == true && search=='') " >Total member selected: {{ this.memberList['totalElements'] }}
+        </b>
+        <b *ngIf="selectedAll == false  ">Total member selected: {{ checkUncheckUser['userIds'].length }}  </b>
+        <b *ngIf=" selectedAll == true && isShown==true && search!='' ">Total member selected: {{checkUncheckUser['userIds'].length}}  </b>
+        <b *ngIf=" selectedAll == true && isShown==false && search!='' "> Total member selected: {{this.checkUncheckUser["userIdsNotIn"]['0']}}  </b>-->
+
+      </div>
+
+    </form>
+
+    <div class="row stepnews">
+      <div *ngIf="step.length != 0" class="col-md-4 col-sm-4 col-xs-4">
+        <input (click)="nextBackActiveTab(activeTabName,'back')" class="save-changes backbtn" type="button"
+               value="Back">
+      </div>
+      <div class="col-md-8 col-sm-8 col-xs-8 saveinfo">
+        <input (click)="nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName == 'BASIC_INFO' "
+               class="save-changes fright" type="button" value="Next">
+        <button (click)="submit()" *ngIf="activeTabName == 'EDITOR' &&  !showUser" class="save-changes"> Save as Draft
+        </button>
+        <button (click)="nextBackActiveTab(activeTabName,'next')" *ngIf="activeTabName == 'EDITOR' && !showUser" class="addanother"
+                data-toggle="modal"> Next
+        </button>
+        <button (click)="nextBackActiveTab(activeTabName,'next')" *ngIf=" activeTabName == 'USER_SELECTION' " class="save-changes">Next</button>
+        <button (click)="sendNow()" class="save-changes" *ngIf=" activeTabName == 'USER_CONFIRMATION'">Send Now</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<ng-template #templatepreview id="openEditModel">
+  <div class="modal-header">
+    <h2 class="previe-edtr">Preview</h2>
+    <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="resetForm()">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+    <button (click)="modalRef.hide()" aria-label="Close" class="close-container evendash" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p *ngIf="editorType=='simple'" [innerHtml]="editorContent1" ></p>
+    <p *ngIf="editorType=='advance'" [innerHtml]="editorContent" ></p>
+  </div>
+</ng-template>
+<ng-template #selectmember id="openEditModel">
+  <div class="modal-header">
+    <h2 class="previe-edtr">Selectd Member List</h2>
+    <button (click)="closeModel()" aria-label="Close" class="close-container evendash" data-dismiss="modal" id="closeModal" type="button">
+      <div class="leftright"></div>
+      <div class="rightleft"></div>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="selectmemberList == 0"> <h3>No member selected</h3></div>
+
+    <div *ngFor="let member of selectmemberList?.content" class="row martoppr" style="margin: 21px;">
+      <div  *ngIf="member.email !=''&& member.email!=null" class="col-md-4">
+        <div class="profiletext">
+          <ul class="mainpr" >
+
+            <li></li>
+
+            <li>
+              <div *ngIf="member['profileShow'] == false" class="txtprofile">
+                {{member['profileUrl']}}
+              </div>
+              <div *ngIf="member['profileShow'] == true" class="txtprofile"><img alt=""
+                                                                                 src="{{member['profileUrl']}}">
+              </div>
+
+              <h4 >{{member['firstName'] | titlecase}}
+                <p> <strong>{{member['lastName'] | titlecase}}</strong> </p>
+                <p>{{member['memberNumber']}}</p>
+              </h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        {{member['email']}}
+      </div>
+      <div class="col-sm-2">
+        {{member['phone']}}
+      </div>
+      <div class="col-md-2 state-txt">
+        <i *ngIf="member['country'] && member['city']">{{member['city']}}
+          <i *ngIf="member['country']">| {{member['country']}}</i>
+        </i>
+      </div>
+    </div>
+    <div class="pegination-main" *ngIf="selectmemberList != 0">
+      <ul>
+        <li>
+          <button (click)="pagination1('current','user',0)" [disabled]="selectmemberList['first'] == true"
+                  class="next">
+            First
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination1('prev','user')" [disabled]="selectmemberList['first'] == true"
+                  class="arrow">
+            <i aria-hidden="true" class="icon-left-arrow icon"></i>
+          </button>
+        </li>
+        <li (click)="pagination1('current','user',i)" *ngFor="let i of totalPages1"
+            [ngClass]="memberReqData.page.page == i ?  'blue-peg' : ''">
+          <button class="numeric">{{i + 1}}</button>
+        </li>
+        <li>
+          <button (click)="pagination1('next','user')" [disabled]="selectmemberList['last'] == true"
+                  class="arrow">
+            <i aria-hidden="true" class="icon-right-arrow icon"></i>
+          </button>
+        </li>
+        <li>
+          <button (click)="pagination1('current','user',(selectmemberList['totalPages']-1))"
+                  [disabled]="selectmemberList['last'] == true" class="next">Last
+          </button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</ng-template>

@@ -1,0 +1,33 @@
+<div class="mainotp-box">
+  <div class="login-logo">
+    <img *ngIf="communityService.logo?.logo" alt="logo" [src]="communityService.logo?.logo?.url|communityImages">
+  </div>
+  <div class="rightpart">
+    <div class="main-box">
+      <h3>
+        Welcome
+      </h3>
+<!--            <span *ngIf="token && phoneNo">-->
+<!--              Your email address verify successfully.-->
+<!--            </span>-->
+      <span>
+        <h4>Your email address will be verified by the below button.</h4>
+      </span>
+      <p>Email Address: {{email}}</p>
+      <div class="login-button" *ngIf="emailVerification==true">
+        <button (click)="emailVerificationRedirect()">Confirm Email </button>
+      </div>
+      <div class="login-button" *ngIf="emailVerification==false">
+        <button (click)="redirectInPassword()">Become a Member </button>
+      </div>
+      <div class="login-button" *ngIf="emailVerification==false">
+                  <button (click)="verifyNewsletter()">Only For Newsletter</button>
+      </div>
+        <!--            <div class="login-button">-->
+<!--                <button (click)="verifyPhone()">Set Password</button>-->
+<!--            </div>-->
+
+    </div>
+  </div>
+</div>
+

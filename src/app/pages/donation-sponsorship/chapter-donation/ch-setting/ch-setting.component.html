@@ -1,0 +1,80 @@
+<div class="dashboard-chart">
+  <ul class="setting-dashboard">
+    <li (click)="userNoti('')" class="colornotifition" data-target="#exampleModalAllnotification"
+        data-toggle="modal">
+      <!-- href="/notifications"  -->
+      <div>
+        <h2>
+          <span>
+            <i aria-hidden="true" class="icon fa-bell"></i>
+          </span>
+        </h2>
+        <span class="notification-setting">
+          Notification
+        </span>
+        <p>
+          Click here to view or create Notification
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModalAllnotification"
+     role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog infomainpopup" role="document">
+    <form [formGroup]="notificationForm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleaLabel"> Notification </h5>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row-eq-height">
+            <div class="col-lg-8 pull-right"></div>
+            <div class="col-lg-4 setMargin pull-right">
+              <mat-form-field class="example-full-width">
+                <mat-label>Send To</mat-label>
+                <mat-select formControlName="notificationAudiences">
+                  <mat-option value="DONORS">Donors</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors ">
+                <span *ngIf="this.submitBtn == false && notificationForm.controls.notificationAudiences.errors "
+                      class="valid-msg">Send To is Required</span>
+              </div>
+            </div>
+          </div>
+          <div class="notarea">
+            <mat-form-field class="example-full-width map-url">
+              <mat-label> Subject</mat-label>
+              <input formControlName="subject" matInput>
+            </mat-form-field>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.subject.errors " class="valid-msg">Subject is Required</span>
+            </div>
+            <div class="editor-main">
+              <span class="sub-head"> Message </span>
+              <ngx-editor [placeholder]="'Enter Description here...'" class="editor-icon"
+                              formControlName="message"></ngx-editor>
+            </div>
+            <div *ngIf="this.submitBtn == false && notificationForm.controls.message.errors ">
+              <span *ngIf="this.submitBtn == false && notificationForm.controls.message.errors "
+                    class="valid-msg martopmsg">Message is Required</span>
+            </div>
+            <!-- <mat-form-field class="example-full-width martopmsg">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Enter Here..."></textarea>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div class="modal-footer text-aligncenter">
+          <button class="btn btn-secondary" data-dismiss="modal" id="deletesNoti" type="button">Cancel</button>
+          <button (click)="submitAllNotification()" class="save-changes" type="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

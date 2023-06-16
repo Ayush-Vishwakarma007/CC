@@ -1,0 +1,16 @@
+<div class="scrolltab">
+  <h3>
+    <span>Add Parking Details</span>
+    <button class="skip" (click)="skip()"> SKip</button>
+  </h3>
+  <div class="parking" *ngFor="let list of parkingCategory let i = index">
+    <span>{{list.title}} </span>
+    <mat-form-field class="example-full-width">
+      <mat-label>Enter number of vehicles </mat-label>
+      <input matInput placeholder="" id="park"  [(ngModel)]="list.value" name="{{list.value}}" (ngModelChange)="mychange($event,i)" (keypress)="numberOnly($event)">
+    </mat-form-field>
+    <div class="per-ticket">${{list.price}}</div>
+  </div>
+
+
+</div>
